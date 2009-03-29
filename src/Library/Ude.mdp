@@ -1,0 +1,55 @@
+<Project name="Ude" fileversion="2.0" DefaultNamespace="Ude" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+  <Configurations active="Debug|Any CPU">
+    <Configuration name="Debug|Any CPU" ctype="DotNetProjectConfiguration">
+      <Output directory="bin/Debug/" assembly="Ude" />
+      <Build debugmode="True" target="Library" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="False" unsafecodeallowed="False" generateoverflowchecks="True" definesymbols="DEBUG;TRACE" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+    <Configuration name="Release|Any CPU" ctype="DotNetProjectConfiguration">
+      <Output directory="bin/Release/" assembly="Ude" />
+      <Build debugmode="False" target="Library" />
+      <Execution runwithwarnings="True" consolepause="True" runtime="MsNet" clr-version="Net_2_0" />
+      <CodeGeneration compiler="Mcs" warninglevel="4" optimize="True" unsafecodeallowed="False" generateoverflowchecks="True" definesymbols="TRACE" generatexmldocumentation="False" ctype="CSharpCompilerParameters" />
+    </Configuration>
+  </Configurations>
+  <Contents>
+    <File name="Ude.Core/CharDistributionAnalyser.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/CharsetProber.cs" subtype="Code" buildaction="Compile" />
+    <File name="Properties/AssemblyInfo.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/CodingStateMachine.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/EscCharsetProber.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/EscSM.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/HebrewProber.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/Latin1Prober.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/MBCSGroupProber.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/BitPackage.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/SBCharsetProber.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/SBCSGroupProber.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/UniversalDetector.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/UTF8Prober.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/MBCSSM.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/SequenceModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/GB18030Prober.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/SMModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/LangCyrillicModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/LangBulgarianModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/LangHebrewModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/LangGreekModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/LangHungarianModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/LangThaiModel.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/Big5Prober.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/EUCJPProber.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/EUCKRProber.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/EUCTWProber.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/JapaneseContextAnalyser.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/SJISProber.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude/ICharsetDetector.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude/CharsetDetector.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude/DetectionConfidence.cs" subtype="Code" buildaction="Compile" />
+    <File name="Ude.Core/Charsets.cs" subtype="Code" buildaction="Compile" />
+  </Contents>
+  <References>
+    <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  </References>
+</Project>
