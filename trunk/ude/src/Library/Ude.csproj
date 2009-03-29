@@ -1,0 +1,92 @@
+﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.50727</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{7BECB850-389A-44FC-8523-3EF0B2540F07}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Ude</RootNamespace>
+    <AssemblyName>Ude</AssemblyName>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Ude</AssemblyName>
+    <RootNamespace>Ude</RootNamespace>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <OutputType>Library</OutputType>
+    <AssemblyName>Ude</AssemblyName>
+    <DebugSymbols>false</DebugSymbols>
+    <RootNamespace>Ude</RootNamespace>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <CheckForOverflowUnderflow>true</CheckForOverflowUnderflow>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Ude.Core\CharDistributionAnalyser.cs" />
+    <Compile Include="Ude.Core\CharsetProber.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Ude.Core\CodingStateMachine.cs" />
+    <Compile Include="Ude.Core\EscCharsetProber.cs" />
+    <Compile Include="Ude.Core\EscSM.cs" />
+    <Compile Include="Ude.Core\HebrewProber.cs" />
+    <Compile Include="Ude.Core\Latin1Prober.cs" />
+    <Compile Include="Ude.Core\MBCSGroupProber.cs" />
+    <Compile Include="Ude.Core\BitPackage.cs" />
+    <Compile Include="Ude.Core\SBCharsetProber.cs" />
+    <Compile Include="Ude.Core\SBCSGroupProber.cs" />
+    <Compile Include="Ude.Core\UniversalDetector.cs" />
+    <Compile Include="Ude.Core\UTF8Prober.cs" />
+    <Compile Include="Ude.Core\MBCSSM.cs" />
+    <Compile Include="Ude.Core\SequenceModel.cs" />
+    <Compile Include="Ude.Core\GB18030Prober.cs" />
+    <Compile Include="Ude.Core\SMModel.cs" />
+    <Compile Include="Ude.Core\LangCyrillicModel.cs" />
+    <Compile Include="Ude.Core\LangBulgarianModel.cs" />
+    <Compile Include="Ude.Core\LangHebrewModel.cs" />
+    <Compile Include="Ude.Core\LangGreekModel.cs" />
+    <Compile Include="Ude.Core\LangHungarianModel.cs" />
+    <Compile Include="Ude.Core\LangThaiModel.cs" />
+    <Compile Include="Ude.Core\Big5Prober.cs" />
+    <Compile Include="Ude.Core\EUCJPProber.cs" />
+    <Compile Include="Ude.Core\EUCKRProber.cs" />
+    <Compile Include="Ude.Core\EUCTWProber.cs" />
+    <Compile Include="Ude.Core\JapaneseContextAnalyser.cs" />
+    <Compile Include="Ude.Core\SJISProber.cs" />
+    <Compile Include="Ude\ICharsetDetector.cs" />
+    <Compile Include="Ude\CharsetDetector.cs" />
+    <Compile Include="Ude\DetectionConfidence.cs" />
+    <Compile Include="Ude.Core\Charsets.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

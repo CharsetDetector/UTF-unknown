@@ -1,0 +1,24 @@
+<Combine name="Ude" fileversion="2.0">
+  <Configurations active="Debug|Any CPU">
+    <Configuration name="Debug|Any CPU" ctype="CombineConfiguration">
+      <Entry build="True" name="Ude.Example" configuration="Debug" />
+      <Entry build="True" name="Ude.Tests" configuration="Debug|Any CPU" />
+      <Entry build="True" name="Ude" configuration="Debug|Any CPU" />
+    </Configuration>
+    <Configuration name="Release|Any CPU" ctype="CombineConfiguration">
+      <Entry build="True" name="Ude.Example" configuration="Debug" />
+      <Entry build="True" name="Ude.Tests" configuration="Release|Any CPU" />
+      <Entry build="True" name="Ude" configuration="Release|Any CPU" />
+    </Configuration>
+  </Configurations>
+  <StartMode startupentry="Ude.Example" single="True">
+    <Execute type="None" entry="Ude.Example" />
+    <Execute type="None" entry="Ude.Tests" />
+    <Execute type="None" entry="Ude" />
+  </StartMode>
+  <Entries>
+    <Entry filename="src/Example/Ude.Example.mdp" />
+    <Entry filename="src/Tests/Ude.Tests.mdp" />
+    <Entry filename="src/Library/Ude.mdp" />
+  </Entries>
+</Combine>
