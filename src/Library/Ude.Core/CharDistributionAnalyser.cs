@@ -47,29 +47,24 @@ namespace Ude.Core
     /// </summary>
     public abstract class CharDistributionAnalyser
     {
-        
         protected const float SURE_YES = 0.99f;
         protected const float SURE_NO = 0.01f;
         protected const int MINIMUM_DATA_THRESHOLD = 4;
         protected const int ENOUGH_DATA_THRESHOLD = 1024;
 
-        //If this flag is set to PR_TRUE, detection is done and conclusion has been made
+        // If this flag is set to true, detection is done and conclusion has been made
         protected bool done;
 
         // The number of characters whose frequency order is less than 512
         protected int freqChars;
 
-        //Total character encounted.
+        // Total character encounted.
         protected int totalChars;
         
         // Mapping table to get frequency order from char order (get from GetOrder())
         protected int[] charToFreqOrder;
 
-        // Size of above table
-        protected int tableSize;
-
-        //This is a constant value varies from language to language, it is used 
-        // in calculating confidence. 
+        // This constant value varies from language to language. It is used in calculating confidence. 
         protected float typicalDistributionRatio;        
 
         public CharDistributionAnalyser()
@@ -104,7 +99,7 @@ namespace Ude.Core
             int order = (charLen == 2) ? GetOrder(buf, offset) : -1;
             if (order >= 0) {
                 totalChars++;
-                if (order < tableSize) { // order is valid
+                if (order < charToFreqOrder.Length) { // order is valid
                     if (512 > charToFreqOrder[order])
                         freqChars++;
                 }
@@ -164,8 +159,6 @@ namespace Ude.Core
          *****************************************************************************/
 
         private static float GB2312_TYPICAL_DISTRIBUTION_RATIO = 0.9f;
-
-        private static int GB2312_TABLE_SIZE = 3760;
 
         private static int[] GB2312_CHAR2FREQ_ORDER = {
         1671, 749,1443,2364,3924,3807,2330,3921,1704,3463,2691,1511,1515, 572,3191,2205,
@@ -602,7 +595,6 @@ namespace Ude.Core
         public GB18030DistributionAnalyser() : base()
         {
             charToFreqOrder = GB2312_CHAR2FREQ_ORDER;
-            tableSize = GB2312_TABLE_SIZE;
             typicalDistributionRatio = GB2312_TYPICAL_DISTRIBUTION_RATIO;
         }
         
@@ -642,8 +634,6 @@ namespace Ude.Core
          *****************************************************************************/
 
         private static float EUCTW_TYPICAL_DISTRIBUTION_RATIO = 0.75f;
-
-        private static int EUCTW_TABLE_SIZE = 8102;
 
         private static int[] EUCTW_CHAR2FREQ_ORDER = {
            1,1800,1506, 255,1431, 198,   9,  82,   6,7310, 177, 202,3615,1256,2808, 110, // 2742
@@ -1033,7 +1023,6 @@ namespace Ude.Core
         public EUCTWDistributionAnalyser()
         {
             charToFreqOrder = EUCTW_CHAR2FREQ_ORDER;
-            tableSize = EUCTW_TABLE_SIZE;
             typicalDistributionRatio = EUCTW_TYPICAL_DISTRIBUTION_RATIO;
         }
 
@@ -1053,7 +1042,8 @@ namespace Ude.Core
     
     public class EUCKRDistributionAnalyser : CharDistributionAnalyser
     {
-                // Sampling from about 20M text materials include literature and computer technology
+        // Sampling from about 20M text materials include literature and computer technology
+		
         /*
          * 128  --> 0.79
          * 256  --> 0.92
@@ -1066,8 +1056,6 @@ namespace Ude.Core
          */
 
         public const float EUCKR_TYPICAL_DISTRIBUTION_RATIO = 6.0f;
-
-        public const int EUCKR_TABLE_SIZE = 2352;
 
         // Char to FreqOrder table
         public static int[] EUCKR_CHAR2FREQ_ORDER = {
@@ -1627,7 +1615,6 @@ namespace Ude.Core
         public EUCKRDistributionAnalyser()
         {
             charToFreqOrder = EUCKR_CHAR2FREQ_ORDER;
-            tableSize = EUCKR_TABLE_SIZE;
             typicalDistributionRatio = EUCKR_TYPICAL_DISTRIBUTION_RATIO;        
         }
         
@@ -1664,8 +1651,6 @@ namespace Ude.Core
          *****************************************************************************/
 
         private static float BIG5_TYPICAL_DISTRIBUTION_RATIO = 0.75f;
-
-        private static int BIG5_TABLE_SIZE = 5376;
 
         private static int[] BIG5_CHAR2FREQ_ORDER = {
            1,1801,1506, 255,1431, 198,   9,  82,   6,5008, 177, 202,3681,1256,2821, 110, //   16
@@ -2553,7 +2538,6 @@ namespace Ude.Core
         public BIG5DistributionAnalyser()
         {
             charToFreqOrder = BIG5_CHAR2FREQ_ORDER;
-            tableSize = BIG5_TABLE_SIZE;
             typicalDistributionRatio = BIG5_TYPICAL_DISTRIBUTION_RATIO;        
         }
         
@@ -2577,9 +2561,9 @@ namespace Ude.Core
 
     public class SJISDistributionAnalyser : CharDistributionAnalyser
     {
-        //Sampling from about 20M text materials include literature and computer technology
+        // Sampling from about 20M text materials include literature and computer technology
         // Japanese frequency table, applied to both S-JIS and EUC-JP
-        //They are sorted in order. 
+		// They are sorted in order. 
 
         /******************************************************************************
          * 128  --> 0.77094
@@ -2595,8 +2579,6 @@ namespace Ude.Core
          *****************************************************************************/
 
         protected static float SJIS_TYPICAL_DISTRIBUTION_RATIO = 3.0f;
-
-        protected static int SJIS_TABLE_SIZE = 4368;
 
         protected static int[] SJIS_CHAR2FREQ_ORDER = {
           40,   1,   6, 182, 152, 180, 295,2127, 285, 381,3295,4304,3068,4606,3165,3510, //   16
@@ -3123,10 +3105,10 @@ namespace Ude.Core
         8256,8257,8258,8259,8260,8261,8262,8263,8264,8265,8266,8267,8268,8269,8270,8271, // 8272
         ****************************************************************************************/
         };        
+		
         public SJISDistributionAnalyser()
         {
             charToFreqOrder = SJIS_CHAR2FREQ_ORDER;
-            tableSize = SJIS_TABLE_SIZE;
             typicalDistributionRatio = SJIS_TYPICAL_DISTRIBUTION_RATIO;        
         }
         
