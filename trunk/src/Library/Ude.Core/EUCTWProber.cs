@@ -88,7 +88,7 @@ namespace Ude.Core
                 
         public override string GetCharsetName()
         {
-            return "x-euc-tw";        
+            return "EUC-TW";        
         }
         
         public override void Reset()

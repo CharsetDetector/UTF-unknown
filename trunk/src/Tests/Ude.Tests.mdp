@@ -1,4 +1,4 @@
-<Project name="Ude.Tests" fileversion="2.0" DefaultNamespace="Ude.Tests" language="C#" clr-version="Net_2_0" ctype="DotNetProject">
+<Project name="Ude.Tests" fileversion="2.0" language="C#" DefaultNamespace="Ude.Tests" clr-version="Net_2_0" targetFramework="2.0" ctype="DotNetProject">
   <Configurations active="Debug|Any CPU">
     <Configuration name="Debug|Any CPU" ctype="DotNetProjectConfiguration">
       <Output directory="bin/Debug/" assemblyKeyFile="." assembly="Ude.Tests" />
@@ -60,6 +60,7 @@
     <File name="Data/windows1255/he1.txt" subtype="Code" buildaction="Nothing" />
     <File name="Data/windows1255/he2.txt" subtype="Code" buildaction="Nothing" />
     <File name="Data/windows1255/he3.txt" subtype="Code" buildaction="Nothing" />
+    <File name="Data/euctw/euc-tw1.txt" subtype="Code" buildaction="Nothing" />
   </Contents>
   <References>
     <ProjectReference type="Gac" localcopy="True" refto="System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
