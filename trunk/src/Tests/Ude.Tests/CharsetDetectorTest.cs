@@ -110,7 +110,17 @@ namespace Ude.Tests
             detector.DataEnd();
             Assert.AreEqual(Charsets.UTF32_LE, detector.Charset);
             Assert.AreEqual(1.0f, detector.Confidence);      
-        }        
+        }
+		
+		[Test()]
+        public void TestIssue3()
+        {
+            byte[] buf = Encoding.UTF8.GetBytes("3");
+            detector.Feed(buf, 0, buf.Length);
+            detector.DataEnd();
+            Assert.AreEqual(Charsets.ASCII, detector.Charset);
+            Assert.AreEqual(1.0f, detector.Confidence);      
+        }
     }
 }
 
