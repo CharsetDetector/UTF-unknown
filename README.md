@@ -1,3 +1,7 @@
+[![Build status](https://ci.appveyor.com/api/projects/status/f2xgxbhwy700rdi6/branch/master?svg=true)](https://ci.appveyor.com/project/304NotModified/ude/branch/master)
+
+
+
 Ude is a C# port of [Mozilla Universal Charset Detector](http://mxr.mozilla.org/mozilla/source/extensions/universalchardet/src/).
 
 The article "[A composite approach to language/encoding detection](http://www.mozilla.org/projects/intl/UniversalCharsetDetection.html)" describes the charsets detection algorithms implemented by the library.
