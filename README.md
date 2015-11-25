@@ -41,16 +41,17 @@ On Windows, compile the Visual Studio solution "ude.sln". On Linux you can build
     
 To compile from svn:
 
-   $ ./autogen.sh --prefix=/usr/local --enable-tests=yes
-   $ make
+    $ ./autogen.sh --prefix=/usr/local --enable-tests=yes
+    $ make
    
 You can pick the library (*Ude.dll*) from the toplevel build directory (*./bin*) or you can install it to *$prefix/lib/ude* by typing:
 
-   $ make install
+    $ make install
    
 This will installs a command-line example program (*$prefix/bin/udetect*) to test the library on a given file as:
 
-   $ udetect filename 
+    $ udetect filename 
+    
 To run the nunit tests type:
 
     $ make test
@@ -68,12 +69,11 @@ public static void Main(String[] args)
 {
     string filename = args[0];
     using (FileStream fs = File.OpenRead(filename)) {
-        Ude.CharsetDetector cdet = new Ude.CharsetDetector();
-        cdet.Feed(fs);
-        cdet.DataEnd();
-        if (cdet.Charset != null) {
-            Console.WriteLine("Charset: {0}, confidence: {1}", 
-                 cdet.Charset, cdet.Confidence);
+        Ude.CharsetDetector detector = new Ude.CharsetDetector();
+        detector.Feed(fs);
+        detector.DataEnd();
+        if (detector.Charset != null) {
+            Console.WriteLine("Charset: {0}, confidence: {1}", detector.Charset, detector.Confidence);
         } else {
             Console.WriteLine("Detection failed.");
         }
