@@ -54,6 +54,11 @@ This will installs a command-line example program (*$prefix/bin/udetect*) to tes
 To run the nunit tests type:
 
     $ make test
+    
+    
+###NuGet
+
+https://www.nuget.org/packages/UDE.CSharp/
 
 ## Usage
 ### Example
