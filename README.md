@@ -30,7 +30,7 @@ Windows and Linux (Mono)
 ## Install
 The release consists in the main library (*Ude.dll*) and a command-line client (*udetect.exe*) that can be used for one-shot tests.
 
-On Windows, compile the Visual Studio 2005 solution ude.sln. On Linux you can build the library, the example and the nunit tests with monodelop and its solution ude.mds, or using make. To compile the sources tarball:
+On Windows, compile the Visual Studio solution "ude.sln". On Linux you can build the library, the example and the nunit tests with monodelop and its solution ude.mds, or using make. To compile the sources tarball:
 
     $ ./configure.sh --prefix=/usr/local --enable-tests=yes
     $ make
