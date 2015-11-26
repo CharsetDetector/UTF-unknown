@@ -70,7 +70,7 @@ namespace Ude.Tests
             Process(Charsets.UTF8, "utf8");
         }
 
-        private void Process(string charset, string dirname)
+        private static void Process(string charset, string dirname)
         {
             string path = Path.Combine(DATA_ROOT, dirname);
             if (!Directory.Exists(path))
