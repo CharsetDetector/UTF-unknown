@@ -1,5 +1,5 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/f2xgxbhwy700rdi6/branch/master?svg=true)](https://ci.appveyor.com/project/304NotModified/ude/branch/master)
-
+[![Build status](https://ci.appveyor.com/api/projects/status/ouo7t319ixcokxer/branch/master?svg=true)](https://ci.appveyor.com/project/304NotModified/ude/branch/master)
+[![codecov.io](https://codecov.io/github/UniversalCharsetDetector/ude/coverage.svg?branch=master)](https://codecov.io/github/UniversalCharsetDetector/ude?branch=master)
 
 
 Ude is a C# port of [Mozilla Universal Charset Detector](http://mxr.mozilla.org/mozilla/source/extensions/universalchardet/src/).
