@@ -75,11 +75,7 @@ namespace Ude.Tests
             Process(Charsets.MAC_CYRILLIC, "maccyrillic");
         }
 
-        [Test()]
-        public void TestBulgarian()
-        {
-            
-        }
+
         
         [Test()]
         public void TestUTF8()
