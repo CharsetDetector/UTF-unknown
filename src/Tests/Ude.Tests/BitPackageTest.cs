@@ -37,24 +37,23 @@
  * ***** END LICENSE BLOCK ***** */
 
 using System;
-using NUnit.Framework;
 using Ude.Core;
+using Xunit;
 
 namespace Ude.Tests
 {
-    [TestFixture()]
     public class BitPackageTest
     {
-        [Test()]
+        [Fact]
         public void TestPack()
         {
-            Assert.AreEqual(BitPackage.Pack4bits(0,0,0,0,0,0,0,0), 0);
-            Assert.AreEqual(BitPackage.Pack4bits(1,1,1,1,1,1,1,1), 286331153);
-            Assert.AreEqual(BitPackage.Pack4bits(2,2,2,2,2,2,2,2), 572662306);
-            Assert.AreEqual(BitPackage.Pack4bits(15,15,15,15,15,15,15,15), -1);
+            Assert.Equal(BitPackage.Pack4bits(0,0,0,0,0,0,0,0), 0);
+            Assert.Equal(BitPackage.Pack4bits(1,1,1,1,1,1,1,1), 286331153);
+            Assert.Equal(BitPackage.Pack4bits(2,2,2,2,2,2,2,2), 572662306);
+            Assert.Equal(BitPackage.Pack4bits(15,15,15,15,15,15,15,15), -1);
         }
         
-        [Test()]
+        [Fact]
         public void TestUnpack()
         {
             int[] data = new int[] {
@@ -71,7 +70,7 @@ namespace Ude.Tests
 
             for (int i = 0; i < 16; i++) {
                 int n = pkg.Unpack(i);
-                Assert.AreEqual(n, i);
+                Assert.Equal(n, i);
             }          
         }
     }

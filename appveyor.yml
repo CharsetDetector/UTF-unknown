@@ -1,0 +1,28 @@
+version: 1.0.{build}
+clone_folder: c:\ude
+configuration: Release
+platform: Any CPU
+assembly_info:
+  patch: true
+  file: '**\AssemblyInfo.*'
+  assembly_version: '1.0.0'
+  assembly_file_version: '{version}'
+  assembly_informational_version: '1.0'
+nuget:
+  project_feed: true
+before_build:
+  - ps: nuget restore -DisableParallelProcessing
+matrix:
+  fast_finish: true
+build:
+  publish_nuget: true
+  publish_nuget_symbols: true
+  verbosity: minimal
+deploy: off
+test_script:
+  - nuget.exe install OpenCover -ExcludeVersion
+  - OpenCover\tools\OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.x86.exe" -targetargs:"\"c:\ude\src\Tests\bin\Release\Ude.Tests.dll\" -appveyor -noshadow"  -returntargetcode -filter:"+[Ude]* -[Ude.Tests]* -[Ude.Example]*" -excludebyattribute:*.ExcludeFromCodeCoverage* -hideskipped:All -output:coverage.xml
+  - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
+  - pip install codecov
+  - codecov -f "coverage.xml"
+ 
