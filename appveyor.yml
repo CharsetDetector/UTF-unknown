@@ -2,8 +2,6 @@ version: 1.0.{build}
 clone_folder: c:\ude
 configuration: Release
 platform: Any CPU
-build:
-  verbosity: minimal
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
@@ -19,7 +17,7 @@ matrix:
 build:
   publish_nuget: true
   publish_nuget_symbols: true
-  verbosity: quiet
+  verbosity: minimal
 deploy: off
 after_test:
   - nuget.exe install OpenCover -ExcludeVersion
