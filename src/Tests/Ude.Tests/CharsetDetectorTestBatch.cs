@@ -6,40 +6,27 @@
 
 using System;
 using System.IO;
-using NUnit.Framework;
 
 using Ude;
+using Xunit;
 
 namespace Ude.Tests
 {
     
-    [TestFixture()]
     public class CharsetDetectorTestBatch
     {
         // Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location)
         const string DATA_ROOT = "../../Data";
         
-        ICharsetDetector detector;
+    
         
-        [SetUpAttribute] 
-        public void SetUp()
-        {
-            detector = new CharsetDetector();
-        }
-        
-        [TearDownAttribute] 
-        public void TearDown()
-        {
-            detector = null;            
-        }        
-        
-        [Test()]
+        [Fact]
         public void TestLatin1()
         {
             Process(Charsets.WIN1252, "latin1");
         }
         
-        [Test()]
+        [Fact]
         public void TestCJK()
         {
             Process(Charsets.GB18030, "gb18030");
@@ -52,20 +39,20 @@ namespace Ude.Tests
             Process(Charsets.ISO2022_KR, "iso2022kr");
         }
 
-        [Test()]
+        [Fact]
         public void TestHebrew()
         {
             Process(Charsets.WIN1255, "windows1255");
         }
         
-        [Test()]
+        [Fact]
         public void TestGreek()
         {
             Process(Charsets.ISO_8859_7, "iso88597");
             //Process(Charsets.WIN1253, "windows1253");
         }
 
-        [Test()]
+        [Fact]
         public void TestCyrillic()
         {
             Process(Charsets.WIN1251, "windows1251");
@@ -77,7 +64,7 @@ namespace Ude.Tests
 
 
         
-        [Test()]
+        [Fact]
         public void TestUTF8()
         {
             Process(Charsets.UTF8, "utf8");            
@@ -91,14 +78,18 @@ namespace Ude.Tests
                 
             string[] files = Directory.GetFiles(path);
                 
+
+
             foreach (string file in files) {
-                using (FileStream fs = new FileStream(file, FileMode.Open)) {
+                using (FileStream fs = new FileStream(file, FileMode.Open))
+                {
+                    var detector = new CharsetDetector();
                     Console.WriteLine("Analysing {0}", file);                    
                     detector.Feed(fs);
                     detector.DataEnd();
                     Console.WriteLine("{0} : {1} {2}", 
                             file, detector.Charset, detector.Confidence);
-                    Assert.AreEqual(charset, detector.Charset);
+                    Assert.Equal(charset, detector.Charset);
                     detector.Reset();
                 }
             }
