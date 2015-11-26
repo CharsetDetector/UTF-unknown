@@ -38,6 +38,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 
 namespace Ude.Core
@@ -125,7 +126,7 @@ namespace Ude.Core
                 
         public override void DumpStatus()
         {
-            Console.WriteLine("  SBCS: {0} [{1}]", GetConfidence(), 
+            Debug.WriteLine("  SBCS: {0} [{1}]", GetConfidence(), 
                 GetCharsetName());
         }
 

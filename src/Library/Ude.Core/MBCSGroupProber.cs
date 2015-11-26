@@ -37,6 +37,7 @@
  * ***** END LICENSE BLOCK ***** */
 
 using System;
+using System.Diagnostics;
 
 namespace Ude.Core
 {
@@ -164,11 +165,11 @@ namespace Ude.Core
             GetConfidence();
             for (int i = 0; i < PROBERS_NUM; i++) {
                 if (!isActive[i]) {
-                    Console.WriteLine("  MBCS inactive: {0} (confidence is too low).", 
+                    Debug.WriteLine("  MBCS inactive: {0} (confidence is too low).", 
                          ProberName[i]);
                 } else {
                     cf = probers[i].GetConfidence();
-                    Console.WriteLine("  MBCS {0}: [{1}]", cf, ProberName[i]);
+                    Debug.WriteLine("  MBCS {0}: [{1}]", cf, ProberName[i]);
                 }
             }
         }

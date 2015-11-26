@@ -37,6 +37,7 @@
  * ***** END LICENSE BLOCK ***** */
 
 using System;
+using System.Diagnostics;
 
 namespace Ude.Core
 {
@@ -173,7 +174,7 @@ namespace Ude.Core
 
         public override void DumpStatus()
         {
-            Console.WriteLine(" Latin1Prober: {0} [{1}]", 
+            Debug.WriteLine(" Latin1Prober: {0} [{1}]", 
                 GetConfidence(), GetCharsetName());
         }
     }

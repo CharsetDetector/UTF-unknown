@@ -9,7 +9,7 @@
     <OutputType>Library</OutputType>
     <RootNamespace>Ude.Tests</RootNamespace>
     <AssemblyName>UdeTests</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <UpgradeBackupLocation>
@@ -98,12 +98,6 @@
   </Target>
   -->
   <ItemGroup>
-    <ProjectReference Include="..\Library\Ude.csproj">
-      <Project>{7BECB850-389A-44FC-8523-3EF0B2540F07}</Project>
-      <Name>Ude</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Data\big5\1.txt" />
     <None Include="Data\eucjp\1.txt" />
     <None Include="Data\euckr\euc1.txt" />
@@ -142,7 +136,12 @@
     <None Include="Data\windows1255\he3.txt" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Library\Ude.PCL.csproj">
+      <Project>{a5dadcca-3764-42a5-8a52-4769f97b0e25}</Project>
+      <Name>Ude.PCL</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
       <Visible>False</Visible>

@@ -52,7 +52,7 @@ namespace Ude
     ///    CharsetDetector cdet = new CharsetDetector();
     ///    cdet.Feed(fs);
     ///    cdet.DataEnd();
-    ///    Console.WriteLine("{0}, {1}", cdet.Charset, cdet.Confidence);
+    ///    Debug.WriteLine("{0}, {1}", cdet.Charset, cdet.Confidence);
     /// </code>
     /// </example>
     /// 
@@ -65,7 +65,7 @@ namespace Ude
     /// while ((read = stream.Read(buff, 0, buff.Length)) > 0 && !done)
     ///     Feed(buff, 0, read);
     /// cdet.DataEnd();
-    /// Console.WriteLine("{0}, {1}", cdet.Charset, cdet.Confidence);
+    /// Debug.WriteLine("{0}, {1}", cdet.Charset, cdet.Confidence);
     /// </code>
     /// </example> 
     /// </summary>                
