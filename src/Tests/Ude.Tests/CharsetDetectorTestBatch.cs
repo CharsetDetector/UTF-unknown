@@ -12,20 +12,20 @@ using Xunit;
 
 namespace Ude.Tests
 {
-    
+
     public class CharsetDetectorTestBatch
     {
         // Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location)
         const string DATA_ROOT = "../../Data";
-        
-    
-        
+
+
+
         [Fact]
         public void TestLatin1()
         {
             Process(Charsets.WIN1252, "latin1");
         }
-        
+
         [Fact]
         public void TestCJK()
         {
@@ -34,7 +34,7 @@ namespace Ude.Tests
             Process(Charsets.SHIFT_JIS, "shiftjis");
             Process(Charsets.EUCJP, "eucjp");
             Process(Charsets.EUCKR, "euckr");
-			Process(Charsets.EUCTW, "euctw");
+            Process(Charsets.EUCTW, "euctw");
             Process(Charsets.ISO2022_JP, "iso2022jp");
             Process(Charsets.ISO2022_KR, "iso2022kr");
         }
@@ -44,7 +44,7 @@ namespace Ude.Tests
         {
             Process(Charsets.WIN1255, "windows1255");
         }
-        
+
         [Fact]
         public void TestGreek()
         {
@@ -63,33 +63,30 @@ namespace Ude.Tests
         }
 
 
-        
+
         [Fact]
         public void TestUTF8()
         {
-            Process(Charsets.UTF8, "utf8");            
+            Process(Charsets.UTF8, "utf8");
         }
-        
-        private void Process(string charset, string dirname) 
+
+        private void Process(string charset, string dirname)
         {
             string path = Path.Combine(DATA_ROOT, dirname);
-            if (!Directory.Exists(path)) 
+            if (!Directory.Exists(path))
                 return;
-                
+
             string[] files = Directory.GetFiles(path);
-                
 
-
-            foreach (string file in files) {
+            foreach (string file in files)
+            {
                 using (FileStream fs = new FileStream(file, FileMode.Open))
                 {
                     var detector = new CharsetDetector();
-                    Console.WriteLine("Analysing {0}", file);                    
+
                     detector.Feed(fs);
                     detector.DataEnd();
-                    Console.WriteLine("{0} : {1} {2}", 
-                            file, detector.Charset, detector.Confidence);
-                    Assert.Equal(charset, detector.Charset);
+                    Assert.True(charset == detector.Charset, string.Format("Charset detection failed for {0}. Expected: {1}, detected: {2} ({3}% confidence)", file, charset, detector.Charset, detector.Confidence));
                     detector.Reset();
                 }
             }
@@ -97,4 +94,3 @@ namespace Ude.Tests
     }
 }
 
-            
