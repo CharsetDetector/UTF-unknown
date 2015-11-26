@@ -21,7 +21,7 @@ build:
 deploy: off
 after_test:
   - nuget.exe install OpenCover -ExcludeVersion
-  - OpenCover\tools\OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.x86.exe" -targetargs:"\"c:\ude\src\Tests\bin\Release\Ude.Tests.dll\" -appveyor -noshadow"  -returntargetcode -filter:"+[Ude]* -[Ude.Tests]*" -excludebyattribute:*.ExcludeFromCodeCoverage* -hideskipped:All -output:coverage.xml
+  - OpenCover\tools\OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.x86.exe" -targetargs:"\"c:\ude\src\Tests\bin\Release\Ude.Tests.dll\" -appveyor -noshadow"  -returntargetcode -filter:"+[Ude]* -[Ude.Tests]* -[Ude.Example]*" -excludebyattribute:*.ExcludeFromCodeCoverage* -hideskipped:All -output:coverage.xml
   - "SET PATH=C:\\Python34;C:\\Python34\\Scripts;%PATH%"
   - pip install codecov
   - codecov -f "coverage.xml"
