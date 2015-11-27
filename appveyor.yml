@@ -3,8 +3,6 @@ clone_folder: c:\ude
 platform: Any CPU
 nuget:
   project_feed: true
-before_build:
-  - ps: nuget restore
 matrix:
   fast_finish: true
 build:
