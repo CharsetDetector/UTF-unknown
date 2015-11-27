@@ -1,6 +1,5 @@
 *.bak
 *.csproj.user
-*.DotSettings
 *.ReSharper.user
 *.sublime-*
 *.suo
