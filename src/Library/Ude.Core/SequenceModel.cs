@@ -56,14 +56,20 @@ namespace Ude.Core
             get { return typicalPositiveRatio; }
         }
         
-        // not used            
+
+        /// <summary>
+        /// TODO not used?
+        /// </summary>
         protected bool keepEnglishLetter;
-        
+
+        /// <summary>
+        /// TODO not used?
+        /// </summary>
         public bool KeepEnglishLetter {
             get { return keepEnglishLetter; }
         }
         
-        protected String charsetName;
+        protected string charsetName;
 
         public string CharsetName {
             get { return charsetName; }

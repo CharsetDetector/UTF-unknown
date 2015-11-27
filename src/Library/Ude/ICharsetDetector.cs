@@ -49,7 +49,9 @@ namespace Ude
         string Charset { get; }
         
         /// <summary>
-        /// The confidence of the detected charset, if any 
+        /// The confidence of the detected charset, if any.
+        /// 
+        /// Between 0 and 1 (including)
         /// </summary>
         float Confidence { get; }
         
@@ -74,6 +76,8 @@ namespace Ude
         
         /// <summary>
         /// Returns true if the detector has found a result and it is sure about it.
+        /// 
+        /// TODO not always true
         /// </summary>
         /// <returns>true if the detector has detected the encoding</returns>
         bool IsDone();

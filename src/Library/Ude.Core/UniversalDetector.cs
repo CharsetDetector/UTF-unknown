@@ -45,34 +45,107 @@ namespace Ude.Core
 
     public abstract class UniversalDetector 
     {
+        /// <summary>
+        /// TODO unused?
+        /// </summary>
         protected const int FILTER_CHINESE_SIMPLIFIED = 1;
+        /// <summary>
+        /// TODO unused?
+        /// </summary>
         protected const int FILTER_CHINESE_TRADITIONAL = 2;
+        /// <summary>
+        /// TODO unused?
+        /// </summary>
         protected const int FILTER_JAPANESE = 4;
+
+        /// <summary>
+        /// TODO unused?
+        /// </summary>
         protected const int FILTER_KOREAN = 8;
+
+        /// <summary>
+        /// TODO unused?
+        /// </summary>
         protected const int FILTER_NON_CJK = 16;
+
+        /// <summary>
+        /// TODO unused? (when <see cref="languageFilter"/> is removed)
+        /// </summary>
         protected const int FILTER_ALL = 31;
-        protected static int FILTER_CHINESE = 
+
+        /// <summary>
+        /// TODO unused?
+        /// </summary>
+        protected static int FILTER_CHINESE =
             FILTER_CHINESE_SIMPLIFIED | FILTER_CHINESE_TRADITIONAL;
-        protected static int FILTER_CJK = 
-                FILTER_JAPANESE | FILTER_KOREAN | FILTER_CHINESE_SIMPLIFIED 
+
+
+        /// <summary>
+        /// TODO unused?
+        /// </summary>
+        protected static int FILTER_CJK =
+                FILTER_JAPANESE | FILTER_KOREAN | FILTER_CHINESE_SIMPLIFIED
                 | FILTER_CHINESE_TRADITIONAL;
-        
+
         protected const float SHORTCUT_THRESHOLD = 0.95f;
         protected const float MINIMUM_THRESHOLD = 0.20f;
 
         internal InputState inputState;
+
+        /// <summary>
+        /// Start of the file
+        /// </summary>
         protected bool start;
+
+        /// <summary>
+        /// De byte array has data?
+        /// </summary>
         protected bool gotData;
+
+        /// <summary>
+        /// Most of the time true of <see cref="detectedCharset"/> is set. TODO not always
+        /// </summary>
         protected bool done;
+
+        /// <summary>
+        /// Lastchar, but not always filled. TODO remove?
+        /// </summary>
         protected byte lastChar;
+        
+        /// <summary>
+        /// best guess rate between 0 and 1 (inluding)
+        /// </summary>
         protected int bestGuess;
+
+        /// <summary>
+        /// tries
+        /// </summary>
         protected const int PROBERS_NUM = 3;
+
+
+        /// <summary>
+        /// TODO unknown. Can be removed?
+        /// </summary>
         protected int languageFilter;
+
+
+        /// <summary>
+        /// "list" of probers
+        /// </summary>
         protected CharsetProber[] charsetProbers = new CharsetProber[PROBERS_NUM];
+
+
+        /// <summary>
+        /// TODO unknown
+        /// </summary>
         protected CharsetProber escCharsetProber;
+
+        /// <summary>
+        /// Detected charset. Most of the time <see cref="done"/> is true
+        /// </summary>
         protected string detectedCharset;
 
-        public UniversalDetector(int languageFilter) { 
+        protected UniversalDetector(int languageFilter) { 
             this.start = true;
             this.inputState = InputState.PureASCII;
             this.lastChar = 0x00;   
@@ -157,7 +230,7 @@ namespace Ude.Core
                 }
             }
             
-            ProbingState st = ProbingState.NotMe;
+            ProbingState st;
             
             switch (inputState) {
                 case InputState.EscASCII:
@@ -185,11 +258,8 @@ namespace Ude.Core
                         }
                     }
                     break;
-                default:  
-                    // pure ascii
-                    break;
+                // else pure ascii
             }
-            return;
         }
 
         /// <summary>
@@ -223,12 +293,13 @@ namespace Ude.Core
                         }
                     }
                 }
-                
+                //TODO why done isn't true?
                 if (maxProberConfidence > MINIMUM_THRESHOLD) {
                     Report(charsetProbers[maxProber].GetCharsetName(), maxProberConfidence);
                 } 
                 
             } else if (inputState == InputState.PureASCII) {
+                //TODO why done isn't true?
                 Report("ASCII", 1.0f);
             } 
         }
