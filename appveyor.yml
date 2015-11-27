@@ -1,17 +1,8 @@
 version: 1.0.{build}
 clone_folder: c:\ude
-configuration: Release
 platform: Any CPU
-assembly_info:
-  patch: true
-  file: '**\AssemblyInfo.*'
-  assembly_version: '1.0.0'
-  assembly_file_version: '{version}'
-  assembly_informational_version: '1.0'
 nuget:
   project_feed: true
-before_build:
-  - ps: nuget restore -DisableParallelProcessing
 matrix:
   fast_finish: true
 build:
