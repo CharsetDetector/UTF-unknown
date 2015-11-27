@@ -84,10 +84,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Ude.Tests\BitPackageTest.cs" />
-    <Compile Include="Ude.Tests\CharsetDetectorTest.cs" />
-    <Compile Include="Ude.Tests\CharsetProberTest.cs" />
-    <Compile Include="Ude.Tests\CharsetDetectorTestBatch.cs" />
+    <Compile Include="BitPackageTest.cs" />
+    <Compile Include="CharsetDetectorTest.cs" />
+    <Compile Include="CharsetProberTest.cs" />
+    <Compile Include="CharsetDetectorTestBatch.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
