@@ -308,6 +308,8 @@ namespace Ude.Core
         /// </summary>
         public virtual void Reset() 
         { 
+            //TODO reset() should be removed with ctor call
+
             done = false;
             start = true;
             detectedCharset = null;
