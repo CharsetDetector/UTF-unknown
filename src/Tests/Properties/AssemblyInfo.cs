@@ -4,7 +4,6 @@
 //    Rudi Pettazzi <rudi.pettazzi@gmail.com>
 //
 using System.Reflection;
-using System.Runtime.CompilerServices;
 
 [assembly: AssemblyTitle("Ude.Tests")]
 [assembly: AssemblyDescription("Unit tests for Ude")]

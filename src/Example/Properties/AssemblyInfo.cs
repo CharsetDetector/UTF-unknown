@@ -1,10 +1,9 @@
-// AssemblyInfo.cs created with MonoDevelop
+﻿// AssemblyInfo.cs created with MonoDevelop
 //
 // Author:
 //    Rudi Pettazzi <rudi.pettazzi@gmail.com>
 //
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Ude.Example")]
