@@ -37,6 +37,9 @@
 
 namespace Ude
 {
+    /// <summary>
+    /// TODO a lot of is unused
+    /// </summary>
     public static class Charsets
     {
         public const string ASCII = "ASCII";
@@ -113,9 +116,9 @@ namespace Ude
         public const string MAC_CYRILLIC = "x-mac-cyrillic";
         
         public const string KOI8R = "KOI8-R";
-        
+
         public const string IBM855 = "IBM855";
-        
+
         public const string IBM866 = "IBM866";
 
         /// <summary>
@@ -144,6 +147,6 @@ namespace Ude
         /// Thai. This recognizer is not enabled yet. 
         /// </summary>
         public const string TIS620 = "TIS620";
-        
+
     }
 }
