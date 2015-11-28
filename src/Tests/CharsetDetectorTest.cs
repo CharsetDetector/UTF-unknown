@@ -164,6 +164,36 @@ namespace Ude.Tests
             Assert.Equal(0, detector.Confidence);
         }
 
+        [Fact]
+        public void TestFeedSecondEmpty()
+        {
+            var detector = new CharsetDetector();
+            byte[] buf = Encoding.UTF8.GetBytes("3");
+            detector.Feed(buf, 0, buf.Length);
+            detector.DataEnd();
+
+            //feed empty
+            detector.Feed(buf, 0, 0);
+            detector.DataEnd();
+            Assert.Equal(Charsets.ASCII, detector.Charset);
+            Assert.Equal(1.0f, detector.Confidence);
+        }
+
+
+        [Fact]
+        public void TestFeedSecondEmpty_bom()
+        {
+            var detector = new CharsetDetector();
+            byte[] buf = { 0xFE, 0xFF, 0x00, 0x68, 0x00, 0x65 };
+            detector = new CharsetDetector();
+            detector.Feed(buf, 0, buf.Length);
+            detector.DataEnd();
+            //feed empty
+            detector.Feed(buf, 0, 0);
+            detector.DataEnd();
+            Assert.Equal(Charsets.UTF16_BE, detector.Charset);
+            Assert.Equal(1.0f, detector.Confidence);
+        }
 
     }
 }
