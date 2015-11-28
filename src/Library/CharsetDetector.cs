@@ -246,33 +246,35 @@ namespace Ude
             string bomSet = null;
             if (len > 3)
             {
-                switch (buf[0])
+                //todo UTF bom of only 3 bytes isn't recognized
+                var b1 = buf[0];
+                var b2 = buf[1];
+                var b3 = buf[2];
+                var b4 = buf[3];
+                switch (b1)
                 {
                     case 0xEF:
-                        if (0xBB == buf[1] && 0xBF == buf[2])
+                        if (0xBB == b2 && 0xBF == b3)
                             bomSet = "UTF-8";
                         break;
                     case 0xFE:
-                        //TODO potentional chrash bug[3]
-                        if (0xFF == buf[1] && 0x00 == buf[2] && 0x00 == buf[3])
+                        if (0xFF == b2 && 0x00 == b3 && 0x00 == b4)
                             // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
                             bomSet = "X-ISO-10646-UCS-4-3412";
-                        else if (0xFF == buf[1])
+                        else if (0xFF == b2)
                             bomSet = "UTF-16BE";
                         break;
                     case 0x00:
-                        //TODO potentional chrash bug[3]
-                        if (0x00 == buf[1] && 0xFE == buf[2] && 0xFF == buf[3])
+                        if (0x00 == b2 && 0xFE == b3 && 0xFF == b4)
                             bomSet = "UTF-32BE";
-                        else if (0x00 == buf[1] && 0xFF == buf[2] && 0xFE == buf[3])
+                        else if (0x00 == b2 && 0xFF == b3 && 0xFE == b4)
                             // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
                             bomSet = "X-ISO-10646-UCS-4-2143";
                         break;
                     case 0xFF:
-                        //TODO potentional chrash bug[3]
-                        if (0xFE == buf[1] && 0x00 == buf[2] && 0x00 == buf[3])
+                        if (0xFE == b2 && 0x00 == b3 && 0x00 == b4)
                             bomSet = "UTF-32LE";
-                        else if (0xFE == buf[1])
+                        else if (0xFE == b2)
                             bomSet = "UTF-16LE";
                         break;
                 } // switch
