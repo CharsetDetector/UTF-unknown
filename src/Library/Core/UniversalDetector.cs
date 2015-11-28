@@ -262,6 +262,8 @@ namespace Ude.Core
             if (detectionResult != null)
             {
                 done = true;
+
+                //conf 1.0 is from v1.0 (todo wrong?)
                 detectionResult.Confidence = 1.0f;
                 return new DetectionSummary(detectionResult);
             }
