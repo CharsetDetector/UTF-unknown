@@ -42,13 +42,10 @@ namespace Ude
 {
     public interface ICharsetDetector
     {
-        /// <summary>
-        /// Feed a bytes stream to the detector. 
-        /// </summary>
-        /// <param name="stream">an input stream</param>
-        DetectionSummary GetFromStream(Stream stream);
-
   
-        
+        DetectionSummary GetFromBytes(byte[] bytes);
+
+        DetectionSummary GetFromStream(Stream stream);
+        DetectionSummary GetFromFile(string filePath);
     }
 }

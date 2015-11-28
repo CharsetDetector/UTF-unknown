@@ -24,21 +24,19 @@ namespace Ude.Example
             }
 
             string filename = args[0];
-            using (FileStream fs = File.OpenRead(filename))
-            {
-                ICharsetDetector detector = new CharsetDetector();
-                var result = detector.GetFromStream(fs);
 
-                if (result.Detected != null)
-                {
-                    Console.WriteLine("Charset: {0}, confidence: {1}",
-                         result.Detected.Charset, result.Detected.Confidence);
-                }
-                else
-                {
-                    Console.WriteLine("Detection failed.");
-                }
+            ICharsetDetector detector = new CharsetDetector();
+            var result = detector.GetFromFile(filename);
+
+            if (result.Detected != null)
+            {
+                Console.WriteLine("Charset: {0}, confidence: {1}", result.Detected.Charset, result.Detected.Confidence);
             }
+            else
+            {
+                Console.WriteLine("Detection failed.");
+            }
+
         }
     }
 }

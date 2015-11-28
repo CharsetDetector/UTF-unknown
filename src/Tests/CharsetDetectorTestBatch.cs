@@ -77,15 +77,13 @@ namespace Ude.Tests
 
             foreach (string file in files)
             {
-                using (FileStream fs = new FileStream(file, FileMode.Open))
-                {
-                    var detector = new CharsetDetector();
 
-                    var result = detector.GetFromStream(fs);
-                    var detected = result.Detected;
-                    Assert.True(charset == detected.Charset, string.Format("Charset detection failed for {0}. Expected: {1}, detected: {2} ({3}% confidence)", file, charset, detected.Charset, detected.Confidence * 100));
-                 
-                }
+                var detector = new CharsetDetector();
+
+                var result = detector.GetFromFile(file);
+                var detected = result.Detected;
+                Assert.True(charset == detected.Charset, string.Format("Charset detection failed for {0}. Expected: {1}, detected: {2} ({3}% confidence)", file, charset, detected.Charset, detected.Confidence * 100));
+
             }
         }
     }

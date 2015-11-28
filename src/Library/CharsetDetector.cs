@@ -117,7 +117,7 @@ namespace Ude
         private const int ProbersNum = 3;
 
         //public event DetectorFinished Finished;
-        
+
         public CharsetDetector()
         {
             _start = true;
@@ -138,7 +138,7 @@ namespace Ude
 
 
         public DetectionSummary GetFromStream(Stream stream)
-        { 
+        {
             byte[] buff = new byte[1024];
             int read;
             while ((read = stream.Read(buff, 0, buff.Length)) > 0 && !_done)
@@ -146,6 +146,17 @@ namespace Ude
                 Feed(buff, 0, read);
             }
             return DataEnd();
+        }
+
+
+        public DetectionSummary GetFromFile(string filePath)
+        {
+            using (FileStream fs = File.OpenRead(filePath))
+            {
+                ICharsetDetector detector = new CharsetDetector();
+                return detector.GetFromStream(fs);
+            }
+
         }
 
         protected virtual void Feed(byte[] buf, int offset, int len)
@@ -180,7 +191,7 @@ namespace Ude
                     _escCharsetProber = _escCharsetProber ?? new EscCharsetProber();
 
                     RunProber(buf, offset, len, _escCharsetProber);
-                  
+
                     break;
                 case InputState.Highbyte:
                     for (int i = 0; i < ProbersNum; i++)
@@ -194,7 +205,7 @@ namespace Ude
                         }
                     }
                     break;
-                // else pure ascii
+                    // else pure ascii
             }
         }
 
@@ -346,7 +357,7 @@ namespace Ude
             return new DetectionSummary();
         }
     }
-    
+
     //public delegate void DetectorFinished(string charset, float confidence);
 
 }
