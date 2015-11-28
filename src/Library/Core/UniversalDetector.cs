@@ -73,10 +73,7 @@ namespace Ude.Core
         /// </summary>
         protected byte lastChar;
 
-        /// <summary>
-        /// best guess rate between 0 and 1 (inluding)
-        /// </summary>
-        protected int bestGuess;
+   
 
         /// <summary>
         /// tries
@@ -104,7 +101,6 @@ namespace Ude.Core
             this.start = true;
             this.inputState = InputState.PureASCII;
             this.lastChar = 0x00;
-            this.bestGuess = -1;
         }
 
         public virtual void Feed(byte[] buf, int offset, int len)
@@ -133,8 +129,6 @@ namespace Ude.Core
             }
 
             FindInputState(buf, len);
-
-            ProbingState probingState;
 
             switch (inputState)
             {
