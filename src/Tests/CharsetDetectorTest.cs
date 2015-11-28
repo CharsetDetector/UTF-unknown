@@ -19,7 +19,6 @@ namespace Ude.Tests
         [Fact]
         public void TestASCII()
         {
-            var detector = new CharsetDetector();
             string s =
                 "The Documentation of the libraries is not complete " +
                 "and your contributions would be greatly appreciated " +
@@ -27,7 +26,7 @@ namespace Ude.Tests
                 "click on the [Edit] link to start writing";
             using (MemoryStream ms = new MemoryStream(Encoding.ASCII.GetBytes(s)))
             {
-                var result = detector.GetFromStream(ms);
+                var result = CharsetDetector.GetFromStream(ms);
                 Assert.Equal(Charsets.ASCII, result.Detected.Charset);
                 Assert.Equal(1.0f, result.Detected.Confidence);
             }
@@ -36,13 +35,12 @@ namespace Ude.Tests
         [Fact]
         public void TestUTF8_1()
         {
-            var detector = new CharsetDetector();
             string s = "ウィキペディアはオープンコンテントの百科事典です。基本方針に賛同し" +
                        "ていただけるなら、誰でも記事を編集したり新しく作成したりできます。" +
                        "ガイドブックを読んでから、サンドボックスで練習してみましょう。質問は" +
                        "利用案内でどうぞ。";
             byte[] buf = Encoding.UTF8.GetBytes(s);
-            var result = detector.GetFromBytes(buf);
+            var result = CharsetDetector.GetFromBytes(buf);
             Assert.Equal(Charsets.UTF8, result.Detected.Charset);
             Assert.Equal(1.0f, result.Detected.Confidence);
         }
@@ -50,9 +48,8 @@ namespace Ude.Tests
         [Fact]
         public void TestBomUTF8()
         {
-            var detector = new CharsetDetector();
-            byte[] buf = { 0xEF, 0xBB, 0xBF, 0x68, 0x65, 0x6C, 0x6C, 0x6F, 0x21 };
-            var result = detector.GetFromBytes(buf);
+            byte[] buf = {0xEF, 0xBB, 0xBF, 0x68, 0x65, 0x6C, 0x6C, 0x6F, 0x21};
+            var result = CharsetDetector.GetFromBytes(buf);
             Assert.Equal(Charsets.UTF8, result.Detected.Charset);
             Assert.Equal(1.0f, result.Detected.Confidence);
         }
@@ -60,10 +57,9 @@ namespace Ude.Tests
         [Fact]
         public void TestBomUTF16_BE()
         {
-            var detector = new CharsetDetector();
-            byte[] buf = { 0xFE, 0xFF, 0x00, 0x68, 0x00, 0x65 };
-            detector = new CharsetDetector();
-            var result = detector.GetFromBytes(buf);
+            byte[] buf = {0xFE, 0xFF, 0x00, 0x68, 0x00, 0x65};
+            
+            var result = CharsetDetector.GetFromBytes(buf);
             Assert.Equal(Charsets.UTF16_BE, result.Detected.Charset);
             Assert.Equal(1.0f, result.Detected.Confidence);
         }
@@ -95,9 +91,8 @@ namespace Ude.Tests
         [Fact]
         public void TestBomUTF16_LE()
         {
-            var detector = new CharsetDetector();
-            byte[] buf = { 0xFF, 0xFE, 0x68, 0x00, 0x65, 0x00 };
-            var result = detector.GetFromBytes(buf);
+            byte[] buf = {0xFF, 0xFE, 0x68, 0x00, 0x65, 0x00};
+            var result = CharsetDetector.GetFromBytes(buf);
             Assert.Equal(Charsets.UTF16_LE, result.Detected.Charset);
             Assert.Equal(1.0f, result.Detected.Confidence);
         }
@@ -105,9 +100,8 @@ namespace Ude.Tests
         [Fact]
         public void TestBomUTF32_BE()
         {
-            var detector = new CharsetDetector();
-            byte[] buf = { 0x00, 0x00, 0xFE, 0xFF, 0x00, 0x00, 0x00, 0x68 };
-            var result = detector.GetFromBytes(buf);
+            byte[] buf = {0x00, 0x00, 0xFE, 0xFF, 0x00, 0x00, 0x00, 0x68};
+            var result = CharsetDetector.GetFromBytes(buf);
             Assert.Equal(Charsets.UTF32_BE, result.Detected.Charset);
             Assert.Equal(1.0f, result.Detected.Confidence);
         }
@@ -115,9 +109,8 @@ namespace Ude.Tests
         [Fact]
         public void TestBomUTF32_LE()
         {
-            var detector = new CharsetDetector();
-            byte[] buf = { 0xFF, 0xFE, 0x00, 0x00, 0x68, 0x00, 0x00, 0x00 };
-            var result = detector.GetFromBytes(buf);
+            byte[] buf = {0xFF, 0xFE, 0x00, 0x00, 0x68, 0x00, 0x00, 0x00};
+            var result = CharsetDetector.GetFromBytes(buf);
             Assert.Equal(Charsets.UTF32_LE, result.Detected.Charset);
             Assert.Equal(1.0f, result.Detected.Confidence);
         }
@@ -125,9 +118,8 @@ namespace Ude.Tests
         [Fact]
         public void TestIssue3()
         {
-            var detector = new CharsetDetector();
             byte[] buf = Encoding.UTF8.GetBytes("3");
-            var result = detector.GetFromBytes(buf);
+            var result = CharsetDetector.GetFromBytes(buf);
             Assert.Equal(Charsets.ASCII, result.Detected.Charset);
             Assert.Equal(1.0f, result.Detected.Confidence);
         }
@@ -152,7 +144,7 @@ namespace Ude.Tests
             detector.DataEnd();
             Assert.Equal(Charsets.ASCII, detector.Charset);
             Assert.Equal(1.0f, detector.Confidence);
-}
+        }
 
         [Fact]
         public void TestEmpty()

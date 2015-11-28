@@ -130,31 +130,34 @@ namespace Ude
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
-        public DetectionSummary GetFromBytes(byte[] bytes)
+        public static DetectionSummary GetFromBytes(byte[] bytes)
         {
-            Feed(bytes, 0, bytes.Length);
-            return DataEnd();
+            var detector = new CharsetDetector();
+            detector.Feed(bytes, 0, bytes.Length);
+            return detector.DataEnd();
         }
 
 
-        public DetectionSummary GetFromStream(Stream stream)
+        public static DetectionSummary GetFromStream(Stream stream)
         {
+
+            var detector = new CharsetDetector();
             byte[] buff = new byte[1024];
             int read;
-            while ((read = stream.Read(buff, 0, buff.Length)) > 0 && !_done)
+            while ((read = stream.Read(buff, 0, buff.Length)) > 0 && !detector._done)
             {
-                Feed(buff, 0, read);
+                detector.Feed(buff, 0, read);
             }
-            return DataEnd();
+            return detector.DataEnd();
         }
 
 
-        public DetectionSummary GetFromFile(string filePath)
+        public static DetectionSummary GetFromFile(string filePath)
         {
             using (FileStream fs = File.OpenRead(filePath))
             {
                 var detector = new CharsetDetector();
-                return detector.GetFromStream(fs);
+                return GetFromStream(fs);
             }
 
         }

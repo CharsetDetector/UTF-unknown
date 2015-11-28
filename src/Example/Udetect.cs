@@ -25,8 +25,7 @@ namespace Ude.Example
 
             string filename = args[0];
 
-            var detector = new CharsetDetector();
-            var result = detector.GetFromFile(filename);
+            var result = CharsetDetector.GetFromFile(filename);
 
             if (result.Detected != null)
             {
