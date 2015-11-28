@@ -240,6 +240,7 @@ namespace Ude
             }
         }
 
+
         private static string FindCharSetByBom(byte[] buf, int len)
         {
             string bomSet = null;
@@ -252,6 +253,7 @@ namespace Ude
                             bomSet = "UTF-8";
                         break;
                     case 0xFE:
+                        //TODO potentional chrash bug[3]
                         if (0xFF == buf[1] && 0x00 == buf[2] && 0x00 == buf[3])
                             // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
                             bomSet = "X-ISO-10646-UCS-4-3412";
@@ -259,6 +261,7 @@ namespace Ude
                             bomSet = "UTF-16BE";
                         break;
                     case 0x00:
+                        //TODO potentional chrash bug[3]
                         if (0x00 == buf[1] && 0xFE == buf[2] && 0xFF == buf[3])
                             bomSet = "UTF-32BE";
                         else if (0x00 == buf[1] && 0xFF == buf[2] && 0xFE == buf[3])
@@ -266,6 +269,7 @@ namespace Ude
                             bomSet = "X-ISO-10646-UCS-4-2143";
                         break;
                     case 0xFF:
+                        //TODO potentional chrash bug[3]
                         if (0xFE == buf[1] && 0x00 == buf[2] && 0x00 == buf[3])
                             bomSet = "UTF-32LE";
                         else if (0xFE == buf[1])
