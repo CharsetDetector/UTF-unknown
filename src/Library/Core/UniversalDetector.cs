@@ -283,7 +283,7 @@ namespace Ude.Core
                 //TODO why done isn't true?
                 if (maxProberConfidence > MINIMUM_THRESHOLD)
                 {
-                    var allDetectionResults = new DetectionResult(maxProber.GetCharsetName(), maxProber.GetConfidence(), maxProber, null);
+                    var allDetectionResults = new DetectionResult(maxProber);
                     return new DetectionSummary(allDetectionResults);
                 }
 
