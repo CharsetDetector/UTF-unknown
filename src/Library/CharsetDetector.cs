@@ -135,11 +135,6 @@ namespace Ude
                 Feed(buff, 0, read);
             }
         }
-        
-        public bool IsDone() 
-        {
-            return _done;
-        }
 
         public virtual void Feed(byte[] buf, int offset, int len)
         {

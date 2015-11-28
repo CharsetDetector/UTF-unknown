@@ -59,16 +59,6 @@ namespace Ude
         /// <param name="stream">an input stream</param>
         void Feed(Stream stream);
 
-      
-        
-        /// <summary>
-        /// Returns true if the detector has found a result and it is sure about it.
-        /// 
-        /// TODO not always true
-        /// </summary>
-        /// <returns>true if the detector has detected the encoding</returns>
-        bool IsDone();
-
         /// <summary>
         /// Tell the detector that there is no more data and it must take its
         /// decision.
