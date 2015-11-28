@@ -125,7 +125,19 @@ namespace Ude
             _lastChar = 0x00;
         }
 
-        public void Feed(Stream stream)
+        /// <summary>
+        /// TODO buffered
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <returns></returns>
+        public DetectionSummary GetFromBytes(byte[] bytes)
+        {
+            Feed(bytes, 0, bytes.Length);
+            return DataEnd();
+        }
+
+
+        public DetectionSummary GetFromStream(Stream stream)
         { 
             byte[] buff = new byte[1024];
             int read;
@@ -133,9 +145,10 @@ namespace Ude
             {
                 Feed(buff, 0, read);
             }
+            return DataEnd();
         }
 
-        public virtual void Feed(byte[] buf, int offset, int len)
+        protected virtual void Feed(byte[] buf, int offset, int len)
         {
             if (_done)
             {
@@ -285,7 +298,7 @@ namespace Ude
         /// <summary>
         /// Notify detector that no further data is available. 
         /// </summary>
-        public virtual DetectionSummary DataEnd()
+        protected virtual DetectionSummary DataEnd()
         {
             if (!_gotData)
             {

@@ -26,9 +26,8 @@ namespace Ude.Example
             string filename = args[0];
             using (FileStream fs = File.OpenRead(filename))
             {
-                ICharsetDetector cdet = new CharsetDetector();
-                cdet.Feed(fs);
-                var result = cdet.DataEnd();
+                ICharsetDetector detector = new CharsetDetector();
+                var result = detector.GetFromStream(fs);
 
                 if (result.Detected != null)
                 {
