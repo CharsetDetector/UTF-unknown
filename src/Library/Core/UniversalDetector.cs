@@ -246,22 +246,21 @@ namespace Ude.Core
         /// <summary>
         /// Notify detector that no further data is available. 
         /// </summary>
-        public virtual void DataEnd()
+        public virtual DetectionSummary DataEnd()
         {
             if (!gotData)
             {
                 // we haven't got any data yet, return immediately 
                 // caller program sometimes call DataEnd before anything has 
                 // been sent to detector
-                return;
+                return new DetectionSummary();
             }
 
             if (detectedCharset != null)
             {
                 done = true;
                 detectedCharset.Confidence = 1.0f;
-                Report(detectedCharset);
-                return;
+                return Report(detectedCharset);
             }
 
             if (inputState == InputState.Highbyte)
@@ -284,35 +283,37 @@ namespace Ude.Core
                 //TODO why done isn't true?
                 if (maxProberConfidence > MINIMUM_THRESHOLD)
                 {
-                    Report(maxProber);
+                    return Report(maxProber);
                 }
 
             }
             else if (inputState == InputState.PureASCII)
             {
                 //TODO why done isn't true?
-                Report("ASCII", 1.0f, null);
+               return Report("ASCII", 1.0f, null);
             }
+            return new DetectionSummary();
         }
 
         private DetectionSummary summary;
 
-        protected void Report(string charset, float confidence, CharsetProber prober)
+        protected DetectionSummary Report(string charset, float confidence, CharsetProber prober)
         {
             summary = new DetectionSummary(new DetectionResult(charset, confidence, prober, null));
-
+            return summary;
         }
 
 
-        protected void Report(CharsetProber prober)
+        protected DetectionSummary Report(CharsetProber prober)
         {
             var allDetectionResults = new DetectionResult(prober.GetCharsetName(), prober.GetConfidence(), prober, null);
-            Report(allDetectionResults);
+           return Report(allDetectionResults);
         }
 
-        private void Report(DetectionResult result)
+        private DetectionSummary Report(DetectionResult result)
         {
             summary = new DetectionSummary(result);
+            return summary;
         }
 
         public string Charset

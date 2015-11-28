@@ -83,7 +83,7 @@ namespace Ude
         /// Tell the detector that there is no more data and it must take its
         /// decision.
         /// </summary>
-        void DataEnd();
+        DetectionSummary DataEnd();
         
     }
 }
