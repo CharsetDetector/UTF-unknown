@@ -21,6 +21,7 @@
  * Contributor(s):
  *          Shy Shalom <shooshX@gmail.com>
  *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port)
+ *          J. Verdurmen
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -71,65 +72,65 @@ namespace Ude
     /// </summary>                
     public class CharsetDetector : ICharsetDetector
     {
-        internal InputState inputState;
+        internal InputState InputState;
 
         /// <summary>
         /// Start of the file
         /// </summary>
-        protected bool start;
+        private bool _start;
 
         /// <summary>
         /// De byte array has data?
         /// </summary>
-        protected bool gotData;
+        private bool _gotData;
 
         /// <summary>
-        /// Most of the time true of <see cref="detectionResult"/> is set. TODO not always
+        /// Most of the time true of <see cref="_detectionResult"/> is set. TODO not always
         /// </summary>
-        protected bool done;
+        private bool _done;
 
         /// <summary>
         /// Lastchar, but not always filled. TODO remove?
         /// </summary>
-        protected byte lastChar;
+        private byte _lastChar;
 
         /// <summary>
         /// "list" of probers
         /// </summary>
-        protected CharsetProber[] charsetProbers = new CharsetProber[PROBERS_NUM];
+        private CharsetProber[] _charsetProbers = new CharsetProber[ProbersNum];
 
         /// <summary>
         /// TODO unknown
         /// </summary>
-        protected CharsetProber escCharsetProber;
+        private CharsetProber _escCharsetProber;
 
         /// <summary>
-        /// Detected charset. Most of the time <see cref="done"/> is true
+        /// Detected charset. Most of the time <see cref="_done"/> is true
         /// </summary>
-        protected DetectionResult detectionResult;
+        private DetectionResult _detectionResult;
 
-        protected const float SHORTCUT_THRESHOLD = 0.95f;
-        protected const float MINIMUM_THRESHOLD = 0.20f;
+        private const float ShortcutThreshold = 0.95f;
+        private const float MinimumThreshold = 0.20f;
 
         /// <summary>
         /// tries
         /// </summary>
-        protected const int PROBERS_NUM = 3;
+        private const int ProbersNum = 3;
 
         //public event DetectorFinished Finished;
         
         public CharsetDetector()
         {
-            this.start = true;
-            this.inputState = InputState.PureASCII;
-            this.lastChar = 0x00;
+            this._start = true;
+            this.InputState = InputState.PureASCII;
+            this._lastChar = 0x00;
         }
 
         public void Feed(Stream stream)
         { 
             byte[] buff = new byte[1024];
             int read;
-            while ((read = stream.Read(buff, 0, buff.Length)) > 0 && !done)
+            while ((read = stream.Read(buff, 0, buff.Length)) > 0 && !_done)
             {
                 Feed(buff, 0, read);
             }
@@ -137,47 +138,47 @@ namespace Ude
         
         public bool IsDone() 
         {
-            return done;
+            return _done;
         }
 
         public virtual void Feed(byte[] buf, int offset, int len)
         {
-            if (done)
+            if (_done)
             {
                 return;
             }
 
             if (len > 0)
-                gotData = true;
+                _gotData = true;
 
             // If the data starts with BOM, we know it is UTF
-            if (start)
+            if (_start)
             {
                 var bomSet = FindCharSetByBom(buf, len);
-                start = false;
+                _start = false;
                 if (bomSet != null)
                 {
-                    detectionResult = new DetectionResult(bomSet, 1);
-                    done = true;
+                    _detectionResult = new DetectionResult(bomSet, 1);
+                    _done = true;
                     return;
                 }
             }
 
             FindInputState(buf, len);
 
-            switch (inputState)
+            switch (InputState)
             {
                 case InputState.EscASCII:
 
-                    escCharsetProber = escCharsetProber ?? new EscCharsetProber();
+                    _escCharsetProber = _escCharsetProber ?? new EscCharsetProber();
 
-                    RunProber(buf, offset, len, escCharsetProber);
+                    RunProber(buf, offset, len, _escCharsetProber);
                   
                     break;
                 case InputState.Highbyte:
-                    for (int i = 0; i < PROBERS_NUM; i++)
+                    for (int i = 0; i < ProbersNum; i++)
                     {
-                        var charsetProber = charsetProbers[i];
+                        var charsetProber = _charsetProbers[i];
 
                         if (charsetProber != null)
                         {
@@ -198,8 +199,8 @@ namespace Ude
 #endif
             if (probingState == ProbingState.FoundIt)
             {
-                done = true;
-                detectionResult = new DetectionResult(charsetProber);
+                _done = true;
+                _detectionResult = new DetectionResult(charsetProber);
                 return true;
             }
             return false;
@@ -213,34 +214,34 @@ namespace Ude
                 if ((buf[i] & 0x80) != 0 && buf[i] != 0xA0)
                 {
                     // we got a non-ascii byte (high-byte)
-                    if (inputState != InputState.Highbyte)
+                    if (InputState != InputState.Highbyte)
                     {
-                        inputState = InputState.Highbyte;
+                        InputState = InputState.Highbyte;
 
                         // kill EscCharsetProber if it is active
-                        if (escCharsetProber != null)
+                        if (_escCharsetProber != null)
                         {
-                            escCharsetProber = null;
+                            _escCharsetProber = null;
                         }
 
                         // start multibyte and singlebyte charset prober
-                        if (charsetProbers[0] == null)
-                            charsetProbers[0] = new MBCSGroupProber();
-                        if (charsetProbers[1] == null)
-                            charsetProbers[1] = new SBCSGroupProber();
-                        if (charsetProbers[2] == null)
-                            charsetProbers[2] = new Latin1Prober();
+                        if (_charsetProbers[0] == null)
+                            _charsetProbers[0] = new MBCSGroupProber();
+                        if (_charsetProbers[1] == null)
+                            _charsetProbers[1] = new SBCSGroupProber();
+                        if (_charsetProbers[2] == null)
+                            _charsetProbers[2] = new Latin1Prober();
                     }
                 }
                 else
                 {
-                    if (inputState == InputState.PureASCII &&
-                        (buf[i] == 0x1B || (buf[i] == 0x7B && lastChar == 0x7E)))
+                    if (InputState == InputState.PureASCII &&
+                        (buf[i] == 0x1B || (buf[i] == 0x7B && _lastChar == 0x7E)))
                     {
                         // found escape character or HZ "~{"
-                        inputState = InputState.EscASCII;
+                        InputState = InputState.EscASCII;
                     }
-                    lastChar = buf[i];
+                    _lastChar = buf[i];
                 }
             }
         }
@@ -286,7 +287,7 @@ namespace Ude
         /// </summary>
         public virtual DetectionSummary DataEnd()
         {
-            if (!gotData)
+            if (!_gotData)
             {
                 // we haven't got any data yet, return immediately 
                 // caller program sometimes call DataEnd before anything has 
@@ -294,21 +295,21 @@ namespace Ude
                 return new DetectionSummary();
             }
 
-            if (detectionResult != null)
+            if (_detectionResult != null)
             {
-                done = true;
+                _done = true;
 
                 //conf 1.0 is from v1.0 (todo wrong?)
-                detectionResult.Confidence = 1.0f;
-                return new DetectionSummary(detectionResult);
+                _detectionResult.Confidence = 1.0f;
+                return new DetectionSummary(_detectionResult);
             }
 
-            if (inputState == InputState.Highbyte)
+            if (InputState == InputState.Highbyte)
             {
-                var list = new List<DetectionResult>(PROBERS_NUM);
-                for (int i = 0; i < PROBERS_NUM; i++)
+                var list = new List<DetectionResult>(ProbersNum);
+                for (int i = 0; i < ProbersNum; i++)
                 {
-                    var charsetProber = charsetProbers[i];
+                    var charsetProber = _charsetProbers[i];
 
                     if (charsetProber != null)
                     {
@@ -316,7 +317,7 @@ namespace Ude
                     }
                 }
 
-                var detectionResults = list.Where(p => p.Confidence > MINIMUM_THRESHOLD).OrderByDescending(p => p.Confidence).ToList();
+                var detectionResults = list.Where(p => p.Confidence > MinimumThreshold).OrderByDescending(p => p.Confidence).ToList();
 
                 return new DetectionSummary(detectionResults);
 
@@ -324,7 +325,7 @@ namespace Ude
 
 
             }
-            else if (inputState == InputState.PureASCII)
+            else if (InputState == InputState.PureASCII)
             {
                 //TODO why done isn't true?
                 return new DetectionSummary(new DetectionResult("ASCII", 1.0f, null, null));
