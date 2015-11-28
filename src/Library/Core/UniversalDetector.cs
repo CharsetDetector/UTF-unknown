@@ -170,7 +170,7 @@ namespace Ude.Core
                 }
             }
 
-            ProbingState st;
+            ProbingState probingState;
 
             switch (inputState)
             {
@@ -179,8 +179,8 @@ namespace Ude.Core
                     {
                         escCharsetProber = new EscCharsetProber();
                     }
-                    st = escCharsetProber.HandleData(buf, offset, len);
-                    if (st == ProbingState.FoundIt)
+                    probingState = escCharsetProber.HandleData(buf, offset, len);
+                    if (probingState == ProbingState.FoundIt)
                     {
                         done = true;
                         detectedCharset = new DetectionResult(escCharsetProber);
@@ -189,16 +189,18 @@ namespace Ude.Core
                 case InputState.Highbyte:
                     for (int i = 0; i < PROBERS_NUM; i++)
                     {
-                        if (charsetProbers[i] != null)
+                        var charsetProber = charsetProbers[i];
+
+                        if (charsetProber != null)
                         {
-                            st = charsetProbers[i].HandleData(buf, offset, len);
+                            probingState = charsetProber.HandleData(buf, offset, len);
 #if DEBUG
                             charsetProbers[i].DumpStatus();
 #endif
-                            if (st == ProbingState.FoundIt)
+                            if (probingState == ProbingState.FoundIt)
                             {
                                 done = true;
-                                detectedCharset = new DetectionResult(charsetProbers[i]);
+                                detectedCharset = new DetectionResult(charsetProber);
                                 return;
                             }
                         }
