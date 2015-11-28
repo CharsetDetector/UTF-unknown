@@ -2,7 +2,7 @@
 using System.Text;
 using Ude.Core;
 
-namespace Ude.V2
+namespace Ude
 {
     public class DetectionResult
     {

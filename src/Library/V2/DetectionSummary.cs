@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Ude.V2
+namespace Ude
 {
     public class DetectionSummary
     {

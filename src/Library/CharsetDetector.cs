@@ -96,23 +96,7 @@ namespace Ude
             return done;
         }
  
-        
-        public string Charset {
-            get { return charset; }
-        }
 
-        public float Confidence {
-            get { return confidence; }
-        }
-        
-        protected override void Report(string charset, float confidence)
-        {
-            this.charset = charset;
-            this.confidence = confidence;
-//            if (Finished != null) {
-//                Finished(charset, confidence);
-//            }
-        }
     }
     
     //public delegate void DetectorFinished(string charset, float confidence);

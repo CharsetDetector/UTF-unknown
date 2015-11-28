@@ -271,8 +271,18 @@ namespace Ude.Core
         }
 
 
-        
-        protected abstract void Report(string charset, float confidence);
+
+        protected void Report(string charset, float confidence)
+        {
+            Charset = charset;
+            Confidence = confidence;
+        }
+
+
+        public string Charset { get; set; }
+
+        public float Confidence { get; set; }
+
 
     }
 }
