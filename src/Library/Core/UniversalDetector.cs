@@ -122,6 +122,7 @@ namespace Ude.Core
             if (start)
             {
                 var bomSet = FindCharSetByBom(buf, len);
+                start = false;
                 if (bomSet != null)
                 {
                     detectedCharset = new DetectionResult(bomSet, 1, null, null);
@@ -206,10 +207,9 @@ namespace Ude.Core
             }
         }
 
-        private string FindCharSetByBom(byte[] buf, int len)
+        private static string FindCharSetByBom(byte[] buf, int len)
         {
             string bomSet = null;
-            start = false;
             if (len > 3)
             {
                 switch (buf[0])
