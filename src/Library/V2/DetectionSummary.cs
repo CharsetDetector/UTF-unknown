@@ -20,9 +20,9 @@ namespace Ude
             AllDetectionResults = allDetectionResults;
         }
 
-        public DetectionSummary(DetectionResult allDetectionResults)
+        public DetectionSummary(DetectionResult detectionResult)
         {
-            AllDetectionResults = new List<DetectionResult> { allDetectionResults };
+            AllDetectionResults = new List<DetectionResult> { detectionResult };
         }
 
         public DetectionResult Detected

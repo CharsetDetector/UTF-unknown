@@ -64,7 +64,7 @@ namespace Ude.Core
         protected bool gotData;
 
         /// <summary>
-        /// Most of the time true of <see cref="detectedCharset"/> is set. TODO not always
+        /// Most of the time true of <see cref="detectionResult"/> is set. TODO not always
         /// </summary>
         protected bool done;
 
@@ -97,7 +97,7 @@ namespace Ude.Core
         /// <summary>
         /// Detected charset. Most of the time <see cref="done"/> is true
         /// </summary>
-        protected DetectionResult detectedCharset;
+        protected DetectionResult detectionResult;
 
         protected UniversalDetector()
         {
@@ -126,7 +126,7 @@ namespace Ude.Core
                 start = false;
                 if (bomSet != null)
                 {
-                    detectedCharset = new DetectionResult(bomSet, 1, null, null);
+                    detectionResult = new DetectionResult(bomSet, 1, null, null);
                     done = true;
                     return;
                 }
@@ -183,7 +183,7 @@ namespace Ude.Core
                     if (probingState == ProbingState.FoundIt)
                     {
                         done = true;
-                        detectedCharset = new DetectionResult(escCharsetProber);
+                        detectionResult = new DetectionResult(escCharsetProber);
                     }
                     break;
                 case InputState.Highbyte:
@@ -200,7 +200,7 @@ namespace Ude.Core
                             if (probingState == ProbingState.FoundIt)
                             {
                                 done = true;
-                                detectedCharset = new DetectionResult(charsetProber);
+                                detectionResult = new DetectionResult(charsetProber);
                                 return;
                             }
                         }
@@ -259,11 +259,11 @@ namespace Ude.Core
                 return new DetectionSummary();
             }
 
-            if (detectedCharset != null)
+            if (detectionResult != null)
             {
                 done = true;
-                detectedCharset.Confidence = 1.0f;
-                return new DetectionSummary(detectedCharset);
+                detectionResult.Confidence = 1.0f;
+                return new DetectionSummary(detectionResult);
             }
 
             if (inputState == InputState.Highbyte)
