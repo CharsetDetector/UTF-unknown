@@ -120,7 +120,6 @@
     <Compile Include="Core\Win1251Model.cs" />
     <Compile Include="Core\Win1253Model.cs" />
     <Compile Include="Core\Win1255Model.cs" />
-    <Compile Include="ICharsetDetector.cs" />
     <Compile Include="Core\Charsets.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

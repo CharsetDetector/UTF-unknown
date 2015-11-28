@@ -70,7 +70,7 @@ namespace Ude
     /// </code>
     /// </example> 
     /// </summary>                
-    public class CharsetDetector : ICharsetDetector
+    public class CharsetDetector
     {
         internal InputState InputState;
 
@@ -153,7 +153,7 @@ namespace Ude
         {
             using (FileStream fs = File.OpenRead(filePath))
             {
-                ICharsetDetector detector = new CharsetDetector();
+                var detector = new CharsetDetector();
                 return detector.GetFromStream(fs);
             }
 
