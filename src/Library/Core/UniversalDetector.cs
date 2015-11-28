@@ -143,12 +143,9 @@ namespace Ude.Core
                     {
                         escCharsetProber = new EscCharsetProber();
                     }
-                    probingState = escCharsetProber.HandleData(buf, offset, len);
-                    if (probingState == ProbingState.FoundIt)
-                    {
-                        done = true;
-                        detectionResult = new DetectionResult(escCharsetProber);
-                    }
+
+                    RunProber(buf, offset, len, escCharsetProber);
+                  
                     break;
                 case InputState.Highbyte:
                     for (int i = 0; i < PROBERS_NUM; i++)
@@ -157,21 +154,28 @@ namespace Ude.Core
 
                         if (charsetProber != null)
                         {
-                            probingState = charsetProber.HandleData(buf, offset, len);
-#if DEBUG
-                            charsetProbers[i].DumpStatus();
-#endif
-                            if (probingState == ProbingState.FoundIt)
-                            {
-                                done = true;
-                                detectionResult = new DetectionResult(charsetProber);
-                                return;
-                            }
+                            var found = RunProber(buf, offset, len, charsetProber);
+                            if (found) return;
                         }
                     }
                     break;
                     // else pure ascii
             }
+        }
+
+        private bool RunProber(byte[] buf, int offset, int len, CharsetProber charsetProber)
+        {
+            var probingState = charsetProber.HandleData(buf, offset, len);
+#if DEBUG
+                            charsetProbers[i].DumpStatus();
+#endif
+            if (probingState == ProbingState.FoundIt)
+            {
+                done = true;
+                detectionResult = new DetectionResult(charsetProber);
+                return true;
+            }
+            return false;
         }
 
         private void FindInputState(byte[] buf, int len)
