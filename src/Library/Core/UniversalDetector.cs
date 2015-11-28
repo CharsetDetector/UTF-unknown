@@ -318,27 +318,7 @@ namespace Ude.Core
             } 
         }
 
-        /// <summary>
-        /// Clear internal state of charset detector.
-        /// In the original interface this method is protected. 
-        /// </summary>
-        public virtual void Reset() 
-        { 
-            //TODO reset() should be removed with ctor call
 
-            done = false;
-            start = true;
-            detectedCharset = null;
-            gotData = false;
-            bestGuess = -1;
-            inputState = InputState.PureASCII;
-            lastChar = 0x00;
-            if (escCharsetProber != null)
-                escCharsetProber.Reset();
-            for (int i = 0; i < PROBERS_NUM; i++)
-                if (charsetProbers[i] != null)
-                    charsetProbers[i].Reset();
-        }
         
         protected abstract void Report(string charset, float confidence);
 

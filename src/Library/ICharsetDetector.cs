@@ -69,10 +69,7 @@ namespace Ude
         /// <param name="stream">an input stream</param>
         void Feed(Stream stream);
 
-        /// <summary>
-        /// Resets the state of the detector. 
-        /// </summary>        
-        void Reset();
+      
         
         /// <summary>
         /// Returns true if the detector has found a result and it is sure about it.

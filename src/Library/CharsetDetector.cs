@@ -95,13 +95,7 @@ namespace Ude
         {
             return done;
         }
-        
-        public override void Reset()
-        {
-            this.charset = null;
-            this.confidence = 0.0f;
-            base.Reset();
-        }
+ 
         
         public string Charset {
             get { return charset; }
