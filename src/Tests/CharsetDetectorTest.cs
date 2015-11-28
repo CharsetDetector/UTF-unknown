@@ -148,6 +148,10 @@ namespace Ude.Tests
             Assert.Equal(0, detector.Confidence);
         }
 
+
+        /// <summary>
+        /// 2 times dataend should not change result
+        /// </summary>
         [Fact]
         public void TestEmpty2()
         {
