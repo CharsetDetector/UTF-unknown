@@ -97,7 +97,7 @@ namespace Ude
         /// <summary>
         /// "list" of probers
         /// </summary>
-        private CharsetProber[] _charsetProbers = new CharsetProber[ProbersNum];
+        private readonly CharsetProber[] _charsetProbers = new CharsetProber[ProbersNum];
 
         /// <summary>
         /// TODO unknown
@@ -109,7 +109,6 @@ namespace Ude
         /// </summary>
         private DetectionResult _detectionResult;
 
-        private const float ShortcutThreshold = 0.95f;
         private const float MinimumThreshold = 0.20f;
 
         /// <summary>
@@ -121,9 +120,9 @@ namespace Ude
         
         public CharsetDetector()
         {
-            this._start = true;
-            this.InputState = InputState.PureASCII;
-            this._lastChar = 0x00;
+            _start = true;
+            InputState = InputState.PureASCII;
+            _lastChar = 0x00;
         }
 
         public void Feed(Stream stream)
