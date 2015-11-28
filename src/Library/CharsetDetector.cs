@@ -189,7 +189,7 @@ namespace Ude
         {
             var probingState = charsetProber.HandleData(buf, offset, len);
 #if DEBUG
-                            charsetProbers[i].DumpStatus();
+            charsetProber.DumpStatus();
 #endif
             if (probingState == ProbingState.FoundIt)
             {
