@@ -4,15 +4,18 @@
 //   Rudi Pettazzi <rudi.pettazzi@gmail.com>
 //
 
-using System.Text;
+#region
+
 using System.IO;
+using System.Text;
 using Xunit;
+
+#endregion
 
 namespace Ude.Tests
 {
     public class CharsetDetectorTest
     {
-
         [Fact]
         public void TestASCII()
         {
@@ -46,12 +49,11 @@ namespace Ude.Tests
             Assert.Equal(1.0f, detector.Confidence);
         }
 
-
         [Fact]
         public void TestBomUTF8()
         {
             var detector = new CharsetDetector();
-            byte[] buf = { 0xEF, 0xBB, 0xBF, 0x68, 0x65, 0x6C, 0x6C, 0x6F, 0x21 };
+            byte[] buf = {0xEF, 0xBB, 0xBF, 0x68, 0x65, 0x6C, 0x6C, 0x6F, 0x21};
             detector.Feed(buf, 0, buf.Length);
             detector.DataEnd();
             Assert.Equal(Charsets.UTF8, detector.Charset);
@@ -62,18 +64,19 @@ namespace Ude.Tests
         public void TestBomUTF16_BE()
         {
             var detector = new CharsetDetector();
-            byte[] buf = { 0xFE, 0xFF, 0x00, 0x68, 0x00, 0x65 };
+            byte[] buf = {0xFE, 0xFF, 0x00, 0x68, 0x00, 0x65};
             detector = new CharsetDetector();
             detector.Feed(buf, 0, buf.Length);
             detector.DataEnd();
             Assert.Equal(Charsets.UTF16_BE, detector.Charset);
             Assert.Equal(1.0f, detector.Confidence);
         }
+
         [Fact]
         public void TestBomX_ISO_10646_UCS_4_3412()
         {
             var detector = new CharsetDetector();
-            byte[] buf = { 0xFE, 0xFF, 0x00, 0x00, 0x65 };
+            byte[] buf = {0xFE, 0xFF, 0x00, 0x00, 0x65};
             detector = new CharsetDetector();
             detector.Feed(buf, 0, buf.Length);
             detector.DataEnd();
@@ -85,7 +88,7 @@ namespace Ude.Tests
         public void TestBomX_ISO_10646_UCS_4_2143()
         {
             var detector = new CharsetDetector();
-            byte[] buf = { 0x00, 0x00, 0xFF, 0xFE, 0x00, 0x65 };
+            byte[] buf = {0x00, 0x00, 0xFF, 0xFE, 0x00, 0x65};
             detector = new CharsetDetector();
             detector.Feed(buf, 0, buf.Length);
             detector.DataEnd();
@@ -97,7 +100,7 @@ namespace Ude.Tests
         public void TestBomUTF16_LE()
         {
             var detector = new CharsetDetector();
-            byte[] buf = { 0xFF, 0xFE, 0x68, 0x00, 0x65, 0x00 };
+            byte[] buf = {0xFF, 0xFE, 0x68, 0x00, 0x65, 0x00};
             detector.Feed(buf, 0, buf.Length);
             detector.DataEnd();
             Assert.Equal(Charsets.UTF16_LE, detector.Charset);
@@ -108,7 +111,7 @@ namespace Ude.Tests
         public void TestBomUTF32_BE()
         {
             var detector = new CharsetDetector();
-            byte[] buf = { 0x00, 0x00, 0xFE, 0xFF, 0x00, 0x00, 0x00, 0x68 };
+            byte[] buf = {0x00, 0x00, 0xFE, 0xFF, 0x00, 0x00, 0x00, 0x68};
             detector.Feed(buf, 0, buf.Length);
             detector.DataEnd();
             Assert.Equal(Charsets.UTF32_BE, detector.Charset);
@@ -119,7 +122,7 @@ namespace Ude.Tests
         public void TestBomUTF32_LE()
         {
             var detector = new CharsetDetector();
-            byte[] buf = { 0xFF, 0xFE, 0x00, 0x00, 0x68, 0x00, 0x00, 0x00 };
+            byte[] buf = {0xFF, 0xFE, 0x00, 0x00, 0x68, 0x00, 0x00, 0x00};
             detector.Feed(buf, 0, buf.Length);
             detector.DataEnd();
             Assert.Equal(Charsets.UTF32_LE, detector.Charset);
@@ -138,6 +141,28 @@ namespace Ude.Tests
         }
 
         [Fact]
+        public void TestOutOfRange()
+        {
+            var detector = new CharsetDetector();
+            byte[] buf = Encoding.UTF8.GetBytes("3");
+            detector.Feed(buf, 0, 10);
+            detector.DataEnd();
+            Assert.Equal(Charsets.ASCII, detector.Charset);
+            Assert.Equal(1.0f, detector.Confidence);
+        }
+
+        [Fact]
+        public void TestOutOfRange2()
+        {
+            var detector = new CharsetDetector();
+            byte[] buf = Encoding.UTF8.GetBytes("1234567890");
+            detector.Feed(buf, 10, 5);
+            detector.DataEnd();
+            Assert.Equal(Charsets.ASCII, detector.Charset);
+            Assert.Equal(1.0f, detector.Confidence);
+        }
+
+        [Fact]
         public void TestEmpty()
         {
             var detector = new CharsetDetector();
@@ -147,7 +172,6 @@ namespace Ude.Tests
             Assert.Equal(null, detector.Charset);
             Assert.Equal(0, detector.Confidence);
         }
-
 
         /// <summary>
         /// 2 times dataend should not change result
@@ -165,6 +189,19 @@ namespace Ude.Tests
         }
 
         [Fact]
+        public void TestOffset()
+        {
+            var detector = new CharsetDetector();
+            byte[] buf = Encoding.ASCII.GetBytes("test1");
+
+            //no crasg
+            detector.Feed(buf, 4, 2);
+            detector.DataEnd();
+            Assert.Equal(Charsets.ASCII, detector.Charset);
+            Assert.Equal(1.0f, detector.Confidence);
+        }
+
+        [Fact]
         public void TestFeedSecondEmpty()
         {
             var detector = new CharsetDetector();
@@ -179,12 +216,11 @@ namespace Ude.Tests
             Assert.Equal(1.0f, detector.Confidence);
         }
 
-
         [Fact]
         public void TestFeedSecondEmpty_bom()
         {
             var detector = new CharsetDetector();
-            byte[] buf = { 0xFE, 0xFF, 0x00, 0x68, 0x00, 0x65 };
+            byte[] buf = {0xFE, 0xFF, 0x00, 0x68, 0x00, 0x65};
             detector = new CharsetDetector();
             detector.Feed(buf, 0, buf.Length);
             detector.DataEnd();
@@ -194,7 +230,5 @@ namespace Ude.Tests
             Assert.Equal(Charsets.UTF16_BE, detector.Charset);
             Assert.Equal(1.0f, detector.Confidence);
         }
-
     }
 }
-

@@ -36,6 +36,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System;
+
 namespace Ude.Core
 {
     /// <summary>
@@ -156,6 +158,8 @@ namespace Ude.Core
             if (done) {
                 return;
             }
+
+            len = Math.Min(len, buf.Length);
 
             if (len > 0)
                 gotData = true;
