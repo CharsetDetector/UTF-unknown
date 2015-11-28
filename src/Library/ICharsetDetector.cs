@@ -43,17 +43,7 @@ namespace Ude
     public interface ICharsetDetector
     {
 
-        /// <summary>
-        /// The detected charset. It can be null.
-        /// </summary>
-        string Charset { get; }
-        
-        /// <summary>
-        /// The confidence of the detected charset, if any.
-        /// 
-        /// Between 0 and 1 (including)
-        /// </summary>
-        float Confidence { get; }
+     
         
         /// <summary>
         /// Feed a block of bytes to the detector. 

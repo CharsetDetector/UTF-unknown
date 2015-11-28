@@ -260,7 +260,7 @@ namespace Ude.Core
             {
                 done = true;
                 detectedCharset.Confidence = 1.0f;
-                return Report(detectedCharset);
+                return new DetectionSummary(detectedCharset);
             }
 
             if (inputState == InputState.Highbyte)
@@ -283,49 +283,17 @@ namespace Ude.Core
                 //TODO why done isn't true?
                 if (maxProberConfidence > MINIMUM_THRESHOLD)
                 {
-                    return Report(maxProber);
+                    var allDetectionResults = new DetectionResult(maxProber.GetCharsetName(), maxProber.GetConfidence(), maxProber, null);
+                    return new DetectionSummary(allDetectionResults);
                 }
 
             }
             else if (inputState == InputState.PureASCII)
             {
                 //TODO why done isn't true?
-               return Report("ASCII", 1.0f, null);
+                return new DetectionSummary(new DetectionResult("ASCII", 1.0f, null, null));
             }
             return new DetectionSummary();
         }
-
-        private DetectionSummary summary;
-
-        protected DetectionSummary Report(string charset, float confidence, CharsetProber prober)
-        {
-            summary = new DetectionSummary(new DetectionResult(charset, confidence, prober, null));
-            return summary;
-        }
-
-
-        protected DetectionSummary Report(CharsetProber prober)
-        {
-            var allDetectionResults = new DetectionResult(prober.GetCharsetName(), prober.GetConfidence(), prober, null);
-           return Report(allDetectionResults);
-        }
-
-        private DetectionSummary Report(DetectionResult result)
-        {
-            summary = new DetectionSummary(result);
-            return summary;
-        }
-
-        public string Charset
-        {
-            get { return summary.Detected.Charset; }
-        }
-
-        public float Confidence
-        {
-            get { return summary.Detected.Confidence; }
-        }
-
-
     }
 }

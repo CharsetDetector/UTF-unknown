@@ -82,8 +82,10 @@ namespace Ude.Tests
                     var detector = new CharsetDetector();
 
                     detector.Feed(fs);
-                    detector.DataEnd();
-                    Assert.True(charset == detector.Charset, string.Format("Charset detection failed for {0}. Expected: {1}, detected: {2} ({3}% confidence)", file, charset, detector.Charset, detector.Confidence));
+                    var result = detector.DataEnd();
+                    var detected = result.Detected;
+                    Assert.True(charset == detected.Charset, string.Format("Charset detection failed for {0}. Expected: {1}, detected: {2} ({3}% confidence)", file, charset, detected.Charset, detected.Confidence * 100));
+                 
                 }
             }
         }
