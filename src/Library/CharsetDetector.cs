@@ -76,7 +76,7 @@ namespace Ude
         
         //public event DetectorFinished Finished;
         
-        public CharsetDetector() : base(FILTER_ALL)
+        public CharsetDetector() : base()
         {
             
         }

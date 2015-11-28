@@ -45,47 +45,7 @@ namespace Ude.Core
     /// </summary>
     public abstract class UniversalDetector 
     {
-        /// <summary>
-        /// TODO unused?
-        /// </summary>
-        protected const int FILTER_CHINESE_SIMPLIFIED = 1;
-        /// <summary>
-        /// TODO unused?
-        /// </summary>
-        protected const int FILTER_CHINESE_TRADITIONAL = 2;
-        /// <summary>
-        /// TODO unused?
-        /// </summary>
-        protected const int FILTER_JAPANESE = 4;
-
-        /// <summary>
-        /// TODO unused?
-        /// </summary>
-        protected const int FILTER_KOREAN = 8;
-
-        /// <summary>
-        /// TODO unused?
-        /// </summary>
-        protected const int FILTER_NON_CJK = 16;
-
-        /// <summary>
-        /// TODO unused? (when <see cref="languageFilter"/> is removed)
-        /// </summary>
-        protected const int FILTER_ALL = 31;
-
-        /// <summary>
-        /// TODO unused?
-        /// </summary>
-        protected static int FILTER_CHINESE =
-            FILTER_CHINESE_SIMPLIFIED | FILTER_CHINESE_TRADITIONAL;
-
-
-        /// <summary>
-        /// TODO unused?
-        /// </summary>
-        protected static int FILTER_CJK =
-                FILTER_JAPANESE | FILTER_KOREAN | FILTER_CHINESE_SIMPLIFIED
-                | FILTER_CHINESE_TRADITIONAL;
+      
 
         protected const float SHORTCUT_THRESHOLD = 0.95f;
         protected const float MINIMUM_THRESHOLD = 0.20f;
@@ -122,13 +82,6 @@ namespace Ude.Core
         /// </summary>
         protected const int PROBERS_NUM = 3;
 
-
-        /// <summary>
-        /// TODO unknown. Can be removed?
-        /// </summary>
-        protected int languageFilter;
-
-
         /// <summary>
         /// "list" of probers
         /// </summary>
@@ -145,12 +98,11 @@ namespace Ude.Core
         /// </summary>
         protected string detectedCharset;
 
-        protected UniversalDetector(int languageFilter) { 
+        protected UniversalDetector() { 
             this.start = true;
             this.inputState = InputState.PureASCII;
             this.lastChar = 0x00;   
             this.bestGuess = -1;
-            this.languageFilter = languageFilter;
         }
 
         public virtual void Feed(byte[] buf, int offset, int len)
