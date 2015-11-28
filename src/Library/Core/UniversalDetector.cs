@@ -132,43 +132,7 @@ namespace Ude.Core
                 }
             }
 
-            for (int i = 0; i < len; i++)
-            {
-
-                // other than 0xa0, if every other character is ascii, the page is ascii
-                if ((buf[i] & 0x80) != 0 && buf[i] != 0xA0)
-                {
-                    // we got a non-ascii byte (high-byte)
-                    if (inputState != InputState.Highbyte)
-                    {
-                        inputState = InputState.Highbyte;
-
-                        // kill EscCharsetProber if it is active
-                        if (escCharsetProber != null)
-                        {
-                            escCharsetProber = null;
-                        }
-
-                        // start multibyte and singlebyte charset prober
-                        if (charsetProbers[0] == null)
-                            charsetProbers[0] = new MBCSGroupProber();
-                        if (charsetProbers[1] == null)
-                            charsetProbers[1] = new SBCSGroupProber();
-                        if (charsetProbers[2] == null)
-                            charsetProbers[2] = new Latin1Prober();
-                    }
-                }
-                else
-                {
-                    if (inputState == InputState.PureASCII &&
-                        (buf[i] == 0x1B || (buf[i] == 0x7B && lastChar == 0x7E)))
-                    {
-                        // found escape character or HZ "~{"
-                        inputState = InputState.EscASCII;
-                    }
-                    lastChar = buf[i];
-                }
-            }
+            FindInputState(buf, len);
 
             ProbingState probingState;
 
@@ -207,6 +171,46 @@ namespace Ude.Core
                     }
                     break;
                     // else pure ascii
+            }
+        }
+
+        private void FindInputState(byte[] buf, int len)
+        {
+            for (int i = 0; i < len; i++)
+            {
+                // other than 0xa0, if every other character is ascii, the page is ascii
+                if ((buf[i] & 0x80) != 0 && buf[i] != 0xA0)
+                {
+                    // we got a non-ascii byte (high-byte)
+                    if (inputState != InputState.Highbyte)
+                    {
+                        inputState = InputState.Highbyte;
+
+                        // kill EscCharsetProber if it is active
+                        if (escCharsetProber != null)
+                        {
+                            escCharsetProber = null;
+                        }
+
+                        // start multibyte and singlebyte charset prober
+                        if (charsetProbers[0] == null)
+                            charsetProbers[0] = new MBCSGroupProber();
+                        if (charsetProbers[1] == null)
+                            charsetProbers[1] = new SBCSGroupProber();
+                        if (charsetProbers[2] == null)
+                            charsetProbers[2] = new Latin1Prober();
+                    }
+                }
+                else
+                {
+                    if (inputState == InputState.PureASCII &&
+                        (buf[i] == 0x1B || (buf[i] == 0x7B && lastChar == 0x7E)))
+                    {
+                        // found escape character or HZ "~{"
+                        inputState = InputState.EscASCII;
+                    }
+                    lastChar = buf[i];
+                }
             }
         }
 
