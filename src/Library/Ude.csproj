@@ -98,7 +98,6 @@
     <Compile Include="Core\UCS2LESMModel.cs" />
     <Compile Include="V2\DetectionSummary.cs" />
     <Compile Include="V2\DetectionResult.cs" />
-    <Compile Include="Core\UniversalDetector.cs" />
     <Compile Include="Core\UTF8Prober.cs" />
     <Compile Include="Core\UTF8SMModel.cs" />
     <Compile Include="Core\SequenceModel.cs" />
