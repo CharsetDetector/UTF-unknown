@@ -36,7 +36,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Ude.Core
 {
@@ -265,27 +266,23 @@ namespace Ude.Core
 
             if (inputState == InputState.Highbyte)
             {
-                float proberConfidence = 0.0f;
-                float maxProberConfidence = 0.0f;
-                CharsetProber maxProber = null;
+                var list = new List<DetectionResult>(PROBERS_NUM);
                 for (int i = 0; i < PROBERS_NUM; i++)
                 {
-                    if (charsetProbers[i] != null)
+                    var charsetProber = charsetProbers[i];
+
+                    if (charsetProber != null)
                     {
-                        proberConfidence = charsetProbers[i].GetConfidence();
-                        if (proberConfidence > maxProberConfidence)
-                        {
-                            maxProberConfidence = proberConfidence;
-                            maxProber = charsetProbers[i];
-                        }
+                        list.Add(new DetectionResult(charsetProber));
                     }
                 }
+
+                var detectionResults = list.Where(p => p.Confidence > MINIMUM_THRESHOLD).OrderByDescending(p => p.Confidence).ToList();
+
+                return new DetectionSummary(detectionResults);
+
                 //TODO why done isn't true?
-                if (maxProberConfidence > MINIMUM_THRESHOLD)
-                {
-                    var allDetectionResults = new DetectionResult(maxProber);
-                    return new DetectionSummary(allDetectionResults);
-                }
+
 
             }
             else if (inputState == InputState.PureASCII)
