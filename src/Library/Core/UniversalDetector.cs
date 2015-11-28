@@ -96,7 +96,7 @@ namespace Ude.Core
         /// <summary>
         /// Detected charset. Most of the time <see cref="done"/> is true
         /// </summary>
-        protected string detectedCharset;
+        protected DetectionResult detectedCharset;
 
         protected UniversalDetector()
         {
@@ -124,7 +124,7 @@ namespace Ude.Core
                 var bomSet = FindCharSetByBom(buf, len);
                 if (bomSet != null)
                 {
-                    detectedCharset = bomSet;
+                    detectedCharset = new DetectionResult(bomSet, 1, null, null);
                     done = true;
                     return;
                 }
@@ -181,7 +181,7 @@ namespace Ude.Core
                     if (st == ProbingState.FoundIt)
                     {
                         done = true;
-                        detectedCharset = escCharsetProber.GetCharsetName();
+                        detectedCharset = new DetectionResult(escCharsetProber);
                     }
                     break;
                 case InputState.Highbyte:
@@ -196,7 +196,7 @@ namespace Ude.Core
                             if (st == ProbingState.FoundIt)
                             {
                                 done = true;
-                                detectedCharset = charsetProbers[i].GetCharsetName();
+                                detectedCharset = new DetectionResult(charsetProbers[i]);
                                 return;
                             }
                         }
@@ -259,7 +259,8 @@ namespace Ude.Core
             if (detectedCharset != null)
             {
                 done = true;
-                Report(detectedCharset, 1.0f, null);
+                detectedCharset.Confidence = 1.0f;
+                Report(detectedCharset);
                 return;
             }
 
@@ -305,8 +306,13 @@ namespace Ude.Core
 
         protected void Report(CharsetProber prober)
         {
-            summary = new DetectionSummary(new DetectionResult(prober.GetCharsetName(), prober.GetConfidence(), prober, null));
+            var allDetectionResults = new DetectionResult(prober.GetCharsetName(), prober.GetConfidence(), prober, null);
+            Report(allDetectionResults);
+        }
 
+        private void Report(DetectionResult result)
+        {
+            summary = new DetectionSummary(result);
         }
 
         public string Charset

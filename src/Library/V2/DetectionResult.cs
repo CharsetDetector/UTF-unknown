@@ -12,7 +12,7 @@ namespace Ude
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Object"/> class.
         /// </summary>
-        public DetectionResult(string encodingShortName, float confidence, CharsetProber prober, TimeSpan? time)
+        public DetectionResult(string encodingShortName, float confidence, CharsetProber prober = null, TimeSpan? time = null)
         {
             _encodingShortName = encodingShortName;
             Confidence = confidence;
@@ -34,7 +34,7 @@ namespace Ude
         /// <summary>
         /// Initializes a new instance of the <see cref="T:System.Object"/> class.
         /// </summary>
-        public DetectionResult(CharsetProber prober, TimeSpan? time) 
+        public DetectionResult(CharsetProber prober, TimeSpan? time = null) 
             : this(prober.GetCharsetName(), prober.GetConfidence(), prober, time)
         {
         }
