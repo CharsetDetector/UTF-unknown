@@ -43,9 +43,9 @@ namespace Ude.Core
     /// <summary>
     /// TODO remove protected fields
     /// </summary>
-    public abstract class UniversalDetector 
+    public abstract class UniversalDetector
     {
-      
+
 
         protected const float SHORTCUT_THRESHOLD = 0.95f;
         protected const float MINIMUM_THRESHOLD = 0.20f;
@@ -71,7 +71,7 @@ namespace Ude.Core
         /// Lastchar, but not always filled. TODO remove?
         /// </summary>
         protected byte lastChar;
-        
+
         /// <summary>
         /// best guess rate between 0 and 1 (inluding)
         /// </summary>
@@ -98,16 +98,18 @@ namespace Ude.Core
         /// </summary>
         protected string detectedCharset;
 
-        protected UniversalDetector() { 
+        protected UniversalDetector()
+        {
             this.start = true;
             this.inputState = InputState.PureASCII;
-            this.lastChar = 0x00;   
+            this.lastChar = 0x00;
             this.bestGuess = -1;
         }
 
         public virtual void Feed(byte[] buf, int offset, int len)
-        { 
-            if (done) {
+        {
+            if (done)
+            {
                 return;
             }
 
@@ -128,16 +130,20 @@ namespace Ude.Core
                 }
             }
 
-            for (int i = 0; i < len; i++) {
-                
+            for (int i = 0; i < len; i++)
+            {
+
                 // other than 0xa0, if every other character is ascii, the page is ascii
-                if ((buf[i] & 0x80) != 0 && buf[i] != 0xA0)  {
+                if ((buf[i] & 0x80) != 0 && buf[i] != 0xA0)
+                {
                     // we got a non-ascii byte (high-byte)
-                    if (inputState != InputState.Highbyte) {
+                    if (inputState != InputState.Highbyte)
+                    {
                         inputState = InputState.Highbyte;
 
                         // kill EscCharsetProber if it is active
-                        if (escCharsetProber != null) {
+                        if (escCharsetProber != null)
+                        {
                             escCharsetProber = null;
                         }
 
@@ -147,47 +153,56 @@ namespace Ude.Core
                         if (charsetProbers[1] == null)
                             charsetProbers[1] = new SBCSGroupProber();
                         if (charsetProbers[2] == null)
-                            charsetProbers[2] = new Latin1Prober(); 
+                            charsetProbers[2] = new Latin1Prober();
                     }
-                } else { 
+                }
+                else
+                {
                     if (inputState == InputState.PureASCII &&
-                        (buf[i] == 0x1B || (buf[i] == 0x7B && lastChar == 0x7E))) {
+                        (buf[i] == 0x1B || (buf[i] == 0x7B && lastChar == 0x7E)))
+                    {
                         // found escape character or HZ "~{"
                         inputState = InputState.EscASCII;
                     }
                     lastChar = buf[i];
                 }
             }
-            
+
             ProbingState st;
-            
-            switch (inputState) {
+
+            switch (inputState)
+            {
                 case InputState.EscASCII:
-                    if (escCharsetProber == null) {
+                    if (escCharsetProber == null)
+                    {
                         escCharsetProber = new EscCharsetProber();
                     }
                     st = escCharsetProber.HandleData(buf, offset, len);
-                    if (st == ProbingState.FoundIt) {
+                    if (st == ProbingState.FoundIt)
+                    {
                         done = true;
                         detectedCharset = escCharsetProber.GetCharsetName();
                     }
                     break;
                 case InputState.Highbyte:
-                    for (int i = 0; i < PROBERS_NUM; i++) {
-                        if (charsetProbers[i] != null) {
+                    for (int i = 0; i < PROBERS_NUM; i++)
+                    {
+                        if (charsetProbers[i] != null)
+                        {
                             st = charsetProbers[i].HandleData(buf, offset, len);
-                            #if DEBUG                            
+#if DEBUG
                             charsetProbers[i].DumpStatus();
-                            #endif                        
-                            if (st == ProbingState.FoundIt) {
+#endif
+                            if (st == ProbingState.FoundIt)
+                            {
                                 done = true;
                                 detectedCharset = charsetProbers[i].GetCharsetName();
                                 return;
-                            }  
+                            }
                         }
                     }
                     break;
-                // else pure ascii
+                    // else pure ascii
             }
         }
 
@@ -233,55 +248,76 @@ namespace Ude.Core
         /// </summary>
         public virtual void DataEnd()
         {
-            if (!gotData) {
+            if (!gotData)
+            {
                 // we haven't got any data yet, return immediately 
                 // caller program sometimes call DataEnd before anything has 
                 // been sent to detector
                 return;
             }
 
-            if (detectedCharset != null) {
+            if (detectedCharset != null)
+            {
                 done = true;
-                Report(detectedCharset, 1.0f);
+                Report(detectedCharset, 1.0f, null);
                 return;
-            } 
+            }
 
-            if (inputState == InputState.Highbyte) {
+            if (inputState == InputState.Highbyte)
+            {
                 float proberConfidence = 0.0f;
                 float maxProberConfidence = 0.0f;
-                int maxProber = 0;
-                for (int i = 0; i < PROBERS_NUM; i++) {
-                    if (charsetProbers[i] != null) {
+                CharsetProber maxProber = null;
+                for (int i = 0; i < PROBERS_NUM; i++)
+                {
+                    if (charsetProbers[i] != null)
+                    {
                         proberConfidence = charsetProbers[i].GetConfidence();
-                        if (proberConfidence > maxProberConfidence) {
+                        if (proberConfidence > maxProberConfidence)
+                        {
                             maxProberConfidence = proberConfidence;
-                            maxProber = i;
+                            maxProber = charsetProbers[i];
                         }
                     }
                 }
                 //TODO why done isn't true?
-                if (maxProberConfidence > MINIMUM_THRESHOLD) {
-                    Report(charsetProbers[maxProber].GetCharsetName(), maxProberConfidence);
-                } 
-                
-            } else if (inputState == InputState.PureASCII) {
+                if (maxProberConfidence > MINIMUM_THRESHOLD)
+                {
+                    Report(maxProber);
+                }
+
+            }
+            else if (inputState == InputState.PureASCII)
+            {
                 //TODO why done isn't true?
-                Report("ASCII", 1.0f);
-            } 
+                Report("ASCII", 1.0f, null);
+            }
         }
 
+        private DetectionSummary summary;
 
-
-        protected void Report(string charset, float confidence)
+        protected void Report(string charset, float confidence, CharsetProber prober)
         {
-            Charset = charset;
-            Confidence = confidence;
+            summary = new DetectionSummary(new DetectionResult(charset, confidence, prober, null));
+
         }
 
 
-        public string Charset { get; set; }
+        protected void Report(CharsetProber prober)
+        {
+            summary = new DetectionSummary(new DetectionResult(prober.GetCharsetName(), prober.GetConfidence(), prober, null));
 
-        public float Confidence { get; set; }
+        }
+
+        public string Charset
+        {
+            get { return summary.Detected.Charset; }
+        }
+
+        public float Confidence
+        {
+            get { return summary.Detected.Confidence; }
+        }
 
 
     }
