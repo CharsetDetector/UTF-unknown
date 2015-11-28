@@ -122,7 +122,7 @@ namespace Ude.Core
                 start = false;
                 if (bomSet != null)
                 {
-                    detectionResult = new DetectionResult(bomSet, 1, null, null);
+                    detectionResult = new DetectionResult(bomSet, 1);
                     done = true;
                     return;
                 }
@@ -133,10 +133,8 @@ namespace Ude.Core
             switch (inputState)
             {
                 case InputState.EscASCII:
-                    if (escCharsetProber == null)
-                    {
-                        escCharsetProber = new EscCharsetProber();
-                    }
+
+                    escCharsetProber = escCharsetProber ?? new EscCharsetProber();
 
                     RunProber(buf, offset, len, escCharsetProber);
                   
