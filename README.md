@@ -29,37 +29,8 @@ Ude can recognize the following charsets:
 * ASCII
 
 ## Platform
-Windows and Linux (Mono)
+Windows. Linux work in progress (Mono and CoreCLR)
 
-## Install
-The release consists in the main library (*Ude.dll*) and a command-line client (*udetect.exe*) that can be used for one-shot tests.
-
-On Windows, compile the Visual Studio solution "ude.sln". On Linux you can build the library, the example and the nunit tests with monodelop and its solution ude.mds, or using make. To compile the sources tarball:
-
-    $ ./configure.sh --prefix=/usr/local --enable-tests=yes
-    $ make
-    
-To compile from svn:
-
-    $ ./autogen.sh --prefix=/usr/local --enable-tests=yes
-    $ make
-   
-You can pick the library (*Ude.dll*) from the toplevel build directory (*./bin*) or you can install it to *$prefix/lib/ude* by typing:
-
-    $ make install
-   
-This will installs a command-line example program (*$prefix/bin/udetect*) to test the library on a given file as:
-
-    $ udetect filename 
-    
-To run the nunit tests type:
-
-    $ make test
-    
-    
-###NuGet
-
-https://www.nuget.org/packages/UDE.CSharp/
 
 ## Usage
 ### Example
