@@ -173,8 +173,7 @@ namespace UtfUnknown.Core
 
         public override void DumpStatus()
         {
-            Console.WriteLine(" Latin1Prober: {0} [{1}]", 
-                GetConfidence(), GetCharsetName());
+           // Console.WriteLine(" Latin1Prober: {0} [{1}]", GetConfidence(), GetCharsetName());
         }
     }
 }

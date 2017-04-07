@@ -123,8 +123,7 @@ namespace UtfUnknown.Core
                 
         public override void DumpStatus()
         {
-            Console.WriteLine("  SBCS: {0} [{1}]", GetConfidence(), 
-                GetCharsetName());
+            //Console.WriteLine("  SBCS: {0} [{1}]", GetConfidence(), GetCharsetName());
         }
 
         public override float GetConfidence()
