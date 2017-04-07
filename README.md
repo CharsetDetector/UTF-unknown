@@ -6,6 +6,8 @@
 
 # UTF Unknown
 
+<img src="https://raw.githubusercontent.com/CharsetDetector/UTF-unknown/master/logo.png" width="40" height="40" />
+
 Detect character set for files, steams and other bytes.
 
 Detection of character sets with a simple and redesigned interface.
