@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.1;netstandard1.3;net40</TargetFrameworks>
+    <TargetFrameworks>netstandard1.0;netstandard1.3;net40</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyName>UtfUnknown</AssemblyName>

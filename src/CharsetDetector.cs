@@ -135,7 +135,7 @@ namespace UtfUnknown
             return detector.DataEnd();
         }
 
-#if !NETSTANDARD1_1
+#if !NETSTANDARD1_0
 
         public static DetectionResult DetectFromStream(Stream stream)
         {
