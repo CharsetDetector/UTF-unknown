@@ -87,7 +87,7 @@ namespace UtfUnknown.Core
         /// <summary>
         /// Traditional chinese
         /// </summary>
-        public const string BIG5 = "Big-5";
+        public const string BIG5 = "Big5";
 
         public const string EUCKR = "EUC-KR";
 
