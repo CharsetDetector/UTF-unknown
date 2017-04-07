@@ -4,9 +4,9 @@
 [![codecov.io](https://codecov.io/github/UniversalCharsetDetector/ude/coverage.svg?branch=master)](https://codecov.io/github/UniversalCharsetDetector/ude?branch=master)
 -->
 
-# UTF Unknown
+<h1><img src="https://raw.githubusercontent.com/CharsetDetector/UTF-unknown/master/logo.png" width="40" height="40" /> UTF Unknown </h1>
 
-<img src="https://raw.githubusercontent.com/CharsetDetector/UTF-unknown/master/logo.png" width="40" height="40" />
+
 
 Detect character set for files, steams and other bytes.
 
