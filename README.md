@@ -34,12 +34,12 @@ Features:
 Use the static detectX methods from `CharsetDetector`.
 
 ```c#
-// Detect from File
-var result = CharsetDetector.DetectFromFile("c:/myfile.txt");
+// Detect from File (NET standard 1.3+)
+var result = CharsetDetector.DetectFromFile("c:/myfile.txt"); //or pass FileInfo
 Encoding encoding = result.Detected.Encoding; //or result.Detected.EncodingName
 float confidence = result.Detected.Confidence; //confidence between 0 and 1
 var allDetails = result.Details;
-// Detect from Stream
+// Detect from Stream (NET standard 1.3+)
 var result = CharsetDetector.DetectFromStream(stream);
 // Detect from bytes
 var result = CharsetDetector.DetectFromBytes(byteArray);
