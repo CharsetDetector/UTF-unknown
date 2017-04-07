@@ -6,7 +6,7 @@
   <PropertyGroup>
     <AssemblyName>UtfUnknown</AssemblyName>
     <PackageId>UTF.Unknown</PackageId>
-    <Version>1.0.0-alpha1</Version>
+    <Version>1.0.0-beta1</Version>
 
   </PropertyGroup>
   <PropertyGroup>
@@ -17,22 +17,22 @@
     <NeutralLanguage>en-US</NeutralLanguage>
     <AssemblyTitle>UTF Unknown</AssemblyTitle>
     <!-- summary is not migrated from project.json, but you can use the <Description> property for that if needed. -->
-    <Description>
-      Detect character set for files, steams and other bytes.
+    <Description>Detect character set for files, steams and other bytes.
 
-      Detection of character sets with a simple, redesigned, interface.
+This package is based on Ude (https://github.com/errepi/ude), which is a port of the Mozilla Universal Charset Detector (https://mxr.mozilla.org/mozilla/source/extensions/universalchardet/).
 
-      This package is forked from Ude (https://github.com/errepi/ude),
-      which is a port of the Mozilla Universal Charset Detector (https://mxr.mozilla.org/mozilla/source/extensions/universalchardet/).
-    </Description>
+Features:
+
+- 28 charsets
+- old bugs fixed</Description>
     <Copyright></Copyright>
 
   </PropertyGroup>
   <PropertyGroup>
 
     <PackageTags>charset;detection;unicode;ascii;netstandard</PackageTags>
-    <PackageReleaseNotes>First alpha</PackageReleaseNotes>
-    <PackageIconUrl></PackageIconUrl>
+    <PackageReleaseNotes>First beta</PackageReleaseNotes>
+    <PackageIconUrl>https://raw.githubusercontent.com/CharsetDetector/UTF-unknown/master/logo.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/CharsetDetector/UTF-unknown</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/CharsetDetector/UTF-unknown/blob/master/license/MPL-1.1.txt</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
