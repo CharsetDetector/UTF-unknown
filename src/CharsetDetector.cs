@@ -116,8 +116,6 @@ namespace UtfUnknown
         /// </summary>
         private const int ProbersNum = 3;
 
-        //public event DetectorFinished Finished;
-
         public CharsetDetector()
         {
             _start = true;
@@ -136,8 +134,7 @@ namespace UtfUnknown
             detector.Feed(bytes, 0, bytes.Length);
             return detector.DataEnd();
         }
-
-
+        
         public static DetectionSummary GetFromStream(Stream stream)
         {
 
@@ -150,8 +147,7 @@ namespace UtfUnknown
             }
             return detector.DataEnd();
         }
-
-
+        
         public static DetectionSummary GetFromFile(string filePath)
         {
             using (FileStream fs = File.OpenRead(filePath))
@@ -361,7 +357,6 @@ namespace UtfUnknown
         }
     }
 
-    //public delegate void DetectorFinished(string charset, float confidence);
 
 }
 

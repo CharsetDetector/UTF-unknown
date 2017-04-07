@@ -18,7 +18,7 @@
     <AssemblyTitle>UTF Unknown</AssemblyTitle>
     <!-- summary is not migrated from project.json, but you can use the <Description> property for that if needed. -->
     <Description>
-      Easily detect characterset for files, strings, steams and other bytes.
+      Detect character set for files, steams and other bytes.
 
       Detection of character sets with a simple, redesigned, interface.
 

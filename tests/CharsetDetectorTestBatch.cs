@@ -82,7 +82,7 @@ namespace UtfUnknown.Tests
 
                 var result = CharsetDetector.GetFromFile(file);
                 var detected = result.Detected;
-                Assert.True(charset == detected.Charset, string.Format("Charset detection failed for {0}. Expected: {1}, detected: {2} ({3}% confidence)", file, charset, detected.Charset, detected.Confidence * 100));
+                Assert.True(charset == detected.EncodingName, string.Format("Charset detection failed for {0}. Expected: {1}, detected: {2} ({3}% confidence)", file, charset, detected.EncodingName, detected.Confidence * 100));
 
             }
         }

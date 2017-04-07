@@ -2,6 +2,7 @@
 //
 // Author:
 //    Rudi Pettazzi <rudi.pettazzi@gmail.com>
+//    J. Verdurmen
 //
 
 using System;
@@ -29,7 +30,7 @@ namespace ConsoleExample
 
             if (result.Detected != null)
             {
-                Console.WriteLine("Charset: {0}, confidence: {1}", result.Detected.Charset, result.Detected.Confidence);
+                Console.WriteLine("Charset: {0}, confidence: {1}", result.Detected.EncodingName, result.Detected.Confidence);
             }
             else
             {

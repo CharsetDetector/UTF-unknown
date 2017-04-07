@@ -4,17 +4,17 @@ using UtfUnknown.Core;
 
 namespace UtfUnknown
 {
+    /// <summary>
+    /// Result of a detection
+    /// </summary>
     public class DetectionResult
     {
-        private readonly string _encodingShortName;
-
-
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Object"/> class.
+        /// New result
         /// </summary>
         public DetectionResult(string encodingShortName, float confidence, CharsetProber prober = null, TimeSpan? time = null)
         {
-            _encodingShortName = encodingShortName;
+            EncodingName = encodingShortName;
             Confidence = confidence;
 
             try
@@ -32,25 +32,36 @@ namespace UtfUnknown
         }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="T:System.Object"/> class.
+        /// New Result
         /// </summary>
         public DetectionResult(CharsetProber prober, TimeSpan? time = null) 
             : this(prober.GetCharsetName(), prober.GetConfidence(), prober, time)
         {
         }
 
-        [Obsolete("v1")]
-        public string Charset
-        {
-            get { return _encodingShortName; }
-        }
+        /// <summary>
+        /// The (short) name of the detected encoding. For full details, check <see cref="Encoding"/>
+        /// </summary>
+        public string EncodingName { get; }
 
+        /// <summary>
+        /// The detected encoding. 
+        /// </summary>
         public Encoding Encoding { get; set; }
 
+        /// <summary>
+        /// The confidence of the found encoding
+        /// </summary>
         public float Confidence { get; set; }
 
+        /// <summary>
+        /// The used prober for detection
+        /// </summary>
         public CharsetProber Prober { get; set; }
 
+        /// <summary>
+        /// The time spent
+        /// </summary>
         public TimeSpan? Time { get; set; }
 
     }
