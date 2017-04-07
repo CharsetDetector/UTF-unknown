@@ -24,6 +24,7 @@ Features:
 - Builds on CI (AppVeyor)
 - Strong named
 - Documentation added
+- Multiple bugs from Ude fixed
 
 ## Platform
 .NET 4.0 and .NET Standard 1.3
