@@ -1,68 +1,45 @@
-﻿using System;
-using System.Text;
-using UtfUnknown.Core;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace UtfUnknown
 {
     /// <summary>
-    /// Result of a detection
+    /// Result of a detection.
     /// </summary>
     public class DetectionResult
     {
         /// <summary>
-        /// New result
+        /// Empty
         /// </summary>
-        public DetectionResult(string encodingShortName, float confidence, CharsetProber prober = null, TimeSpan? time = null)
-        {
-            EncodingName = encodingShortName;
-            Confidence = confidence;
-
-            try
-            {
-                Encoding = System.Text.Encoding.GetEncoding(encodingShortName);
-            }
-            catch (Exception)
-            {
-                
-               //wrong name
-            }
-         
-            Prober = prober;
-            Time = time;
-        }
-
-        /// <summary>
-        /// New Result
-        /// </summary>
-        public DetectionResult(CharsetProber prober, TimeSpan? time = null) 
-            : this(prober.GetCharsetName(), prober.GetConfidence(), prober, time)
+        public DetectionResult()
         {
         }
 
         /// <summary>
-        /// The (short) name of the detected encoding. For full details, check <see cref="Encoding"/>
+        /// Multiple results
         /// </summary>
-        public string EncodingName { get; }
+        public DetectionResult(IList<DetectionDetail> details)
+        {
+            Details = details;
+        }
 
         /// <summary>
-        /// The detected encoding. 
+        /// Single result
         /// </summary>
-        public Encoding Encoding { get; set; }
+        /// <param name="detectionDetail"></param>
+        public DetectionResult(DetectionDetail detectionDetail)
+        {
+            Details = new List<DetectionDetail> { detectionDetail };
+        }
 
         /// <summary>
-        /// The confidence of the found encoding
+        /// Get the best Detection
         /// </summary>
-        public float Confidence { get; set; }
+        public DetectionDetail Detected => Details?.FirstOrDefault();
 
         /// <summary>
-        /// The used prober for detection
+        /// All results
         /// </summary>
-        public CharsetProber Prober { get; set; }
-
-        /// <summary>
-        /// The time spent
-        /// </summary>
-        public TimeSpan? Time { get; set; }
-
+        public IList<DetectionDetail> Details { set; get; }
     }
 }

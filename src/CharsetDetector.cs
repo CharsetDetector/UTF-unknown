@@ -85,7 +85,7 @@ namespace UtfUnknown
         private bool _gotData;
 
         /// <summary>
-        /// Most of the time true of <see cref="_detectionResult"/> is set. TODO not always
+        /// Most of the time true of <see cref="_detectionDetail"/> is set. TODO not always
         /// </summary>
         private bool _done;
 
@@ -107,7 +107,7 @@ namespace UtfUnknown
         /// <summary>
         /// Detected charset. Most of the time <see cref="_done"/> is true
         /// </summary>
-        private DetectionResult _detectionResult;
+        private DetectionDetail _detectionDetail;
 
         private const float MinimumThreshold = 0.20f;
 
@@ -128,14 +128,14 @@ namespace UtfUnknown
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
-        public static DetectionSummary GetFromBytes(byte[] bytes)
+        public static DetectionResult DetectFromBytes(byte[] bytes)
         {
             var detector = new CharsetDetector();
             detector.Feed(bytes, 0, bytes.Length);
             return detector.DataEnd();
         }
-        
-        public static DetectionSummary GetFromStream(Stream stream)
+
+        public static DetectionResult DetectFromStream(Stream stream)
         {
 
             var detector = new CharsetDetector();
@@ -147,13 +147,12 @@ namespace UtfUnknown
             }
             return detector.DataEnd();
         }
-        
-        public static DetectionSummary GetFromFile(string filePath)
+
+        public static DetectionResult DetectFromFile(string filePath)
         {
             using (FileStream fs = File.OpenRead(filePath))
             {
-                var detector = new CharsetDetector();
-                return GetFromStream(fs);
+                return DetectFromStream(fs);
             }
 
         }
@@ -175,7 +174,7 @@ namespace UtfUnknown
                 _start = false;
                 if (bomSet != null)
                 {
-                    _detectionResult = new DetectionResult(bomSet, 1);
+                    _detectionDetail = new DetectionDetail(bomSet, 1);
                     _done = true;
                     return;
                 }
@@ -217,7 +216,7 @@ namespace UtfUnknown
             if (probingState == ProbingState.FoundIt)
             {
                 _done = true;
-                _detectionResult = new DetectionResult(charsetProber);
+                _detectionDetail = new DetectionDetail(charsetProber);
                 return true;
             }
             return false;
@@ -236,10 +235,7 @@ namespace UtfUnknown
                         InputState = InputState.Highbyte;
 
                         // kill EscCharsetProber if it is active
-                        if (_escCharsetProber != null)
-                        {
-                            _escCharsetProber = null;
-                        }
+                        _escCharsetProber = null;
 
                         // start multibyte and singlebyte charset prober
                         if (_charsetProbers[0] == null)
@@ -308,41 +304,41 @@ namespace UtfUnknown
         /// <summary>
         /// Notify detector that no further data is available. 
         /// </summary>
-        protected virtual DetectionSummary DataEnd()
+        protected virtual DetectionResult DataEnd()
         {
             if (!_gotData)
             {
                 // we haven't got any data yet, return immediately 
                 // caller program sometimes call DataEnd before anything has 
                 // been sent to detector
-                return new DetectionSummary();
+                return new DetectionResult();
             }
 
-            if (_detectionResult != null)
+            if (_detectionDetail != null)
             {
                 _done = true;
 
                 //conf 1.0 is from v1.0 (todo wrong?)
-                _detectionResult.Confidence = 1.0f;
-                return new DetectionSummary(_detectionResult);
+                _detectionDetail.Confidence = 1.0f;
+                return new DetectionResult(_detectionDetail);
             }
 
             if (InputState == InputState.Highbyte)
             {
-                var list = new List<DetectionResult>(ProbersNum);
+                var list = new List<DetectionDetail>(ProbersNum);
                 for (int i = 0; i < ProbersNum; i++)
                 {
                     var charsetProber = _charsetProbers[i];
 
                     if (charsetProber != null)
                     {
-                        list.Add(new DetectionResult(charsetProber));
+                        list.Add(new DetectionDetail(charsetProber));
                     }
                 }
 
                 var detectionResults = list.Where(p => p.Confidence > MinimumThreshold).OrderByDescending(p => p.Confidence).ToList();
 
-                return new DetectionSummary(detectionResults);
+                return new DetectionResult(detectionResults);
 
                 //TODO why done isn't true?
 
@@ -351,9 +347,9 @@ namespace UtfUnknown
             else if (InputState == InputState.PureASCII)
             {
                 //TODO why done isn't true?
-                return new DetectionSummary(new DetectionResult("ASCII", 1.0f, null, null));
+                return new DetectionResult(new DetectionDetail("ASCII", 1.0f, null, null));
             }
-            return new DetectionSummary();
+            return new DetectionResult();
         }
     }
 

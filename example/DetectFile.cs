@@ -10,7 +10,7 @@ using UtfUnknown;
 
 namespace ConsoleExample
 {
-    public class Udetect
+    public class DetectFile
     {
         /// <summary>
         /// Command line example: detects the encoding of the given file.
@@ -26,7 +26,7 @@ namespace ConsoleExample
 
             string filename = args[0];
 
-            var result = CharsetDetector.GetFromFile(filename);
+            var result = CharsetDetector.DetectFromFile(filename);
 
             if (result.Detected != null)
             {

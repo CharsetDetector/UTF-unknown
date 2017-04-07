@@ -4,7 +4,7 @@
     <TargetFrameworks>netstandard1.3;net40</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyName>UTF.Unknown</AssemblyName>
+    <AssemblyName>UtfUnknown</AssemblyName>
     <PackageId>UTF.Unknown</PackageId>
     <Version>1.0.0-alpha1</Version>
 
