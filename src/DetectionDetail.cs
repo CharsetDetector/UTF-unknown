@@ -5,7 +5,7 @@ using UtfUnknown.Core;
 namespace UtfUnknown
 {
     /// <summary>
-    /// Result of a detection
+    /// Detailed result of a detection
     /// </summary>
     public class DetectionDetail
     {
@@ -50,7 +50,7 @@ namespace UtfUnknown
         public Encoding Encoding { get; set; }
 
         /// <summary>
-        /// The confidence of the found encoding
+        /// The confidence of the found encoding. Between 0 and 1.
         /// </summary>
         public float Confidence { get; set; }
 
@@ -60,7 +60,7 @@ namespace UtfUnknown
         public CharsetProber Prober { get; set; }
 
         /// <summary>
-        /// The time spent
+        /// The time spend
         /// </summary>
         public TimeSpan? Time { get; set; }
 

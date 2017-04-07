@@ -116,7 +116,7 @@ namespace UtfUnknown
         /// </summary>
         private const int ProbersNum = 3;
 
-        public CharsetDetector()
+        private CharsetDetector()
         {
             _start = true;
             InputState = InputState.PureASCII;
@@ -331,7 +331,7 @@ namespace UtfUnknown
         /// <summary>
         /// Notify detector that no further data is available. 
         /// </summary>
-        protected virtual DetectionResult DataEnd()
+        private DetectionResult DataEnd()
         {
             if (!_gotData)
             {
