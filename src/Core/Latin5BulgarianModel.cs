@@ -1,4 +1,4 @@
-namespace Ude.Core
+namespace UtfUnknown.Core
 {
     public class Latin5BulgarianModel : BulgarianModel
     {

@@ -5,9 +5,9 @@
 //
 
 using System;
-using System.IO;
+using UtfUnknown;
 
-namespace Ude.Example
+namespace ConsoleExample
 {
     public class Udetect
     {

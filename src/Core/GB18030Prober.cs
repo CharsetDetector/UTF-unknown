@@ -36,7 +36,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-namespace Ude.Core
+namespace UtfUnknown.Core
 {
     // We use gb18030 to replace gb2312, because 18030 is a superset. 
     public class GB18030Prober : CharsetProber

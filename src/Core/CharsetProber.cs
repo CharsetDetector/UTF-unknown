@@ -38,7 +38,7 @@
 
 using System.IO;
 
-namespace Ude.Core
+namespace UtfUnknown.Core
 {
     public abstract class CharsetProber
     {

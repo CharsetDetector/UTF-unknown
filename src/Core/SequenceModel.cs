@@ -38,7 +38,7 @@
 
 using System;
 
-namespace Ude.Core
+namespace UtfUnknown.Core
 {   
     public abstract class SequenceModel
     {

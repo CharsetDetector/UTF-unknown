@@ -36,7 +36,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-namespace Ude
+namespace UtfUnknown
 {
     /// <summary>
     /// TODO not used?

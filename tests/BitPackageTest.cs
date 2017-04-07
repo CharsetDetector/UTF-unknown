@@ -36,10 +36,10 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-using Ude.Core;
+using UtfUnknown.Core;
 using Xunit;
 
-namespace Ude.Tests
+namespace UtfUnknown.Tests
 {
     public class BitPackageTest
     {

@@ -135,7 +135,7 @@ using System;
  * charset identified, either "windows-1255" or "ISO-8859-8".
  *
  */
-namespace Ude.Core
+namespace UtfUnknown.Core
 {
     
     /// <summary>

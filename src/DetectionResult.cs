@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text;
-using Ude.Core;
+using UtfUnknown.Core;
 
-namespace Ude
+namespace UtfUnknown
 {
     public class DetectionResult
     {

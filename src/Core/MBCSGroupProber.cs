@@ -38,7 +38,7 @@
 
 using System;
 
-namespace Ude.Core
+namespace UtfUnknown.Core
 {
     /// <summary>
     /// Multi-byte charsets probers

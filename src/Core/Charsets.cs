@@ -35,7 +35,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-namespace Ude
+namespace UtfUnknown.Core
 {
     /// <summary>
     /// TODO a lot of is unused

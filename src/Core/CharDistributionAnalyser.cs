@@ -35,7 +35,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-namespace Ude.Core
+namespace UtfUnknown.Core
 {
     /// <summary>
     /// Base class for the Character Distribution Method, used for 

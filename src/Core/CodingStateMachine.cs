@@ -37,7 +37,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-namespace Ude.Core
+namespace UtfUnknown.Core
 {
     /// <summary>
     /// Parallel state machine for the Coding Scheme Method

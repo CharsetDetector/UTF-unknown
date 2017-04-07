@@ -40,9 +40,9 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using Ude.Core;
+using UtfUnknown.Core;
 
-namespace Ude
+namespace UtfUnknown
 {
     /// <summary>
     /// Default implementation of charset detection interface. 

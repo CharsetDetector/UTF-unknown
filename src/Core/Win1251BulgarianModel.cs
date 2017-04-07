@@ -1,4 +1,4 @@
-namespace Ude.Core
+namespace UtfUnknown.Core
 {
     public class Win1251BulgarianModel : BulgarianModel
     {

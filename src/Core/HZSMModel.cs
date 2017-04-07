@@ -39,7 +39,7 @@
 /// <summary>
 /// Escaped charsets state machines
 /// </summary>
-namespace Ude.Core
+namespace UtfUnknown.Core
 {
     public class HZSMModel : SMModel
     {

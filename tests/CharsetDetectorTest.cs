@@ -8,11 +8,12 @@
 
 using System.IO;
 using System.Text;
+using UtfUnknown.Core;
 using Xunit;
 
 #endregion
 
-namespace Ude.Tests
+namespace UtfUnknown.Tests
 {
     public class CharsetDetectorTest
     {

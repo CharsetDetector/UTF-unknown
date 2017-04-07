@@ -38,6 +38,7 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/CharsetDetector/UTF-unknown</RepositoryUrl>
+    <RootNamespace>UtfUnknown</RootNamespace>
   </PropertyGroup>
 
 </Project>
