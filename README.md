@@ -4,6 +4,8 @@
 [![codecov.io](https://codecov.io/github/UniversalCharsetDetector/ude/coverage.svg?branch=master)](https://codecov.io/github/UniversalCharsetDetector/ude?branch=master)
 -->
 
+# UTF Unknown
+
 Detect character set for files, steams and other bytes.
 
 Detection of character sets with a simple and redesigned interface.
@@ -23,12 +25,31 @@ Features:
 - Strong named
 - Documentation added
 
+## Platform
+.NET 4.0 and .NET Standard 1.3
+
+## Usage
+
+Use the static detectX methods from `CharsetDetector`.
+
+```c#
+// Detect from File
+var result = CharsetDetector.DetectFromFile("c:/myfile.txt");
+Encoding encoding = result.Detected.Encoding; //or result.Detected.EncodingName
+float confidence = result.Detected.Confidence; //confidence between 0 and 1
+var allDetails = result.Details;
+// Detect from Stream
+var result = CharsetDetector.DetectFromStream(stream);
+// Detect from bytes
+var result = CharsetDetector.DetectFromBytes(byteArray);
+
+```
 
 # Docs
 
 The article "[A composite approach to language/encoding detection](http://www.mozilla.org/projects/intl/UniversalCharsetDetection.html)" describes the charsets detection algorithms implemented by the library.
 
-Ude can recognize the following charsets:
+The following charsets are supported:
 
 * UTF-8
 * UTF-16 (BE and LE)
@@ -50,27 +71,7 @@ Ude can recognize the following charsets:
 * X-ISO-10646-UCS-4-3412 and X-ISO-10646-UCS-4-2413 (unusual BOM)
 * ASCII
 
-## Platform
-.NET 4.0 and .NET Standard 1.3
 
-## Usage
-
-Use the static detectX methods from `CharsetDetector`.
-
-### Example
-
-```c#
-// Detect from File
-var result = CharsetDetector.DetectFromFile("c:/myfile.txt");
-Encoding encoding = result.Detected.Encoding; //or result.Detected.EncodingName
-float confidence = result.Detected.Confidence; //confidence between 0 and 1
-var allDetails = result.Details;
-// Detect from Stream
-var result = CharsetDetector.DetectFromStream(stream);
-// Detect from bytes
-var result = CharsetDetector.DetectFromBytes(byteArray);
-
-```
 
 ## License
 
