@@ -164,11 +164,10 @@ namespace UtfUnknown.Core
             GetConfidence();
             for (int i = 0; i < PROBERS_NUM; i++) {
                 if (!isActive[i]) {
-                    Console.WriteLine("  MBCS inactive: {0} (confidence is too low).", 
-                         ProberName[i]);
+                    //Console.WriteLine("  MBCS inactive: {0} (confidence is too low).", ProberName[i]);
                 } else {
                     cf = probers[i].GetConfidence();
-                    Console.WriteLine("  MBCS {0}: [{1}]", cf, ProberName[i]);
+                   // Console.WriteLine("  MBCS {0}: [{1}]", cf, ProberName[i]);
                 }
             }
         }

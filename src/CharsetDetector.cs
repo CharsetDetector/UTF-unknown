@@ -135,6 +135,8 @@ namespace UtfUnknown
             return detector.DataEnd();
         }
 
+#if !NETSTANDARD1_1
+
         public static DetectionResult DetectFromStream(Stream stream)
         {
 
@@ -156,6 +158,8 @@ namespace UtfUnknown
             }
 
         }
+
+#endif
 
         protected virtual void Feed(byte[] buf, int offset, int len)
         {
