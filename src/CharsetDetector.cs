@@ -124,7 +124,7 @@ namespace UtfUnknown
         }
 
         /// <summary>
-        /// TODO buffered
+        /// Detect the character encoding form this byte array.
         /// </summary>
         /// <param name="bytes"></param>
         /// <returns></returns>
@@ -137,6 +137,12 @@ namespace UtfUnknown
 
 #if !NETSTANDARD1_0
 
+        /// <summary>
+        /// Detect the character encoding by reading the stream.
+        /// 
+        /// Note: stream position is not reset before and after.
+        /// </summary>
+        /// <param name="stream">The steam. </param>
         public static DetectionResult DetectFromStream(Stream stream)
         {
 
@@ -149,10 +155,27 @@ namespace UtfUnknown
             }
             return detector.DataEnd();
         }
-
+        /// <summary>
+        /// Detect the character encoding of this file.
+        /// </summary>
+        /// <param name="filePath">Path to file</param>
+        /// <returns></returns>
         public static DetectionResult DetectFromFile(string filePath)
         {
             using (FileStream fs = File.OpenRead(filePath))
+            {
+                return DetectFromStream(fs);
+            }
+
+        }    
+        /// <summary>
+        /// Detect the character encoding of this file.
+        /// </summary>
+        /// <param name="file">The file</param>
+        /// <returns></returns>
+        public static DetectionResult DetectFromFile(FileInfo file)
+        {
+            using (FileStream fs = file.OpenRead())
             {
                 return DetectFromStream(fs);
             }
