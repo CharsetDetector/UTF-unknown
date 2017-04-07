@@ -1,17 +1,26 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/ouo7t319ixcokxer/branch/master?svg=true)](https://ci.appveyor.com/project/304NotModified/ude/branch/master)
 [![codecov.io](https://codecov.io/github/UniversalCharsetDetector/ude/coverage.svg?branch=master)](https://codecov.io/github/UniversalCharsetDetector/ude?branch=master)
 
+      Detect character set for files, steams and other bytes.
 
-#WIP
-Work in progress! 
+      Detection of character sets with a simple and redesigned interface.
+
+      This package is based on [Ude](https://github.com/errepi/ude),
+      which is a port of the [Mozilla Universal Charset Detector](https://mxr.mozilla.org/mozilla/source/extensions/universalchardet/).
+
+            
+      The interface and other classes has been resigned so it's easier to use and better object oriented design (OOD). Unit tests and CI has been added.
+
+      Features:
+
+      - OOD
+      - Moved to netstandard
+      - Added more unit tests
+      - Builds on CI (AppVeyor)
+      - Strong named
 
 
-#About this libary
-
-
-#Docs
-
-Ude is a C# port of [Mozilla Universal Charset Detector](http://mxr.mozilla.org/mozilla/source/extensions/universalchardet/src/).
+# Docs
 
 The article "[A composite approach to language/encoding detection](http://www.mozilla.org/projects/intl/UniversalCharsetDetection.html)" describes the charsets detection algorithms implemented by the library.
 
@@ -38,37 +47,26 @@ Ude can recognize the following charsets:
 * ASCII
 
 ## Platform
-Windows. Linux work in progress (Mono and CoreCLR)
-
+.NET 4.0 and .NET Standard 1.3
 
 ## Usage
+
+Use the static detectX methods from `CharsetDetector`.
+
 ### Example
 
 ```c#
-public static void Main(String[] args)
-{
-    string filename = args[0];
-    using (FileStream fs = File.OpenRead(filename)) {
-        Ude.CharsetDetector detector = new Ude.CharsetDetector();
-        detector.Feed(fs);
-        detector.DataEnd();
-        if (detector.Charset != null) {
-            Console.WriteLine("Charset: {0}, confidence: {1}", detector.Charset, detector.Confidence);
-        } else {
-            Console.WriteLine("Detection failed.");
-        }
-    }
-}    
+// Detect from File
+var result = CharsetDetector.DetectFromFile("c:/myfile.txt");
+Encoding encoding = result.Detected.Encoding; //or result.Detected.EncodingName
+float confidence = result.Detected.Confidence; //confidence between 0 and 1
+var allDetails = result.Details;
+// Detect from Stream
+var result = CharsetDetector.DetectFromStream(stream);
+// Detect from bytes
+var result = CharsetDetector.DetectFromBytes(byteArray);
+
 ```
-
-## Other portings
-The original Mozilla Universal Charset Detector has been ported to a variety of languages. Among these, a Java port:
-
-* [juniversalchardet](http://code.google.com/p/juniversalchardet/)
-
-from which I copied a few data structures, and a Python port:
-
-* [chardet](http://chardet.feedparser.org/)
 
 ## License
 

@@ -6,6 +6,7 @@
 //
 
 using System;
+using System.Text;
 using UtfUnknown;
 
 namespace ConsoleExample
@@ -23,6 +24,9 @@ namespace ConsoleExample
                 Console.WriteLine("Usage: udetect <filename>");
                 return;
             }
+
+
+
 
             string filename = args[0];
 
