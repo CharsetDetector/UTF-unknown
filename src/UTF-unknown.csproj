@@ -42,5 +42,8 @@
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>UtfUnknown.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard1.3|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard1.3\UtfUnknown.xml</DocumentationFile>
+  </PropertyGroup>
 
 </Project>
