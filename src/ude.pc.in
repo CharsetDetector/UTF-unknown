@@ -1,8 +1,0 @@
-prefix=@prefix@
-assemblies_dir=${prefix}/lib/@PACKAGE@
-Libraries=${assemblies_dir}/Ude.dll
- 
-Name: Ude
-Description: C# porting of Mozilla Universal Charset Detector
-Version: 0.1
-Libs: -r:@prefix@/lib/@PACKAGE@/Ude.dll

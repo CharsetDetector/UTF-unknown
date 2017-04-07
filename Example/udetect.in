@@ -1,4 +1,0 @@
-#!/bin/sh
-
-exec mono "@prefix@/lib/@PACKAGE@/udetect.exe" $MONO_EXTRA_ARGS "$@"
-
