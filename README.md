@@ -4,24 +4,24 @@
 [![codecov.io](https://codecov.io/github/UniversalCharsetDetector/ude/coverage.svg?branch=master)](https://codecov.io/github/UniversalCharsetDetector/ude?branch=master)
 -->
 
-      Detect character set for files, steams and other bytes.
+Detect character set for files, steams and other bytes.
 
-      Detection of character sets with a simple and redesigned interface.
+Detection of character sets with a simple and redesigned interface.
 
-      This package is based on [Ude](https://github.com/errepi/ude),
-      which is a port of the [Mozilla Universal Charset Detector](https://mxr.mozilla.org/mozilla/source/extensions/universalchardet/).
+This package is based on [Ude](https://github.com/errepi/ude),
+which is a port of the [Mozilla Universal Charset Detector](https://mxr.mozilla.org/mozilla/source/extensions/universalchardet/).
 
-            
-      The interface and other classes has been resigned so it's easier to use and better object oriented design (OOD). Unit tests and CI has been added.
+      
+The interface and other classes has been resigned so it's easier to use and better object oriented design (OOD). Unit tests and CI has been added.
 
-      Features:
+Features:
 
-      - OOD
-      - Moved to netstandard
-      - Added more unit tests
-      - Builds on CI (AppVeyor)
-      - Strong named
-      - Documentation added
+- OOD
+- Moved to netstandard
+- Added more unit tests
+- Builds on CI (AppVeyor)
+- Strong named
+- Documentation added
 
 
 # Docs
