@@ -36,9 +36,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-/// <summary>
-/// Escaped charsets state machines
-/// </summary>
+//Escaped charsets state machines
 namespace UtfUnknown.Core
 {
     public class HZSMModel : SMModel

@@ -39,7 +39,7 @@
 using System;
 
 
-/**
+/*
  * General ideas of the Hebrew charset recognition
  *
  * Four main charsets exist in Hebrew:
