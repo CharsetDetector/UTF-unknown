@@ -1,5 +1,8 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/ouo7t319ixcokxer/branch/master?svg=true)](https://ci.appveyor.com/project/304NotModified/ude/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/xr59ab52cav8vuph/branch/master?svg=true)](https://ci.appveyor.com/project/304NotModified/utf-unknown/branch/master)
+
+<!-- 
 [![codecov.io](https://codecov.io/github/UniversalCharsetDetector/ude/coverage.svg?branch=master)](https://codecov.io/github/UniversalCharsetDetector/ude?branch=master)
+-->
 
       Detect character set for files, steams and other bytes.
 
@@ -18,6 +21,7 @@
       - Added more unit tests
       - Builds on CI (AppVeyor)
       - Strong named
+      - Documentation added
 
 
 # Docs
