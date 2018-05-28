@@ -36,23 +36,23 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using NUnit.Framework;
 using UtfUnknown.Core;
-using Xunit;
 
 namespace UtfUnknown.Tests
 {
     public class BitPackageTest
     {
-        [Fact]
+        [Test]
         public void TestPack()
         {
-            Assert.Equal(BitPackage.Pack4bits(0,0,0,0,0,0,0,0), 0);
-            Assert.Equal(BitPackage.Pack4bits(1,1,1,1,1,1,1,1), 286331153);
-            Assert.Equal(BitPackage.Pack4bits(2,2,2,2,2,2,2,2), 572662306);
-            Assert.Equal(BitPackage.Pack4bits(15,15,15,15,15,15,15,15), -1);
+            Assert.AreEqual(BitPackage.Pack4bits(0,0,0,0,0,0,0,0), 0);
+            Assert.AreEqual(BitPackage.Pack4bits(1,1,1,1,1,1,1,1), 286331153);
+            Assert.AreEqual(BitPackage.Pack4bits(2,2,2,2,2,2,2,2), 572662306);
+            Assert.AreEqual(BitPackage.Pack4bits(15,15,15,15,15,15,15,15), -1);
         }
         
-        [Fact]
+        [Test]
         public void TestUnpack()
         {
             int[] data = new int[] {
@@ -69,7 +69,7 @@ namespace UtfUnknown.Tests
 
             for (int i = 0; i < 16; i++) {
                 int n = pkg.Unpack(i);
-                Assert.Equal(n, i);
+                Assert.AreEqual(n, i);
             }          
         }
     }

@@ -14,7 +14,7 @@ build:
 deploy: off
 test_script:
 - ps: cd .\tests\
-- ps: dotnet xunit
+- ps: dotnet test
 - ps: cd ..
 after_build:
 - ps: dotnet pack .\src\

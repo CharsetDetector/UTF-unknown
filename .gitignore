@@ -19,3 +19,4 @@ StyleCop.Cache
 TestResults/
 test-results/
 UpgradeLog*.XML
+/.vs
