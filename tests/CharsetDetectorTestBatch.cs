@@ -16,7 +16,29 @@ namespace UtfUnknown.Tests
 
     public class CharsetDetectorTestBatch
     {
-        static string DATA_ROOT = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "../../../../Data";
+        private static readonly string DATA_ROOT = FindRootPath();
+
+        /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
+        static string FindRootPath()
+        {
+            //find Data in Test directory
+            var path = TestContext.CurrentContext.TestDirectory;
+
+            var directoryName = "TESTS";
+
+            var index = path.IndexOf(directoryName, StringComparison.CurrentCultureIgnoreCase);
+
+            path = path.Substring(0, index + directoryName.Length);
+
+            var fullPath = path + Path.DirectorySeparatorChar + "Data";
+
+            if (!Directory.Exists(fullPath))
+            {
+                throw new DirectoryNotFoundException($"Directory Data with test files not found, path: {fullPath}");
+            }
+
+            return fullPath;
+        }
 
         [TestCaseSource(nameof(AllTestFiles))]
         public void TestFile(TestCase testCase)
@@ -72,7 +94,7 @@ namespace UtfUnknown.Tests
         {
             var result = CharsetDetector.DetectFromFile(file);
             var detected = result.Detected;
-            
+
             StringAssert.AreEqualIgnoringCase(expectedCharset, detected.EncodingName,
                 $"Charset detection failed for {file}. Expected: {expectedCharset}, detected: {detected.EncodingName} ({detected.Confidence * 100}% confidence)");
             Assert.NotNull(detected.Encoding);
