@@ -37,6 +37,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -130,6 +131,11 @@ namespace UtfUnknown
         /// <returns></returns>
         public static DetectionResult DetectFromBytes(byte[] bytes)
         {
+            if (bytes == null)
+            {
+                throw new ArgumentNullException(nameof(bytes));
+            }
+
             var detector = new CharsetDetector();
             detector.Feed(bytes, 0, bytes.Length);
             return detector.DataEnd();
@@ -145,16 +151,84 @@ namespace UtfUnknown
         /// <param name="stream">The steam. </param>
         public static DetectionResult DetectFromStream(Stream stream)
         {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            return DetectFromStream(stream, null);
+        }
+
+        /// <summary>
+        /// Detect the character encoding by reading the stream.
+        /// 
+        /// Note: stream position is not reset before and after.
+        /// </summary>
+        /// <param name="stream">The steam. </param>
+        /// <param name="maxBytesToRead">max bytes to read from <paramref name="stream"/>. If <c>null</c>, then no max</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="maxBytesToRead"/> 0 or lower.</exception>
+        public static DetectionResult DetectFromStream(Stream stream, long? maxBytesToRead)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            if (maxBytesToRead <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxBytesToRead));
+            }
 
             var detector = new CharsetDetector();
-            byte[] buff = new byte[1024];
-            int read;
-            while ((read = stream.Read(buff, 0, buff.Length)) > 0 && !detector._done)
-            {
-                detector.Feed(buff, 0, read);
-            }
+            
+            ReadStream(stream, maxBytesToRead, detector);
             return detector.DataEnd();
         }
+
+        private static void ReadStream(Stream stream, long? maxBytes, CharsetDetector detector)
+        {
+          
+
+            const int bufferSize = 1024;
+            byte[] buff = new byte[bufferSize];
+            int read;
+            long readTotal = 0;
+
+            var toRead = CalcToRead(maxBytes, readTotal, bufferSize);
+
+            while ((read = stream.Read(buff, 0, toRead)) > 0)
+            {
+                detector.Feed(buff, 0, read);
+
+                if (maxBytes != null)
+                {
+                    readTotal += read;
+                    if (readTotal >= maxBytes)
+                    {
+                        return;
+                    }
+
+                    toRead = CalcToRead(maxBytes, readTotal, bufferSize);
+                }
+
+                if (detector._done)
+                {
+                    return;
+                }
+            }
+        }
+
+        private static int CalcToRead(long? maxBytes, long readTotal, int bufferSize)
+        {
+            if (readTotal + bufferSize > maxBytes)
+            {
+                var calcToRead = (int)maxBytes - (int)readTotal;
+                return calcToRead;
+            }
+
+            return bufferSize;
+        }
+
         /// <summary>
         /// Detect the character encoding of this file.
         /// </summary>
@@ -162,12 +236,16 @@ namespace UtfUnknown
         /// <returns></returns>
         public static DetectionResult DetectFromFile(string filePath)
         {
+            if (filePath == null)
+            {
+                throw new ArgumentNullException(nameof(filePath));
+            }
+
             using (FileStream fs = File.OpenRead(filePath))
             {
                 return DetectFromStream(fs);
             }
-
-        }    
+        }
         /// <summary>
         /// Detect the character encoding of this file.
         /// </summary>
@@ -175,11 +253,15 @@ namespace UtfUnknown
         /// <returns></returns>
         public static DetectionResult DetectFromFile(FileInfo file)
         {
+            if (file == null)
+            {
+                throw new ArgumentNullException(nameof(file));
+            }
+
             using (FileStream fs = file.OpenRead())
             {
                 return DetectFromStream(fs);
             }
-
         }
 
 #endif
