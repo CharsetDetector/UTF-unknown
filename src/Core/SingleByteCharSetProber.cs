@@ -137,7 +137,7 @@ namespace UtfUnknown.Core
             return 0.01f;
             */
             // POSITIVE_APPROACH
-            float r = 0.0f;
+            float r;
 
             if (totalSeqs > 0) {
                 r = 1.0f * seqCounters[POSITIVE_CAT] / totalSeqs / model.TypicalPositiveRatio;

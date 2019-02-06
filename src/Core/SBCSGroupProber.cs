@@ -76,8 +76,6 @@ namespace UtfUnknown.Core
   
         public override ProbingState HandleData(byte[] buf, int offset, int len) 
         {
-            ProbingState st = ProbingState.NotMe;
-            
             //apply filter to original buffer, and we got new buffer back
             //depend on what script it is, we will feed them the new buffer 
             //we got after applying proper filter
@@ -91,7 +89,7 @@ namespace UtfUnknown.Core
             for (int i = 0; i < PROBERS_NUM; i++) {
                 if (!isActive[i])
                     continue;
-                st = probers[i].HandleData(newBuf, 0, newBuf.Length);
+                var st = probers[i].HandleData(newBuf, 0, newBuf.Length);
                 
                 if (st == ProbingState.FoundIt) {
                     bestGuess = i;

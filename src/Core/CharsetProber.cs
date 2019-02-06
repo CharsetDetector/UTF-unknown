@@ -99,7 +99,7 @@ namespace UtfUnknown.Core
         /// <returns>filtered buffer</returns>
         protected static byte[] FilterWithoutEnglishLetters(byte[] buf, int offset, int len)
         {
-            byte[] result = null;
+            byte[] result;
 
             using (MemoryStream ms = new MemoryStream(buf.Length))
             {
@@ -147,7 +147,7 @@ namespace UtfUnknown.Core
         /// <returns>a filtered copy of the input buffer</returns>
         protected static byte[] FilterWithEnglishLetters(byte[] buf, int offset, int len)
         {
-            byte[] result = null;
+            byte[] result;
 
             using (MemoryStream ms = new MemoryStream(buf.Length))
             {

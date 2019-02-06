@@ -19,7 +19,7 @@ namespace UtfUnknown
 
             try
             {
-                Encoding = System.Text.Encoding.GetEncoding(encodingShortName);
+                Encoding = Encoding.GetEncoding(encodingShortName);
             }
             catch (Exception)
             {

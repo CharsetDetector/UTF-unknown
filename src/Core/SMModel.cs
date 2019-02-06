@@ -74,10 +74,10 @@ namespace UtfUnknown.Core
             BitPackage stateTable, int[] charLenTable, String name)
         {
             this.classTable = classTable;
-            this.ClassFactor = classFactor;
+            ClassFactor = classFactor;
             this.stateTable = stateTable;
             this.charLenTable = charLenTable;
-            this.Name = name;
+            Name = name;
         }
         
         public int GetClass(byte b)

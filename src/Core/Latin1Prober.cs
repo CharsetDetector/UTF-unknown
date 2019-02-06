@@ -153,7 +153,7 @@ namespace UtfUnknown.Core
             if (state == ProbingState.NotMe)
                 return 0.01f;
             
-            float confidence = 0.0f;
+            float confidence;
             int total = 0;
             for (int i = 0; i < FREQ_CAT_NUM; i++) {
                 total += freqCounter[i];
