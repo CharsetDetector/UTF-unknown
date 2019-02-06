@@ -1,90 +1,103 @@
-// CharsetDetectorTestBatch.cs created with MonoDevelop
-//
 // Author:
 //    Rudi Pettazzi <rudi.pettazzi@gmail.com>
+//    Julian Verdurmen
 //
 
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Reflection;
 using UtfUnknown.Core;
-using Xunit;
+using NUnit.Framework;
 
 namespace UtfUnknown.Tests
 {
 
     public class CharsetDetectorTestBatch
     {
-        // Path.GetDirectoryName (Assembly.GetExecutingAssembly ().Location)
-        const string DATA_ROOT = "../../Data";
+        private static readonly string DATA_ROOT = FindRootPath();
 
-
-
-        [Fact]
-        public void TestLatin1()
+        /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
+        static string FindRootPath()
         {
-            Process(Charsets.WIN1252, "latin1");
-        }
+            //find Data in Test directory
+            var path = TestContext.CurrentContext.TestDirectory;
 
-        [Fact]
-        public void TestCJK()
-        {
-            Process(Charsets.GB18030, "gb18030");
-            Process(Charsets.BIG5, "big5");
-            Process(Charsets.SHIFT_JIS, "shiftjis");
-            Process(Charsets.EUCJP, "eucjp");
-            Process(Charsets.EUCKR, "euckr");
-            Process(Charsets.EUCTW, "euctw");
-            Process(Charsets.ISO2022_JP, "iso2022jp");
-            Process(Charsets.ISO2022_KR, "iso2022kr");
-        }
+            var directoryName = "TESTS";
 
-        [Fact]
-        public void TestHebrew()
-        {
-            Process(Charsets.WIN1255, "windows1255");
-        }
+            var index = path.IndexOf(directoryName, StringComparison.CurrentCultureIgnoreCase);
 
-        [Fact]
-        public void TestGreek()
-        {
-            Process(Charsets.ISO_8859_7, "iso88597");
-            //Process(Charsets.WIN1253, "windows1253");
-        }
+            path = path.Substring(0, index + directoryName.Length);
 
-        [Fact]
-        public void TestCyrillic()
-        {
-            Process(Charsets.WIN1251, "windows1251");
-            Process(Charsets.KOI8R, "koi8r");
-            Process(Charsets.IBM855, "ibm855");
-            Process(Charsets.IBM866, "ibm866");
-            Process(Charsets.MAC_CYRILLIC, "maccyrillic");
-        }
+            var fullPath = path + Path.DirectorySeparatorChar + "Data";
 
-
-
-        [Fact]
-        public void TestUTF8()
-        {
-            Process(Charsets.UTF8, "utf8");
-        }
-
-        private static void Process(string charset, string dirname)
-        {
-            string path = Path.Combine(DATA_ROOT, dirname);
-            if (!Directory.Exists(path))
-                return;
-
-            string[] files = Directory.GetFiles(path);
-
-            foreach (string file in files)
+            if (!Directory.Exists(fullPath))
             {
-
-
-                var result = CharsetDetector.DetectFromFile(file);
-                var detected = result.Detected;
-                Assert.True(charset == detected.EncodingName, string.Format("Charset detection failed for {0}. Expected: {1}, detected: {2} ({3}% confidence)", file, charset, detected.EncodingName, detected.Confidence * 100));
-                Assert.NotNull(detected.Encoding);
+                throw new DirectoryNotFoundException($"Directory Data with test files not found, path: {fullPath}");
             }
+
+            return fullPath;
+        }
+
+        [TestCaseSource(nameof(AllTestFiles))]
+        public void TestFile(TestCase testCase)
+        {
+            TestFile(testCase.ExpectedEncoding, testCase.InputFile.FullName);
+        }
+
+        public class TestCase
+        {
+            /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
+            public TestCase(FileInfo inputFile, string expectedEncoding)
+            {
+                ExpectedEncoding = expectedEncoding;
+                InputFile = inputFile;
+            }
+
+            public FileInfo InputFile { get; set; }
+            public string ExpectedEncoding { get; set; }
+
+            public override string ToString()
+            {
+                return ExpectedEncoding + ": " + InputFile.Name;
+            }
+
+        }
+
+        private static List<TestCase> AllTestFiles()
+        {
+            var testCases = new List<TestCase>();
+
+            var dirInfo = new DirectoryInfo(DATA_ROOT);
+            var dirs = dirInfo.GetDirectories();
+            foreach (var dir in dirs)
+            {
+                testCases.AddRange(CreateTestCases(dir));
+            }
+
+            return testCases;
+        }
+
+        private static List<TestCase> CreateTestCases(DirectoryInfo dirname)
+        {
+            //encoding is the directory name  - before the optional '(' 
+            var expectedEncoding = dirname.Name.Split('(').First().Trim();
+
+            var files = dirname.GetFiles();
+            var cases = files.Select(f => new TestCase(f, expectedEncoding)).ToList();
+            return cases;
+        }
+
+
+        private static void TestFile(string expectedCharset, string file)
+        {
+            var result = CharsetDetector.DetectFromFile(file);
+            var detected = result.Detected;
+
+            StringAssert.AreEqualIgnoringCase(expectedCharset, detected.EncodingName,
+                $"Charset detection failed for {file}. Expected: {expectedCharset}, detected: {detected.EncodingName} ({detected.Confidence * 100}% confidence)");
+            Assert.NotNull(detected.Encoding);
         }
     }
 }
