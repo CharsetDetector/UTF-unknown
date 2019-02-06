@@ -1,22 +1,21 @@
 version: 1.0.{build}
 clone_folder: c:\utfUnknown
 image: Visual Studio 2017
-before_build:
-- ps: msbuild /t:restore
 configuration: Release
 platform: Any CPU
 nuget:
   project_feed: true
-build:
-  publish_nuget: true
-  publish_nuget_symbols: true
-  verbosity: minimal
+
 deploy: off
+build_script:
+- ps: dotnet build -c Release 
 test_script:
 - ps: cd .\tests\
 - ps: dotnet test
 - ps: cd ..
 after_build:
-- ps: dotnet pack .\src\
+- ps: cd .\src\
+- ps: dotnet pack -c Release 
+- ps: cd ..
 artifacts:
 - path: '**\*.nupkg'
