@@ -64,5 +64,10 @@ namespace UtfUnknown
         /// </summary>
         public TimeSpan? Time { get; set; }
 
+
+        public override string ToString()
+        {
+            return $"Detected {EncodingName} with confidence of {Confidence}";
+        }
     }
 }

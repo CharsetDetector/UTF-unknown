@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -41,5 +42,10 @@ namespace UtfUnknown
         /// All results
         /// </summary>
         public IList<DetectionDetail> Details { set; get; }
+
+        public override string ToString()
+        {
+            return $"{nameof(Detected)}: {Detected}, \n{nameof(Details)}:\n - {String.Join("\n- ", Details?.Select(d => d.ToString()))}";
+        }
     }
 }
