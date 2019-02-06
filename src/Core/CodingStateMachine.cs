@@ -47,11 +47,11 @@ namespace UtfUnknown.Core
         private int currentState;
         private SMModel model;
         private int currentCharLen;
-        private int currentBytePos;
+        
         
         public CodingStateMachine(SMModel model) 
         {
-            this.currentState = SMModel.START;
+            currentState = SMModel.START;
             this.model = model;
         }
 
@@ -61,14 +61,14 @@ namespace UtfUnknown.Core
             // we also get byte length
             int byteCls = model.GetClass(b);
             if (currentState == SMModel.START) { 
-                currentBytePos = 0;
+                
                 currentCharLen = model.charLenTable[byteCls];
             }
             
             // from byte's class and stateTable, we get its next state            
             currentState = model.stateTable.Unpack(
                 currentState * model.ClassFactor + byteCls);
-            currentBytePos++;
+            
             return currentState;
         }
   

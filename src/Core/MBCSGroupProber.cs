@@ -112,13 +112,11 @@ namespace UtfUnknown.Core
                     }
                 }
             }
-            
-            ProbingState st = ProbingState.NotMe;
-            
+
             for (int i = 0; i < probers.Length; i++) {
                 if (!isActive[i])
                     continue;
-                st = probers[i].HandleData(highbyteBuf, 0, hptr);
+                var st = probers[i].HandleData(highbyteBuf, 0, hptr);
                 if (st == ProbingState.FoundIt) {
                     bestGuess = i;
                     state = ProbingState.FoundIt;
@@ -138,8 +136,7 @@ namespace UtfUnknown.Core
         public override float GetConfidence()
         {
             float bestConf = 0.0f;
-            float cf = 0.0f;
-            
+
             if (state == ProbingState.FoundIt) {
                 return 0.99f;
             } else if (state == ProbingState.NotMe) {
@@ -148,7 +145,7 @@ namespace UtfUnknown.Core
                 for (int i = 0; i < PROBERS_NUM; i++) {
                     if (!isActive[i])
                         continue;
-                    cf = probers[i].GetConfidence();
+                    var cf = probers[i].GetConfidence();
                     if (bestConf < cf) {
                         bestConf = cf;
                         bestGuess = i;
@@ -160,13 +157,12 @@ namespace UtfUnknown.Core
 
         public override void DumpStatus()
         {
-            float cf;
             GetConfidence();
             for (int i = 0; i < PROBERS_NUM; i++) {
                 if (!isActive[i]) {
                     //Console.WriteLine("  MBCS inactive: {0} (confidence is too low).", ProberName[i]);
                 } else {
-                    cf = probers[i].GetConfidence();
+                   var cf = probers[i].GetConfidence();
                    // Console.WriteLine("  MBCS {0}: [{1}]", cf, ProberName[i]);
                 }
             }

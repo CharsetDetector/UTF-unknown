@@ -456,7 +456,7 @@ namespace UtfUnknown
             else if (InputState == InputState.PureASCII)
             {
                 //TODO why done isn't true?
-                return new DetectionResult(new DetectionDetail("ASCII", 1.0f, null, null));
+                return new DetectionResult(new DetectionDetail("ASCII", 1.0f));
             }
             return new DetectionResult();
         }

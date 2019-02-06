@@ -64,12 +64,11 @@ namespace UtfUnknown.Core
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
-            int codingState = SMModel.START;
             int max = offset + len;
             
             for (int i = offset; i < max; i++) {
 
-                codingState = codingSM.NextState(buf[i]);
+                var codingState = codingSM.NextState(buf[i]);
 
                 if (codingState == SMModel.ERROR) {
                     state = ProbingState.NotMe;
@@ -96,7 +95,7 @@ namespace UtfUnknown.Core
         public override float GetConfidence()
         {
             float unlike = 0.99f;
-            float confidence = 0.0f;
+            float confidence;
             
             if (numOfMBChar < 6) {
                 for (int i = 0; i < numOfMBChar; i++)

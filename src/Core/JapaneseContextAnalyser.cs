@@ -167,8 +167,6 @@ namespace UtfUnknown.Core
 
         public void HandleData(byte[] buf, int offset, int len)
         {
-
-            int charLen = 0;
             int max = offset + len;
             
             if (done)
@@ -182,7 +180,7 @@ namespace UtfUnknown.Core
             // is complete, but since a character will not make much difference,
             // skipping it will simplify our logic and improve performance.
             for (int i = needToSkipCharNum+offset; i < max; ) {
-                int order = GetOrder(buf, i, out charLen);
+                int order = GetOrder(buf, i, out var charLen);
                 i += charLen;
                 if (i > max) {
                     needToSkipCharNum = i - max;

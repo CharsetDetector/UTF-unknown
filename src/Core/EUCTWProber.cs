@@ -46,9 +46,9 @@ namespace UtfUnknown.Core
 
         public EUCTWProber()
         {
-            this.codingSM = new CodingStateMachine(new EUCTWSMModel());
-            this.distributionAnalyser = new EUCTWDistributionAnalyser();
-            this.Reset();
+            codingSM = new CodingStateMachine(new EUCTWSMModel());
+            distributionAnalyser = new EUCTWDistributionAnalyser();
+            Reset();
         }
         
         public override ProbingState HandleData(byte[] buf, int offset, int len)

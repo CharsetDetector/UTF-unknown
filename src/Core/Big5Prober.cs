@@ -47,18 +47,17 @@ namespace UtfUnknown.Core
         
         public Big5Prober()
         {
-            this.codingSM = new CodingStateMachine(new BIG5SMModel());
-            this.distributionAnalyser = new BIG5DistributionAnalyser();
-            this.Reset();        
+            codingSM = new CodingStateMachine(new BIG5SMModel());
+            distributionAnalyser = new BIG5DistributionAnalyser();
+            Reset();        
         }
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
-            int codingState = 0;
             int max = offset + len;
 
             for (int i = offset; i < max; i++) {
-                codingState = codingSM.NextState(buf[i]);
+                var codingState = codingSM.NextState(buf[i]);
                 if (codingState == SMModel.ERROR) {
                     state = ProbingState.NotMe;
                     break;
