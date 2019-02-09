@@ -6,7 +6,7 @@
   <PropertyGroup>
     <AssemblyName>UtfUnknown</AssemblyName>
     <PackageId>UTF.Unknown</PackageId>
-    <Version>1.0.0-beta1</Version>
+    <Version>1.0.0-rc1</Version>
 
   </PropertyGroup>
   <PropertyGroup>
@@ -16,7 +16,6 @@
     <Authors>Julian Verdurmen, Rudi Pettazzi, Shy Shalom</Authors>
     <NeutralLanguage>en-US</NeutralLanguage>
     <AssemblyTitle>UTF Unknown</AssemblyTitle>
-    <!-- summary is not migrated from project.json, but you can use the <Description> property for that if needed. -->
     <Description>Detect character set for files, steams and other bytes.
 
 This package is based on Ude (https://github.com/errepi/ude), which is a port of the Mozilla Universal Charset Detector (https://mxr.mozilla.org/mozilla/source/extensions/universalchardet/).
@@ -24,14 +23,19 @@ This package is based on Ude (https://github.com/errepi/ude), which is a port of
 Features:
 
 - 28 charsets
-- old bugs fixed</Description>
+- old bugs fixed
+- easy to use API    
+    </Description>
     <Copyright></Copyright>
 
   </PropertyGroup>
   <PropertyGroup>
 
     <PackageTags>charset;detection;unicode;ascii;netstandard</PackageTags>
-    <PackageReleaseNotes>First beta</PackageReleaseNotes>
+    <PackageReleaseNotes>
+    Added maxBytesToRead for DetectFromStream + improve error handling for incorrect arguments
+    
+    </PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/CharsetDetector/UTF-unknown/master/logo.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/CharsetDetector/UTF-unknown</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/CharsetDetector/UTF-unknown/blob/master/license/MPL-1.1.txt</PackageLicenseUrl>
