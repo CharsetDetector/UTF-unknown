@@ -40,16 +40,16 @@ using System;
 
 namespace UtfUnknown.Core
 {
-
     public class SingleByteCharSetProber : CharsetProber
     {
-        private const int SAMPLE_SIZE = 64;
         private const int SB_ENOUGH_REL_THRESHOLD = 1024;
         private const float POSITIVE_SHORTCUT_THRESHOLD = 0.95f;
         private const float NEGATIVE_SHORTCUT_THRESHOLD = 0.05f;
         private const int SYMBOL_CAT_ORDER = 250;
         private const int NUMBER_OF_SEQ_CAT = 4;
         private const int POSITIVE_CAT = NUMBER_OF_SEQ_CAT-1;
+        private const int PROBABLE_CAT = NUMBER_OF_SEQ_CAT - 2;
+        private const int NEUTRAL_CAT = NUMBER_OF_SEQ_CAT - 3;
         private const int NEGATIVE_CAT = 0;
         
         protected SequenceModel model;
@@ -61,8 +61,10 @@ namespace UtfUnknown.Core
         byte lastOrder;
 
         int totalSeqs;
-        int totalChar;
         int[] seqCounters = new int[NUMBER_OF_SEQ_CAT];
+
+        int totalChar;
+        int ctrlChar;
         
         // characters that fall in our sampling range
         int freqChar;
@@ -89,23 +91,40 @@ namespace UtfUnknown.Core
         {
             int max = offset + len;
             
-            for (int i = offset; i < max; i++) {
+            for (int i = offset; i < max; i++)
+            {
                 byte order = model.GetOrder(buf[i]);
 
                 if (order < SYMBOL_CAT_ORDER)
+                {
                     totalChar++;
+                }
+                else if (order == SequenceModel.ILL)
+                {
+                    // When encountering an illegal codepoint,
+                    // no need to continue analyzing data
+                    state = ProbingState.NotMe;
+                    break;
+                }
+                else if (order == SequenceModel.CTR)
+                {
+                    ctrlChar++;
+                }
                     
-                if (order < SAMPLE_SIZE) {
+                if (order < model.FreqCharCount)
+                {
                     freqChar++;
 
-                    if (lastOrder < SAMPLE_SIZE) {
+                    if (lastOrder < model.FreqCharCount)
+                    {
                         totalSeqs++;
                         if (!reversed)
-                            ++(seqCounters[model.GetPrecedence(lastOrder*SAMPLE_SIZE+order)]);
+                            ++(seqCounters[model.GetPrecedence(lastOrder * model.FreqCharCount + order)]);
                         else // reverse the order of the letters in the lookup
-                            ++(seqCounters[model.GetPrecedence(order*SAMPLE_SIZE+lastOrder)]);
+                            ++(seqCounters[model.GetPrecedence(order * model.FreqCharCount + lastOrder)]);
                     }
                 }
+
                 lastOrder = order;
             }
 
@@ -141,6 +160,20 @@ namespace UtfUnknown.Core
 
             if (totalSeqs > 0) {
                 r = 1.0f * seqCounters[POSITIVE_CAT] / totalSeqs / model.TypicalPositiveRatio;
+
+                // Multiply by a ratio of positive sequences per characters.
+                // This would help in particular to distinguish close winners.
+                // Indeed if you add a letter, you'd expect the positive sequence count
+                // to increase as well. If it doesn't, it may mean that this new codepoint
+                // may not have been a letter, but instead a symbol (or some other
+                // character). This could make the difference between very closely related
+                // charsets used for the same language.
+                r = r * (seqCounters[POSITIVE_CAT] + (float)seqCounters[PROBABLE_CAT] / 4) / totalChar;
+
+                // The more control characters (proportionnaly to the size of the text), the
+                // less confident we become in the current charset.
+                r = r * (totalChar - ctrlChar) / totalChar;
+
                 r = r * freqChar / totalChar;
                 if (r >= 1.0f)
                     r = 0.99f;

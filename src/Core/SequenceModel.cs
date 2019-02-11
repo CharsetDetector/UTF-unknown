@@ -42,13 +42,34 @@ namespace UtfUnknown.Core
 {   
     public abstract class SequenceModel
     {
+        // Codepoints
+
+        // Illegal codepoints
+        public const byte ILL = 255;
+        // Control character
+        public const byte CTR = 254;
+        // Symbols and punctuation that does not belong to words
+        public const byte SYM = 253;
+        // Return/Line feeds
+        public const byte RET = 252;
+        // Numbers 0-9
+        public const byte NUM = 251;
+
         // [256] table use to find a char's order
         protected byte[] charToOrderMap;
         
-        // [SAMPLE_SIZE][SAMPLE_SIZE] table to find a 2-char sequence's 
+        // freqCharCount x freqCharCount table to find a 2-char sequence's 
         // frequency        
         protected byte[] precedenceMatrix;
         
+        // The count of frequent characters
+        protected int freqCharCount;
+
+        public int FreqCharCount
+        {
+            get { return freqCharCount; }
+        }
+
         // freqSeqs / totalSeqs
         protected float typicalPositiveRatio;
         
@@ -78,12 +99,14 @@ namespace UtfUnknown.Core
         public SequenceModel(
                 byte[] charToOrderMap,
                 byte[] precedenceMatrix,
+                int freqCharCount,
                 float typicalPositiveRatio,
                 bool keepEnglishLetter,
                 String charsetName)
         {
             this.charToOrderMap = charToOrderMap;
             this.precedenceMatrix = precedenceMatrix;
+            this.freqCharCount = freqCharCount;
             this.typicalPositiveRatio = typicalPositiveRatio;
             this.keepEnglishLetter = keepEnglishLetter;
             this.charsetName = charsetName;
@@ -98,6 +121,5 @@ namespace UtfUnknown.Core
         {
             return precedenceMatrix[pos];
         }
-        
     }
 }

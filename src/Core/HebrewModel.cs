@@ -40,12 +40,12 @@ namespace UtfUnknown.Core
 {   
     public abstract class HebrewModel : SequenceModel
     {
-        //Model Table: 
-        //total sequences: 100%
-        //first 512 sequences: 98.4004%
-        //first 1024 sequences: 1.5981%
-        //rest  sequences:      0.087%
-        //negative sequences:   0.0015%  
+        // Model Table: 
+        // total sequences: 100%
+        // first 512 sequences: 98.4004%
+        // first 1024 sequences: 1.5981%
+        // rest  sequences:      0.087%
+        // negative sequences:   0.0015%  
         private readonly static byte[] HEBREW_LANG_MODEL = {
             0,3,3,3,3,3,3,3,3,3,3,2,3,3,3,3,3,3,3,3,3,3,3,2,3,2,1,2,0,1,0,0,
             3,0,3,1,0,0,1,3,2,0,1,1,2,0,2,2,2,1,1,1,1,2,1,1,1,2,0,0,2,2,0,1,
@@ -178,7 +178,7 @@ namespace UtfUnknown.Core
         };
 
         public HebrewModel(byte[] charToOrderMap, string name) 
-            : base(charToOrderMap, HEBREW_LANG_MODEL, 0.984004f, false, name)
+            : base(charToOrderMap, HEBREW_LANG_MODEL, 64, 0.984004f, false, name)
         {
         }        
     }

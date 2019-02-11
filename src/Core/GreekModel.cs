@@ -178,7 +178,7 @@ namespace UtfUnknown.Core
         };
 
         public GreekModel(byte[] charToOrderMap, string name) 
-            : base(charToOrderMap, GREEK_LANG_MODEL, 0.982851f, false, name)
+            : base(charToOrderMap, GREEK_LANG_MODEL, 64, 0.982851f, false, name)
         {
         }        
     }

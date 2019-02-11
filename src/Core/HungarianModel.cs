@@ -177,7 +177,7 @@ namespace UtfUnknown.Core
         };
 
         public HungarianModel(byte[] charToOrderMap, string name) 
-            : base(charToOrderMap, HUNGARIAN_LANG_MODEL, 0.947368f, 
+            : base(charToOrderMap, HUNGARIAN_LANG_MODEL, 64, 0.947368f, 
                    false, name)
         {
         }        
