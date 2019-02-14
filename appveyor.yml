@@ -19,3 +19,4 @@ after_build:
 - ps: cd ..
 artifacts:
 - path: '**\*.nupkg'
+- path: '**\test-diag.log'

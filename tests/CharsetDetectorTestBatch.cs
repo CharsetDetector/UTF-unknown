@@ -18,6 +18,16 @@ namespace UtfUnknown.Tests
     public class CharsetDetectorTestBatch
     {
         private static readonly string DATA_ROOT = FindRootPath();
+        
+        private StreamWriter _logWriter;
+
+        /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
+        public CharsetDetectorTestBatch()
+        {
+            _logWriter = new StreamWriter("test-diag.log");
+            
+            
+        }
 
         /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
         static string FindRootPath()
@@ -91,12 +101,14 @@ namespace UtfUnknown.Tests
         }
 
 
-        private static void TestFile(string expectedCharset, string file)
+        private void TestFile(string expectedCharset, string file)
         {
             var result = CharsetDetector.DetectFromFile(file);
             var detected = result.Detected;
 
-            TestContext.WriteLine("{0} ({1}) -> {2} ",file, expectedCharset, JsonConvert.SerializeObject(result));
+            
+            _logWriter.WriteLine(string.Format("- {0} ({1}) -> {2}", file, expectedCharset, JsonConvert.SerializeObject(result)));
+            //File.WriteAllText("test-diag.log", string.Format("- {0} ({1}) -> {2} \n", file, expectedCharset, JsonConvert.SerializeObject(result)));
 
             StringAssert.AreEqualIgnoringCase(expectedCharset, detected.EncodingName,
                 $"Charset detection failed for {file}. Expected: {expectedCharset}, detected: {detected.EncodingName} ({detected.Confidence * 100}% confidence)");
