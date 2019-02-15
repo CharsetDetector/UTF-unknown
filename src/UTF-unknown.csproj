@@ -6,7 +6,7 @@
   <PropertyGroup>
     <AssemblyName>UtfUnknown</AssemblyName>
     <PackageId>UTF.Unknown</PackageId>
-    <Version>1.0.0-rc1</Version>
+    <Version>1.0.0</Version>
 
   </PropertyGroup>
   <PropertyGroup>
@@ -21,10 +21,12 @@
 This package is based on Ude (https://github.com/errepi/ude), which is a port of the Mozilla Universal Charset Detector (https://mxr.mozilla.org/mozilla/source/extensions/universalchardet/).
 
 Features:
+- Detects 28 charsets
+- Easy to use API  
+- .NET standard 1.0 + 2.0 support 
+- Strong named
+- XML documentation included
 
-- 28 charsets
-- old bugs fixed
-- easy to use API    
     </Description>
     <Copyright></Copyright>
 
@@ -33,7 +35,21 @@ Features:
 
     <PackageTags>charset;detection;unicode;ascii;netstandard</PackageTags>
     <PackageReleaseNotes>
-    Added maxBytesToRead for DetectFromStream + improve error handling for incorrect arguments
+Compared to Ude:
+ 
+ - Refactor of API, namespaces and deadcode removal
+ - Added some docs
+ - Improve error handling
+ - Improved unit tests
+ 
+ Bug fixes:
+
+ - EUCTW: System.IndexOutOfRangeException
+ - pureascii detection issue
+ - BUG in SBCSGroupProber class in function Reset
+ - Detection fails on particular, simple ANSI file  
+  
+  See https://github.com/CharsetDetector/UTF-unknown/milestone/1?closed=1
     
     </PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/CharsetDetector/UTF-unknown/master/logo.png</PackageIconUrl>
