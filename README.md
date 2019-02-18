@@ -22,8 +22,8 @@ The interface and other classes has been resigned so it's easier to use and bett
 
 Features:
 
-- OOD
-- Moved to netstandard
+- New API
+- Moved to .NET Standard
 - Added more unit tests
 - Builds on CI (AppVeyor)
 - Strong named
@@ -52,10 +52,11 @@ var result = CharsetDetector.DetectFromBytes(byteArray);
 
 # Docs
 
-The article "[A composite approach to language/encoding detection](http://www.mozilla.org/projects/intl/UniversalCharsetDetection.html)" describes the charsets detection algorithms implemented by the library.
+The article "[A composite approach to language/encoding detection](https://www-archive.mozilla.org/projects/intl/UniversalCharsetDetection.html)" describes the charsets detection algorithms implemented by the library.
 
 The following charsets are supported:
 
+* ASCII
 * UTF-8
 * UTF-16 (BE and LE)
 * UTF-32 (BE and LE)
@@ -74,7 +75,7 @@ The following charsets are supported:
 * x-mac-cyrillic
 * IBM855 and IBM866
 * X-ISO-10646-UCS-4-3412 and X-ISO-10646-UCS-4-2413 (unusual BOM)
-* ASCII
+
 
 
 
@@ -82,4 +83,4 @@ The following charsets are supported:
 
 The library is subject to the Mozilla Public License Version 1.1 (the "License"). Alternatively, it may be used under the terms of either the GNU General Public License Version 2 or later (the "GPL"), or the GNU Lesser General Public License Version 2.1 or later (the "LGPL").
 
-Test data has been extracted from [Wikipedia](http://wikipedia.org) and [The Project Gutenberg](http://www.gutenberg.org/) books and is subject to their licenses.
+Test data has been extracted from [Wikipedia](https://wikipedia.org) and [The Project Gutenberg](https://www.gutenberg.org/) books and is subject to their licenses.
