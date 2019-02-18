@@ -42,7 +42,7 @@ namespace UtfUnknown.Core
 {
     public class SBCSGroupProber : CharsetProber
     {
-        private const int PROBERS_NUM = 13;
+        private const int PROBERS_NUM = 23;
         private CharsetProber[] probers = new CharsetProber[PROBERS_NUM];        
         private bool[] isActive = new bool[PROBERS_NUM];
         private int bestGuess;
@@ -56,8 +56,8 @@ namespace UtfUnknown.Core
             probers[3] = new SingleByteCharSetProber(new MacCyrillicModel());
             probers[4] = new SingleByteCharSetProber(new Ibm866Model());
             probers[5] = new SingleByteCharSetProber(new Ibm855Model());
-            probers[6] = new SingleByteCharSetProber(new Latin7Model());
-            probers[7] = new SingleByteCharSetProber(new Win1253Model());
+            probers[6] = new SingleByteCharSetProber(new Latin7GreekModel());
+            probers[7] = new SingleByteCharSetProber(new Win1253GreekModel());
             probers[8] = new SingleByteCharSetProber(new Latin5BulgarianModel());
             probers[9] = new SingleByteCharSetProber(new Win1251BulgarianModel());
             HebrewProber hebprober = new HebrewProber();
@@ -67,10 +67,12 @@ namespace UtfUnknown.Core
             // Visual
             probers[12] = new SingleByteCharSetProber(new Win1255Model(), true, hebprober); 
             hebprober.SetModelProbers(probers[11], probers[12]);
+
             // disable latin2 before latin1 is available, otherwise all latin1 
             // will be detected as latin2 because of their similarity.
-            //probers[13] = new SingleByteCharSetProber(new Latin2HungarianModel());
-            //probers[14] = new SingleByteCharSetProber(new Win1250HungarianModel());            
+            probers[21] = new SingleByteCharSetProber(new Latin2HungarianModel());
+            probers[22] = new SingleByteCharSetProber(new Win1250HungarianModel());
+
             Reset();
         }
   
