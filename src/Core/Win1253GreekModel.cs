@@ -22,6 +22,7 @@ namespace UtfUnknown.Core
         // ligature of 'o' and 'e' exists in ISO-8859-15 but not in ISO-8859-1
         // even though they are both used for French.Same for the euro sign.
 
+        //Character Mapping Table:
         private readonly static byte[] WIN1253__CHAR_TO_ORDER_MAP = {
           CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,RET,CTR,CTR,RET,CTR,CTR, /* 0X */
           CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR, /* 1X */

@@ -37,6 +37,7 @@
  * ***** END LICENSE BLOCK ***** */
 
 using System;
+using System.Text;
 
 
 /*
@@ -290,9 +291,13 @@ namespace UtfUnknown.Core
             return ProbingState.Detecting;
         }
 
-        public override void DumpStatus()
+        public override string DumpStatus()
         {
-            //Console.WriteLine("  HEB: {0} - {1} [Logical-Visual score]", finalCharLogicalScore, finalCharVisualScore);
+            StringBuilder status = new StringBuilder();
+
+            status.AppendLine($"  HEB: {finalCharLogicalScore} - {finalCharVisualScore} [Logical-Visual score]");
+
+            return status.ToString();
         }
         
         public override float GetConfidence()

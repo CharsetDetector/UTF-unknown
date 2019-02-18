@@ -37,6 +37,7 @@
  * ***** END LICENSE BLOCK ***** */
 
 using System;
+using System.Text;
 
 namespace UtfUnknown.Core
 {
@@ -47,7 +48,7 @@ namespace UtfUnknown.Core
         private const float NEGATIVE_SHORTCUT_THRESHOLD = 0.05f;
         private const int SYMBOL_CAT_ORDER = 250;
         private const int NUMBER_OF_SEQ_CAT = 4;
-        private const int POSITIVE_CAT = NUMBER_OF_SEQ_CAT-1;
+        private const int POSITIVE_CAT = NUMBER_OF_SEQ_CAT - 1;
         private const int PROBABLE_CAT = NUMBER_OF_SEQ_CAT - 2;
         private const int NEUTRAL_CAT = NUMBER_OF_SEQ_CAT - 3;
         private const int NEGATIVE_CAT = 0;
@@ -140,9 +141,18 @@ namespace UtfUnknown.Core
             return state;
         }
                 
-        public override void DumpStatus()
+        public override string DumpStatus()
         {
-            //Console.WriteLine("  SBCS: {0} [{1}]", GetConfidence(), GetCharsetName());
+            StringBuilder status = new StringBuilder();
+
+            status.AppendLine($"  SBCS: {GetConfidence()} [{GetCharsetName()}]");
+
+            return status.ToString();
+        }
+
+        private void StringBuilder(string v1, float v2, string v3)
+        {
+            throw new NotImplementedException();
         }
 
         public override float GetConfidence()

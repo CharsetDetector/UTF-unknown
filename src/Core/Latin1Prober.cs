@@ -37,6 +37,7 @@
  * ***** END LICENSE BLOCK ***** */
 
 using System;
+using System.Text;
 
 namespace UtfUnknown.Core
 {
@@ -54,9 +55,9 @@ namespace UtfUnknown.Core
         private const int ACO = 5;       // accent capital other
         private const int ASV = 6;       // accent small vowel
         private const int ASO = 7;       // accent small other
-        
+
         private const int CLASS_NUM = 8; // total classes
-        
+
         private readonly static byte[] Latin1_CharToClass = {
           OTH, OTH, OTH, OTH, OTH, OTH, OTH, OTH,   // 00 - 07
           OTH, OTH, OTH, OTH, OTH, OTH, OTH, OTH,   // 08 - 0F
@@ -111,17 +112,17 @@ namespace UtfUnknown.Core
 
         private byte lastCharClass;
         private int[] freqCounter = new int[FREQ_CAT_NUM];
-        
+
         public Latin1Prober()
         {
             Reset();
         }
 
-        public override string GetCharsetName() 
+        public override string GetCharsetName()
         {
             return "windows-1252";
         }
-        
+
         public override void Reset()
         {
             state = ProbingState.Detecting;
@@ -129,18 +130,20 @@ namespace UtfUnknown.Core
             for (int i = 0; i < FREQ_CAT_NUM; i++)
                 freqCounter[i] = 0;
         }
-        
+
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
             byte[] newbuf = FilterWithEnglishLetters(buf, offset, len);
             byte charClass, freq;
-            
-            for (int i = 0; i < newbuf.Length; i++) {
+
+            for (int i = 0; i < newbuf.Length; i++)
+            {
                 charClass = Latin1_CharToClass[newbuf[i]];
                 freq = Latin1ClassModel[lastCharClass * CLASS_NUM + charClass];
-                if (freq == 0) {
-                  state = ProbingState.NotMe;
-                  break;
+                if (freq == 0)
+                {
+                    state = ProbingState.NotMe;
+                    break;
                 }
                 freqCounter[freq]++;
                 lastCharClass = charClass;
@@ -152,28 +155,36 @@ namespace UtfUnknown.Core
         {
             if (state == ProbingState.NotMe)
                 return 0.01f;
-            
+
             float confidence;
             int total = 0;
-            for (int i = 0; i < FREQ_CAT_NUM; i++) {
+            for (int i = 0; i < FREQ_CAT_NUM; i++)
+            {
                 total += freqCounter[i];
             }
-            
-            if (total <= 0) {
+
+            if (total <= 0)
+            {
                 confidence = 0.0f;
-            } else {
+            }
+            else
+            {
                 confidence = freqCounter[3] * 1.0f / total;
                 confidence -= freqCounter[1] * 20.0f / total;
             }
-            
+
             // lower the confidence of latin1 so that other more accurate detector 
             // can take priority.
             return confidence < 0.0f ? 0.0f : confidence * 0.5f;
         }
 
-        public override void DumpStatus()
+        public override string DumpStatus()
         {
-           // Console.WriteLine(" Latin1Prober: {0} [{1}]", GetConfidence(), GetCharsetName());
+            StringBuilder status = new StringBuilder();
+
+            status.AppendLine($" Latin1Prober: {GetConfidence()} [{GetCharsetName()}]");
+
+            return status.ToString();
         }
     }
 }

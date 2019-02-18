@@ -25,8 +25,6 @@ namespace UtfUnknown.Tests
         public CharsetDetectorTestBatch()
         {
             _logWriter = new StreamWriter("test-diag.log");
-            
-            
         }
 
         /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
@@ -73,7 +71,6 @@ namespace UtfUnknown.Tests
             {
                 return ExpectedEncoding + ": " + InputFile.Name;
             }
-
         }
 
         private static List<TestCase> AllTestFiles()

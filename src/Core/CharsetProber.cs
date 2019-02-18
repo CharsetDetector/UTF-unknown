@@ -85,9 +85,9 @@ namespace UtfUnknown.Core
 
         }
 
-        public virtual void DumpStatus()
+        public virtual string DumpStatus()
         {
-
+            return string.Empty;
         }
 
         //
@@ -103,7 +103,6 @@ namespace UtfUnknown.Core
 
             using (MemoryStream ms = new MemoryStream(buf.Length))
             {
-
                 bool meetMSB = false;
                 int max = offset + len;
                 int prev = offset;
@@ -117,8 +116,7 @@ namespace UtfUnknown.Core
                     {
                         meetMSB = true;
                     }
-                    else if (b < CAPITAL_A || (b > CAPITAL_Z && b < SMALL_A)
-                             || b > SMALL_Z)
+                    else if (b < CAPITAL_A || (b > CAPITAL_Z && b < SMALL_A) || b > SMALL_Z)
                     {
                         if (meetMSB && cur > prev)
                         {

@@ -320,7 +320,7 @@ namespace UtfUnknown
         {
             var probingState = charsetProber.HandleData(buf, offset, len);
 #if DEBUG
-            charsetProber.DumpStatus();
+            //charsetProber.DumpStatus();
 #endif
             if (probingState == ProbingState.FoundIt)
             {
