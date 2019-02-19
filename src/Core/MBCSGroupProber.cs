@@ -126,23 +126,24 @@ namespace UtfUnknown.Core
 
             for (int i = 0; i < probers.Length; i++)
             {
-                if (!isActive[i])
-                    continue;
-                var st = probers[i].HandleData(highbyteBuf, 0, hptr);
-                if (st == ProbingState.FoundIt)
+                if (isActive[i])
                 {
-                    bestGuess = i;
-                    state = ProbingState.FoundIt;
-                    break;
-                }
-                else if (st == ProbingState.NotMe)
-                {
-                    isActive[i] = false;
-                    activeNum--;
-                    if (activeNum <= 0)
+                    var st = probers[i].HandleData(highbyteBuf, 0, hptr);
+                    if (st == ProbingState.FoundIt)
                     {
-                        state = ProbingState.NotMe;
+                        bestGuess = i;
+                        state = ProbingState.FoundIt;
                         break;
+                    }
+                    else if (st == ProbingState.NotMe)
+                    {
+                        isActive[i] = false;
+                        activeNum--;
+                        if (activeNum <= 0)
+                        {
+                            state = ProbingState.NotMe;
+                            break;
+                        }
                     }
                 }
             }
@@ -165,13 +166,14 @@ namespace UtfUnknown.Core
             {
                 for (int i = 0; i < PROBERS_NUM; i++)
                 {
-                    if (!isActive[i])
-                        continue;
-                    var cf = probers[i].GetConfidence();
-                    if (bestConf < cf)
+                    if (isActive[i])
                     {
-                        bestConf = cf;
-                        bestGuess = i;
+                        var cf = probers[i].GetConfidence();
+                        if (bestConf < cf)
+                        {
+                            bestConf = cf;
+                            bestGuess = i;
+                        }
                     }
                 }
             }

@@ -109,25 +109,25 @@ namespace UtfUnknown.Core
 
             for (int i = 0; i < PROBERS_NUM; i++)
             {
-                if (!isActive[i])
-                    continue;
-
-                ProbingState st = probers[i].HandleData(newBuf, 0, newBuf.Length);
-
-                if (st == ProbingState.FoundIt)
+                if (isActive[i])
                 {
-                    bestGuess = i;
-                    state = ProbingState.FoundIt;
-                    break;
-                }
-                else if (st == ProbingState.NotMe)
-                {
-                    isActive[i] = false;
-                    activeNum--;
-                    if (activeNum <= 0)
+                    ProbingState st = probers[i].HandleData(newBuf, 0, newBuf.Length);
+
+                    if (st == ProbingState.FoundIt)
                     {
-                        state = ProbingState.NotMe;
+                        bestGuess = i;
+                        state = ProbingState.FoundIt;
                         break;
+                    }
+                    else if (st == ProbingState.NotMe)
+                    {
+                        isActive[i] = false;
+                        activeNum--;
+                        if (activeNum <= 0)
+                        {
+                            state = ProbingState.NotMe;
+                            break;
+                        }
                     }
                 }
             }
@@ -147,13 +147,14 @@ namespace UtfUnknown.Core
                 default:
                     for (int i = 0; i < PROBERS_NUM; i++)
                     {
-                        if (!isActive[i])
-                            continue;
-                        cf = probers[i].GetConfidence();
-                        if (bestConf < cf)
+                        if (isActive[i])
                         {
-                            bestConf = cf;
-                            bestGuess = i;
+                            cf = probers[i].GetConfidence();
+                            if (bestConf < cf)
+                            {
+                                bestConf = cf;
+                                bestGuess = i;
+                            }
                         }
                     }
                     break;
