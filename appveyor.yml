@@ -17,6 +17,7 @@ after_build:
 - ps: cd .\src\
 - ps: dotnet pack -c Release 
 - ps: cd ..
+- ps: Get-ChildItem '**\test-diag.log' | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
 artifacts:
 - path: '**\*.nupkg'
 - path: '**\test-diag.log'
