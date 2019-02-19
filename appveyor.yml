@@ -7,6 +7,9 @@ nuget:
   project_feed: true
 
 deploy: off
+
+init:
+- git config --global core.autocrlf true
 build_script:
 - ps: dotnet build -c Release 
 test_script:
