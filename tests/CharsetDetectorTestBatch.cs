@@ -17,6 +17,7 @@ namespace UtfUnknown.Tests
 
     public class CharsetDetectorTestBatch
     {
+        private static readonly string TESTS_ROOT = GetTestsPath();
         private static readonly string DATA_ROOT = FindRootPath();
         
         private StreamWriter _logWriter;
@@ -24,13 +25,26 @@ namespace UtfUnknown.Tests
         /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
         public CharsetDetectorTestBatch()
         {
-            _logWriter = new StreamWriter("test-diag.log");
+            _logWriter = new StreamWriter(Path.Combine(TESTS_ROOT, "test-diag.log"));
         }
 
-        /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
         static string FindRootPath()
         {
             //find Data in Test directory
+            string path = TESTS_ROOT;
+
+            var fullPath = Path.Combine(path, "Data");
+
+            if (!Directory.Exists(fullPath))
+            {
+                throw new DirectoryNotFoundException($"Directory Data with test files not found, path: {fullPath}");
+            }
+
+            return fullPath;
+        }
+
+        private static string GetTestsPath()
+        {
             var path = TestContext.CurrentContext.TestDirectory;
 
             var directoryName = "TESTS";
@@ -39,14 +53,7 @@ namespace UtfUnknown.Tests
 
             path = path.Substring(0, index + directoryName.Length);
 
-            var fullPath = path + Path.DirectorySeparatorChar + "Data";
-
-            if (!Directory.Exists(fullPath))
-            {
-                throw new DirectoryNotFoundException($"Directory Data with test files not found, path: {fullPath}");
-            }
-
-            return fullPath;
+            return path;
         }
 
         [TestCaseSource(nameof(AllTestFiles))]
@@ -102,10 +109,8 @@ namespace UtfUnknown.Tests
         {
             var result = CharsetDetector.DetectFromFile(file);
             var detected = result.Detected;
-
             
             _logWriter.WriteLine(string.Format("- {0} ({1}) -> {2}", file, expectedCharset, JsonConvert.SerializeObject(result)));
-            //File.WriteAllText("test-diag.log", string.Format("- {0} ({1}) -> {2} \n", file, expectedCharset, JsonConvert.SerializeObject(result)));
 
             StringAssert.AreEqualIgnoringCase(expectedCharset, detected.EncodingName,
                 $"Charset detection failed for {file}. Expected: {expectedCharset}, detected: {detected.EncodingName} ({detected.Confidence * 100}% confidence)");
@@ -113,4 +118,3 @@ namespace UtfUnknown.Tests
         }
     }
 }
-
