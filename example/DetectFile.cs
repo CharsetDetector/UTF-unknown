@@ -25,9 +25,6 @@ namespace ConsoleExample
                 return;
             }
 
-
-
-
             string filename = args[0];
 
             var result = CharsetDetector.DetectFromFile(filename);
@@ -40,7 +37,6 @@ namespace ConsoleExample
             {
                 Console.WriteLine("Detection failed.");
             }
-
         }
     }
 }

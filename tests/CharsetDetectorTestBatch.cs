@@ -102,10 +102,8 @@ namespace UtfUnknown.Tests
         {
             var result = CharsetDetector.DetectFromFile(file);
             var detected = result.Detected;
-
             
             _logWriter.WriteLine(string.Format("- {0} ({1}) -> {2}", file, expectedCharset, JsonConvert.SerializeObject(result)));
-            //File.WriteAllText("test-diag.log", string.Format("- {0} ({1}) -> {2} \n", file, expectedCharset, JsonConvert.SerializeObject(result)));
 
             StringAssert.AreEqualIgnoringCase(expectedCharset, detected.EncodingName,
                 $"Charset detection failed for {file}. Expected: {expectedCharset}, detected: {detected.EncodingName} ({detected.Confidence * 100}% confidence)");
@@ -113,4 +111,3 @@ namespace UtfUnknown.Tests
         }
     }
 }
-

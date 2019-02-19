@@ -319,9 +319,7 @@ namespace UtfUnknown
         private bool RunProber(byte[] buf, int offset, int len, CharsetProber charsetProber)
         {
             var probingState = charsetProber.HandleData(buf, offset, len);
-#if DEBUG
-            //charsetProber.DumpStatus();
-#endif
+
             if (probingState == ProbingState.FoundIt)
             {
                 _done = true;

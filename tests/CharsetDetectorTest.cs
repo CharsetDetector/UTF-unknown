@@ -61,9 +61,6 @@ namespace UtfUnknown.Tests
             Assert.AreEqual(expectedPosition, stream.Position);
         }
 
-
-
-
         [Test]
         public void TestUTF8_1()
         {
