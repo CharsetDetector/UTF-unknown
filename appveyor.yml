@@ -21,3 +21,4 @@ after_build:
 artifacts:
 - path: '**\*.nupkg'
 - path: '**\test-diag.log'
+  name: test log
