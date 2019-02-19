@@ -56,15 +56,15 @@ namespace UtfUnknown.Core
 
         // Total character encounted.
         protected int totalChars;
-        
+
         // Mapping table to get frequency order from char order (get from GetOrder())
         protected int[] charToFreqOrder;
 
         // This constant value varies from language to language. It is used in calculating confidence. 
-        protected float typicalDistributionRatio;        
+        protected float typicalDistributionRatio;
 
         public CharDistributionAnalyser()
-        { 
+        {
             Reset();
         }
 
@@ -91,22 +91,24 @@ namespace UtfUnknown.Core
         {
             //we only care about 2-bytes character in our distribution analysis
             int order = (charLen == 2) ? GetOrder(buf, offset) : -1;
-            if (order >= 0) {
+            if (order >= 0)
+            {
                 totalChars++;
-                if (order < charToFreqOrder.Length) { // order is valid
+                if (order < charToFreqOrder.Length)
+                { // order is valid
                     if (512 > charToFreqOrder[order])
                         freqChars++;
                 }
             }
         }
 
-        public virtual void Reset() 
+        public virtual void Reset()
         {
             done = false;
             totalChars = 0;
             freqChars = 0;
         }
-        
+
         /// <summary>
         /// return confidence base on received data
         /// </summary>
@@ -118,7 +120,8 @@ namespace UtfUnknown.Core
             // negative answer
             if (totalChars <= 0 || freqChars <= MINIMUM_DATA_THRESHOLD)
                 return SURE_NO;
-            if (totalChars != freqChars) {
+            if (totalChars != freqChars)
+            {
                 float r = freqChars / ((totalChars - freqChars) * typicalDistributionRatio);
                 if (r < SURE_YES)
                     return r;
@@ -126,13 +129,12 @@ namespace UtfUnknown.Core
             //normalize confidence, (we don't want to be 100% sure)
             return SURE_YES;
         }
-        
+
         //It is not necessary to receive all data to draw conclusion. For charset detection,
         // certain amount of data is enough
-        public bool GotEnoughData() 
+        public bool GotEnoughData()
         {
             return totalChars > ENOUGH_DATA_THRESHOLD;
         }
-
     }
 }

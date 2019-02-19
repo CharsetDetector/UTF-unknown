@@ -323,8 +323,7 @@ namespace UtfUnknown.Core
             // example legally end with a Non-Final Pe or Kaf. However, the benefit of 
             // these letters as Non-Final letters outweighs the damage since these words 
             // are quite rare.            
-            return (b == NORMAL_KAF || b == NORMAL_MEM || b == NORMAL_NUN 
-                    || b == NORMAL_PE);
+            return (b == NORMAL_KAF || b == NORMAL_MEM || b == NORMAL_NUN || b == NORMAL_PE);
         }
     }
 }

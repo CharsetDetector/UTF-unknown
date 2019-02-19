@@ -187,8 +187,6 @@ namespace UtfUnknown
 
         private static void ReadStream(Stream stream, long? maxBytes, CharsetDetector detector)
         {
-          
-
             const int bufferSize = 1024;
             byte[] buff = new byte[bufferSize];
             int read;
@@ -283,7 +281,7 @@ namespace UtfUnknown
                 _start = false;
                 if (bomSet != null)
                 {
-                    _detectionDetail = new DetectionDetail(bomSet, 1);
+                    _detectionDetail = new DetectionDetail(bomSet, 1.0f);
                     _done = true;
                     return;
                 }
@@ -366,7 +364,6 @@ namespace UtfUnknown
             }
         }
 
-
         private static string FindCharSetByBom(byte[] buf, int len)
         {
             string bomSet = null;
@@ -425,7 +422,7 @@ namespace UtfUnknown
             {
                 _done = true;
 
-                //conf 1.0 is from v1.0 (todo wrong?)
+                // conf 1.0 is from v1.0 (todo wrong?)
                 _detectionDetail.Confidence = 1.0f;
                 return new DetectionResult(_detectionDetail);
             }
@@ -459,7 +456,5 @@ namespace UtfUnknown
             return new DetectionResult();
         }
     }
-
-
 }
 

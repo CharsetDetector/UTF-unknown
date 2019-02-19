@@ -145,7 +145,7 @@ namespace UtfUnknown.Core
         {
             StringBuilder status = new StringBuilder();
 
-            status.AppendLine($"  SBCS: {GetConfidence()} [{GetCharsetName()}]");
+            status.AppendLine($"  SBCS: {GetConfidence():0.00############} [{GetCharsetName()}]");
 
             return status.ToString();
         }
@@ -178,7 +178,7 @@ namespace UtfUnknown.Core
                 // may not have been a letter, but instead a symbol (or some other
                 // character). This could make the difference between very closely related
                 // charsets used for the same language.
-                r = r * (seqCounters[POSITIVE_CAT] + (float)seqCounters[PROBABLE_CAT] / 4) / totalChar;
+                r = r * (seqCounters[POSITIVE_CAT] + (float)seqCounters[PROBABLE_CAT] / 4.0f) / totalChar;
 
                 // The more control characters (proportionnaly to the size of the text), the
                 // less confident we become in the current charset.
