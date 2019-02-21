@@ -78,13 +78,14 @@ namespace UtfUnknown.Core
             probers[12] = new SingleByteCharSetProber(new Win1255HebrewModel(), true, hebprober);
             hebprober.SetModelProbers(probers[11], probers[12]);
 
-            // Is the following still happening?
+            // Is the following still valid?
             // disable latin2 before latin1 is available, otherwise all latin1 
             // will be detected as latin2 because of their similarity
             // Hungarian
             probers[21] = new SingleByteCharSetProber(new Latin2HungarianModel());
             probers[22] = new SingleByteCharSetProber(new Win1250HungarianModel());
 
+            // Finnish
             probers[60] = new SingleByteCharSetProber(new Latin1FinnishModel());
             probers[61] = new SingleByteCharSetProber(new Latin4FinnishModel());
             probers[62] = new SingleByteCharSetProber(new Latin5FinnishModel());
@@ -92,6 +93,7 @@ namespace UtfUnknown.Core
             probers[64] = new SingleByteCharSetProber(new Latin9FinnishModel());
             probers[65] = new SingleByteCharSetProber(new Win1252FinnishModel());
 
+            // Swedish
             probers[95] = new SingleByteCharSetProber(new Latin1SwedishModel());
             probers[96] = new SingleByteCharSetProber(new Latin4SwedishModel());
             probers[97] = new SingleByteCharSetProber(new Latin5SwedishModel());
