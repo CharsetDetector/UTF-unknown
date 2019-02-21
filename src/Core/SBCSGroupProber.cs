@@ -49,7 +49,7 @@ namespace UtfUnknown.Core
         private int bestGuess;
         private int activeNum;
 
-        private StringBuilder notes = new StringBuilder();
+        StringBuilder notes;
 
         public SBCSGroupProber()
         {
@@ -139,7 +139,10 @@ namespace UtfUnknown.Core
 
         public override float GetConfidence()
         {
+            notes = new StringBuilder();
+
             float bestConf = 0.0f, cf;
+
             switch (state)
             {
                 case ProbingState.FoundIt:
@@ -163,6 +166,7 @@ namespace UtfUnknown.Core
                     }
                     break;
             }
+
             return bestConf;
         }
 
@@ -184,7 +188,7 @@ namespace UtfUnknown.Core
             }
 
             status.AppendLine($" SBCS Group found best match [{probers[bestGuess].GetCharsetName()}] confidence {cf}.");
-            status.AppendLine($"Notes:{Environment.NewLine}{notes.ToString()}{Environment.NewLine}Notes end.");
+            status.AppendLine($"Notes:{Environment.NewLine}{notes?.ToString()}{Environment.NewLine}Notes end.");
 
             return status.ToString();
         }
