@@ -11,17 +11,15 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * The Original Code is Mozilla Universal charset detector code.
+ * The Original Code is Mozilla Communicator client code.
  *
  * The Initial Developer of the Original Code is
  * Netscape Communications Corporation.
- * Portions created by the Initial Developer are Copyright (C) 2001
+ * Portions created by the Initial Developer are Copyright (C) 1998
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- *          Shy Shalom <shooshX@gmail.com>
- *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port)
- * 
+ *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
  * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
@@ -36,9 +34,15 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+/*
+* The following part was imported from https://gitlab.freedesktop.org/uchardet/uchardet
+* The implementation of this feature was originally done on https://gitlab.freedesktop.org/uchardet/uchardet/blob/master/src/LangModels/LangRussianModel.cpp
+* and adjusted to language specific support.
+*/
+
 namespace UtfUnknown.Core
 {
-    public abstract class CyrillicModel : SequenceModel
+    public abstract class RussianModel : SequenceModel
     {
         // Model Table: 
         // total sequences: 100%
@@ -177,7 +181,7 @@ namespace UtfUnknown.Core
             0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,
         };
         
-        public CyrillicModel(byte[] charToOrderMap, string name) 
+        public RussianModel(byte[] charToOrderMap, string name) 
             : base(charToOrderMap, RUSSIAN_LANG_MODEL, 64, 0.976601f, false, name)
         {
         }

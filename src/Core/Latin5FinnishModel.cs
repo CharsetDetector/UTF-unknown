@@ -37,7 +37,7 @@
 /*
 * The following part was imported from https://gitlab.freedesktop.org/uchardet/uchardet
 * The implementation of this feature was originally done on https://gitlab.freedesktop.org/uchardet/uchardet/blob/master/src/LangModels/LangFinnishModel.cpp
-* and adjusted to Finnish and Swedish language supports.
+* and adjusted to language specific support.
 */
 
 namespace UtfUnknown.Core

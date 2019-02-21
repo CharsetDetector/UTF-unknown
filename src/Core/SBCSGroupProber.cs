@@ -53,9 +53,9 @@ namespace UtfUnknown.Core
 
         public SBCSGroupProber()
         {
-            probers[0] = new SingleByteCharSetProber(new Win1251Model());
+            probers[0] = new SingleByteCharSetProber(new Win1251RussianModel());
             probers[1] = new SingleByteCharSetProber(new Koi8rModel());
-            probers[2] = new SingleByteCharSetProber(new Latin5Model());
+            probers[2] = new SingleByteCharSetProber(new Latin5RussianModel());
             probers[3] = new SingleByteCharSetProber(new MacCyrillicModel());
             probers[4] = new SingleByteCharSetProber(new Ibm866Model());
             probers[5] = new SingleByteCharSetProber(new Ibm855Model());
