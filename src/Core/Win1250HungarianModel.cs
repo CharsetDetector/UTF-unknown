@@ -1,26 +1,87 @@
+/* ***** BEGIN LICENSE BLOCK *****
+ * Version: MPL 1.1/GPL 2.0/LGPL 2.1
+ *
+ * The contents of this file are subject to the Mozilla Public License Version
+ * 1.1 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ * http://www.mozilla.org/MPL/
+ *
+ * Software distributed under the License is distributed on an "AS IS" basis,
+ * WITHOUT WARRANTY OF ANY KIND, either express or implied. See the License
+ * for the specific language governing rights and limitations under the
+ * License.
+ *
+ * The Original Code is Mozilla Universal charset detector code.
+ *
+ * The Initial Developer of the Original Code is
+ * Netscape Communications Corporation.
+ * Portions created by the Initial Developer are Copyright (C) 2001
+ * the Initial Developer. All Rights Reserved.
+ *
+ * Contributor(s):
+ *          Shy Shalom <shooshX@gmail.com>
+ *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port)
+ * Alternatively, the contents of this file may be used under the terms of
+ * either the GNU General Public License Version 2 or later (the "GPL"), or
+ * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
+ * in which case the provisions of the GPL or the LGPL are applicable instead
+ * of those above. If you wish to allow use of your version of this file only
+ * under the terms of either the GPL or the LGPL, and not to allow others to
+ * use your version of this file under the terms of the MPL, indicate your
+ * decision by deleting the provisions above and replace them with the notice
+ * and other provisions required by the GPL or the LGPL. If you do not delete
+ * the provisions above, a recipient may use your version of this file under
+ * the terms of any one of the MPL, the GPL or the LGPL.
+ *
+ * ***** END LICENSE BLOCK ***** */
+
+/*
+* The following part was imported from https://gitlab.freedesktop.org/uchardet/uchardet
+* The implementation of this feature was originally done on https://gitlab.freedesktop.org/uchardet/uchardet/blob/master/src/LangModels/LangHungarianModel.cpp
+* and adjusted to language specific support.
+*/
+
 namespace UtfUnknown.Core
 {
     public class Win1250HungarianModel : HungarianModel
     {
+        // Character Mapping Table:
+        // ILL: illegal character.
+        // CTR: control character specific to the charset.
+        // RET: carriage/return.
+        // SYM: symbol (punctuation) that does not belong to word.
+        // NUM: 0 - 9.
+        // 
+        // Other characters are ordered by probabilities
+        // (0 is the most common character in the language).
+        // 
+        // Orders are generic to a language. So the codepoint with order X in
+        // CHARSET1 maps to the same character as the codepoint with the same
+        // order X in CHARSET2 for the same language.
+        // As such, it is possible to get missing order. For instance the
+        // ligature of 'o' and 'e' exists in ISO-8859-15 but not in ISO-8859-1
+        // even though they are both used for French. Same for the euro sign.
+
         private readonly static byte[] WIN1250_CHAR_TO_ORDER_MAP = {
-            255,255,255,255,255,255,255,255,255,255,254,255,255,254,255,255,  //00
-            255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,255,  //10
-            +253,253,253,253,253,253,253,253,253,253,253,253,253,253,253,253,  //20
-            252,252,252,252,252,252,252,252,252,252,253,253,253,253,253,253,  //30
-            253, 28, 40, 54, 45, 32, 50, 49, 38, 39, 53, 36, 41, 34, 35, 47,
-            46, 72, 43, 33, 37, 57, 48, 64, 68, 55, 52,253,253,253,253,253,
-            253,  2, 18, 26, 17,  1, 27, 12, 20,  9, 22,  7,  6, 13,  4,  8,
-            23, 67, 10,  5,  3, 21, 19, 65, 62, 16, 11,253,253,253,253,253,
-            161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,
-            177,178,179,180, 78,181, 69,182,183,184,185,186,187,188,189,190,
-            191,192,193,194,195,196,197, 76,198,199,200,201,202,203,204,205,
-            81,206,207,208,209,210,211,212,213,214,215,216,217,218,219,220,
-            221, 51, 83,222, 80,223,224,225,226, 44,227,228,229, 61,230,231,
-            232,233,234, 58,235, 66, 59,236,237,238, 60, 70, 63,239,240,241,
-            84, 14, 75,242, 71, 82,243, 73,244, 15, 85, 79, 86, 30, 77, 87,
-            245,246,247, 25, 74, 42, 24,248,249,250, 31, 56, 29,251,252,253,
+          CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,RET,CTR,CTR,RET,CTR,CTR, /* 0X */
+          CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR, /* 1X */
+          SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM, /* 2X */
+          NUM,NUM,NUM,NUM,NUM,NUM,NUM,NUM,NUM,NUM,SYM,SYM,SYM,SYM,SYM,SYM, /* 3X */
+          SYM,  1, 15, 23, 16,  0, 24, 13, 20,  7, 22,  9,  4, 12,  6,  8, /* 4X */
+           21, 34,  5,  3,  2, 19, 17, 32, 33, 18, 10,SYM,SYM,SYM,SYM,SYM, /* 5X */
+          SYM,  1, 15, 23, 16,  0, 24, 13, 20,  7, 22,  9,  4, 12,  6,  8, /* 6X */
+           21, 34,  5,  3,  2, 19, 17, 32, 33, 18, 10,SYM,SYM,SYM,SYM,CTR, /* 7X */
+          SYM,ILL,SYM,ILL,SYM,SYM,SYM,SYM,ILL,SYM, 37,SYM, 46, 78, 48, 79, /* 8X */
+          ILL,SYM,SYM,SYM,SYM,SYM,SYM,SYM,ILL,SYM, 37,SYM, 46, 80, 48, 81, /* 9X */
+          SYM,SYM,SYM, 42,SYM, 82,SYM,SYM,SYM,SYM, 52,SYM,SYM,SYM,SYM, 83, /* AX */
+          SYM,SYM,SYM, 42,SYM,SYM,SYM,SYM,SYM, 84, 52,SYM, 85,SYM, 86, 87, /* BX */
+           88, 11, 40, 36, 35, 89, 38, 39, 41, 14, 50, 90, 53, 28, 45, 91, /* CX */
+           49, 43, 54, 26, 92, 27, 25,SYM, 44, 93, 30, 31, 29, 47, 51, 94, /* DX */
+           95, 11, 40, 36, 35, 96, 38, 39, 41, 14, 50, 97, 53, 28, 45, 98, /* EX */
+           49, 43, 54, 26, 99, 27, 25,SYM, 44,100, 30, 31, 29, 47, 51,SYM, /* FX */
         };
-        
+        /*X0  X1  X2  X3  X4  X5  X6  X7  X8  X9  XA  XB  XC  XD  XE  XF */
+
         public Win1250HungarianModel() : base(WIN1250_CHAR_TO_ORDER_MAP, "windows-1250")
         {
         }

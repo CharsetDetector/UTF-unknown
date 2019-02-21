@@ -78,8 +78,10 @@ namespace UtfUnknown.Core
             probers[12] = new SingleByteCharSetProber(new Win1255HebrewModel(), true, hebprober);
             hebprober.SetModelProbers(probers[11], probers[12]);
 
+            // Is the following still happening?
             // disable latin2 before latin1 is available, otherwise all latin1 
-            // will be detected as latin2 because of their similarity.
+            // will be detected as latin2 because of their similarity
+            // Hungarian
             probers[21] = new SingleByteCharSetProber(new Latin2HungarianModel());
             probers[22] = new SingleByteCharSetProber(new Win1250HungarianModel());
 
