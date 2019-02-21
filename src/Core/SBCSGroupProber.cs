@@ -49,6 +49,8 @@ namespace UtfUnknown.Core
         private int bestGuess;
         private int activeNum;
 
+        private StringBuilder notes = new StringBuilder();
+
         public SBCSGroupProber()
         {
             probers[0] = new SingleByteCharSetProber(new Win1251Model());
@@ -154,6 +156,8 @@ namespace UtfUnknown.Core
                             {
                                 bestConf = cf;
                                 bestGuess = i;
+
+                                notes.AppendLine($"-- new match found: confidence {bestConf}, index {bestGuess}.");
                             }
                         }
                     }
@@ -180,6 +184,7 @@ namespace UtfUnknown.Core
             }
 
             status.AppendLine($" SBCS Group found best match [{probers[bestGuess].GetCharsetName()}] confidence {cf}.");
+            status.AppendLine($"Notes:\n\r{notes.ToString()}\n\rNotes end.");
 
             return status.ToString();
         }
