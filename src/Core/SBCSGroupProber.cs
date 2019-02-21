@@ -65,6 +65,7 @@ namespace UtfUnknown.Core
             probers[6] = new SingleByteCharSetProber(new Latin7GreekModel());
             probers[7] = new SingleByteCharSetProber(new Win1253GreekModel());
 
+            // Bulgarian
             probers[8] = new SingleByteCharSetProber(new Latin5BulgarianModel());
             probers[9] = new SingleByteCharSetProber(new Win1251BulgarianModel());
 

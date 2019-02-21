@@ -11,17 +11,15 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * The Original Code is Mozilla Universal charset detector code.
+ * The Original Code is Mozilla Communicator client code.
  *
  * The Initial Developer of the Original Code is
  * Netscape Communications Corporation.
- * Portions created by the Initial Developer are Copyright (C) 2001
+ * Portions created by the Initial Developer are Copyright (C) 1998
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- *          Shy Shalom <shooshX@gmail.com>
- *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port)
- * 
+ *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
  * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
@@ -36,16 +34,22 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+/*
+* The following part was imported from https://gitlab.freedesktop.org/uchardet/uchardet
+* The implementation of this feature was originally done on https://gitlab.freedesktop.org/uchardet/uchardet/blob/master/src/LangModels/LangBulgarianModel.cpp
+* and adjusted to language specific support.
+*/
+
 namespace UtfUnknown.Core
 {   
     public abstract class BulgarianModel : SequenceModel
     {
-        //Model Table: 
-        //total sequences: 100%
-        //first 512 sequences: 96.9392%
-        //first 1024 sequences:3.0618%
-        //rest  sequences:     0.2992%
-        //negative sequences:  0.0020% 
+        // Model Table: 
+        // total sequences: 100%
+        // first 512 sequences: 96.9392%
+        // first 1024 sequences:3.0618%
+        // rest  sequences:     0.2992%
+        // negative sequences:  0.0020% 
         private static byte[] BULGARIAN_LANG_MODEL = {
             0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,3,3,3,3,3,3,3,3,2,3,3,3,3,3,
             3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,3,3,3,2,2,3,2,2,1,2,2,
@@ -174,7 +178,7 @@ namespace UtfUnknown.Core
             2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
             1,0,0,1,1,1,1,1,1,1,1,1,1,1,1,1,1,0,1,0,1,1,0,1,1,1,1,1,0,1,0,0,
-            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,            
+            0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
         };
 
         public BulgarianModel(byte[] charToOrderMap, string name) 
