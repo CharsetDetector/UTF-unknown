@@ -184,7 +184,7 @@ namespace UtfUnknown.Core
             }
 
             status.AppendLine($" SBCS Group found best match [{probers[bestGuess].GetCharsetName()}] confidence {cf}.");
-            status.AppendLine($"Notes:\n\r{notes.ToString()}\n\rNotes end.");
+            status.AppendLine($"Notes:{Environment.NewLine}{notes.ToString()}{Environment.NewLine}Notes end.");
 
             return status.ToString();
         }
