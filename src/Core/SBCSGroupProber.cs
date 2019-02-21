@@ -69,12 +69,13 @@ namespace UtfUnknown.Core
             probers[8] = new SingleByteCharSetProber(new Latin5BulgarianModel());
             probers[9] = new SingleByteCharSetProber(new Win1251BulgarianModel());
 
+            // Hebrew
             HebrewProber hebprober = new HebrewProber();
             probers[10] = hebprober;
             // Logical  
-            probers[11] = new SingleByteCharSetProber(new Win1255Model(), false, hebprober);
+            probers[11] = new SingleByteCharSetProber(new Win1255HebrewModel(), false, hebprober);
             // Visual
-            probers[12] = new SingleByteCharSetProber(new Win1255Model(), true, hebprober);
+            probers[12] = new SingleByteCharSetProber(new Win1255HebrewModel(), true, hebprober);
             hebprober.SetModelProbers(probers[11], probers[12]);
 
             // disable latin2 before latin1 is available, otherwise all latin1 
