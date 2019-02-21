@@ -157,7 +157,7 @@ namespace UtfUnknown.Core
                                 bestConf = cf;
                                 bestGuess = i;
 
-                                notes.AppendLine($"-- new match found: confidence {bestConf}, index {bestGuess}.");
+                                notes.AppendLine($"-- new match found: confidence {bestConf}, index {bestGuess}, charset {probers[i].GetCharsetName()}.");
                             }
                         }
                     }
