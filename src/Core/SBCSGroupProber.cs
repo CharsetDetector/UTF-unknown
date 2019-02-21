@@ -53,6 +53,7 @@ namespace UtfUnknown.Core
 
         public SBCSGroupProber()
         {
+            // Russian
             probers[0] = new SingleByteCharSetProber(new Win1251RussianModel());
             probers[1] = new SingleByteCharSetProber(new Koi8rModel());
             probers[2] = new SingleByteCharSetProber(new Latin5RussianModel());
@@ -60,6 +61,7 @@ namespace UtfUnknown.Core
             probers[4] = new SingleByteCharSetProber(new Ibm866Model());
             probers[5] = new SingleByteCharSetProber(new Ibm855Model());
 
+            // Greek
             probers[6] = new SingleByteCharSetProber(new Latin7GreekModel());
             probers[7] = new SingleByteCharSetProber(new Win1253GreekModel());
 
