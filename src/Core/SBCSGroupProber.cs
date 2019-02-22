@@ -76,6 +76,10 @@ namespace UtfUnknown.Core
             probers[12] = new SingleByteCharSetProber(new Win1255HebrewModel(), true, hebprober);
             hebprober.SetModelProbers(probers[11], probers[12]);
 
+            // Thai
+            probers[13] = new SingleByteCharSetProber(new Tis620Model());
+            probers[14] = new SingleByteCharSetProber(new LatinThai());
+
             // Is the following still valid?
             // disable latin2 before latin1 is available, otherwise all latin1 
             // will be detected as latin2 because of their similarity
