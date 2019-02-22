@@ -150,33 +150,51 @@ namespace UtfUnknown.Core
             return state;
         }
 
-        public override float GetConfidence()
+        public override float GetConfidence(StringBuilder status = null)
         {
             float bestConf = 0.0f;
 
-            if (state == ProbingState.FoundIt)
+            switch (state)
             {
-                return 0.99f;
-            }
-            else if (state == ProbingState.NotMe)
-            {
-                return 0.01f;
-            }
-            else
-            {
-                for (int i = 0; i < PROBERS_NUM; i++)
-                {
-                    if (isActive[i])
+                case ProbingState.FoundIt:
+                    return 0.99f;
+
+                case ProbingState.NotMe:
+                    return 0.01f;
+
+                default:
+
+                    if (status != null)
                     {
-                        var cf = probers[i].GetConfidence();
-                        if (bestConf < cf)
+                        status.AppendLine($"Get confidence:");
+                    }
+
+                    for (int i = 0; i < PROBERS_NUM; i++)
+                    {
+                        if (isActive[i])
                         {
-                            bestConf = cf;
-                            bestGuess = i;
+                            var cf = probers[i].GetConfidence();
+                            if (bestConf < cf)
+                            {
+                                bestConf = cf;
+                                bestGuess = i;
+
+                                if (status != null)
+                                {
+                                    status.AppendLine($"-- new match found: confidence {bestConf}, index {bestGuess}, charset {probers[i].GetCharsetName()}.");
+                                }
+                            }
                         }
                     }
-                }
+
+                    if (status != null)
+                    {
+                        status.AppendLine($"Get confidence done.");
+                    }
+
+                    break;
             }
+
             return bestConf;
         }
 

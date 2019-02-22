@@ -49,8 +49,6 @@ namespace UtfUnknown.Core
         private int bestGuess;
         private int activeNum;
 
-        StringBuilder notes;
-
         public SBCSGroupProber()
         {
             // Russian
@@ -145,19 +143,25 @@ namespace UtfUnknown.Core
             return state;
         }
 
-        public override float GetConfidence()
+        public override float GetConfidence(StringBuilder status = null)
         {
-            notes = new StringBuilder();
-
             float bestConf = 0.0f, cf;
 
             switch (state)
             {
                 case ProbingState.FoundIt:
                     return 0.99f; //sure yes
+
                 case ProbingState.NotMe:
                     return 0.01f;  //sure no
+
                 default:
+
+                    if (status != null)
+                    {
+                        status.AppendLine($"Get confidence:");
+                    }
+
                     for (int i = 0; i < PROBERS_NUM; i++)
                     {
                         if (isActive[i])
@@ -168,10 +172,19 @@ namespace UtfUnknown.Core
                                 bestConf = cf;
                                 bestGuess = i;
 
-                                notes.AppendLine($"-- new match found: confidence {bestConf}, index {bestGuess}, charset {probers[i].GetCharsetName()}.");
+                                if (status != null)
+                                {
+                                    status.AppendLine($"-- new match found: confidence {bestConf}, index {bestGuess}, charset {probers[i].GetCharsetName()}.");
+                                }
                             }
                         }
                     }
+
+                    if (status != null)
+                    {
+                        status.AppendLine($"Get confidence done.");
+                    }
+
                     break;
             }
 
@@ -182,7 +195,7 @@ namespace UtfUnknown.Core
         {
             StringBuilder status = new StringBuilder();
 
-            float cf = GetConfidence();
+            float cf = GetConfidence(status);
 
             status.AppendLine(" SBCS Group Prober --------begin status");
 
@@ -196,7 +209,6 @@ namespace UtfUnknown.Core
             }
 
             status.AppendLine($" SBCS Group found best match [{probers[bestGuess].GetCharsetName()}] confidence {cf}.");
-            status.AppendLine($"Notes:{Environment.NewLine}{notes?.ToString()}{Environment.NewLine}Notes end.");
 
             return status.ToString();
         }

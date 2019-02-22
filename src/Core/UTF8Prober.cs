@@ -36,6 +36,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System.Text;
+
 namespace UtfUnknown.Core
 {
     public class UTF8Prober : CharsetProber
@@ -46,12 +48,13 @@ namespace UtfUnknown.Core
 
         public UTF8Prober()
         {
-            numOfMBChar = 0; 
+            numOfMBChar = 0;
             codingSM = new CodingStateMachine(new UTF8SMModel());
             Reset();
         }
-        
-        public override string GetCharsetName() {
+
+        public override string GetCharsetName()
+        {
             return "UTF-8";
         }
 
@@ -65,22 +68,26 @@ namespace UtfUnknown.Core
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
             int max = offset + len;
-            
-            for (int i = offset; i < max; i++) {
+
+            for (int i = offset; i < max; i++)
+            {
 
                 var codingState = codingSM.NextState(buf[i]);
 
-                if (codingState == SMModel.ERROR) {
+                if (codingState == SMModel.ERROR)
+                {
                     state = ProbingState.NotMe;
                     break;
                 }
 
-                if (codingState == SMModel.ITSME) {
+                if (codingState == SMModel.ITSME)
+                {
                     state = ProbingState.FoundIt;
                     break;
                 }
 
-                if (codingState == SMModel.START) {
+                if (codingState == SMModel.START)
+                {
                     if (codingSM.CurrentCharLen >= 2)
                         numOfMBChar++;
                 }
@@ -92,20 +99,24 @@ namespace UtfUnknown.Core
             return state;
         }
 
-        public override float GetConfidence()
+        public override float GetConfidence(StringBuilder status = null)
         {
             float unlike = 0.99f;
             float confidence;
-            
-            if (numOfMBChar < 6) {
+
+            if (numOfMBChar < 6)
+            {
                 for (int i = 0; i < numOfMBChar; i++)
                     unlike *= ONE_CHAR_PROB;
+
                 confidence = 1.0f - unlike;
-            } else {
+            }
+            else
+            {
                 confidence = 0.99f;
             }
-            return confidence;
 
+            return confidence;
         }
     }
 }

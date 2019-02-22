@@ -36,6 +36,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System.Text;
+
 namespace UtfUnknown.Core
 {
     public class Big5Prober : CharsetProber
@@ -96,7 +98,7 @@ namespace UtfUnknown.Core
             return "Big5";        
         }
         
-        public override float GetConfidence()
+        public override float GetConfidence(StringBuilder status = null)
         {
             return distributionAnalyser.GetConfidence();
         }

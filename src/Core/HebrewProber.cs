@@ -300,7 +300,7 @@ namespace UtfUnknown.Core
             return status.ToString();
         }
         
-        public override float GetConfidence()
+        public override float GetConfidence(StringBuilder status = null)
         { 
             return 0.0f;
         }

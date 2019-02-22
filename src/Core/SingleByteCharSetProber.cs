@@ -155,7 +155,7 @@ namespace UtfUnknown.Core
             throw new NotImplementedException();
         }
 
-        public override float GetConfidence()
+        public override float GetConfidence(StringBuilder status = null)
         {
             /*
             NEGATIVE_APPROACH

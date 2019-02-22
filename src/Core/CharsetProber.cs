@@ -37,6 +37,7 @@
  * ***** END LICENSE BLOCK ***** */
 
 using System.IO;
+using System.Text;
 
 namespace UtfUnknown.Core
 {
@@ -73,7 +74,7 @@ namespace UtfUnknown.Core
 
         public abstract string GetCharsetName();
 
-        public abstract float GetConfidence();
+        public abstract float GetConfidence(StringBuilder status = null);
 
         public virtual ProbingState GetState()
         {

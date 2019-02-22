@@ -36,6 +36,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System.Text;
+
 namespace UtfUnknown.Core
 {
     public class EUCTWProber : CharsetProber
@@ -96,7 +98,7 @@ namespace UtfUnknown.Core
             distributionAnalyser.Reset();
         }
 
-        public override float GetConfidence()
+        public override float GetConfidence(StringBuilder status = null)
         {
             return distributionAnalyser.GetConfidence();
         }

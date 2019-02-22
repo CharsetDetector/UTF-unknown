@@ -35,6 +35,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System.Text;
+
 namespace UtfUnknown.Core
 {
     public class EscCharsetProber : CharsetProber
@@ -97,7 +99,7 @@ namespace UtfUnknown.Core
             return detectedCharset;        
         }
         
-        public override float GetConfidence()
+        public override float GetConfidence(StringBuilder status = null)
         {
             return 0.99f;
         }           

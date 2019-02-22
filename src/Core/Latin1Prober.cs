@@ -151,7 +151,7 @@ namespace UtfUnknown.Core
             return state;
         }
 
-        public override float GetConfidence()
+        public override float GetConfidence(StringBuilder status = null)
         {
             if (state == ProbingState.NotMe)
                 return 0.01f;

@@ -36,6 +36,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System.Text;
+
 namespace UtfUnknown.Core
 {
     /// <summary>
@@ -106,7 +108,7 @@ namespace UtfUnknown.Core
             distributionAnalyser.Reset();
         }
         
-        public override float GetConfidence()
+        public override float GetConfidence(StringBuilder status = null)
         {
             float contxtCf = contextAnalyser.GetConfidence();
             float distribCf = distributionAnalyser.GetConfidence();

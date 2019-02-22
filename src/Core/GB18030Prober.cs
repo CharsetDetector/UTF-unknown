@@ -36,6 +36,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System.Text;
+
 namespace UtfUnknown.Core
 {
     // We use gb18030 to replace gb2312, because 18030 is a superset. 
@@ -94,7 +96,7 @@ namespace UtfUnknown.Core
             return state;
         }
         
-        public override float GetConfidence()
+        public override float GetConfidence(StringBuilder status = null)
         {
             return analyser.GetConfidence();
         }
