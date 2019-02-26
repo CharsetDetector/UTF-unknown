@@ -50,7 +50,7 @@ namespace UtfUnknown.Core
         public GB18030Prober()
         {
             lastChar = new byte[2];
-            codingSM = new CodingStateMachine(new GB18030SMModel());
+            codingSM = new CodingStateMachine(new GB18030_SMModel());
             analyser = new GB18030DistributionAnalyser();
             Reset();
         }

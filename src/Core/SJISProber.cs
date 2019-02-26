@@ -55,7 +55,7 @@ namespace UtfUnknown.Core
     
         public SJISProber()
         {
-            codingSM = new CodingStateMachine(new SJISSMModel());
+            codingSM = new CodingStateMachine(new SJIS_SMModel());
             distributionAnalyser = new SJISDistributionAnalyser();
             contextAnalyser = new SJISContextAnalyser(); 
             Reset();

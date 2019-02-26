@@ -49,10 +49,10 @@ namespace UtfUnknown.Core
         public EscCharsetProber()
         {
             codingSM = new CodingStateMachine[CHARSETS_NUM]; 
-            codingSM[0] = new CodingStateMachine(new HZSMModel());
-            codingSM[1] = new CodingStateMachine(new ISO2022CNSMModel());
-            codingSM[2] = new CodingStateMachine(new ISO2022JPSMModel());
-            codingSM[3] = new CodingStateMachine(new ISO2022KRSMModel());
+            codingSM[0] = new CodingStateMachine(new HZ_GB_2312_SMModel());
+            codingSM[1] = new CodingStateMachine(new Iso_2022_CN_SMModel());
+            codingSM[2] = new CodingStateMachine(new Iso_2022_JP_SMModel());
+            codingSM[3] = new CodingStateMachine(new Iso_2022_KR_SMModel());
             Reset();
         }
         

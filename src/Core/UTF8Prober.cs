@@ -49,7 +49,7 @@ namespace UtfUnknown.Core
         public UTF8Prober()
         {
             numOfMBChar = 0;
-            codingSM = new CodingStateMachine(new UTF8SMModel());
+            codingSM = new CodingStateMachine(new UTF8_SMModel());
             Reset();
         }
 
