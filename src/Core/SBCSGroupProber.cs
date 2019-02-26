@@ -112,6 +112,10 @@ namespace UtfUnknown.Core
             probers[28] = new SingleByteCharSetProber(new Iso_8859_6_ArabicModel());
             probers[29] = new SingleByteCharSetProber(new Windows_1256_ArabicModel());
 
+            // Vietnamese
+            probers[30] = new SingleByteCharSetProber(new Viscii_VietnameseModel());
+            probers[31] = new SingleByteCharSetProber(new Windows_1258_VietnameseModel());
+
             // Finnish
             probers[60] = new SingleByteCharSetProber(new Iso_8859_1_FinnishModel());
             probers[61] = new SingleByteCharSetProber(new Iso_8859_4_FinnishModel());
