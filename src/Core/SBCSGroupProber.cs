@@ -168,6 +168,13 @@ namespace UtfUnknown.Core
             probers[64] = new SingleByteCharSetProber(new Iso_8859_15_FinnishModel());
             probers[65] = new SingleByteCharSetProber(new Windows_1252_FinnishModel());
 
+            // Italian
+            probers[66] = new SingleByteCharSetProber(new Iso_8859_1_ItalianModel());
+            probers[67] = new SingleByteCharSetProber(new Iso_8859_3_ItalianModel());
+            probers[68] = new SingleByteCharSetProber(new Iso_8859_9_ItalianModel());
+            probers[69] = new SingleByteCharSetProber(new Iso_8859_15_ItalianModel());
+            probers[70] = new SingleByteCharSetProber(new Windows_1252_ItalianModel());
+
             // Swedish
             probers[95] = new SingleByteCharSetProber(new Iso_8859_1_SwedishModel());
             probers[96] = new SingleByteCharSetProber(new Iso_8859_4_SwedishModel());
