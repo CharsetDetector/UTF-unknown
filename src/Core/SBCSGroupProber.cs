@@ -80,6 +80,11 @@ namespace UtfUnknown.Core
             probers[13] = new SingleByteCharSetProber(new Tis620Model());
             probers[14] = new SingleByteCharSetProber(new LatinThai());
 
+            // French
+            probers[15] = new SingleByteCharSetProber(new Iso_8859_1FrenchModel());
+            probers[16] = new SingleByteCharSetProber(new Iso_8859_15FrenchModel());
+            probers[17] = new SingleByteCharSetProber(new Windows_1252FrenchModel());
+
             // Is the following still valid?
             // disable latin2 before latin1 is available, otherwise all latin1 
             // will be detected as latin2 because of their similarity
