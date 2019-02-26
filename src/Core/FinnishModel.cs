@@ -50,7 +50,7 @@ namespace UtfUnknown.Core
         // Next 512 sequences(512-1024) : 0.0014621852444200612
         // Rest: 3.881443777498106e-17
         // Negative sequences: TODO
-        private static byte[] FINNISH_LANG_MODEL = {
+        private static byte[] LANG_MODEL = {
             3,3,3,3,3,3,3,3,3,3,3,2,3,3,3,3,3,3,3,3,3,3,2,3,3,3,3,2,2,2,
             3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,3,3,2,0,2,
             3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,0,0,2,
@@ -84,7 +84,7 @@ namespace UtfUnknown.Core
         };
 
         public FinnishModel(byte[] charToOrderMap, string name)
-            : base(charToOrderMap, FINNISH_LANG_MODEL, 30, 0.9985378147555799f, true, name)
+            : base(charToOrderMap, LANG_MODEL, 30, 0.9985378147555799f, true, name)
         {
         }
     }

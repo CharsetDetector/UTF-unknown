@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core
 {
-    public class Latin5BulgarianModel : BulgarianModel
+    public class Iso_8859_5BulgarianModel : BulgarianModel
     {
         // CTR: Control characters that usually does not exist in any text
         // RET: Carriage/Return
@@ -53,7 +53,7 @@ namespace UtfUnknown.Core
         // this table is modified base on win1251BulgarianCharToOrderMap, so 
         // only number <64 is sure valid
 
-        private static byte[] LATIN5_CHAR_TO_ORDER_MAP = {
+        private static byte[] CHAR_TO_ORDER_MAP = {
             CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,RET,CTR,CTR,RET,CTR,CTR,  //00
             CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,  //10
             SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,  //20
@@ -72,7 +72,7 @@ namespace UtfUnknown.Core
              62,242,243,244, 58,245, 98,246,247,248,249,250,251, 91,NUM,SYM,  //f0
         };
         
-        public Latin5BulgarianModel() : base(LATIN5_CHAR_TO_ORDER_MAP, "ISO-8859-5")
+        public Iso_8859_5BulgarianModel() : base(CHAR_TO_ORDER_MAP, "ISO-8859-5")
         {
         }
     }

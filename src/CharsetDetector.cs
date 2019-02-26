@@ -445,8 +445,6 @@ namespace UtfUnknown
                 return new DetectionResult(detectionResults);
 
                 //TODO why done isn't true?
-
-
             }
             else if (InputState == InputState.PureASCII)
             {

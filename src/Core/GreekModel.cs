@@ -51,7 +51,7 @@ namespace UtfUnknown.Core
         // Next 512 sequences (512-1024): 0.03968891876305471
         // Rest: 0.0018920066107342773
         // Negative sequences: TODO
-        private readonly static byte[] GREEK_LANG_MODEL = {
+        private readonly static byte[] LANG_MODEL = {
           1,3,3,3,3,3,3,3,3,3,2,3,3,3,3,3,2,2,3,2,3,1,2,
            3,3,3,3,3,1,3,0,3,0,0,0,0,0,0,1,0,0,1,0,0,0,2,
           2,2,3,3,3,3,3,3,3,3,2,3,3,3,3,3,1,2,3,2,3,1,2,
@@ -147,7 +147,7 @@ namespace UtfUnknown.Core
         };
 
         public GreekModel(byte[] charToOrderMap, string name) 
-            : base(charToOrderMap, GREEK_LANG_MODEL, 46, 0.958419074626211f, false, name)
+            : base(charToOrderMap, LANG_MODEL, 46, 0.958419074626211f, false, name)
         {
         }        
     }

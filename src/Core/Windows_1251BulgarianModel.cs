@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core
 {
-    public class Win1251BulgarianModel : BulgarianModel
+    public class Windows_1251BulgarianModel : BulgarianModel
     {
         // CTR: Control characters that usually does not exist in any text
         // RET: Carriage/Return
@@ -53,7 +53,7 @@ namespace UtfUnknown.Core
         // this table is modified base on win1251BulgarianCharToOrderMap, so 
         // only number <64 is sure valid
 
-        private static byte[] WIN1251__CHAR_TO_ORDER_MAP = {
+        private static byte[] CHAR_TO_ORDER_MAP = {
             CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,RET,CTR,CTR,RET,CTR,CTR,  //00
             CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,  //10
             SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,  //20
@@ -72,7 +72,7 @@ namespace UtfUnknown.Core
               7,  8,  5, 19, 29, 25, 22, 21, 27, 24, 17, 75, 52,SYM, 42, 16,  //f0
         };
         
-        public Win1251BulgarianModel() : base(WIN1251__CHAR_TO_ORDER_MAP, "windows-1251")
+        public Windows_1251BulgarianModel() : base(CHAR_TO_ORDER_MAP, "WINDOWS-1251")
         {
         }
     }

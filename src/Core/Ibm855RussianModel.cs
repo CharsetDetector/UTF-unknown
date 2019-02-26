@@ -11,16 +11,14 @@
  * for the specific language governing rights and limitations under the
  * License.
  *
- * The Original Code is Mozilla Universal charset detector code.
+ * The Original Code is Mozilla Communicator client code.
  *
  * The Initial Developer of the Original Code is
  * Netscape Communications Corporation.
- * Portions created by the Initial Developer are Copyright (C) 2001
+ * Portions created by the Initial Developer are Copyright (C) 1998
  * the Initial Developer. All Rights Reserved.
  *
  * Contributor(s):
- *          Shy Shalom <shooshX@gmail.com>
- *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port)
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -38,41 +36,34 @@
 
 /*
 * The following part was imported from https://gitlab.freedesktop.org/uchardet/uchardet
-* The implementation of this feature was originally done on https://gitlab.freedesktop.org/uchardet/uchardet/blob/master/src/LangModels/LangHebrewModel.cpp
+* The implementation of this feature was originally done on https://gitlab.freedesktop.org/uchardet/uchardet/blob/master/src/LangModels/LangRussianModel.cpp
 * and adjusted to language specific support.
 */
 
 namespace UtfUnknown.Core
 {
-    public class Win1255HebrewModel : HebrewModel
+    public class Ibm855RussianModel : RussianModel
     {
-        // 255: Control characters that usually does not exist in any text
-        // 254: Carriage/Return
-        // 253: symbol (punctuation) that does not belong to word
-        // 252: 0 - 9
-
-        // Windows-1255 language model
-        // Character Mapping Table:        
-        private readonly static byte[] WIN1255_CHAR_TO_ORDER_MAP = {
+        private readonly static byte[] BYTE_TO_ORDER_MAP = {
             CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,RET,CTR,CTR,RET,CTR,CTR,  //00
             CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,  //10
             SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,  //20
             NUM,NUM,NUM,NUM,NUM,NUM,NUM,NUM,NUM,NUM,SYM,SYM,SYM,SYM,SYM,SYM,  //30
-            SYM, 69, 91, 79, 80, 92, 89, 97, 90, 68,111,112, 82, 73, 95, 85,  //40
-             78,121, 86, 71, 67,102,107, 84,114,103,115,SYM,SYM,SYM,SYM,SYM,  //50
-            SYM, 50, 74, 60, 61, 42, 76, 70, 64, 53,105, 93, 56, 65, 54, 49,  //60
-             66,110, 51, 43, 44, 63, 81, 77, 98, 75,108,SYM,SYM,SYM,SYM,SYM,  //70
-            124,ILL,203,204,205, 40, 58,206,207,208,ILL,210,ILL,ILL,ILL,ILL,
-            ILL, 83, 52, 47, 46, 72, 32, 94,216,113,ILL,109,ILL,ILL,ILL,ILL,
-             34,116,222,118,100,223,224,117,119,104,125,225,226, 87, 99,227,
-            106,122,123,228, 55,229,230,101,231,232,120,233, 48, 39, 57,234,
-             30, 59, 41, 88, 33, 37, 36, 31, 29, 35,235, 62, 28,236,126,237,
-            238, 38, 45,239,240,241,242,243,127,ILL,ILL,ILL,ILL,ILL,ILL,ILL,
-              9,  8, 20, 16,  3,  2, 24, 14, 22,  1, 25, 15,  4, 11,  6, 23,
-             12, 19, 13, 26, 18, 27, 21, 17,  7, 10,  5,ILL,ILL,128, 96,ILL,
+            SYM,142,143,144,145,146,147,148,149,150,151,152, 74,153, 75,154,  //40
+            155,156,157,158,159,160,161,162,163,164,165,SYM,SYM,SYM,SYM,SYM,  //50
+            SYM, 71,172, 66,173, 65,174, 76,175, 64,176,177, 77, 72,178, 69,  //60
+             67,179, 78, 73,180,181, 79,182,183,184,185,SYM,SYM,SYM,SYM,SYM,  //70
+            191,192,193,194, 68,195,196,197,198,199,200,201,202,203,204,205,
+            206,207,208,209,210,211,212,213,214,215,216,217, 27, 59, 54, 70,
+              3, 37, 21, 44, 28, 58, 13, 41,  2, 48, 39, 53, 19, 46,218,219,
+            220,221,222,223,224, 26, 55,  4, 42,225,226,227,228, 23, 60,229,
+            230,231,232,233,234,235, 11, 36,236,237,238,239,240,241,242,243,
+              8, 49, 12, 38,  5, 31,  1, 34, 15,244,245,246,247, 35, 16,248,
+             43,  9, 45,  7, 32,  6, 40, 14, 52, 24, 56, 10, 33, 17, 61,249,
+            250, 18, 62, 20, 51, 25, 57, 30, 47, 29, 63, 22, 50,251,NUM,CTR,
         };
-        
-        public Win1255HebrewModel() : base(WIN1255_CHAR_TO_ORDER_MAP, "windows-1255")
+                
+        public Ibm855RussianModel() : base(BYTE_TO_ORDER_MAP, "IBM855")
         {
         }
     }

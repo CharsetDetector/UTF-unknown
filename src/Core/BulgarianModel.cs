@@ -50,7 +50,7 @@ namespace UtfUnknown.Core
         // first 1024 sequences:3.0618%
         // rest  sequences:     0.2992%
         // negative sequences:  0.0020% 
-        private static byte[] BULGARIAN_LANG_MODEL = {
+        private static byte[] LANG_MODEL = {
             0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,3,3,3,3,3,3,3,3,2,3,3,3,3,3,
             3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,3,3,3,2,2,3,2,2,1,2,2,
             3,1,3,3,2,3,3,3,3,3,3,3,3,3,3,3,3,0,3,3,3,3,3,3,3,3,3,3,0,3,0,1,
@@ -182,7 +182,7 @@ namespace UtfUnknown.Core
         };
 
         public BulgarianModel(byte[] charToOrderMap, string name) 
-            : base(charToOrderMap, BULGARIAN_LANG_MODEL, 64, 0.969392f, false, name)
+            : base(charToOrderMap, LANG_MODEL, 64, 0.969392f, false, name)
         {
         }        
     }

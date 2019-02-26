@@ -165,8 +165,8 @@ namespace UtfUnknown.Core
         // If the difference is below this, don't rely at all on the model score distance.
         private const float MIN_MODEL_DISTANCE = 0.01f;
 
-        protected const string VISUAL_HEBREW_NAME = "ISO-8859-8";
-        protected const string LOGICAL_HEBREW_NAME = "windows-1255";
+        protected const string VISUAL_NAME = "ISO-8859-8";
+        protected const string LOGICAL_NAME = "WINDOWS-1255";
         
         // owned by the group prober.
         protected CharsetProber logicalProber, visualProber;
@@ -255,23 +255,23 @@ namespace UtfUnknown.Core
             // If the final letter score distance is dominant enough, rely on it.
             int finalsub = finalCharLogicalScore - finalCharVisualScore;
             if (finalsub >= MIN_FINAL_CHAR_DISTANCE) 
-                return LOGICAL_HEBREW_NAME;
+                return LOGICAL_NAME;
             if (finalsub <= -(MIN_FINAL_CHAR_DISTANCE))
-                return VISUAL_HEBREW_NAME;
+                return VISUAL_NAME;
 
             // It's not dominant enough, try to rely on the model scores instead.
             float modelsub = logicalProber.GetConfidence() - visualProber.GetConfidence();
             if (modelsub > MIN_MODEL_DISTANCE)
-                return LOGICAL_HEBREW_NAME;
+                return LOGICAL_NAME;
             if (modelsub < -(MIN_MODEL_DISTANCE))
-                return VISUAL_HEBREW_NAME;
+                return VISUAL_NAME;
             
             // Still no good, back to final letter distance, maybe it'll save the day.
             if (finalsub < 0) 
-                return VISUAL_HEBREW_NAME;
+                return VISUAL_NAME;
 
             // (finalsub > 0 - Logical) or (don't know what to do) default to Logical.
-            return LOGICAL_HEBREW_NAME;
+            return LOGICAL_NAME;
         }
 
         public override void Reset()

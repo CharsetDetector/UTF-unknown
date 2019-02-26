@@ -50,7 +50,7 @@ namespace UtfUnknown.Core
         // Next 512 sequences (512-1024): 0.002942120007616917
         // Rest: 3.8163916471489756e-17
         // Negative sequences: TODO
-        private static byte[] FRENCH_LANG_MODEL = {
+        private static byte[] LANG_MODEL = {
             3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,3,3,3,3,3,3,3,3,0,0,3,3,3,0,3,3,0,0,0,2,0,2,0,
             3,3,3,3,3,2,3,3,3,3,3,3,3,3,3,2,2,3,3,3,3,0,3,3,0,0,3,0,0,2,3,0,0,0,2,2,0,0,
             3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,0,3,3,3,0,3,3,2,2,3,0,0,3,0,
@@ -92,7 +92,7 @@ namespace UtfUnknown.Core
         };
 
         public FrenchModel(byte[] charToOrderMap, string name)
-            : base(charToOrderMap, FRENCH_LANG_MODEL, 38, 0.997057879992383f, true, name)
+            : base(charToOrderMap, LANG_MODEL, 38, 0.997057879992383f, true, name)
         {
         }
     }

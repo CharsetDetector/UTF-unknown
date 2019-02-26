@@ -50,7 +50,7 @@ namespace UtfUnknown.Core
         // Next 512 sequences (512-1024): 0.0026764914153179875
         // Rest: 1.7780915628762273e-17
         // Negative sequences: TODO
-        private static byte[] SWEDISH_LANG_MODEL = {
+        private static byte[] LANG_MODEL = {
           3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,3,0,3,2,3,3,3,3,3,2,0,0,2,
           3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,3,2,3,2,3,3,3,3,3,3,0,0,2,
           3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,3,2,2,0,0,
@@ -85,7 +85,7 @@ namespace UtfUnknown.Core
         };
 
         public SwedishModel(byte[] charToOrderMap, string name)
-            : base(charToOrderMap, SWEDISH_LANG_MODEL, 31, 0.997323508584682f, true, name)
+            : base(charToOrderMap, LANG_MODEL, 31, 0.997323508584682f, true, name)
         {
         }
     }

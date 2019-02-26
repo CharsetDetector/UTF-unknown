@@ -50,7 +50,7 @@ namespace UtfUnknown.Core
         // first 1024 sequences: 2.3389%
         // rest  sequences:      0.1237%
         // negative sequences:   0.0009% 
-        protected readonly static byte[] RUSSIAN_LANG_MODEL = {
+        protected readonly static byte[] LANG_MODEL = {
             0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,3,3,3,3,1,3,3,3,2,3,2,3,3,
             3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,3,2,2,2,2,2,0,0,2,
             3,3,3,2,3,3,3,3,3,3,3,3,3,3,2,3,3,0,0,3,3,3,3,3,3,3,3,3,2,3,2,0,
@@ -182,7 +182,7 @@ namespace UtfUnknown.Core
         };
         
         public RussianModel(byte[] charToOrderMap, string name) 
-            : base(charToOrderMap, RUSSIAN_LANG_MODEL, 64, 0.976601f, false, name)
+            : base(charToOrderMap, LANG_MODEL, 64, 0.976601f, false, name)
         {
         }
     }

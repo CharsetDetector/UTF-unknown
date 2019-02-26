@@ -51,7 +51,7 @@ namespace UtfUnknown.Core
         // Next 512 sequences (512-1024): 0.024983863604162403
         // Rest: 0.0001889139024889644
         // Negative sequences: TODO
-        private readonly static byte[] HUNGARIAN_LANG_MODEL = {
+        private readonly static byte[] LANG_MODEL = {
           3,3,3,3,3,3,3,3,3,3,3,2,3,3,2,3,3,3,3,3,3,3,3,3,3,3,1,0,2,2,0,0,
           3,2,3,3,3,3,3,3,2,3,3,2,3,3,2,3,3,3,3,3,3,3,3,3,3,0,0,2,2,1,2,1,
           3,3,3,3,3,3,3,3,3,3,3,3,3,2,3,3,2,3,3,3,3,2,3,2,2,3,3,3,3,3,2,2,
@@ -87,7 +87,7 @@ namespace UtfUnknown.Core
         };
 
         public HungarianModel(byte[] charToOrderMap, string name) 
-            : base(charToOrderMap, HUNGARIAN_LANG_MODEL, 32, 0.9748272224933486f, 
+            : base(charToOrderMap, LANG_MODEL, 32, 0.9748272224933486f, 
                    false, name)
         {
         }        

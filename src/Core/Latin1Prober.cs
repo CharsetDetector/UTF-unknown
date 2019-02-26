@@ -120,7 +120,7 @@ namespace UtfUnknown.Core
 
         public override string GetCharsetName()
         {
-            return "windows-1252";
+            return "WINDOWS-1252";
         }
 
         public override void Reset()

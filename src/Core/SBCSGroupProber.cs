@@ -52,33 +52,33 @@ namespace UtfUnknown.Core
         public SBCSGroupProber()
         {
             // Russian
-            probers[0] = new SingleByteCharSetProber(new Win1251RussianModel());
+            probers[0] = new SingleByteCharSetProber(new Windows_1251RussianModel());
             probers[1] = new SingleByteCharSetProber(new Koi8rModel());
-            probers[2] = new SingleByteCharSetProber(new Latin5RussianModel());
-            probers[3] = new SingleByteCharSetProber(new MacCyrillicModel());
-            probers[4] = new SingleByteCharSetProber(new Ibm866Model());
-            probers[5] = new SingleByteCharSetProber(new Ibm855Model());
+            probers[2] = new SingleByteCharSetProber(new Iso_8859_5RussianModel());
+            probers[3] = new SingleByteCharSetProber(new MacCyrillicRussianModel());
+            probers[4] = new SingleByteCharSetProber(new Ibm866RussianModel());
+            probers[5] = new SingleByteCharSetProber(new Ibm855RussianModel());
 
             // Greek
-            probers[6] = new SingleByteCharSetProber(new Latin7GreekModel());
-            probers[7] = new SingleByteCharSetProber(new Win1253GreekModel());
+            probers[6] = new SingleByteCharSetProber(new Iso_8859_7GreekModel());
+            probers[7] = new SingleByteCharSetProber(new Windows_1253GreekModel());
 
             // Bulgarian
-            probers[8] = new SingleByteCharSetProber(new Latin5BulgarianModel());
-            probers[9] = new SingleByteCharSetProber(new Win1251BulgarianModel());
+            probers[8] = new SingleByteCharSetProber(new Iso_8859_5BulgarianModel());
+            probers[9] = new SingleByteCharSetProber(new Windows_1251BulgarianModel());
 
             // Hebrew
             HebrewProber hebprober = new HebrewProber();
             probers[10] = hebprober;
             // Logical  
-            probers[11] = new SingleByteCharSetProber(new Win1255HebrewModel(), false, hebprober);
+            probers[11] = new SingleByteCharSetProber(new Windows_1255HebrewModel(), false, hebprober);
             // Visual
-            probers[12] = new SingleByteCharSetProber(new Win1255HebrewModel(), true, hebprober);
+            probers[12] = new SingleByteCharSetProber(new Windows_1255HebrewModel(), true, hebprober);
             hebprober.SetModelProbers(probers[11], probers[12]);
 
             // Thai
-            probers[13] = new SingleByteCharSetProber(new Tis620Model());
-            probers[14] = new SingleByteCharSetProber(new LatinThai());
+            probers[13] = new SingleByteCharSetProber(new Tis_620ThaiModel());
+            probers[14] = new SingleByteCharSetProber(new Iso_8859_11ThaiModel());
 
             // French
             probers[15] = new SingleByteCharSetProber(new Iso_8859_1FrenchModel());
@@ -89,23 +89,23 @@ namespace UtfUnknown.Core
             // disable latin2 before latin1 is available, otherwise all latin1 
             // will be detected as latin2 because of their similarity
             // Hungarian
-            probers[21] = new SingleByteCharSetProber(new Latin2HungarianModel());
-            probers[22] = new SingleByteCharSetProber(new Win1250HungarianModel());
+            probers[21] = new SingleByteCharSetProber(new Iso_8859_2HungarianModel());
+            probers[22] = new SingleByteCharSetProber(new Windows_1250HungarianModel());
 
             // Finnish
-            probers[60] = new SingleByteCharSetProber(new Latin1FinnishModel());
-            probers[61] = new SingleByteCharSetProber(new Latin4FinnishModel());
-            probers[62] = new SingleByteCharSetProber(new Latin5FinnishModel());
-            probers[63] = new SingleByteCharSetProber(new Latin7FinnishModel());
-            probers[64] = new SingleByteCharSetProber(new Latin9FinnishModel());
-            probers[65] = new SingleByteCharSetProber(new Win1252FinnishModel());
+            probers[60] = new SingleByteCharSetProber(new Iso_8859_1FinnishModel());
+            probers[61] = new SingleByteCharSetProber(new Iso_8859_4FinnishModel());
+            probers[62] = new SingleByteCharSetProber(new Iso_8859_9FinnishModel());
+            probers[63] = new SingleByteCharSetProber(new Iso_8859_13FinnishModel());
+            probers[64] = new SingleByteCharSetProber(new Iso_8859_15FinnishModel());
+            probers[65] = new SingleByteCharSetProber(new Windows_1252FinnishModel());
 
             // Swedish
-            probers[95] = new SingleByteCharSetProber(new Latin1SwedishModel());
-            probers[96] = new SingleByteCharSetProber(new Latin4SwedishModel());
-            probers[97] = new SingleByteCharSetProber(new Latin5SwedishModel());
-            probers[98] = new SingleByteCharSetProber(new Latin9SwedishModel());
-            probers[99] = new SingleByteCharSetProber(new Win1252SwedishModel());
+            probers[95] = new SingleByteCharSetProber(new Iso_8859_1SwedishModel());
+            probers[96] = new SingleByteCharSetProber(new Iso_8859_4SwedishModel());
+            probers[97] = new SingleByteCharSetProber(new Iso_8859_9SwedishModel());
+            probers[98] = new SingleByteCharSetProber(new Iso_8859_15SwedishModel());
+            probers[99] = new SingleByteCharSetProber(new Windows_1252SwedishModel());
 
             Reset();
         }

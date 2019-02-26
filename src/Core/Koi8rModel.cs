@@ -44,7 +44,7 @@ namespace UtfUnknown.Core
 {
     public class Koi8rModel : RussianModel
     {
-        private readonly static byte[] KOI8R_CHAR_TO_ORDER_MAP = {
+        private readonly static byte[] CHAR_TO_ORDER_MAP = {
             CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,RET,CTR,CTR,RET,CTR,CTR,  //00
             CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,  //10
             SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,  //20
@@ -63,7 +63,7 @@ namespace UtfUnknown.Core
              35, 43, 45, 32, 40, 52, 56, 33, 61, 62, 51, 57, 47, 63, 50, 70,  //f0
         };
         
-        public Koi8rModel() : base(KOI8R_CHAR_TO_ORDER_MAP, "KOI8-R")
+        public Koi8rModel() : base(CHAR_TO_ORDER_MAP, "KOI8-R")
         {
         }
     }
