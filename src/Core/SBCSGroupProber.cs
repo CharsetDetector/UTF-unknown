@@ -183,6 +183,13 @@ namespace UtfUnknown.Core
             probers[75] = new SingleByteCharSetProber(new Mac_Centraleurope_CroatianModel());
             probers[76] = new SingleByteCharSetProber(new Ibm852_CroatianModel());
 
+            // Estonian
+            probers[77] = new SingleByteCharSetProber(new Windows_1252_EstonianModel());
+            probers[78] = new SingleByteCharSetProber(new Windows_1257_EstonianModel());
+            probers[79] = new SingleByteCharSetProber(new Iso_8859_4_EstonianModel());
+            probers[80] = new SingleByteCharSetProber(new Iso_8859_13_EstonianModel());
+            probers[81] = new SingleByteCharSetProber(new Iso_8859_15_EstonianModel());
+
             // Swedish
             probers[95] = new SingleByteCharSetProber(new Iso_8859_1_SwedishModel());
             probers[96] = new SingleByteCharSetProber(new Iso_8859_4_SwedishModel());
