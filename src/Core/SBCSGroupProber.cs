@@ -190,6 +190,12 @@ namespace UtfUnknown.Core
             probers[80] = new SingleByteCharSetProber(new Iso_8859_13_EstonianModel());
             probers[81] = new SingleByteCharSetProber(new Iso_8859_15_EstonianModel());
 
+            // Irish
+            probers[82] = new SingleByteCharSetProber(new Iso_8859_1_IrishModel());
+            probers[83] = new SingleByteCharSetProber(new Iso_8859_9_IrishModel());
+            probers[84] = new SingleByteCharSetProber(new Iso_8859_15_IrishModel());
+            probers[85] = new SingleByteCharSetProber(new Windows_1252_IrishModel());
+
             // Swedish
             probers[95] = new SingleByteCharSetProber(new Iso_8859_1_SwedishModel());
             probers[96] = new SingleByteCharSetProber(new Iso_8859_4_SwedishModel());
