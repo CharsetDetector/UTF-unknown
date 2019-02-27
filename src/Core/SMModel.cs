@@ -45,7 +45,6 @@ namespace UtfUnknown.Core
     /// </summary>
     public abstract class SMModel
     {
-
         /// <summary>
         /// Start node
         /// </summary>
@@ -55,7 +54,6 @@ namespace UtfUnknown.Core
         /// Error node <see cref="ProbingState.NotMe"/> ?
         /// </summary>
         public const int ERROR = 1;
-
 
         /// <summary>
         /// <see cref="ProbingState.FoundIt"/> ?

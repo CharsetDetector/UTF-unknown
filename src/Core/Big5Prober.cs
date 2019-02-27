@@ -46,62 +46,70 @@ namespace UtfUnknown.Core
         private CodingStateMachine codingSM;
         private BIG5DistributionAnalyser distributionAnalyser;
         private byte[] lastChar = new byte[2];
-        
+
         public Big5Prober()
         {
             codingSM = new CodingStateMachine(new BIG5SMModel());
             distributionAnalyser = new BIG5DistributionAnalyser();
-            Reset();        
+            Reset();
         }
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
             int max = offset + len;
 
-            for (int i = offset; i < max; i++) {
+            for (int i = offset; i < max; i++)
+            {
                 var codingState = codingSM.NextState(buf[i]);
-                if (codingState == SMModel.ERROR) {
+                if (codingState == SMModel.ERROR)
+                {
                     state = ProbingState.NotMe;
                     break;
                 }
-                if (codingState == SMModel.ITSME) {
+                if (codingState == SMModel.ITSME)
+                {
                     state = ProbingState.FoundIt;
                     break;
                 }
-                if (codingState == SMModel.START) {
+                if (codingState == SMModel.START)
+                {
                     int charLen = codingSM.CurrentCharLen;
-                    if (i == offset) {
+                    if (i == offset)
+                    {
                         lastChar[1] = buf[offset];
                         distributionAnalyser.HandleOneChar(lastChar, 0, charLen);
-                    } else {
-                        distributionAnalyser.HandleOneChar(buf, i-1, charLen);        
+                    }
+                    else
+                    {
+                        distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
                     }
                 }
             }
-            lastChar[0] = buf[max-1];
+
+            lastChar[0] = buf[max - 1];
 
             if (state == ProbingState.Detecting)
                 if (distributionAnalyser.GotEnoughData() && GetConfidence() > SHORTCUT_THRESHOLD)
                     state = ProbingState.FoundIt;
+
             return state;
         }
-        
+
         public override void Reset()
         {
-            codingSM.Reset(); 
+            codingSM.Reset();
             state = ProbingState.Detecting;
             distributionAnalyser.Reset();
         }
-            
+
         public override string GetCharsetName()
         {
-            return "Big5";        
+            return "Big5";
         }
-        
+
         public override float GetConfidence(StringBuilder status = null)
         {
             return distributionAnalyser.GetConfidence();
         }
-        
     }
 }
