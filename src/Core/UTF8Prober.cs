@@ -96,6 +96,7 @@ namespace UtfUnknown.Core
             if (state == ProbingState.Detecting)
                 if (GetConfidence() > SHORTCUT_THRESHOLD)
                     state = ProbingState.FoundIt;
+
             return state;
         }
 

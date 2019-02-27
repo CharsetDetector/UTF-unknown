@@ -47,8 +47,18 @@ namespace UtfUnknown.Core
     public class MBCSGroupProber : CharsetProber
     {
         private const int PROBERS_NUM = 7;
+
         private readonly static string[] ProberName =
-            { "UTF8", "SJIS", "EUCJP", "GB18030", "EUCKR", "Big5", "EUCTW" };
+        {
+            "UTF-8",
+            "SJIS",
+            "EUC-JP",
+            "GB18030",
+            "EUC-KR",
+            "Big5",
+            "EUC-TW"
+        };
+
         private CharsetProber[] probers = new CharsetProber[PROBERS_NUM];
         private bool[] isActive = new bool[PROBERS_NUM];
         private int bestGuess;
@@ -63,6 +73,7 @@ namespace UtfUnknown.Core
             probers[4] = new EUCKRProber();
             probers[5] = new Big5Prober();
             probers[6] = new EUCTWProber();
+
             Reset();
         }
 
@@ -71,15 +82,18 @@ namespace UtfUnknown.Core
             if (bestGuess == -1)
             {
                 GetConfidence();
+
                 if (bestGuess == -1)
                     bestGuess = 0;
             }
+
             return probers[bestGuess].GetCharsetName();
         }
 
         public override void Reset()
         {
             activeNum = 0;
+
             for (int i = 0; i < probers.Length; i++)
             {
                 if (probers[i] != null)
@@ -93,6 +107,7 @@ namespace UtfUnknown.Core
                     isActive[i] = false;
                 }
             }
+
             bestGuess = -1;
             state = ProbingState.Detecting;
         }
@@ -147,6 +162,7 @@ namespace UtfUnknown.Core
                     }
                 }
             }
+
             return state;
         }
 
