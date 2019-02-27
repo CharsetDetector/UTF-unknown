@@ -196,6 +196,12 @@ namespace UtfUnknown.Core
             probers[84] = new SingleByteCharSetProber(new Iso_8859_15_IrishModel());
             probers[85] = new SingleByteCharSetProber(new Windows_1252_IrishModel());
 
+            // Romanian
+            probers[86] = new SingleByteCharSetProber(new Windows_1250_RomanianModel());
+            probers[87] = new SingleByteCharSetProber(new Iso_8859_2_RomanianModel());
+            probers[88] = new SingleByteCharSetProber(new Iso_8859_16_RomanianModel());
+            probers[89] = new SingleByteCharSetProber(new Ibm852_RomanianModel());
+
             // Slovene
             probers[90] = new SingleByteCharSetProber(new Windows_1250_SloveneModel());
             probers[91] = new SingleByteCharSetProber(new Iso_8859_2_SloveneModel());
