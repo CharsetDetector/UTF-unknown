@@ -320,10 +320,20 @@ namespace UtfUnknown.Core
             for (int i = 0; i < PROBERS_NUM; i++)
             {
                 if (probers[i] != null)
+                {
                     if (!isActive[i])
-                        status.AppendLine($" inactive: [{probers[i].GetCharsetName()}] (i.e. confidence is too low).");
+                    {
+                        status.AppendLine($" SBCS inactive: [{probers[i].GetCharsetName()}] (i.e. confidence is too low).");
+                    }
                     else
+                    {
+                        var cfp = probers[i].GetConfidence();
+
+                        status.AppendLine($" SBCS {cfp}: [{probers[i].GetCharsetName()}]");
+
                         status.AppendLine(probers[i].DumpStatus());
+                    }
+                }
             }
 
             status.AppendLine($" SBCS Group found best match [{probers[bestGuess].GetCharsetName()}] confidence {cf}.");

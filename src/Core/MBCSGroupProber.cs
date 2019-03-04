@@ -48,17 +48,6 @@ namespace UtfUnknown.Core
     {
         private const int PROBERS_NUM = 7;
 
-        private readonly static string[] ProberName =
-        {
-            "UTF-8",
-            "SJIS",
-            "EUC-JP",
-            "GB18030",
-            "EUC-KR",
-            "Big5",
-            "EUC-TW"
-        };
-
         private CharsetProber[] probers = new CharsetProber[PROBERS_NUM];
         private bool[] isActive = new bool[PROBERS_NUM];
         private int bestGuess;
@@ -218,21 +207,30 @@ namespace UtfUnknown.Core
         {
             StringBuilder status = new StringBuilder();
 
-            GetConfidence();
+            float cf = GetConfidence(status);
+
+            status.AppendLine(" MBCS Group Prober --------begin status");
 
             for (int i = 0; i < PROBERS_NUM; i++)
             {
-                if (!isActive[i])
+                if (probers[i] != null)
                 {
-                    status.AppendLine($"  MBCS inactive: {ProberName[i]} (confidence is too low).");
-                }
-                else
-                {
-                    var cf = probers[i].GetConfidence();
+                    if (!isActive[i])
+                    {
+                        status.AppendLine($" MBCS inactive: {probers[i].GetCharsetName()} (i.e. confidence is too low).");
+                    }
+                    else
+                    {
+                        var cfp = probers[i].GetConfidence();
 
-                    status.AppendLine($"  MBCS {cf}: [{ProberName[i]}]");
+                        status.AppendLine($" MBCS {cfp}: [{probers[i].GetCharsetName()}]");
+
+                        status.AppendLine(probers[i].DumpStatus());
+                    }
                 }
             }
+
+            status.AppendLine($" MBCS Group found best match [{probers[bestGuess].GetCharsetName()}] confidence {cf}.");
 
             return status.ToString();
         }
