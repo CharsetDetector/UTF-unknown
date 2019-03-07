@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text;
+
 using UtfUnknown.Core;
+using UtfUnknown.Core.Probers;
 
 namespace UtfUnknown
 {
