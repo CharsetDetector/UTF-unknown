@@ -143,7 +143,7 @@ namespace UtfUnknown.Core.Probers
             return state;
         }
                 
-        public override string DumpStatus()
+        public override string LogStatus()
         {
             StringBuilder status = new StringBuilder();
 

@@ -208,7 +208,7 @@ namespace UtfUnknown.Core.Probers
             return bestConf;
         }
 
-        public override string DumpStatus()
+        public override string LogStatus()
         {
             StringBuilder status = new StringBuilder();
 
@@ -230,7 +230,7 @@ namespace UtfUnknown.Core.Probers
 
                         status.AppendLine($" MBCS {cfp}: [{probers[i].GetCharsetName()}]");
 
-                        status.AppendLine(probers[i].DumpStatus());
+                        status.AppendLine(probers[i].LogStatus());
                     }
                 }
             }

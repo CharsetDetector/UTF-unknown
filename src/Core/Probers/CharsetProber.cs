@@ -86,7 +86,7 @@ namespace UtfUnknown.Core.Probers
 
         }
 
-        public virtual string DumpStatus()
+        public virtual string LogStatus()
         {
             return string.Empty;
         }

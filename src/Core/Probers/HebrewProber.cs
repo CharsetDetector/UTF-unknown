@@ -290,7 +290,7 @@ namespace UtfUnknown.Core.Probers
             return ProbingState.Detecting;
         }
 
-        public override string DumpStatus()
+        public override string LogStatus()
         {
             StringBuilder status = new StringBuilder();
 

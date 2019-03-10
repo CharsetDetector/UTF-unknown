@@ -14,7 +14,7 @@ namespace UtfUnknown
         /// <summary>
         /// New result
         /// </summary>
-        public DetectionDetail(string encodingShortName, float confidence, CharsetProber prober = null, TimeSpan? time = null, string statusDump = null)
+        public DetectionDetail(string encodingShortName, float confidence, CharsetProber prober = null, TimeSpan? time = null, string statusLog = null)
         {
             EncodingName = encodingShortName;
             Confidence = confidence;
@@ -32,14 +32,14 @@ namespace UtfUnknown
             Prober = prober;
             Time = time;
 
-            StatusDump = statusDump;
+            StatusLog = statusLog;
         }
 
         /// <summary>
         /// New Result
         /// </summary>
         public DetectionDetail(CharsetProber prober, TimeSpan? time = null) 
-            : this(prober.GetCharsetName(), prober.GetConfidence(), prober, time, prober.DumpStatus())
+            : this(prober.GetCharsetName(), prober.GetConfidence(), prober, time, prober.LogStatus())
         {
         }
 
@@ -68,7 +68,7 @@ namespace UtfUnknown
         /// </summary>
         public TimeSpan? Time { get; set; }
 
-        public string StatusDump { get; set; }
+        public string StatusLog { get; set; }
 
         public override string ToString()
         {
