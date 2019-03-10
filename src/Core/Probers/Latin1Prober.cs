@@ -178,7 +178,7 @@ namespace UtfUnknown.Core.Probers
             return confidence < 0.0f ? 0.0f : confidence * 0.5f;
         }
 
-        public override string LogStatus()
+        public override string DumpStatus()
         {
             StringBuilder status = new StringBuilder();
 

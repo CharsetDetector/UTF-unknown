@@ -343,7 +343,7 @@ namespace UtfUnknown.Core.Probers
             return bestConf;
         }
 
-        public override string LogStatus()
+        public override string DumpStatus()
         {
             StringBuilder status = new StringBuilder();
 
@@ -365,7 +365,7 @@ namespace UtfUnknown.Core.Probers
 
                         status.AppendLine($" SBCS {cfp}: [{probers[i].GetCharsetName()}]");
 
-                        status.AppendLine(probers[i].LogStatus());
+                        status.AppendLine(probers[i].DumpStatus());
                     }
                 }
             }

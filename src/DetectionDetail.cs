@@ -39,7 +39,7 @@ namespace UtfUnknown
         /// New Result
         /// </summary>
         public DetectionDetail(CharsetProber prober, TimeSpan? time = null) 
-            : this(prober.GetCharsetName(), prober.GetConfidence(), prober, time, prober.LogStatus())
+            : this(prober.GetCharsetName(), prober.GetConfidence(), prober, time, prober.DumpStatus())
         {
         }
 
