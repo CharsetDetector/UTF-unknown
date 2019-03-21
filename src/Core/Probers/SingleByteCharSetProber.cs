@@ -209,7 +209,6 @@ namespace UtfUnknown.Core.Probers
         {
             return (nameProber == null) ? model.CharsetName
                                         : nameProber.GetCharsetName();
-        }
-        
+        }        
     }
 }
