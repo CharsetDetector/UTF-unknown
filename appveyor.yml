@@ -1,4 +1,8 @@
+environment:
+  info_version: 2.0-rc1
+
 version: 2.0.{build}
+
 clone_folder: c:\utfUnknown
 image: Visual Studio 2017
 configuration: Release
@@ -25,8 +29,8 @@ artifacts:
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
-  version: '{version}'
-  package_version: '{version}'
+  version: $(info_version)
+  package_version: $(info_version)
   assembly_version: 2.0.0.0
-  file_version: '{build}'
-  informational_version: '{version}'
+  file_version: '{version}'
+  informational_version: $(info_version)
