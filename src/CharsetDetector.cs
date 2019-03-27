@@ -41,7 +41,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+
 using UtfUnknown.Core;
+using UtfUnknown.Core.Probers;
 
 namespace UtfUnknown
 {
@@ -187,8 +189,6 @@ namespace UtfUnknown
 
         private static void ReadStream(Stream stream, long? maxBytes, CharsetDetector detector)
         {
-          
-
             const int bufferSize = 1024;
             byte[] buff = new byte[bufferSize];
             int read;
@@ -283,7 +283,7 @@ namespace UtfUnknown
                 _start = false;
                 if (bomSet != null)
                 {
-                    _detectionDetail = new DetectionDetail(bomSet, 1);
+                    _detectionDetail = new DetectionDetail(bomSet, 1.0f);
                     _done = true;
                     return;
                 }
@@ -319,9 +319,7 @@ namespace UtfUnknown
         private bool RunProber(byte[] buf, int offset, int len, CharsetProber charsetProber)
         {
             var probingState = charsetProber.HandleData(buf, offset, len);
-#if DEBUG
-            charsetProber.DumpStatus();
-#endif
+
             if (probingState == ProbingState.FoundIt)
             {
                 _done = true;
@@ -367,7 +365,6 @@ namespace UtfUnknown
                 }
             }
         }
-
 
         private static string FindCharSetByBom(byte[] buf, int len)
         {
@@ -427,7 +424,7 @@ namespace UtfUnknown
             {
                 _done = true;
 
-                //conf 1.0 is from v1.0 (todo wrong?)
+                // conf 1.0 is from v1.0 (todo wrong?)
                 _detectionDetail.Confidence = 1.0f;
                 return new DetectionResult(_detectionDetail);
             }
@@ -450,8 +447,6 @@ namespace UtfUnknown
                 return new DetectionResult(detectionResults);
 
                 //TODO why done isn't true?
-
-
             }
             else if (InputState == InputState.PureASCII)
             {
@@ -461,7 +456,5 @@ namespace UtfUnknown
             return new DetectionResult();
         }
     }
-
-
 }
 

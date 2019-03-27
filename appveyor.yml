@@ -5,8 +5,9 @@ configuration: Release
 platform: Any CPU
 nuget:
   project_feed: true
-
 deploy: off
+init:
+- git config --global core.autocrlf true
 build_script:
 - ps: dotnet build -c Release 
 test_script:
@@ -17,5 +18,7 @@ after_build:
 - ps: cd .\src\
 - ps: dotnet pack -c Release 
 - ps: cd ..
+- ps: Get-ChildItem '**\test-diag.log' | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
 artifacts:
 - path: '**\*.nupkg'
+- path: '**\test-diag.log'

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Text;
+
 using UtfUnknown.Core;
+using UtfUnknown.Core.Probers;
 
 namespace UtfUnknown
 {
@@ -12,7 +14,7 @@ namespace UtfUnknown
         /// <summary>
         /// New result
         /// </summary>
-        public DetectionDetail(string encodingShortName, float confidence, CharsetProber prober = null, TimeSpan? time = null)
+        public DetectionDetail(string encodingShortName, float confidence, CharsetProber prober = null, TimeSpan? time = null, string statusLog = null)
         {
             EncodingName = encodingShortName;
             Confidence = confidence;
@@ -29,13 +31,15 @@ namespace UtfUnknown
          
             Prober = prober;
             Time = time;
+
+            StatusLog = statusLog;
         }
 
         /// <summary>
         /// New Result
         /// </summary>
         public DetectionDetail(CharsetProber prober, TimeSpan? time = null) 
-            : this(prober.GetCharsetName(), prober.GetConfidence(), prober, time)
+            : this(prober.GetCharsetName(), prober.GetConfidence(), prober, time, prober.DumpStatus())
         {
         }
 
@@ -64,6 +68,7 @@ namespace UtfUnknown
         /// </summary>
         public TimeSpan? Time { get; set; }
 
+        public string StatusLog { get; set; }
 
         public override string ToString()
         {
