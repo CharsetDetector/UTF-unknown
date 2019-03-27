@@ -9,7 +9,6 @@ configuration: Release
 platform: Any CPU
 nuget:
   project_feed: true
-deploy: off
 init:
 - git config --global core.autocrlf true
 build_script:
