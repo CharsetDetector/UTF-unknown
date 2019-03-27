@@ -22,3 +22,11 @@ after_build:
 artifacts:
 - path: '**\*.nupkg'
 - path: '**\test-diag.log'
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+  assembly_version: 2.0.0.0
+  file_version: '{build}'
+  informational_version: '{version}'
