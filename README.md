@@ -1,5 +1,4 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/xr59ab52cav8vuph/branch/master?svg=true)](https://ci.appveyor.com/project/304NotModified/utf-unknown/branch/master)
-
 [![NuGet Pre Release](https://img.shields.io/nuget/vpre/UTF.Unknown.svg)](https://www.nuget.org/packages/UTF.Unknown/)
 
 <!-- 
@@ -14,7 +13,7 @@ Detect character set for files, steams and other bytes.
 
 Detection of character sets with a simple and redesigned interface.
 
-This package is based on [Ude](https://github.com/errepi/ude) and since version 2 also [uchardet](https://gitlab.freedesktop.org/uchardet/uchardet),
+This package is based on [Ude](https://github.com/errepi/ude) and since version 2 also on [uchardet](https://gitlab.freedesktop.org/uchardet/uchardet),
 which are ports of the [Mozilla Universal Charset Detector](https://mxr.mozilla.org/mozilla/source/extensions/universalchardet/).
       
 The interface and other classes has been resigned so it's easier to use and better object oriented design (OOD). Unit tests and CI has been added.
