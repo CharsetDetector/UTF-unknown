@@ -18,7 +18,7 @@
     <AssemblyTitle>UTF Unknown</AssemblyTitle>
     <Description>Detect character set for files, steams and other bytes.
 
-This package is based on Ude (https://github.com/errepi/ude), which is a port of the Mozilla Universal Charset Detector (https://mxr.mozilla.org/mozilla/source/extensions/universalchardet/).
+      This package is based on Ude and since version 2 also on uchardet, which are ports of the Mozilla Universal Charset Detector.
 
 Features:
 - Detects 28 charsets
