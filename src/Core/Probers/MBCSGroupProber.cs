@@ -51,7 +51,7 @@ namespace UtfUnknown.Core.Probers
     /// </summary>
     public class MBCSGroupProber : CharsetProber
     {
-        private const int PROBERS_NUM = 7;
+        private const int PROBERS_NUM = 8;
 
         private CharsetProber[] probers = new CharsetProber[PROBERS_NUM];
         private bool[] isActive = new bool[PROBERS_NUM];
@@ -65,8 +65,9 @@ namespace UtfUnknown.Core.Probers
             probers[2] = new EUCJPProber();
             probers[3] = new GB18030Prober();
             probers[4] = new EUCKRProber();
-            probers[5] = new Big5Prober();
-            probers[6] = new EUCTWProber();
+            probers[5] = new CP949Prober();
+            probers[6] = new Big5Prober();
+            probers[7] = new EUCTWProber();
 
             Reset();
         }

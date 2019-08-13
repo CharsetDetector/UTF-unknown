@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 
 using UtfUnknown.Core;
@@ -16,12 +17,12 @@ namespace UtfUnknown
         /// </summary>
         public DetectionDetail(string encodingShortName, float confidence, CharsetProber prober = null, TimeSpan? time = null, string statusLog = null)
         {
-            EncodingName = encodingShortName;
+            EncodingName = encodingShortName.Split('(').First().Trim();
             Confidence = confidence;
 
             try
             {
-                Encoding = Encoding.GetEncoding(encodingShortName);
+                Encoding = Encoding.GetEncoding(encodingShortName.Split('(').Last().Split(')').First().Trim());
             }
             catch (Exception)
             {
