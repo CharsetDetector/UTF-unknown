@@ -6,7 +6,7 @@
   <PropertyGroup>
     <AssemblyName>UtfUnknown</AssemblyName>
     <PackageId>UTF.Unknown</PackageId>
-    <Version>2.0.0</Version>
+    <Version>2.1.0</Version>
 
   </PropertyGroup>
   <PropertyGroup>
@@ -43,9 +43,7 @@ Features:
 
     <PackageTags>charset;detection;unicode;ascii;netstandard</PackageTags>
     <PackageReleaseNotes>
-Version 2 updated the detection from Uchardet's code (thanks Mihai Sorin Dobrescu!)
-  
-See https://github.com/CharsetDetector/UTF-unknown/milestone/2
+- Added support for CP949 (@HelloWorld017)
     
     </PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/CharsetDetector/UTF-unknown/master/logo.png</PackageIconUrl>
