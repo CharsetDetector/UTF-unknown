@@ -67,6 +67,7 @@ The following charsets are supported:
 * gb18030 (superset of gb2312)
 * HZ-GB-2312
 * Shift-JIS
+* CP949
 * EUC-KR, EUC-JP, EUC-TW
 * ISO-2022-JP, ISO-2022-KR, ISO-2022-CN
 * KOI8-R
