@@ -15,18 +15,26 @@ namespace UtfUnknown
         /// <summary>
         /// New result
         /// </summary>
-        public DetectionDetail(string encodingShortName, float confidence, CharsetProber prober = null, TimeSpan? time = null, string statusLog = null)
+        public DetectionDetail(
+            string encodingShortName,
+            float confidence,
+            CharsetProber prober = null,
+            TimeSpan? time = null,
+            string statusLog = null)
         {
             EncodingName = encodingShortName.Split('(').First().Trim();
             Confidence = confidence;
 
             try
             {
-                Encoding = Encoding.GetEncoding(encodingShortName.Split('(').Last().Split(')').First().Trim());
+                var encodingName = encodingShortName
+                    .Split('(').Last()
+                    .Split(')').First()
+                    .Trim();
+                Encoding = Encoding.GetEncoding(encodingName);
             }
             catch (Exception)
             {
-                
                //wrong name
             }
          

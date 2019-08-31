@@ -8,6 +8,7 @@ namespace UtfUnknown.Core
         /// Found escape character or HZ "~{"
         /// </summary>
         EscASCII = 1,
+
         /// <summary>
         /// non-ascii byte (high-byte)
         /// </summary>
