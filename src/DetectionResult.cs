@@ -41,7 +41,7 @@ namespace UtfUnknown
         /// <summary>
         /// All results
         /// </summary>
-        public IList<DetectionDetail> Details { get; private set; }
+        public IList<DetectionDetail> Details { get; set; }
 
         public override string ToString()
         {
