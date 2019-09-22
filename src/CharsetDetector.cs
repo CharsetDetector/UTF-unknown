@@ -100,12 +100,29 @@ namespace UtfUnknown
         /// <summary>
         /// "list" of probers
         /// </summary>
-        private readonly CharsetProber[] _charsetProbers = new CharsetProber[ProbersNum];
+        private IList<CharsetProber> _charsetProbers;
 
         /// <summary>
         /// TODO unknown
         /// </summary>
-        private CharsetProber _escCharsetProber;
+        private IList<CharsetProber> _escCharsetProber;
+
+        private IList<CharsetProber> CharsetProbers
+        {
+            get
+            {
+                switch (InputState)
+                {
+                    case InputState.EscASCII:
+                        return _escCharsetProber;
+                    case InputState.Highbyte:
+                        return _charsetProbers;
+                    default:
+                        // pure ascii
+                        return new List<CharsetProber>();
+                }
+            }
+        }
 
         /// <summary>
         /// Detected charset. Most of the time <see cref="_done"/> is true
@@ -113,11 +130,6 @@ namespace UtfUnknown
         private DetectionDetail _detectionDetail;
 
         private const float MinimumThreshold = 0.20f;
-
-        /// <summary>
-        /// tries
-        /// </summary>
-        private const int ProbersNum = 3;
 
         private CharsetDetector()
         {
@@ -182,7 +194,7 @@ namespace UtfUnknown
             }
 
             var detector = new CharsetDetector();
-            
+
             ReadStream(stream, maxBytesToRead, detector);
             return detector.DataEnd();
         }
@@ -264,7 +276,7 @@ namespace UtfUnknown
             }
         }
 
-#endif
+#endif // !NETSTANDARD1_0
 
         protected virtual void Feed(byte[] buf, int offset, int len)
         {
@@ -279,50 +291,37 @@ namespace UtfUnknown
             // If the data starts with BOM, we know it is UTF
             if (_start)
             {
-                var bomSet = FindCharSetByBom(buf, len);
                 _start = false;
-                if (bomSet != null)
-                {
-                    _detectionDetail = new DetectionDetail(bomSet, 1.0f);
-                    _done = true;
+                _done = IsStartsWithBom(buf, len);
+                if (_done)
                     return;
-                }
             }
 
             FindInputState(buf, len);
-
-            switch (InputState)
+            foreach (var prober in CharsetProbers)
             {
-                case InputState.EscASCII:
+                _done = RunProber(buf, offset, len, prober);
+                if (_done)
+                    return;
+            };
+        }
 
-                    _escCharsetProber = _escCharsetProber ?? new EscCharsetProber();
-
-                    RunProber(buf, offset, len, _escCharsetProber);
-
-                    break;
-                case InputState.Highbyte:
-                    for (int i = 0; i < ProbersNum; i++)
-                    {
-                        var charsetProber = _charsetProbers[i];
-
-                        if (charsetProber != null)
-                        {
-                            var found = RunProber(buf, offset, len, charsetProber);
-                            if (found) return;
-                        }
-                    }
-                    break;
-                    // else pure ascii
+        private bool IsStartsWithBom(byte[] buf, int len)
+        {
+            var bomSet = FindCharSetByBom(buf, len);
+            if (bomSet != null)
+            {
+                _detectionDetail = new DetectionDetail(bomSet, 1.0f);
+                return true;
             }
+            return false;
         }
 
         private bool RunProber(byte[] buf, int offset, int len, CharsetProber charsetProber)
         {
             var probingState = charsetProber.HandleData(buf, offset, len);
-
             if (probingState == ProbingState.FoundIt)
             {
-                _done = true;
                 _detectionDetail = new DetectionDetail(charsetProber);
                 return true;
             }
@@ -343,14 +342,7 @@ namespace UtfUnknown
 
                         // kill EscCharsetProber if it is active
                         _escCharsetProber = null;
-
-                        // start multibyte and singlebyte charset prober
-                        if (_charsetProbers[0] == null)
-                            _charsetProbers[0] = new MBCSGroupProber();
-                        if (_charsetProbers[1] == null)
-                            _charsetProbers[1] = new SBCSGroupProber();
-                        if (_charsetProbers[2] == null)
-                            _charsetProbers[2] = new Latin1Prober();
+                        _charsetProbers = _charsetProbers ?? GetNewProbers();
                     }
                 }
                 else
@@ -360,6 +352,7 @@ namespace UtfUnknown
                     {
                         // found escape character or HZ "~{"
                         InputState = InputState.EscASCII;
+                        _escCharsetProber = _escCharsetProber ?? GetNewProbers();
                     }
                     _lastChar = buf[i];
                 }
@@ -431,18 +424,11 @@ namespace UtfUnknown
 
             if (InputState == InputState.Highbyte)
             {
-                var list = new List<DetectionDetail>(ProbersNum);
-                for (int i = 0; i < ProbersNum; i++)
-                {
-                    var charsetProber = _charsetProbers[i];
-
-                    if (charsetProber != null)
-                    {
-                        list.Add(new DetectionDetail(charsetProber));
-                    }
-                }
-
-                var detectionResults = list.Where(p => p.Confidence > MinimumThreshold).OrderByDescending(p => p.Confidence).ToList();
+                var detectionResults = _charsetProbers
+                    .Select(prober => new DetectionDetail(prober))
+                    .Where(result => result.Confidence > MinimumThreshold)
+                    .OrderByDescending(result => result.Confidence)
+                    .ToList();
 
                 return new DetectionResult(detectionResults);
 
@@ -453,7 +439,29 @@ namespace UtfUnknown
                 //TODO why done isn't true?
                 return new DetectionResult(new DetectionDetail("ASCII", 1.0f));
             }
+
             return new DetectionResult();
+        }
+
+        internal IList<CharsetProber> GetNewProbers()
+        {
+            switch (InputState)
+            {
+                case InputState.EscASCII:
+                    return new List<CharsetProber>() { new EscCharsetProber() };
+
+                case InputState.Highbyte:
+                    return new List<CharsetProber>()
+                    {
+                        new MBCSGroupProber(),
+                        new SBCSGroupProber(),
+                        new Latin1Prober(),
+                    };
+
+                default:
+                    // pure ascii
+                    return new List<CharsetProber>();
+            }
         }
     }
 }
