@@ -1,7 +1,7 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/xr59ab52cav8vuph/branch/master?svg=true)](https://ci.appveyor.com/project/304NotModified/utf-unknown/branch/master)
 [![NuGet Pre Release](https://img.shields.io/nuget/vpre/UTF.Unknown.svg)](https://www.nuget.org/packages/UTF.Unknown/)
 
-<!-- 
+<!--
 [![codecov.io](https://codecov.io/github/UniversalCharsetDetector/ude/coverage.svg?branch=master)](https://codecov.io/github/UniversalCharsetDetector/ude?branch=master)
 -->
 
@@ -15,7 +15,7 @@ Detection of character sets with a simple and redesigned interface.
 
 This package is based on [Ude](https://github.com/errepi/ude) and since version 2 also on [uchardet](https://gitlab.freedesktop.org/uchardet/uchardet),
 which are ports of the [Mozilla Universal Charset Detector](https://mxr.mozilla.org/mozilla/source/extensions/universalchardet/).
-      
+
 The interface and other classes has been resigned so it's easier to use and better object oriented design (OOD). Unit tests and CI has been added.
 
 Features:
@@ -52,29 +52,48 @@ var result = CharsetDetector.DetectFromBytes(byteArray);
 
 The article "[A composite approach to language/encoding detection](https://www-archive.mozilla.org/projects/intl/UniversalCharsetDetection.html)" describes the charsets detection algorithms implemented by the library.
 
-The following charsets are supported:
+<details>
+  <summary>The following charsets are supported</summary>
 
-* ASCII
-* UTF-8
-* UTF-16 (BE and LE)
-* UTF-32 (BE and LE)
-* windows-1252 (mostly equivalent to iso8859-1)
-* windows-1251 and ISO-8859-5 (cyrillic)
-* windows-1253 and ISO-8859-7 (greek)
-* windows-1255 (logical hebrew. Includes ISO-8859-8-I and most of x-mac-hebrew)
-* ISO-8859-8 (visual hebrew)
-* Big-5
-* gb18030 (superset of gb2312)
-* HZ-GB-2312
-* Shift-JIS
-* CP949
-* EUC-KR, EUC-JP, EUC-TW
-* ISO-2022-JP, ISO-2022-KR, ISO-2022-CN
-* KOI8-R
-* x-mac-cyrillic
-* IBM855 and IBM866
-* X-ISO-10646-UCS-4-3412 and X-ISO-10646-UCS-4-2413 (unusual BOM)
+|        Language         | Encodings                                                                                           |
+|-------------------------|-----------------------------------------------------------------------------------------------------|
+| International (Unicode) | UTF-8; UTF-16BE / UTF-16LE; UTF-32BE / UTF-32LE / X-ISO-10646-UCS-4-34121 / X-ISO-10646-UCS-4-21431 |
+| Arabic                  | ISO-8859-6; WINDOWS-1256                                                                            |
+| Bulgarian               | ISO-8859-5; WINDOWS-1251                                                                            |
+| Chinese                 | ISO-2022-CN; BIG5; EUC-TW; GB18030; HZ-GB-2312                                                      |
+| Croatian                | ISO-8859-2; ISO-8859-13; ISO-8859-16; WINDOWS-1250; IBM852; MAC-CENTRALEUROPE                       |
+| Czech                   | WINDOWS-1250; ISO-8859-2; IBM852; MAC-CENTRALEUROPE                                                 |
+| Danish                  | ISO-8859-1; ISO-8859-15; WINDOWS-1252                                                               |
+| English                 | ASCII                                                                                               |
+| Esperanto               | ISO-8859-3                                                                                          |
+| Estonian                | ISO-8859-4; ISO-8859-13; ISO-8859-13; WINDOWS-1252; WINDOWS-1257                                    |
+| Finnish                 | ISO-8859-1; ISO-8859-4; ISO-8859-9; ISO-8859-13; ISO-8859-15; WINDOWS-1252                          |
+| French                  | ISO-8859-1; ISO-8859-15; WINDOWS-1252                                                               |
+| German                  | ISO-8859-1; WINDOWS-1252                                                                            |
+| Greek                   | ISO-8859-7; WINDOWS-1253                                                                            |
+| Hebrew                  | ISO-8859-8; WINDOWS-1255                                                                            |
+| Hungarian               | ISO-8859-2; WINDOWS-1250                                                                            |
+| Irish Gaelic            | ISO-8859-1; ISO-8859-9; ISO-8859-15; WINDOWS-1252                                                   |
+| Italian                 | ISO-8859-1; ISO-8859-3; ISO-8859-9; ISO-8859-15; WINDOWS-1252                                       |
+| Japanese                | ISO-2022-JP; SHIFT_JIS; EUC-JP                                                                      |
+| Korean                  | ISO-2022-KR; EUC-KR / UHC; WINDOWS-949                                                              |
+| Lithuanian              | ISO-8859-4; ISO-8859-10; ISO-8859-13                                                                |
+| Latvian                 | ISO-8859-4; ISO-8859-10; ISO-8859-13                                                                |
+| Maltese                 | ISO-8859-3                                                                                          |
+| Polish                  | ISO-8859-2; ISO-8859-13; ISO-8859-16; WINDOWS-1250; IBM852; MAC-CENTRALEUROPE                       |
+| Portuguese              | ISO-8859-1; ISO-8859-9; ISO-8859-15; WINDOWS-1252                                                   |
+| Romanian                | ISO-8859-2; ISO-8859-16; WINDOWS-1250; IBM852                                                       |
+| Russian                 | ISO-8859-5; KOI8-R; WINDOWS-1251; MAC-CYRILLIC; IBM866; IBM855                                      |
+| Slovak                  | WINDOWS-1250; ISO-8859-2; IBM852; MAC-CENTRALEUROPE                                                 |
+| Slovene                 | ISO-8859-2; ISO-8859-16; WINDOWS-1250; IBM852; MAC-CENTRALEUROPE                                    |
+| Spanish                 | ISO-8859-1; ISO-8859-15; WINDOWS-1252                                                               |
+| Swedish                 | ISO-8859-1; ISO-8859-4; ISO-8859-9; ISO-8859-15; WINDOWS-1252                                       |
+| Thai                    | TIS-620; ISO-8859-11                                                                                |
+| Turkish                 | ISO-8859-3; ISO-8859-9                                                                              |
+| Vietnamese              | VISCII; WINDOWS-1258                                                                                |
+| Others                  | WINDOWS-1252                                                                                        |
 
+</details>
 
 
 
