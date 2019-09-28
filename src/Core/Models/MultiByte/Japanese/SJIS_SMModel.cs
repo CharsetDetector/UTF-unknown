@@ -1,10 +1,8 @@
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.MultiByte.Japanese
 {
     public class SJIS_SMModel : StateMachineModel
     {
-        private readonly static int[] SJIS_cls = {
+        private static readonly int[] SJIS_cls = {
             //BitPacket.Pack4bits(0,1,1,1,1,1,1,1),  // 00 - 07 
             BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 00 - 07 
             BitPackage.Pack4bits(1,1,1,1,1,1,0,0),  // 08 - 0f 
@@ -42,27 +40,25 @@ namespace UtfUnknown.Core.Models.MultiByte.Japanese
             BitPackage.Pack4bits(4,4,4,4,4,0,0,0)   // f8 - ff 
         };
 
-        private readonly static int[] SJIS_st = {
+        private static readonly int[] SJIS_st = {
             BitPackage.Pack4bits(ERROR,START,START,    3,ERROR,ERROR,ERROR,ERROR),//00-07 
             BitPackage.Pack4bits(ERROR,ERROR,ERROR,ERROR,ITSME,ITSME,ITSME,ITSME),//08-0f 
             BitPackage.Pack4bits(ITSME,ITSME,ERROR,ERROR,START,START,START,START) //10-17        
         };
 
-        private readonly static int[] SJISCharLenTable = { 0, 1, 1, 2, 0, 0 };
-        
+        private static readonly int[] SJISCharLenTable = { 0, 1, 1, 2, 0, 0 };
+
         public SJIS_SMModel() : base(
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, SJIS_cls),
             6,
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, SJIS_st),
             SJISCharLenTable, "Shift_JIS")
-        {
-
-        }
+        { }
     }
 }

@@ -40,8 +40,6 @@
 * and adjusted to language specific support.
 */
 
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.SingleByte.Czech
 {
     public abstract class CzechModel : SequenceModel
@@ -52,7 +50,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Czech
         // Next 512 sequences (512-1024): 0.02139445610866691
         // Rest: 2.0246480655940202e-06
         // Negative sequences: TODO
-        private static byte[] LANG_MODEL = {
+        private static readonly byte[] LANG_MODEL = {
             2,2,3,2,3,3,3,3,3,3,3,2,3,3,3,3,3,3,2,3,
              2,3,3,0,0,3,3,3,0,2,3,0,3,0,3,2,2,0,2,0,0,
             3,3,3,3,3,3,3,3,3,3,3,0,3,3,3,3,3,3,2,3,

@@ -40,8 +40,6 @@
 * and adjusted to language specific support.
 */
 
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.SingleByte.Romanian
 {
     public abstract class RomanianModel : SequenceModel
@@ -52,7 +50,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Romanian
         // Next 512 sequences (512-1024): 0.002237435856687006
         // Rest: 3.0357660829594124e-18
         // Negative sequences: TODO
-        private static byte[] LANG_MODEL = {
+        private static readonly byte[] LANG_MODEL = {
             3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,3,3,3,3,3,3,3,3,3,0,3,3,3,3,3,2,0,2,
             3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,3,3,3,3,3,0,3,3,3,2,3,3,3,2,2,0,0,2,
             3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,3,3,3,3,3,0,3,3,3,0,3,3,3,3,3,0,2,2,

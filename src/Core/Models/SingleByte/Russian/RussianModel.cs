@@ -40,8 +40,6 @@
 * and adjusted to language specific support.
 */
 
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.SingleByte.Russian
 {
     public abstract class RussianModel : SequenceModel
@@ -182,8 +180,8 @@ namespace UtfUnknown.Core.Models.SingleByte.Russian
             0,1,1,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,
         };
-        
-        public RussianModel(byte[] charToOrderMap, string name) 
+
+        protected RussianModel(byte[] charToOrderMap, string name)
             : base(charToOrderMap, LANG_MODEL, 64, 0.976601f, false, name)
         {
         }

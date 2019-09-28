@@ -47,15 +47,15 @@ namespace UtfUnknown.Core.Probers.MultiByte.Chinese
     // We use gb18030 to replace gb2312, because 18030 is a superset. 
     public class GB18030Prober : CharsetProber
     {
-        private CodingStateMachine codingSM;
-        private GB18030DistributionAnalyser analyser;
-        private byte[] lastChar;
+        private readonly CodingStateMachine _codingSm;
+        private readonly GB18030DistributionAnalyser _analyser;
+        private readonly byte[] _lastChar;
 
         public GB18030Prober()
         {
-            lastChar = new byte[2];
-            codingSM = new CodingStateMachine(new GB18030_SMModel());
-            analyser = new GB18030DistributionAnalyser();
+            _lastChar = new byte[2];
+            _codingSm = new CodingStateMachine(new GB18030_SMModel());
+            _analyser = new GB18030DistributionAnalyser();
             Reset();
         }
 
@@ -67,11 +67,9 @@ namespace UtfUnknown.Core.Probers.MultiByte.Chinese
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
             int max = offset + len;
-
             for (int i = offset; i < max; i++)
             {
-                var codingState = codingSM.NextState(buf[i]);
-
+                var codingState = _codingSm.NextState(buf[i]);
                 if (codingState == StateMachineModel.ERROR)
                 {
                     state = ProbingState.NotMe;
@@ -84,27 +82,27 @@ namespace UtfUnknown.Core.Probers.MultiByte.Chinese
                     break;
                 }
 
-                if (codingState == StateMachineModel.START)
+                if (codingState != StateMachineModel.START) continue;
+
+                int charLen = _codingSm.CurrentCharLen;
+                if (i == offset)
                 {
-                    int charLen = codingSM.CurrentCharLen;
-                    if (i == offset)
-                    {
-                        lastChar[1] = buf[offset];
-                        analyser.HandleOneChar(lastChar, 0, charLen);
-                    }
-                    else
-                    {
-                        analyser.HandleOneChar(buf, i - 1, charLen);
-                    }
+                    _lastChar[1] = buf[offset];
+                    _analyser.HandleOneChar(_lastChar, 0, charLen);
+                }
+                else
+                {
+                    _analyser.HandleOneChar(buf, i - 1, charLen);
                 }
             }
 
-            lastChar[0] = buf[max - 1];
+            _lastChar[0] = buf[max - 1];
 
-            if (state == ProbingState.Detecting)
+            if (state == ProbingState.Detecting
+                && _analyser.GotEnoughData()
+                && GetConfidence() > SHORTCUT_THRESHOLD)
             {
-                if (analyser.GotEnoughData() && GetConfidence() > SHORTCUT_THRESHOLD)
-                    state = ProbingState.FoundIt;
+                state = ProbingState.FoundIt;
             }
 
             return state;
@@ -112,14 +110,14 @@ namespace UtfUnknown.Core.Probers.MultiByte.Chinese
 
         public override float GetConfidence(StringBuilder status = null)
         {
-            return analyser.GetConfidence();
+            return _analyser.GetConfidence();
         }
 
         public override void Reset()
         {
-            codingSM.Reset();
+            _codingSm.Reset();
             state = ProbingState.Detecting;
-            analyser.Reset();
+            _analyser.Reset();
         }
     }
 }

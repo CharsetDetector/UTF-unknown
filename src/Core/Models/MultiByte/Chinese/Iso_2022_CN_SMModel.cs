@@ -1,10 +1,8 @@
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.MultiByte.Chinese
 {
     public class Iso_2022_CN_SMModel : StateMachineModel
     {
-        private readonly static int[] ISO2022CN_cls = {
+        private static readonly int[] ISO2022CN_cls = {
             BitPackage.Pack4bits(2,0,0,0,0,0,0,0), // 00 - 07 
             BitPackage.Pack4bits(0,0,0,0,0,0,0,0), // 08 - 0f 
             BitPackage.Pack4bits(0,0,0,0,0,0,0,0), // 10 - 17 
@@ -39,7 +37,7 @@ namespace UtfUnknown.Core.Models.MultiByte.Chinese
             BitPackage.Pack4bits(2,2,2,2,2,2,2,2)  // f8 - ff 
         };
 
-        private readonly static int[] ISO2022CN_st = {
+        private static readonly int[] ISO2022CN_st = {
             BitPackage.Pack4bits(START,    3,ERROR,START,START,START,START,START), //00-07 
             BitPackage.Pack4bits(START,ERROR,ERROR,ERROR,ERROR,ERROR,ERROR,ERROR), //08-0f 
             BitPackage.Pack4bits(ERROR,ERROR,ITSME,ITSME,ITSME,ITSME,ITSME,ITSME), //10-17 
@@ -50,21 +48,19 @@ namespace UtfUnknown.Core.Models.MultiByte.Chinese
             BitPackage.Pack4bits(ERROR,ERROR,ERROR,ERROR,ERROR,ITSME,ERROR,START)  //38-3f 
         };
 
-        private readonly static int[] ISO2022CNCharLenTable = {0, 0, 0, 0, 0, 0, 0, 0, 0};
+        private static readonly int[] ISO2022CNCharLenTable = { 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
         public Iso_2022_CN_SMModel() : base(
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, ISO2022CN_cls),
             9,
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, ISO2022CN_st),
             ISO2022CNCharLenTable, "ISO-2022-CN")
-        {
-
-        }
+        { }
     }
 }

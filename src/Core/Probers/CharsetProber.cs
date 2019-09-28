@@ -81,11 +81,6 @@ namespace UtfUnknown.Core.Probers
             return state;
         }
 
-        public virtual void SetOption()
-        {
-
-        }
-
         public virtual string DumpStatus()
         {
             return string.Empty;

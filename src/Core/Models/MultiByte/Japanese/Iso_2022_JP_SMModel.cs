@@ -1,10 +1,8 @@
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.MultiByte.Japanese
 {
     public class Iso_2022_JP_SMModel : StateMachineModel
     {
-        private readonly static int[] ISO2022JP_cls = {
+        private static readonly int[] ISO2022JP_cls = {
             BitPackage.Pack4bits(2,0,0,0,0,0,0,0), // 00 - 07 
             BitPackage.Pack4bits(0,0,0,0,0,0,2,2), // 08 - 0f 
             BitPackage.Pack4bits(0,0,0,0,0,0,0,0), // 10 - 17 
@@ -39,7 +37,7 @@ namespace UtfUnknown.Core.Models.MultiByte.Japanese
             BitPackage.Pack4bits(2,2,2,2,2,2,2,2)  // f8 - ff 
         };
 
-        private readonly static int[] ISO2022JP_st = {
+        private static readonly int[] ISO2022JP_st = {
             BitPackage.Pack4bits(START,     3, ERROR,START,START,START,START,START), //00-07 
             BitPackage.Pack4bits(START, START, ERROR,ERROR,ERROR,ERROR,ERROR,ERROR), //08-0f 
             BitPackage.Pack4bits(ERROR, ERROR, ERROR,ERROR,ITSME,ITSME,ITSME,ITSME), //10-17 
@@ -51,22 +49,19 @@ namespace UtfUnknown.Core.Models.MultiByte.Japanese
             BitPackage.Pack4bits(ERROR, ERROR, ERROR,ERROR,ITSME,ERROR,START,START)  //40-47 
         };
 
-        private readonly static int[] ISO2022JPCharLenTable = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+        private static readonly int[] ISO2022JPCharLenTable = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
         public Iso_2022_JP_SMModel() : base(
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, ISO2022JP_cls),
             10,
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, ISO2022JP_st),
             ISO2022JPCharLenTable, "ISO-2022-JP")
-        {
-
-        }
-    
+        { }
     }
 }

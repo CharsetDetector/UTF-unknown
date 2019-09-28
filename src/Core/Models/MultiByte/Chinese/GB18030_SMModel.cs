@@ -1,10 +1,8 @@
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.MultiByte.Chinese
 {
     public class GB18030_SMModel : StateMachineModel
     {
-        private readonly static int[] GB18030_cls = {
+        private static readonly int[] GB18030_cls = {
             BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 00 - 07 
             BitPackage.Pack4bits(1,1,1,1,1,1,0,0),  // 08 - 0f 
             BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 10 - 17 
@@ -39,7 +37,7 @@ namespace UtfUnknown.Core.Models.MultiByte.Chinese
             BitPackage.Pack4bits(6,6,6,6,6,6,6,0)   // f8 - ff 
         };
 
-        private readonly static int[] GB18030_st = {
+        private static readonly int[] GB18030_st = {
             BitPackage.Pack4bits(ERROR,START,START,START,START,START,    3,ERROR),//00-07 
             BitPackage.Pack4bits(ERROR,ERROR,ERROR,ERROR,ERROR,ERROR,ITSME,ITSME),//08-0f 
             BitPackage.Pack4bits(ITSME,ITSME,ITSME,ITSME,ITSME,ERROR,ERROR,START),//10-17 
@@ -53,21 +51,19 @@ namespace UtfUnknown.Core.Models.MultiByte.Chinese
         // it is used for frequency analysis only, and we are validating 
         // each code range there as well. So it is safe to set it to be 
         // 2 here. 
-        private readonly static int[] GB18030CharLenTable = {0, 1, 1, 1, 1, 1, 2};
-        
+        private static readonly int[] GB18030CharLenTable = { 0, 1, 1, 1, 1, 1, 2 };
+
         public GB18030_SMModel() : base(
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, GB18030_cls),
             7,
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, GB18030_st),
             GB18030CharLenTable, "GB18030")
-        {
-
-        }
+        { }
     }
 }

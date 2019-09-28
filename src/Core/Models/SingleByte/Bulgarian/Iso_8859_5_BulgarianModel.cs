@@ -53,7 +53,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Bulgarian
         // this table is modified base on win1251BulgarianCharToOrderMap, so 
         // only number <64 is sure valid
 
-        private static byte[] CHAR_TO_ORDER_MAP = {
+        private static readonly byte[] CHAR_TO_ORDER_MAP = {
             CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,RET,CTR,CTR,RET,CTR,CTR, /* 0X */
             CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR, /* 1X */
             SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM, /* 2X */

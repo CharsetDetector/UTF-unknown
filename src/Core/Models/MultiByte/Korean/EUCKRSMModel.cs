@@ -2,7 +2,7 @@ namespace UtfUnknown.Core.Models.MultiByte.Korean
 {
     public class EUCKRSMModel : StateMachineModel
     {
-        private readonly static int[] EUCKR_cls = {
+        private static readonly int[] EUCKR_cls = {
             //BitPacket.Pack4bits(0,1,1,1,1,1,1,1),  // 00 - 07 
             BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 00 - 07 
             BitPackage.Pack4bits(1,1,1,1,1,1,0,0),  // 08 - 0f 
@@ -38,26 +38,24 @@ namespace UtfUnknown.Core.Models.MultiByte.Korean
             BitPackage.Pack4bits(2,2,2,2,2,2,2,0)   // f8 - ff 
         };
 
-        private readonly static int[] EUCKR_st = {
+        private static readonly int[] EUCKR_st = {
             BitPackage.Pack4bits(ERROR,START,    3,ERROR,ERROR,ERROR,ERROR,ERROR),//00-07 
             BitPackage.Pack4bits(ITSME,ITSME,ITSME,ITSME,ERROR,ERROR,START,START) //08-0f 
         };
 
-        private readonly static int[] EUCKRCharLenTable = { 0, 1, 2, 0 };
-        
+        private static readonly int[] EUCKRCharLenTable = { 0, 1, 2, 0 };
+
         public EUCKRSMModel() : base(
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, EUCKR_cls),
             4,
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, EUCKR_st),
             EUCKRCharLenTable, "EUC-KR")
-        {
-
-        }
+        { }
     }
 }

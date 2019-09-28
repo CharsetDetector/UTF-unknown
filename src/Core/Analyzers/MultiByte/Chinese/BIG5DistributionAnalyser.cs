@@ -902,28 +902,31 @@ namespace UtfUnknown.Core.Analyzers.Chinese
         13968,13969,13970,13971,13972, //13973
         ****************************************************************************************/
         };
-        
+
         public BIG5DistributionAnalyser()
         {
             charToFreqOrder = BIG5_CHAR2FREQ_ORDER;
-            typicalDistributionRatio = BIG5_TYPICAL_DISTRIBUTION_RATIO;        
+            typicalDistributionRatio = BIG5_TYPICAL_DISTRIBUTION_RATIO;
         }
-        
+
         /// <summary>
         /// first  byte range: 0xa4 -- 0xfe
         ///  second byte range: 0x40 -- 0x7e , 0xa1 -- 0xfe
         /// no validation needed here. State machine has done that
         /// </summary>
-        public override int GetOrder(byte[] buf, int offset) 
-        { 
-            if (buf[offset] >= 0xA4) {
-                if (buf[offset+1] >= 0xA1)
-                    return 157 * (buf[offset] - 0xA4) + buf[offset+1] - 0xA1 + 63;
+        public override int GetOrder(byte[] buf, int offset)
+        {
+            if (buf[offset] >= 0xA4)
+            {
+                if (buf[offset + 1] >= 0xA1)
+                    return 157 * (buf[offset] - 0xA4) + buf[offset + 1] - 0xA1 + 63;
                 else
-                    return 157 * (buf[offset] - 0xA4) + buf[offset+1] - 0x40;
-            } else {
-                return -1;            
-            }  
+                    return 157 * (buf[offset] - 0xA4) + buf[offset + 1] - 0x40;
+            }
+            else
+            {
+                return -1;
+            }
         }
     }
 }

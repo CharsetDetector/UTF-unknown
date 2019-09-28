@@ -63,7 +63,7 @@ namespace UtfUnknown.Core.Analyzers
         // This constant value varies from language to language. It is used in calculating confidence. 
         protected float typicalDistributionRatio;
 
-        public CharDistributionAnalyser()
+        protected CharDistributionAnalyser()
         {
             Reset();
         }
@@ -91,15 +91,12 @@ namespace UtfUnknown.Core.Analyzers
         {
             //we only care about 2-bytes character in our distribution analysis
             int order = (charLen == 2) ? GetOrder(buf, offset) : -1;
-            if (order >= 0)
-            {
-                totalChars++;
-                if (order < charToFreqOrder.Length)
-                { // order is valid
-                    if (512 > charToFreqOrder[order])
-                        freqChars++;
-                }
-            }
+            if (order < 0) return;
+
+            totalChars++;
+            if (order >= charToFreqOrder.Length) return; // order is invalid
+
+            if (512 > charToFreqOrder[order]) freqChars++;
         }
 
         public virtual void Reset()
@@ -123,8 +120,7 @@ namespace UtfUnknown.Core.Analyzers
             if (totalChars != freqChars)
             {
                 float r = freqChars / ((totalChars - freqChars) * typicalDistributionRatio);
-                if (r < SURE_YES)
-                    return r;
+                if (r < SURE_YES) return r;
             }
             //normalize confidence, (we don't want to be 100% sure)
             return SURE_YES;

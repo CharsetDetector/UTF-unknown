@@ -1,10 +1,8 @@
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.MultiByte
 {
     public class UCS2LE_SMModel : StateMachineModel
     {
-        private readonly static int[] UCS2LE_cls = {
+        private static readonly int[] UCS2LE_cls = {
             BitPackage.Pack4bits(0,0,0,0,0,0,0,0),  // 00 - 07 
             BitPackage.Pack4bits(0,0,1,0,0,2,0,0),  // 08 - 0f 
             BitPackage.Pack4bits(0,0,0,0,0,0,0,0),  // 10 - 17 
@@ -39,7 +37,7 @@ namespace UtfUnknown.Core.Models.MultiByte
             BitPackage.Pack4bits(0,0,0,0,0,0,4,5)   // f8 - ff 
         };
 
-        private readonly static int[] UCS2LE_st = {
+        private static readonly int[] UCS2LE_st = {
             BitPackage.Pack4bits(    6,    6,    7,    6,    4,    3,ERROR,ERROR),//00-07 
             BitPackage.Pack4bits(ERROR,ERROR,ERROR,ERROR,ITSME,ITSME,ITSME,ITSME),//08-0f 
             BitPackage.Pack4bits(ITSME,ITSME,    5,    5,    5,ERROR,ITSME,ERROR),//10-17 
@@ -49,21 +47,19 @@ namespace UtfUnknown.Core.Models.MultiByte
             BitPackage.Pack4bits(    5,    5,    5,ERROR,    5,ERROR,START,START) //30-37 
         };
 
-        private readonly static int[] UCS2LECharLenTable = { 2, 2, 2, 2, 2, 2 };
-        
+        private static readonly int[] UCS2LECharLenTable = { 2, 2, 2, 2, 2, 2 };
+
         public UCS2LE_SMModel() : base(
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, UCS2LE_cls),
             6,
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, UCS2LE_st),
             UCS2LECharLenTable, "UTF-16LE")
-        {
-
-        }
+        { }
     }
 }

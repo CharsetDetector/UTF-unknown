@@ -1,8 +1,8 @@
 namespace UtfUnknown.Core.Models.MultiByte.Korean
 {
     public class Iso_2022_KR_SMModel : StateMachineModel
-    {   
-        private readonly static int[] ISO2022KR_cls = {
+    {
+        private static readonly int[] ISO2022KR_cls = {
             BitPackage.Pack4bits(2,0,0,0,0,0,0,0), // 00 - 07 
             BitPackage.Pack4bits(0,0,0,0,0,0,0,0), // 08 - 0f 
             BitPackage.Pack4bits(0,0,0,0,0,0,0,0), // 10 - 17 
@@ -37,7 +37,7 @@ namespace UtfUnknown.Core.Models.MultiByte.Korean
             BitPackage.Pack4bits(2,2,2,2,2,2,2,2)  // f8 - ff 
         };
 
-        private readonly static int[] ISO2022KR_st = {
+        private static readonly int[] ISO2022KR_st = {
             BitPackage.Pack4bits(START,    3,ERROR,START,START,START,ERROR,ERROR), //00-07 
             BitPackage.Pack4bits(ERROR,ERROR,ERROR,ERROR,ITSME,ITSME,ITSME,ITSME), //08-0f 
             BitPackage.Pack4bits(ITSME,ITSME,ERROR,ERROR,ERROR,    4,ERROR,ERROR), //10-17 
@@ -45,21 +45,19 @@ namespace UtfUnknown.Core.Models.MultiByte.Korean
             BitPackage.Pack4bits(ERROR,ERROR,ERROR,ITSME,START,START,START,START)  //20-27 
         };
 
-        private readonly static int[] ISO2022KRCharLenTable = {0, 0, 0, 0, 0, 0};
+        private static readonly int[] ISO2022KRCharLenTable = { 0, 0, 0, 0, 0, 0 };
 
         public Iso_2022_KR_SMModel() : base(
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, ISO2022KR_cls),
             6,
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, ISO2022KR_st),
             ISO2022KRCharLenTable, "ISO-2022-KR")
-        {
-
-        }
+        { }
     }
 }

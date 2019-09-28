@@ -36,7 +36,6 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-using System;
 using System.Text;
 
 /*
@@ -137,7 +136,7 @@ using System.Text;
  */
 
 namespace UtfUnknown.Core.Probers
-{    
+{
     /// <summary>
     /// This prober doesn't actually recognize a language or a charset.
     /// It is a helper prober for the use of the Hebrew model probers
@@ -145,11 +144,11 @@ namespace UtfUnknown.Core.Probers
     public class HebrewProber : CharsetProber
     {
         // windows-1255 / ISO-8859-8 code points of interest
-        private const byte FINAL_KAF  = 0xEA;
+        private const byte FINAL_KAF = 0xEA;
         private const byte NORMAL_KAF = 0xEB;
-        private const byte FINAL_MEM  = 0xED;
+        private const byte FINAL_MEM = 0xED;
         private const byte NORMAL_MEM = 0xEE;
-        private const byte FINAL_NUN  = 0xEF;
+        private const byte FINAL_NUN = 0xEF;
         private const byte NORMAL_NUN = 0xF0;
         private const byte FINAL_PE = 0xF3;
         private const byte NORMAL_PE = 0xF4;
@@ -166,25 +165,28 @@ namespace UtfUnknown.Core.Probers
 
         protected const string VISUAL_NAME = "ISO-8859-8";
         protected const string LOGICAL_NAME = "WINDOWS-1255";
-        
+
         // owned by the group prober.
-        protected CharsetProber logicalProber, visualProber;
-        protected int finalCharLogicalScore, finalCharVisualScore;      
-        
+        protected CharsetProber logicalProber;
+        protected CharsetProber visualProber;
+        protected int finalCharLogicalScore;
+        protected int finalCharVisualScore;
+
         // The two last bytes seen in the previous buffer.
-        protected byte prev, beforePrev;
-                
+        protected byte prev;
+        protected byte beforePrev;
+
         public HebrewProber()
         {
             Reset();
         }
-         
-        public void SetModelProbers(CharsetProber logical, CharsetProber visual) 
-        { 
-            logicalProber = logical; 
-            visualProber = visual; 
+
+        public void SetModelProbers(CharsetProber logical, CharsetProber visual)
+        {
+            logicalProber = logical;
+            visualProber = visual;
         }
-        
+
         /** 
          * Final letter analysis for logical-visual decision.
          * Look for evidence that the received buffer is either logical Hebrew or 
@@ -213,31 +215,37 @@ namespace UtfUnknown.Core.Probers
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
             // Both model probers say it's not them. No reason to continue.
-            if (GetState() == ProbingState.NotMe)
-                return ProbingState.NotMe;
+            if (GetState() == ProbingState.NotMe) return ProbingState.NotMe;
 
             int max = offset + len;
-
-            for (int i = offset; i < max; i++) {
-                
+            for (int i = offset; i < max; i++)
+            {
                 byte b = buf[i];
-                
                 // a word just ended
-                if (b == 0x20) {
+                if (b == 0x20)
+                {
                     // *(curPtr-2) was not a space so prev is not a 1 letter word
-                    if (beforePrev != 0x20) {
+                    if (beforePrev != 0x20)
+                    {
                         // case (1) [-2:not space][-1:final letter][cur:space]
-                        if (IsFinal(prev)) 
+                        if (IsFinal(prev))
+                        {
                             finalCharLogicalScore++;
+                        }
                         // case (2) [-2:not space][-1:Non-Final letter][cur:space]                        
                         else if (IsNonFinal(prev))
+                        {
                             finalCharVisualScore++;
+                        }
                     }
-                    
-                } else {
+                }
+                else
+                {
                     // case (3) [-2:space][-1:final letter][cur:not space]
-                    if ((beforePrev == 0x20) && (IsFinal(prev)) && (b != ' ')) 
+                    if ((beforePrev == 0x20) && (IsFinal(prev)) && (b != ' '))
+                    {
                         ++finalCharVisualScore;
+                    }
                 }
                 beforePrev = prev;
                 prev = b;
@@ -253,24 +261,17 @@ namespace UtfUnknown.Core.Probers
         {
             // If the final letter score distance is dominant enough, rely on it.
             int finalsub = finalCharLogicalScore - finalCharVisualScore;
-            if (finalsub >= MIN_FINAL_CHAR_DISTANCE) 
-                return LOGICAL_NAME;
-            if (finalsub <= -(MIN_FINAL_CHAR_DISTANCE))
-                return VISUAL_NAME;
+            if (finalsub >= MIN_FINAL_CHAR_DISTANCE) return LOGICAL_NAME;
+            if (finalsub < -MIN_FINAL_CHAR_DISTANCE) return VISUAL_NAME;
 
             // It's not dominant enough, try to rely on the model scores instead.
             float modelsub = logicalProber.GetConfidence() - visualProber.GetConfidence();
-            if (modelsub > MIN_MODEL_DISTANCE)
-                return LOGICAL_NAME;
-            if (modelsub < -(MIN_MODEL_DISTANCE))
-                return VISUAL_NAME;
-            
-            // Still no good, back to final letter distance, maybe it'll save the day.
-            if (finalsub < 0) 
-                return VISUAL_NAME;
+            if (modelsub > MIN_MODEL_DISTANCE) return LOGICAL_NAME;
+            if (modelsub < -MIN_MODEL_DISTANCE) return VISUAL_NAME;
 
+            // Still no good, back to final letter distance, maybe it'll save the day
             // (finalsub > 0 - Logical) or (don't know what to do) default to Logical.
-            return LOGICAL_NAME;
+            return finalsub >= 0 ? LOGICAL_NAME : VISUAL_NAME;
         }
 
         public override void Reset()
@@ -281,35 +282,34 @@ namespace UtfUnknown.Core.Probers
             beforePrev = 0x20;
         }
 
-        public override ProbingState GetState() 
+        public override ProbingState GetState()
         {
             // Remain active as long as any of the model probers are active.
-            if (logicalProber.GetState() == ProbingState.NotMe && 
-                visualProber.GetState() == ProbingState.NotMe)
-                return ProbingState.NotMe;
-            return ProbingState.Detecting;
+            return logicalProber.GetState() == ProbingState.NotMe
+                   && visualProber.GetState() == ProbingState.NotMe
+                ? ProbingState.NotMe
+                : ProbingState.Detecting;
         }
 
         public override string DumpStatus()
         {
             StringBuilder status = new StringBuilder();
-
-            status.AppendLine($"  HEB: {finalCharLogicalScore} - {finalCharVisualScore} [Logical-Visual score]");
-
+            status.AppendLine(
+                $"  HEB: {finalCharLogicalScore} - {finalCharVisualScore} [Logical-Visual score]");
             return status.ToString();
         }
-        
+
         public override float GetConfidence(StringBuilder status = null)
-        { 
+        {
             return 0.0f;
         }
-        
+
         protected static bool IsFinal(byte b)
         {
-            return (b == FINAL_KAF || b == FINAL_MEM || b == FINAL_NUN 
-                    || b == FINAL_PE || b == FINAL_TSADI);        
+            return (b == FINAL_KAF || b == FINAL_MEM || b == FINAL_NUN
+                    || b == FINAL_PE || b == FINAL_TSADI);
         }
-        
+
         protected static bool IsNonFinal(byte b)
         {
             // The normal Tsadi is not a good Non-Final letter due to words like 

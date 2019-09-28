@@ -45,14 +45,14 @@ namespace UtfUnknown.Core.Probers.MultiByte
 {
     public class UTF8Prober : CharsetProber
     {
-        private static float ONE_CHAR_PROB = 0.50f;
-        private CodingStateMachine codingSM;
-        private int numOfMBChar;
+        private static readonly float ONE_CHAR_PROB = 0.50f;
+        private readonly CodingStateMachine _codingSm;
+        private int _numOfMbChar;
 
         public UTF8Prober()
         {
-            numOfMBChar = 0;
-            codingSM = new CodingStateMachine(new UTF8_SMModel());
+            _numOfMbChar = 0;
+            _codingSm = new CodingStateMachine(new UTF8_SMModel());
             Reset();
         }
 
@@ -63,20 +63,17 @@ namespace UtfUnknown.Core.Probers.MultiByte
 
         public override void Reset()
         {
-            codingSM.Reset();
-            numOfMBChar = 0;
+            _codingSm.Reset();
+            _numOfMbChar = 0;
             state = ProbingState.Detecting;
         }
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
             int max = offset + len;
-
             for (int i = offset; i < max; i++)
             {
-
-                var codingState = codingSM.NextState(buf[i]);
-
+                var codingState = _codingSm.NextState(buf[i]);
                 if (codingState == StateMachineModel.ERROR)
                 {
                     state = ProbingState.NotMe;
@@ -89,16 +86,16 @@ namespace UtfUnknown.Core.Probers.MultiByte
                     break;
                 }
 
-                if (codingState == StateMachineModel.START)
-                {
-                    if (codingSM.CurrentCharLen >= 2)
-                        numOfMBChar++;
-                }
+                if (codingState != StateMachineModel.START) continue;
+
+                if (_codingSm.CurrentCharLen >= 2) _numOfMbChar++;
             }
 
-            if (state == ProbingState.Detecting)
-                if (GetConfidence() > SHORTCUT_THRESHOLD)
-                    state = ProbingState.FoundIt;
+            if (state == ProbingState.Detecting
+                && GetConfidence() > SHORTCUT_THRESHOLD)
+            {
+                state = ProbingState.FoundIt;
+            }
 
             return state;
         }
@@ -107,12 +104,12 @@ namespace UtfUnknown.Core.Probers.MultiByte
         {
             float unlike = 0.99f;
             float confidence;
-
-            if (numOfMBChar < 6)
+            if (_numOfMbChar < 6)
             {
-                for (int i = 0; i < numOfMBChar; i++)
+                for (int i = 0; i < _numOfMbChar; i++)
+                {
                     unlike *= ONE_CHAR_PROB;
-
+                }
                 confidence = 1.0f - unlike;
             }
             else

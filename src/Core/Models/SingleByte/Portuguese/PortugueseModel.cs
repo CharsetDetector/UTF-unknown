@@ -40,8 +40,6 @@
 * and adjusted to language specific support.
 */
 
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.SingleByte.Portuguese
 {
     public abstract class PortugueseModel : SequenceModel
@@ -52,7 +50,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Portuguese
         // Next 512 sequences (512-1024): 0.00468204176868278556
         // Rest: 2.42861286636753e-17
         // Negative sequences: TODO
-        private static byte[] LANG_MODEL = {
+        private static readonly byte[] LANG_MODEL = {
             2,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,0,3,3,3,3,0,3,2,3,0,0,3,2,2,3,0,0,0,
             3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,0,2,3,3,2,3,2,3,2,3,0,2,3,3,2,2,2,0,0,
             3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,2,2,3,2,3,2,3,2,3,0,2,3,3,0,3,0,0,0,

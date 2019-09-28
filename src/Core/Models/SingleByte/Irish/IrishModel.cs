@@ -40,8 +40,6 @@
 * and adjusted to language specific support.
 */
 
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.SingleByte.Irish
 {
     public abstract class IrishModel : SequenceModel
@@ -52,7 +50,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Irish
         // Next 512 sequences (512-1024): 0.0025923348750903907
         // Rest: -2.7755575615628914e-17
         // Negative sequences: TODO
-        private static byte[] LANG_MODEL = {
+        private static readonly byte[] LANG_MODEL = {
             3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,3,3,3,0,3,0,3,0,3,3,3,3,2,3,3,2,
             3,3,3,2,3,3,3,3,3,3,3,3,3,3,2,3,3,0,2,3,3,3,3,3,3,3,0,3,3,3,0,
             3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,3,3,0,2,3,0,2,

@@ -64,7 +64,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Thai
         // ligature of 'o' and 'e' exists in ISO-8859-15 but not in ISO-8859-1
         // even though they are both used for French.Same for the euro sign.
 
-        private readonly static byte[] CHAR_TO_ORDER_MAP =
+        private static readonly byte[] CHAR_TO_ORDER_MAP =
         {
           CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,RET,CTR,CTR,RET,CTR,CTR, /* 0X */
           CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR, /* 1X */

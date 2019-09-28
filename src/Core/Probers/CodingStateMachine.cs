@@ -46,47 +46,39 @@ namespace UtfUnknown.Core.Probers
     /// </summary>
     public class CodingStateMachine
     {
-        private int currentState;
-        private StateMachineModel model;
-        private int currentCharLen;
-        
-        
-        public CodingStateMachine(StateMachineModel model) 
+        private int _currentState;
+        private readonly StateMachineModel _model;
+
+        public CodingStateMachine(StateMachineModel model)
         {
-            currentState = StateMachineModel.START;
-            this.model = model;
+            _currentState = StateMachineModel.START;
+            _model = model;
         }
 
         public int NextState(byte b)
         {
             // for each byte we get its class, if it is first byte, 
             // we also get byte length
-            int byteCls = model.GetClass(b);
-            if (currentState == StateMachineModel.START) { 
-                
-                currentCharLen = model.charLenTable[byteCls];
+            int byteCls = _model.GetClass(b);
+            if (_currentState == StateMachineModel.START)
+            {
+                CurrentCharLen = _model.charLenTable[byteCls];
             }
-            
+
             // from byte's class and stateTable, we get its next state            
-            currentState = model.stateTable.Unpack(
-                currentState * model.ClassFactor + byteCls);
-            
-            return currentState;
-        }
-  
-        public void Reset() 
-        { 
-            currentState = StateMachineModel.START; 
+            _currentState = _model.stateTable.Unpack(
+                _currentState * _model.ClassFactor + byteCls);
+
+            return _currentState;
         }
 
-        public int CurrentCharLen 
-        { 
-            get { return currentCharLen; } 
+        public void Reset()
+        {
+            _currentState = StateMachineModel.START;
         }
 
-        public string ModelName 
-        { 
-            get { return model.Name; } 
-        }
+        public int CurrentCharLen { get; private set; }
+
+        public string ModelName => _model.Name;
     }
 }

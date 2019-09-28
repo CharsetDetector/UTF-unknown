@@ -36,7 +36,6 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-using System;
 using System.Text;
 
 #region using languages
@@ -78,177 +77,177 @@ namespace UtfUnknown.Core.Probers
     public class SBCSGroupProber : CharsetProber
     {
         private const int PROBERS_NUM = 100;
-        private CharsetProber[] probers = new CharsetProber[PROBERS_NUM];
-        private bool[] isActive = new bool[PROBERS_NUM];
-        private int bestGuess;
-        private int activeNum;
+        private readonly CharsetProber[] _probers = new CharsetProber[PROBERS_NUM];
+        private readonly bool[] _isActive = new bool[PROBERS_NUM];
+        private int _bestGuess;
+        private int _activeNum;
 
         public SBCSGroupProber()
         {
             // Russian
-            probers[0] = new SingleByteCharSetProber(new Windows_1251_RussianModel());
-            probers[1] = new SingleByteCharSetProber(new Koi8r_Model());
-            probers[2] = new SingleByteCharSetProber(new Iso_8859_5_RussianModel());
-            probers[3] = new SingleByteCharSetProber(new X_Mac_Cyrillic_RussianModel());
-            probers[4] = new SingleByteCharSetProber(new Ibm866_RussianModel());
-            probers[5] = new SingleByteCharSetProber(new Ibm855_RussianModel());
+            _probers[0] = new SingleByteCharSetProber(new Windows_1251_RussianModel());
+            _probers[1] = new SingleByteCharSetProber(new Koi8r_Model());
+            _probers[2] = new SingleByteCharSetProber(new Iso_8859_5_RussianModel());
+            _probers[3] = new SingleByteCharSetProber(new X_Mac_Cyrillic_RussianModel());
+            _probers[4] = new SingleByteCharSetProber(new Ibm866_RussianModel());
+            _probers[5] = new SingleByteCharSetProber(new Ibm855_RussianModel());
 
             // Greek
-            probers[6] = new SingleByteCharSetProber(new Iso_8859_7_GreekModel());
-            probers[7] = new SingleByteCharSetProber(new Windows_1253_GreekModel());
+            _probers[6] = new SingleByteCharSetProber(new Iso_8859_7_GreekModel());
+            _probers[7] = new SingleByteCharSetProber(new Windows_1253_GreekModel());
 
             // Bulgarian
-            probers[8] = new SingleByteCharSetProber(new Iso_8859_5_BulgarianModel());
-            probers[9] = new SingleByteCharSetProber(new Windows_1251_BulgarianModel());
+            _probers[8] = new SingleByteCharSetProber(new Iso_8859_5_BulgarianModel());
+            _probers[9] = new SingleByteCharSetProber(new Windows_1251_BulgarianModel());
 
             // Hebrew
             HebrewProber hebprober = new HebrewProber();
-            probers[10] = hebprober;
+            _probers[10] = hebprober;
             // Logical  
-            probers[11] = new SingleByteCharSetProber(new Windows_1255_HebrewModel(), false, hebprober);
+            _probers[11] = new SingleByteCharSetProber(new Windows_1255_HebrewModel(), false, hebprober);
             // Visual
-            probers[12] = new SingleByteCharSetProber(new Windows_1255_HebrewModel(), true, hebprober);
-            hebprober.SetModelProbers(probers[11], probers[12]);
+            _probers[12] = new SingleByteCharSetProber(new Windows_1255_HebrewModel(), true, hebprober);
+            hebprober.SetModelProbers(_probers[11], _probers[12]);
 
             // Thai
-            probers[13] = new SingleByteCharSetProber(new Tis_620_ThaiModel());
-            probers[14] = new SingleByteCharSetProber(new Iso_8859_11_ThaiModel());
+            _probers[13] = new SingleByteCharSetProber(new Tis_620_ThaiModel());
+            _probers[14] = new SingleByteCharSetProber(new Iso_8859_11_ThaiModel());
 
             // French
-            probers[15] = new SingleByteCharSetProber(new Iso_8859_1_FrenchModel());
-            probers[16] = new SingleByteCharSetProber(new Iso_8859_15_FrenchModel());
-            probers[17] = new SingleByteCharSetProber(new Windows_1252_FrenchModel());
+            _probers[15] = new SingleByteCharSetProber(new Iso_8859_1_FrenchModel());
+            _probers[16] = new SingleByteCharSetProber(new Iso_8859_15_FrenchModel());
+            _probers[17] = new SingleByteCharSetProber(new Windows_1252_FrenchModel());
 
             // Spanish
-            probers[18] = new SingleByteCharSetProber(new Iso_8859_1_SpanishModel());
-            probers[19] = new SingleByteCharSetProber(new Iso_8859_15_SpanishModel());
-            probers[20] = new SingleByteCharSetProber(new Windows_1252_SpanishModel());
+            _probers[18] = new SingleByteCharSetProber(new Iso_8859_1_SpanishModel());
+            _probers[19] = new SingleByteCharSetProber(new Iso_8859_15_SpanishModel());
+            _probers[20] = new SingleByteCharSetProber(new Windows_1252_SpanishModel());
 
             // Is the following still valid?
             // disable latin2 before latin1 is available, otherwise all latin1 
             // will be detected as latin2 because of their similarity
             // Hungarian
-            probers[21] = new SingleByteCharSetProber(new Iso_8859_2_HungarianModel());
-            probers[22] = new SingleByteCharSetProber(new Windows_1250_HungarianModel());
+            _probers[21] = new SingleByteCharSetProber(new Iso_8859_2_HungarianModel());
+            _probers[22] = new SingleByteCharSetProber(new Windows_1250_HungarianModel());
 
             // German
-            probers[23] = new SingleByteCharSetProber(new Iso_8859_1_GermanModel());
-            probers[24] = new SingleByteCharSetProber(new Windows_1252_GermanModel());
+            _probers[23] = new SingleByteCharSetProber(new Iso_8859_1_GermanModel());
+            _probers[24] = new SingleByteCharSetProber(new Windows_1252_GermanModel());
 
             // Esperanto
-            probers[25] = new SingleByteCharSetProber(new Iso_8859_3_EsperantoModel());
+            _probers[25] = new SingleByteCharSetProber(new Iso_8859_3_EsperantoModel());
 
             // Turkish
-            probers[26] = new SingleByteCharSetProber(new Iso_8859_3_TurkishModel());
-            probers[27] = new SingleByteCharSetProber(new Iso_8859_9_TurkishModel());
+            _probers[26] = new SingleByteCharSetProber(new Iso_8859_3_TurkishModel());
+            _probers[27] = new SingleByteCharSetProber(new Iso_8859_9_TurkishModel());
 
             // Arabic
-            probers[28] = new SingleByteCharSetProber(new Iso_8859_6_ArabicModel());
-            probers[29] = new SingleByteCharSetProber(new Windows_1256_ArabicModel());
+            _probers[28] = new SingleByteCharSetProber(new Iso_8859_6_ArabicModel());
+            _probers[29] = new SingleByteCharSetProber(new Windows_1256_ArabicModel());
 
             // Vietnamese
-            probers[30] = new SingleByteCharSetProber(new Viscii_VietnameseModel());
-            probers[31] = new SingleByteCharSetProber(new Windows_1258_VietnameseModel());
+            _probers[30] = new SingleByteCharSetProber(new Viscii_VietnameseModel());
+            _probers[31] = new SingleByteCharSetProber(new Windows_1258_VietnameseModel());
 
             // Danish
-            probers[32] = new SingleByteCharSetProber(new Iso_8859_15_DanishModel());
-            probers[33] = new SingleByteCharSetProber(new Iso_8859_1_DanishModel());
-            probers[34] = new SingleByteCharSetProber(new Windows_1252_DanishModel());
+            _probers[32] = new SingleByteCharSetProber(new Iso_8859_15_DanishModel());
+            _probers[33] = new SingleByteCharSetProber(new Iso_8859_1_DanishModel());
+            _probers[34] = new SingleByteCharSetProber(new Windows_1252_DanishModel());
 
             // Lithuanian
-            probers[35] = new SingleByteCharSetProber(new Iso_8859_13_LithuanianModel());
-            probers[36] = new SingleByteCharSetProber(new Iso_8859_10_LithuanianModel());
-            probers[37] = new SingleByteCharSetProber(new Iso_8859_4_LithuanianModel());
+            _probers[35] = new SingleByteCharSetProber(new Iso_8859_13_LithuanianModel());
+            _probers[36] = new SingleByteCharSetProber(new Iso_8859_10_LithuanianModel());
+            _probers[37] = new SingleByteCharSetProber(new Iso_8859_4_LithuanianModel());
 
             // Latvian
-            probers[38] = new SingleByteCharSetProber(new Iso_8859_13_LatvianModel());
-            probers[39] = new SingleByteCharSetProber(new Iso_8859_10_LatvianModel());
-            probers[40] = new SingleByteCharSetProber(new Iso_8859_4_LatvianModel());
+            _probers[38] = new SingleByteCharSetProber(new Iso_8859_13_LatvianModel());
+            _probers[39] = new SingleByteCharSetProber(new Iso_8859_10_LatvianModel());
+            _probers[40] = new SingleByteCharSetProber(new Iso_8859_4_LatvianModel());
 
             // Portuguese
-            probers[41] = new SingleByteCharSetProber(new Iso_8859_1_PortugueseModel());
-            probers[42] = new SingleByteCharSetProber(new Iso_8859_9_PortugueseModel());
-            probers[43] = new SingleByteCharSetProber(new Iso_8859_15_PortugueseModel());
-            probers[44] = new SingleByteCharSetProber(new Windows_1252_PortugueseModel());
+            _probers[41] = new SingleByteCharSetProber(new Iso_8859_1_PortugueseModel());
+            _probers[42] = new SingleByteCharSetProber(new Iso_8859_9_PortugueseModel());
+            _probers[43] = new SingleByteCharSetProber(new Iso_8859_15_PortugueseModel());
+            _probers[44] = new SingleByteCharSetProber(new Windows_1252_PortugueseModel());
 
             // Maltese
-            probers[45] = new SingleByteCharSetProber(new Iso_8859_3_MalteseModel());
+            _probers[45] = new SingleByteCharSetProber(new Iso_8859_3_MalteseModel());
 
             // Czech
-            probers[46] = new SingleByteCharSetProber(new Windows_1250_CzechModel());
-            probers[47] = new SingleByteCharSetProber(new Iso_8859_2_CzechModel());
-            probers[48] = new SingleByteCharSetProber(new Mac_Centraleurope_CzechModel());
-            probers[49] = new SingleByteCharSetProber(new Ibm852_CzechModel());
+            _probers[46] = new SingleByteCharSetProber(new Windows_1250_CzechModel());
+            _probers[47] = new SingleByteCharSetProber(new Iso_8859_2_CzechModel());
+            _probers[48] = new SingleByteCharSetProber(new Mac_Centraleurope_CzechModel());
+            _probers[49] = new SingleByteCharSetProber(new Ibm852_CzechModel());
 
             // Slovak
-            probers[50] = new SingleByteCharSetProber(new Windows_1250_SlovakModel());
-            probers[51] = new SingleByteCharSetProber(new Iso_8859_2_SlovakModel());
-            probers[52] = new SingleByteCharSetProber(new Mac_Centraleurope_SlovakModel());
-            probers[53] = new SingleByteCharSetProber(new Ibm852_SlovakModel());
+            _probers[50] = new SingleByteCharSetProber(new Windows_1250_SlovakModel());
+            _probers[51] = new SingleByteCharSetProber(new Iso_8859_2_SlovakModel());
+            _probers[52] = new SingleByteCharSetProber(new Mac_Centraleurope_SlovakModel());
+            _probers[53] = new SingleByteCharSetProber(new Ibm852_SlovakModel());
 
             // Polish
-            probers[54] = new SingleByteCharSetProber(new Windows_1250_PolishModel());
-            probers[55] = new SingleByteCharSetProber(new Iso_8859_2_PolishModel());
-            probers[56] = new SingleByteCharSetProber(new Iso_8859_13_PolishModel());
-            probers[57] = new SingleByteCharSetProber(new Iso_8859_16_PolishModel());
-            probers[58] = new SingleByteCharSetProber(new Mac_Centraleurope_PolishModel());
-            probers[59] = new SingleByteCharSetProber(new Ibm852_PolishModel());
+            _probers[54] = new SingleByteCharSetProber(new Windows_1250_PolishModel());
+            _probers[55] = new SingleByteCharSetProber(new Iso_8859_2_PolishModel());
+            _probers[56] = new SingleByteCharSetProber(new Iso_8859_13_PolishModel());
+            _probers[57] = new SingleByteCharSetProber(new Iso_8859_16_PolishModel());
+            _probers[58] = new SingleByteCharSetProber(new Mac_Centraleurope_PolishModel());
+            _probers[59] = new SingleByteCharSetProber(new Ibm852_PolishModel());
 
             // Finnish
-            probers[60] = new SingleByteCharSetProber(new Iso_8859_1_FinnishModel());
-            probers[61] = new SingleByteCharSetProber(new Iso_8859_4_FinnishModel());
-            probers[62] = new SingleByteCharSetProber(new Iso_8859_9_FinnishModel());
-            probers[63] = new SingleByteCharSetProber(new Iso_8859_13_FinnishModel());
-            probers[64] = new SingleByteCharSetProber(new Iso_8859_15_FinnishModel());
-            probers[65] = new SingleByteCharSetProber(new Windows_1252_FinnishModel());
+            _probers[60] = new SingleByteCharSetProber(new Iso_8859_1_FinnishModel());
+            _probers[61] = new SingleByteCharSetProber(new Iso_8859_4_FinnishModel());
+            _probers[62] = new SingleByteCharSetProber(new Iso_8859_9_FinnishModel());
+            _probers[63] = new SingleByteCharSetProber(new Iso_8859_13_FinnishModel());
+            _probers[64] = new SingleByteCharSetProber(new Iso_8859_15_FinnishModel());
+            _probers[65] = new SingleByteCharSetProber(new Windows_1252_FinnishModel());
 
             // Italian
-            probers[66] = new SingleByteCharSetProber(new Iso_8859_1_ItalianModel());
-            probers[67] = new SingleByteCharSetProber(new Iso_8859_3_ItalianModel());
-            probers[68] = new SingleByteCharSetProber(new Iso_8859_9_ItalianModel());
-            probers[69] = new SingleByteCharSetProber(new Iso_8859_15_ItalianModel());
-            probers[70] = new SingleByteCharSetProber(new Windows_1252_ItalianModel());
+            _probers[66] = new SingleByteCharSetProber(new Iso_8859_1_ItalianModel());
+            _probers[67] = new SingleByteCharSetProber(new Iso_8859_3_ItalianModel());
+            _probers[68] = new SingleByteCharSetProber(new Iso_8859_9_ItalianModel());
+            _probers[69] = new SingleByteCharSetProber(new Iso_8859_15_ItalianModel());
+            _probers[70] = new SingleByteCharSetProber(new Windows_1252_ItalianModel());
 
             // Croatian
-            probers[71] = new SingleByteCharSetProber(new Windows_1250_CroatianModel());
-            probers[72] = new SingleByteCharSetProber(new Iso_8859_2_CroatianModel());
-            probers[73] = new SingleByteCharSetProber(new Iso_8859_13_CroatianModel());
-            probers[74] = new SingleByteCharSetProber(new Iso_8859_16_CroatianModel());
-            probers[75] = new SingleByteCharSetProber(new Mac_Centraleurope_CroatianModel());
-            probers[76] = new SingleByteCharSetProber(new Ibm852_CroatianModel());
+            _probers[71] = new SingleByteCharSetProber(new Windows_1250_CroatianModel());
+            _probers[72] = new SingleByteCharSetProber(new Iso_8859_2_CroatianModel());
+            _probers[73] = new SingleByteCharSetProber(new Iso_8859_13_CroatianModel());
+            _probers[74] = new SingleByteCharSetProber(new Iso_8859_16_CroatianModel());
+            _probers[75] = new SingleByteCharSetProber(new Mac_Centraleurope_CroatianModel());
+            _probers[76] = new SingleByteCharSetProber(new Ibm852_CroatianModel());
 
             // Estonian
-            probers[77] = new SingleByteCharSetProber(new Windows_1252_EstonianModel());
-            probers[78] = new SingleByteCharSetProber(new Windows_1257_EstonianModel());
-            probers[79] = new SingleByteCharSetProber(new Iso_8859_4_EstonianModel());
-            probers[80] = new SingleByteCharSetProber(new Iso_8859_13_EstonianModel());
-            probers[81] = new SingleByteCharSetProber(new Iso_8859_15_EstonianModel());
+            _probers[77] = new SingleByteCharSetProber(new Windows_1252_EstonianModel());
+            _probers[78] = new SingleByteCharSetProber(new Windows_1257_EstonianModel());
+            _probers[79] = new SingleByteCharSetProber(new Iso_8859_4_EstonianModel());
+            _probers[80] = new SingleByteCharSetProber(new Iso_8859_13_EstonianModel());
+            _probers[81] = new SingleByteCharSetProber(new Iso_8859_15_EstonianModel());
 
             // Irish
-            probers[82] = new SingleByteCharSetProber(new Iso_8859_1_IrishModel());
-            probers[83] = new SingleByteCharSetProber(new Iso_8859_9_IrishModel());
-            probers[84] = new SingleByteCharSetProber(new Iso_8859_15_IrishModel());
-            probers[85] = new SingleByteCharSetProber(new Windows_1252_IrishModel());
+            _probers[82] = new SingleByteCharSetProber(new Iso_8859_1_IrishModel());
+            _probers[83] = new SingleByteCharSetProber(new Iso_8859_9_IrishModel());
+            _probers[84] = new SingleByteCharSetProber(new Iso_8859_15_IrishModel());
+            _probers[85] = new SingleByteCharSetProber(new Windows_1252_IrishModel());
 
             // Romanian
-            probers[86] = new SingleByteCharSetProber(new Windows_1250_RomanianModel());
-            probers[87] = new SingleByteCharSetProber(new Iso_8859_2_RomanianModel());
-            probers[88] = new SingleByteCharSetProber(new Iso_8859_16_RomanianModel());
-            probers[89] = new SingleByteCharSetProber(new Ibm852_RomanianModel());
+            _probers[86] = new SingleByteCharSetProber(new Windows_1250_RomanianModel());
+            _probers[87] = new SingleByteCharSetProber(new Iso_8859_2_RomanianModel());
+            _probers[88] = new SingleByteCharSetProber(new Iso_8859_16_RomanianModel());
+            _probers[89] = new SingleByteCharSetProber(new Ibm852_RomanianModel());
 
             // Slovene
-            probers[90] = new SingleByteCharSetProber(new Windows_1250_SloveneModel());
-            probers[91] = new SingleByteCharSetProber(new Iso_8859_2_SloveneModel());
-            probers[92] = new SingleByteCharSetProber(new Iso_8859_16_SloveneModel());
-            probers[93] = new SingleByteCharSetProber(new Mac_Centraleurope_SloveneModel());
-            probers[94] = new SingleByteCharSetProber(new Ibm852_SloveneModel());
+            _probers[90] = new SingleByteCharSetProber(new Windows_1250_SloveneModel());
+            _probers[91] = new SingleByteCharSetProber(new Iso_8859_2_SloveneModel());
+            _probers[92] = new SingleByteCharSetProber(new Iso_8859_16_SloveneModel());
+            _probers[93] = new SingleByteCharSetProber(new Mac_Centraleurope_SloveneModel());
+            _probers[94] = new SingleByteCharSetProber(new Ibm852_SloveneModel());
 
             // Swedish
-            probers[95] = new SingleByteCharSetProber(new Iso_8859_1_SwedishModel());
-            probers[96] = new SingleByteCharSetProber(new Iso_8859_4_SwedishModel());
-            probers[97] = new SingleByteCharSetProber(new Iso_8859_9_SwedishModel());
-            probers[98] = new SingleByteCharSetProber(new Iso_8859_15_SwedishModel());
-            probers[99] = new SingleByteCharSetProber(new Windows_1252_SwedishModel());
+            _probers[95] = new SingleByteCharSetProber(new Iso_8859_1_SwedishModel());
+            _probers[96] = new SingleByteCharSetProber(new Iso_8859_4_SwedishModel());
+            _probers[97] = new SingleByteCharSetProber(new Iso_8859_9_SwedishModel());
+            _probers[98] = new SingleByteCharSetProber(new Iso_8859_15_SwedishModel());
+            _probers[99] = new SingleByteCharSetProber(new Windows_1252_SwedishModel());
 
             Reset();
         }
@@ -263,33 +262,28 @@ namespace UtfUnknown.Core.Probers
             // recognize languages with English characters.
 
             byte[] newBuf = FilterWithoutEnglishLetters(buf, offset, len);
-
-            if (newBuf.Length == 0)
-                return state; // Nothing to see here, move on.
+            if (newBuf.Length == 0) return state;
 
             for (int i = 0; i < PROBERS_NUM; i++)
             {
-                if (isActive[i])
-                {
-                    ProbingState st = probers[i].HandleData(newBuf, 0, newBuf.Length);
+                if (!_isActive[i]) continue;
 
-                    if (st == ProbingState.FoundIt)
-                    {
-                        bestGuess = i;
-                        state = ProbingState.FoundIt;
-                        break;
-                    }
-                    else if (st == ProbingState.NotMe)
-                    {
-                        isActive[i] = false;
-                        activeNum--;
-                        if (activeNum <= 0)
-                        {
-                            state = ProbingState.NotMe;
-                            break;
-                        }
-                    }
+                ProbingState st = _probers[i].HandleData(newBuf, 0, newBuf.Length);
+                if (st == ProbingState.FoundIt)
+                {
+                    _bestGuess = i;
+                    state = ProbingState.FoundIt;
+                    break;
                 }
+
+                if (st != ProbingState.NotMe) continue;
+
+                _isActive[i] = false;
+                _activeNum--;
+                if (_activeNum > 0) continue;
+
+                state = ProbingState.NotMe;
+                break;
             }
 
             return state;
@@ -297,7 +291,7 @@ namespace UtfUnknown.Core.Probers
 
         public override float GetConfidence(StringBuilder status = null)
         {
-            float bestConf = 0.0f, cf;
+            float bestConf = 0.0f;
 
             switch (state)
             {
@@ -309,34 +303,23 @@ namespace UtfUnknown.Core.Probers
 
                 default:
 
-                    if (status != null)
-                    {
-                        status.AppendLine($"Get confidence:");
-                    }
-
+                    status?.AppendLine($"Get confidence:");
+                    float cf;
                     for (int i = 0; i < PROBERS_NUM; i++)
                     {
-                        if (isActive[i])
-                        {
-                            cf = probers[i].GetConfidence();
-                            if (bestConf < cf)
-                            {
-                                bestConf = cf;
-                                bestGuess = i;
+                        if (!_isActive[i]) continue;
 
-                                if (status != null)
-                                {
-                                    status.AppendLine($"-- new match found: confidence {bestConf}, index {bestGuess}, charset {probers[i].GetCharsetName()}.");
-                                }
-                            }
-                        }
+                        cf = _probers[i].GetConfidence();
+                        if (cf <= bestConf) continue;
+
+                        bestConf = cf;
+                        _bestGuess = i;
+
+                        var chName = _probers[i].GetCharsetName();
+                        status?.AppendLine(
+                            $"-- new match found: confidence {bestConf}, index {_bestGuess}, charset {chName}.");
                     }
-
-                    if (status != null)
-                    {
-                        status.AppendLine($"Get confidence done.");
-                    }
-
+                    status?.AppendLine($"Get confidence done.");
                     break;
             }
 
@@ -346,54 +329,53 @@ namespace UtfUnknown.Core.Probers
         public override string DumpStatus()
         {
             StringBuilder status = new StringBuilder();
-
             float cf = GetConfidence(status);
-
             status.AppendLine(" SBCS Group Prober --------begin status");
-
             for (int i = 0; i < PROBERS_NUM; i++)
             {
-                if (probers[i] != null)
+                if (_probers[i] == null) continue;
+
+                var chName = _probers[i].GetCharsetName();
+                if (!_isActive[i])
                 {
-                    if (!isActive[i])
-                    {
-                        status.AppendLine($" SBCS inactive: [{probers[i].GetCharsetName()}] (i.e. confidence is too low).");
-                    }
-                    else
-                    {
-                        var cfp = probers[i].GetConfidence();
-
-                        status.AppendLine($" SBCS {cfp}: [{probers[i].GetCharsetName()}]");
-
-                        status.AppendLine(probers[i].DumpStatus());
-                    }
+                    status.AppendLine(
+                        $" SBCS inactive: [{chName}] (i.e. confidence is too low).");
+                }
+                else
+                {
+                    var cfp = _probers[i].GetConfidence();
+                    var dumpStatus = _probers[i].DumpStatus();
+                    status.AppendLine($" SBCS {cfp}: [{chName}]");
+                    status.AppendLine(dumpStatus);
                 }
             }
 
-            status.AppendLine($" SBCS Group found best match [{probers[bestGuess].GetCharsetName()}] confidence {cf}.");
+            var bestChName = _probers[_bestGuess].GetCharsetName();
+            status.AppendLine(
+                $" SBCS Group found best match [{bestChName}] confidence {cf}.");
 
             return status.ToString();
         }
 
         public override void Reset()
         {
-            activeNum = 0;
+            _activeNum = 0;
 
             for (int i = 0; i < PROBERS_NUM; i++)
             {
-                if (probers[i] != null)
+                if (_probers[i] != null)
                 {
-                    probers[i].Reset();
-                    isActive[i] = true;
-                    ++activeNum;
+                    _probers[i].Reset();
+                    _isActive[i] = true;
+                    ++_activeNum;
                 }
                 else
                 {
-                    isActive[i] = false;
+                    _isActive[i] = false;
                 }
             }
 
-            bestGuess = -1;
+            _bestGuess = -1;
 
             state = ProbingState.Detecting;
         }
@@ -401,14 +383,14 @@ namespace UtfUnknown.Core.Probers
         public override string GetCharsetName()
         {
             //if we have no answer yet
-            if (bestGuess == -1)
+            if (_bestGuess == -1)
             {
                 GetConfidence();
                 //no charset seems positive
-                if (bestGuess == -1)
-                    bestGuess = 0;
+                if (_bestGuess == -1)
+                    _bestGuess = 0;
             }
-            return probers[bestGuess].GetCharsetName();
+            return _probers[_bestGuess].GetCharsetName();
         }
     }
 }

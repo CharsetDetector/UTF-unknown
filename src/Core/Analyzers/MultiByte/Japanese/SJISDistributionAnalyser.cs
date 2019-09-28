@@ -545,32 +545,32 @@ namespace UtfUnknown.Core.Analyzers.Japanese
         8240,8241,8242,8243,8244,8245,8246,8247,8248,8249,8250,8251,8252,8253,8254,8255, // 8256
         8256,8257,8258,8259,8260,8261,8262,8263,8264,8265,8266,8267,8268,8269,8270,8271, // 8272
         ****************************************************************************************/
-        };        
-		
+        };
+
         public SJISDistributionAnalyser()
         {
             charToFreqOrder = SJIS_CHAR2FREQ_ORDER;
-            typicalDistributionRatio = SJIS_TYPICAL_DISTRIBUTION_RATIO;        
+            typicalDistributionRatio = SJIS_TYPICAL_DISTRIBUTION_RATIO;
         }
-        
+
         /// <summary>
         /// first  byte range: 0x81 -- 0x9f , 0xe0 -- 0xfe
         ///  second byte range: 0x40 -- 0x7e,  0x81 -- oxfe
         /// no validation needed here. State machine has done that
         /// </summary>
-        public override int GetOrder(byte[] buf, int offset) 
-        { 
+        public override int GetOrder(byte[] buf, int offset)
+        {
             int order;
-            
-            if (buf[offset] >= 0x81 && buf[offset] <= 0x9F)  
+
+            if (buf[offset] >= 0x81 && buf[offset] <= 0x9F)
                 order = 188 * (buf[offset] - 0x81);
-            else if (buf[offset] >= 0xE0 && buf[offset] <= 0xEF)  
+            else if (buf[offset] >= 0xE0 && buf[offset] <= 0xEF)
                 order = 188 * (buf[offset] - 0xE0 + 31);
             else
                 return -1;
-            order += buf[offset+1] - 0x40;
-            
-            if (buf[offset+1] > 0x7F)
+            order += buf[offset + 1] - 0x40;
+
+            if (buf[offset + 1] > 0x7F)
                 order--;
             return order;
         }

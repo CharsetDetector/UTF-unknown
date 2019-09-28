@@ -2,7 +2,7 @@ namespace UtfUnknown.Core
 {
     enum InputState
     {
-        PureASCII=0,
+        PureASCII = 0,
 
         /// <summary>
         /// Found escape character or HZ "~{"

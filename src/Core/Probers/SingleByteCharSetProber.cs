@@ -36,7 +36,6 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-using System;
 using System.Text;
 
 using UtfUnknown.Core.Models;
@@ -54,53 +53,50 @@ namespace UtfUnknown.Core.Probers
         private const int PROBABLE_CAT = NUMBER_OF_SEQ_CAT - 2;
         private const int NEUTRAL_CAT = NUMBER_OF_SEQ_CAT - 3;
         private const int NEGATIVE_CAT = 0;
-        
+
         protected SequenceModel model;
-        
+
         // true if we need to reverse every pair in the model lookup        
-        bool reversed; 
+        private readonly bool _reversed;
 
         // char order of last character
-        byte lastOrder;
+        private byte _lastOrder;
 
-        int totalSeqs;
-        int[] seqCounters = new int[NUMBER_OF_SEQ_CAT];
+        private int _totalSeqs;
+        private readonly int[] _seqCounters = new int[NUMBER_OF_SEQ_CAT];
 
-        int totalChar;
-        int ctrlChar;
-        
+        private int _totalChar;
+        private int _ctrlChar;
+
         // characters that fall in our sampling range
-        int freqChar;
-  
+        private int _freqChar;
+
         // Optional auxiliary prober for name decision. created and destroyed by the GroupProber
-        CharsetProber nameProber; 
-                    
-        public SingleByteCharSetProber(SequenceModel model) 
+        private readonly CharsetProber _nameProber;
+
+        public SingleByteCharSetProber(SequenceModel model)
             : this(model, false, null)
-        {
-            
-        }
-    
-        public SingleByteCharSetProber(SequenceModel model, bool reversed, 
-                                       CharsetProber nameProber)
+        { }
+
+        public SingleByteCharSetProber(
+            SequenceModel model, bool reversed, CharsetProber nameProber)
         {
             this.model = model;
-            this.reversed = reversed;
-            this.nameProber = nameProber;
-            Reset();            
+            _reversed = reversed;
+            _nameProber = nameProber;
+            Reset();
         }
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
             int max = offset + len;
-            
             for (int i = offset; i < max; i++)
             {
                 byte order = model.GetOrder(buf[i]);
 
                 if (order < SYMBOL_CAT_ORDER)
                 {
-                    totalChar++;
+                    _totalChar++;
                 }
                 else if (order == SequenceModel.ILL)
                 {
@@ -111,50 +107,51 @@ namespace UtfUnknown.Core.Probers
                 }
                 else if (order == SequenceModel.CTR)
                 {
-                    ctrlChar++;
+                    _ctrlChar++;
                 }
-                    
+
                 if (order < model.FreqCharCount)
                 {
-                    freqChar++;
-
-                    if (lastOrder < model.FreqCharCount)
+                    ++_freqChar;
+                    if (_lastOrder < model.FreqCharCount)
                     {
-                        totalSeqs++;
-                        if (!reversed)
-                            ++(seqCounters[model.GetPrecedence(lastOrder * model.FreqCharCount + order)]);
-                        else // reverse the order of the letters in the lookup
-                            ++(seqCounters[model.GetPrecedence(order * model.FreqCharCount + lastOrder)]);
+                        ++_totalSeqs;
+                        // reverse the order of the letters in the lookup
+                        var pos = _reversed
+                            ? order * model.FreqCharCount + _lastOrder
+                            : _lastOrder * model.FreqCharCount + order;
+                        var precedence = model.GetPrecedence(pos);
+                        ++_seqCounters[precedence];
                     }
                 }
 
-                lastOrder = order;
+                _lastOrder = order;
             }
 
-            if (state == ProbingState.Detecting) {
-                if (totalSeqs > SB_ENOUGH_REL_THRESHOLD) {
-                    float cf = GetConfidence();
-                    if (cf > POSITIVE_SHORTCUT_THRESHOLD)
-                        state = ProbingState.FoundIt;
-                    else if (cf < NEGATIVE_SHORTCUT_THRESHOLD)
-                        state = ProbingState.NotMe;
-                }
+            if (state != ProbingState.Detecting) return state;
+            if (_totalSeqs <= SB_ENOUGH_REL_THRESHOLD) return state;
+
+            float cf = GetConfidence();
+            if (cf > POSITIVE_SHORTCUT_THRESHOLD)
+            {
+                state = ProbingState.FoundIt;
             }
+            else if (cf < NEGATIVE_SHORTCUT_THRESHOLD)
+            {
+                state = ProbingState.NotMe;
+            }
+
             return state;
         }
-                
+
         public override string DumpStatus()
         {
             StringBuilder status = new StringBuilder();
-
-            status.AppendLine($"  SBCS: {GetConfidence():0.00############} [{GetCharsetName()}]");
-
+            var cf = GetConfidence();
+            var chName = GetCharsetName();
+            status.AppendLine(
+                $"  SBCS: {cf:0.00############} [{chName}]");
             return status.ToString();
-        }
-
-        private void StringBuilder(string v1, float v2, string v3)
-        {
-            throw new NotImplementedException();
         }
 
         public override float GetConfidence(StringBuilder status = null)
@@ -170,45 +167,45 @@ namespace UtfUnknown.Core.Probers
             // POSITIVE_APPROACH
             float r;
 
-            if (totalSeqs > 0) {
-                r = 1.0f * seqCounters[POSITIVE_CAT] / totalSeqs / model.TypicalPositiveRatio;
+            if (_totalSeqs <= 0) return 0.01f;
 
-                // Multiply by a ratio of positive sequences per characters.
-                // This would help in particular to distinguish close winners.
-                // Indeed if you add a letter, you'd expect the positive sequence count
-                // to increase as well. If it doesn't, it may mean that this new codepoint
-                // may not have been a letter, but instead a symbol (or some other
-                // character). This could make the difference between very closely related
-                // charsets used for the same language.
-                r = r * (seqCounters[POSITIVE_CAT] + (float)seqCounters[PROBABLE_CAT] / 4.0f) / totalChar;
+            r = 1.0f * _seqCounters[POSITIVE_CAT] / _totalSeqs / model.TypicalPositiveRatio;
 
-                // The more control characters (proportionnaly to the size of the text), the
-                // less confident we become in the current charset.
-                r = r * (totalChar - ctrlChar) / totalChar;
+            // Multiply by a ratio of positive sequences per characters.
+            // This would help in particular to distinguish close winners.
+            // Indeed if you add a letter, you'd expect the positive sequence count
+            // to increase as well. If it doesn't, it may mean that this new codepoint
+            // may not have been a letter, but instead a symbol (or some other
+            // character). This could make the difference between very closely related
+            // charsets used for the same language.
+            var ratio = _seqCounters[POSITIVE_CAT] + _seqCounters[PROBABLE_CAT] / 4.0f;
+            r = r * ratio / _totalChar;
 
-                r = r * freqChar / totalChar;
-                if (r >= 1.0f)
-                    r = 0.99f;
-                return r;
-            }
-            return 0.01f;            
+            // The more control characters (proportionnaly to the size of the text), the
+            // less confident we become in the current charset.
+            r = r * (_totalChar - _ctrlChar) / _totalChar;
+            r = r * _freqChar / _totalChar;
+            if (r >= 1.0f) r = 0.99f;
+
+            return r;
         }
-        
+
         public override void Reset()
         {
             state = ProbingState.Detecting;
-            lastOrder = 255;
+            _lastOrder = 255;
             for (int i = 0; i < NUMBER_OF_SEQ_CAT; i++)
-                seqCounters[i] = 0;
-            totalSeqs = 0;
-            totalChar = 0;
-            freqChar = 0;
+            {
+                _seqCounters[i] = 0;
+            }
+            _totalSeqs = 0;
+            _totalChar = 0;
+            _freqChar = 0;
         }
-        
-        public override string GetCharsetName() 
+
+        public override string GetCharsetName()
         {
-            return (nameProber == null) ? model.CharsetName
-                                        : nameProber.GetCharsetName();
-        }        
+            return _nameProber?.GetCharsetName() ?? model.CharsetName;
+        }
     }
 }

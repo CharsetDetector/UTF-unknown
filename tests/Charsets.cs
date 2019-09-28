@@ -45,11 +45,11 @@ namespace UtfUnknown.Core
         public const string ASCII = "ASCII";
 
         public const string UTF16_LE = "UTF-16LE";
-        
+
         public const string UTF16_BE = "UTF-16BE";
-        
+
         public const string UTF32_BE = "UTF-32BE";
-        
+
         public const string UTF32_LE = "UTF-32LE";
 
     }

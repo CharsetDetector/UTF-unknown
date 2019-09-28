@@ -6,10 +6,10 @@
 
 #region
 
+using NUnit.Framework;
 using System.IO;
 using System.Text;
 using UtfUnknown.Core;
-using NUnit.Framework;
 
 #endregion
 

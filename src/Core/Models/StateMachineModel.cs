@@ -36,8 +36,6 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-using System;
-
 namespace UtfUnknown.Core.Models
 {
     /// <summary>
@@ -68,8 +66,8 @@ namespace UtfUnknown.Core.Models
 
         public int ClassFactor { get; }
 
-        public StateMachineModel(BitPackage classTable, int classFactor,
-            BitPackage stateTable, int[] charLenTable, String name)
+        protected StateMachineModel(BitPackage classTable, int classFactor,
+            BitPackage stateTable, int[] charLenTable, string name)
         {
             this.classTable = classTable;
             ClassFactor = classFactor;
@@ -77,10 +75,10 @@ namespace UtfUnknown.Core.Models
             this.charLenTable = charLenTable;
             Name = name;
         }
-        
+
         public int GetClass(byte b)
-        {        
-            return classTable.Unpack((int)b);            
+        {
+            return classTable.Unpack((int)b);
         }
-    }    
+    }
 }

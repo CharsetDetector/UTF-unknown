@@ -1,10 +1,8 @@
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.MultiByte.Japanese
 {
     public class EUCJPSMModel : StateMachineModel
     {
-        private readonly static int[] EUCJP_cls = {
+        private static readonly int[] EUCJP_cls = {
             //BitPacket.Pack4bits(5,4,4,4,4,4,4,4),  // 00 - 07 
             BitPackage.Pack4bits(4,4,4,4,4,4,4,4),  // 00 - 07 
             BitPackage.Pack4bits(4,4,4,4,4,4,5,5),  // 08 - 0f 
@@ -40,7 +38,7 @@ namespace UtfUnknown.Core.Models.MultiByte.Japanese
             BitPackage.Pack4bits(0,0,0,0,0,0,0,5)   // f8 - ff 
         };
 
-        private readonly static int[] EUCJP_st = {
+        private static readonly int[] EUCJP_st = {
             BitPackage.Pack4bits(    3,    4,    3,    5,START,ERROR,ERROR,ERROR),//00-07 
             BitPackage.Pack4bits(ERROR,ERROR,ERROR,ERROR,ITSME,ITSME,ITSME,ITSME),//08-0f 
             BitPackage.Pack4bits(ITSME,ITSME,START,ERROR,START,ERROR,ERROR,ERROR),//10-17 
@@ -48,16 +46,16 @@ namespace UtfUnknown.Core.Models.MultiByte.Japanese
             BitPackage.Pack4bits(    3,ERROR,ERROR,ERROR,START,START,START,START) //20-27 
         };
 
-        private readonly static int[] EUCJPCharLenTable = { 2, 2, 2, 3, 1, 0 };
-        
+        private static readonly int[] EUCJPCharLenTable = { 2, 2, 2, 3, 1, 0 };
+
         public EUCJPSMModel() : base(
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, EUCJP_cls),
             6,
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, EUCJP_st),
             EUCJPCharLenTable, "EUC-JP")

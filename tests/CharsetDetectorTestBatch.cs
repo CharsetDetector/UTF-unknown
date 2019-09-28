@@ -3,14 +3,12 @@
 //    Julian Verdurmen
 //
 
+using Newtonsoft.Json;
+using NUnit.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
-using Newtonsoft.Json;
-using UtfUnknown.Core;
-using NUnit.Framework;
 
 namespace UtfUnknown.Tests
 {
@@ -19,7 +17,7 @@ namespace UtfUnknown.Tests
     {
         private static readonly string TESTS_ROOT = GetTestsPath();
         private static readonly string DATA_ROOT = FindRootPath();
-        
+
         private StreamWriter _logWriter;
 
         /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
@@ -108,7 +106,7 @@ namespace UtfUnknown.Tests
         {
             var result = CharsetDetector.DetectFromFile(file);
             var detected = result.Detected;
-            
+
             _logWriter.WriteLine(string.Format("- {0} ({1}) -> {2}", file, expectedCharset, JsonConvert.SerializeObject(result)));
 
             StringAssert.AreEqualIgnoringCase(expectedCharset, detected.EncodingName,

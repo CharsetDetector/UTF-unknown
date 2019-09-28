@@ -45,16 +45,16 @@ namespace UtfUnknown.Core.Probers.MultiByte.Japanese
 {
     public class EUCJPProber : CharsetProber
     {
-        private CodingStateMachine codingSM;
-        private EUCJPContextAnalyser contextAnalyser;
-        private EUCJPDistributionAnalyser distributionAnalyser;
-        private byte[] lastChar = new byte[2];
+        private readonly CodingStateMachine _codingSm;
+        private readonly EUCJPContextAnalyser _contextAnalyser;
+        private readonly EUCJPDistributionAnalyser _distributionAnalyser;
+        private readonly byte[] _lastChar = new byte[2];
 
         public EUCJPProber()
         {
-            codingSM = new CodingStateMachine(new EUCJPSMModel());
-            distributionAnalyser = new EUCJPDistributionAnalyser();
-            contextAnalyser = new EUCJPContextAnalyser();
+            _codingSm = new CodingStateMachine(new EUCJPSMModel());
+            _distributionAnalyser = new EUCJPDistributionAnalyser();
+            _contextAnalyser = new EUCJPContextAnalyser();
             Reset();
         }
 
@@ -67,59 +67,62 @@ namespace UtfUnknown.Core.Probers.MultiByte.Japanese
         {
             int codingState;
             int max = offset + len;
-
             for (int i = offset; i < max; i++)
             {
-                codingState = codingSM.NextState(buf[i]);
+                codingState = _codingSm.NextState(buf[i]);
                 if (codingState == StateMachineModel.ERROR)
                 {
                     state = ProbingState.NotMe;
                     break;
                 }
+
                 if (codingState == StateMachineModel.ITSME)
                 {
                     state = ProbingState.FoundIt;
                     break;
                 }
-                if (codingState == StateMachineModel.START)
+
+                if (codingState != StateMachineModel.START) continue;
+
+                int charLen = _codingSm.CurrentCharLen;
+                if (i == offset)
                 {
-                    int charLen = codingSM.CurrentCharLen;
-                    if (i == offset)
-                    {
-                        lastChar[1] = buf[offset];
-                        contextAnalyser.HandleOneChar(lastChar, 0, charLen);
-                        distributionAnalyser.HandleOneChar(lastChar, 0, charLen);
-                    }
-                    else
-                    {
-                        contextAnalyser.HandleOneChar(buf, i - 1, charLen);
-                        distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
-                    }
+                    _lastChar[1] = buf[offset];
+                    _contextAnalyser.HandleOneChar(_lastChar, 0, charLen);
+                    _distributionAnalyser.HandleOneChar(_lastChar, 0, charLen);
+                }
+                else
+                {
+                    _contextAnalyser.HandleOneChar(buf, i - 1, charLen);
+                    _distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
                 }
             }
 
-            lastChar[0] = buf[max - 1];
+            _lastChar[0] = buf[max - 1];
 
-            if (state == ProbingState.Detecting)
-                if (contextAnalyser.GotEnoughData() && GetConfidence() > SHORTCUT_THRESHOLD)
-                    state = ProbingState.FoundIt;
+            if (state == ProbingState.Detecting
+                && _contextAnalyser.GotEnoughData()
+                && GetConfidence() > SHORTCUT_THRESHOLD)
+            {
+                state = ProbingState.FoundIt;
+            }
 
             return state;
         }
 
         public override void Reset()
         {
-            codingSM.Reset();
+            _codingSm.Reset();
             state = ProbingState.Detecting;
-            contextAnalyser.Reset();
-            distributionAnalyser.Reset();
+            _contextAnalyser.Reset();
+            _distributionAnalyser.Reset();
         }
 
         public override float GetConfidence(StringBuilder status = null)
         {
-            float contxtCf = contextAnalyser.GetConfidence();
-            float distribCf = distributionAnalyser.GetConfidence();
-            return (contxtCf > distribCf ? contxtCf : distribCf);
+            float contxtCf = _contextAnalyser.GetConfidence();
+            float distribCf = _distributionAnalyser.GetConfidence();
+            return contxtCf > distribCf ? contxtCf : distribCf;
         }
     }
 }

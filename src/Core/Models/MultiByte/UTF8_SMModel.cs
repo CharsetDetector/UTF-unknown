@@ -36,13 +36,11 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.MultiByte
 {
     public class UTF8_SMModel : StateMachineModel
     {
-        private readonly static int[] UTF8_cls = {
+        private static readonly int[] UTF8_cls = {
             BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 00 - 07
             BitPackage.Pack4bits(1,1,1,1,1,1,0,0),  // 08 - 0f 
             BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 10 - 17 
@@ -77,7 +75,7 @@ namespace UtfUnknown.Core.Models.MultiByte
             BitPackage.Pack4bits(12,13,13,13,14,15,0,0)   // f8 - ff 
         };
 
-        private readonly static int[] UTF8_st = {
+        private static readonly int[] UTF8_st = {
             BitPackage.Pack4bits(ERROR,START,ERROR,ERROR,ERROR,ERROR,   12,   10),//00-07 
             BitPackage.Pack4bits(    9,   11,    8,    7,    6,    5,    4,    3),//08-0f 
             BitPackage.Pack4bits(ERROR,ERROR,ERROR,ERROR,ERROR,ERROR,ERROR,ERROR),//10-17 
@@ -106,22 +104,20 @@ namespace UtfUnknown.Core.Models.MultiByte
             BitPackage.Pack4bits(ERROR,ERROR,ERROR,ERROR,ERROR,ERROR,ERROR,ERROR) //c8-cf  
         };
 
-        private readonly static int[] UTF8CharLenTable = 
+        private static readonly int[] UTF8CharLenTable =
             {0, 1, 0, 0, 0, 0, 2, 3, 3, 3, 4, 4, 5, 5, 6, 6 };
-        
+
         public UTF8_SMModel() : base(
-              new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                         BitPackage.SHIFT_MASK_4BITS, 
+              new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                         BitPackage.SHIFT_MASK_4BITS,
                          BitPackage.BIT_SHIFT_4BITS,
                          BitPackage.UNIT_MASK_4BITS, UTF8_cls),
                          16,
-              new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                         BitPackage.SHIFT_MASK_4BITS, 
+              new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                         BitPackage.SHIFT_MASK_4BITS,
                          BitPackage.BIT_SHIFT_4BITS,
                          BitPackage.UNIT_MASK_4BITS, UTF8_st),
               UTF8CharLenTable, "UTF-8")
-        {
-
-        }
+        { }
     }
 }

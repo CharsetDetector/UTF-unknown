@@ -40,8 +40,6 @@
 * and adjusted to language specific support.
 */
 
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.SingleByte.Estonian
 {
     public abstract class EstonianModel : SequenceModel
@@ -52,7 +50,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Estonian
         // Next 512 sequences (512-1024): 0.0027278687816868537
         // Rest: -5.204170427930421e-18
         // Negative sequences: TODO
-        private static byte[] LANG_MODEL = {
+        private static readonly byte[] LANG_MODEL = {
             3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,3,2,2,3,3,0,3,3,3,3,2,2,0,2,
             3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,3,3,2,3,3,2,2,3,3,2,2,2,0,2,
             3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,3,2,2,3,3,0,3,3,3,2,0,2,0,2,

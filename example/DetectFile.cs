@@ -6,7 +6,6 @@
 //
 
 using System;
-using System.Text;
 using UtfUnknown;
 
 namespace ConsoleExample
@@ -17,7 +16,7 @@ namespace ConsoleExample
         /// Command line example: detects the encoding of the given file.
         /// </summary>
         /// <param name="args">a filename</param>
-        public static void Main(String[] args)
+        public static void Main(string[] args)
         {
             if (args.Length == 0)
             {

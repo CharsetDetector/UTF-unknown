@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-
-using UtfUnknown.Core;
 using UtfUnknown.Core.Probers;
 
 namespace UtfUnknown
@@ -35,9 +33,9 @@ namespace UtfUnknown
             }
             catch (Exception)
             {
-               //wrong name
+                //wrong name
             }
-         
+
             Prober = prober;
             Time = time;
 
@@ -47,7 +45,7 @@ namespace UtfUnknown
         /// <summary>
         /// New Result
         /// </summary>
-        public DetectionDetail(CharsetProber prober, TimeSpan? time = null) 
+        public DetectionDetail(CharsetProber prober, TimeSpan? time = null)
             : this(prober.GetCharsetName(), prober.GetConfidence(), prober, time, prober.DumpStatus())
         {
         }

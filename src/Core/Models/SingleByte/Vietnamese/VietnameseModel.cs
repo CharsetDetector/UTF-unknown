@@ -40,8 +40,6 @@
 * and adjusted to language specific support.
 */
 
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.SingleByte.Vietnamese
 {
     public abstract class VietnameseModel : SequenceModel
@@ -52,7 +50,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Vietnamese
         // Next 512 sequences (512-1024): 0.06092051479986333
         // Rest: 0.0068905733918831966
         // Negative sequences: TODO
-        private static byte[] LANG_MODEL = {
+        private static readonly byte[] LANG_MODEL = {
             3,3,3,3,3,3,3,2,2,3,0,2,3,1,1,1,1,2,3,3,2,3,3,3,2,1,2,
              3,0,3,2,2,2,3,1,0,1,1,2,0,0,1,0,1,0,2,2,1,0,0,0,3,0,0,2,
             2,1,2,0,3,0,3,3,2,3,0,2,3,0,2,3,0,0,3,1,3,3,1,3,1,3,3,

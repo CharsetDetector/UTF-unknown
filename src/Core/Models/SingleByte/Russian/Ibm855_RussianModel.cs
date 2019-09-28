@@ -44,7 +44,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Russian
 {
     public class Ibm855_RussianModel : RussianModel
     {
-        private readonly static byte[] BYTE_TO_ORDER_MAP = {
+        private static readonly byte[] BYTE_TO_ORDER_MAP = {
             CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,RET,CTR,CTR,RET,CTR,CTR,  //00
             CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,  //10
             SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,  //20
@@ -62,7 +62,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Russian
              43,  9, 45,  7, 32,  6, 40, 14, 52, 24, 56, 10, 33, 17, 61,249,
             250, 18, 62, 20, 51, 25, 57, 30, 47, 29, 63, 22, 50,251,NUM,CTR,
         };
-                
+
         public Ibm855_RussianModel() : base(BYTE_TO_ORDER_MAP, "IBM855")
         {
         }

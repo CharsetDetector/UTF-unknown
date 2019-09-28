@@ -36,10 +36,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-using System;
-
 namespace UtfUnknown.Core.Models
-{   
+{
     public abstract class SequenceModel
     {
         // Codepoints
@@ -57,11 +55,11 @@ namespace UtfUnknown.Core.Models
 
         // [256] table use to find a char's order
         protected byte[] charToOrderMap;
-        
+
         // freqCharCount x freqCharCount table to find a 2-char sequence's 
         // frequency        
         protected byte[] precedenceMatrix;
-        
+
         // The count of frequent characters
         protected int freqCharCount;
 
@@ -72,11 +70,12 @@ namespace UtfUnknown.Core.Models
 
         // freqSeqs / totalSeqs
         protected float typicalPositiveRatio;
-        
-        public float TypicalPositiveRatio {
+
+        public float TypicalPositiveRatio
+        {
             get { return typicalPositiveRatio; }
         }
-        
+
 
         /// <summary>
         /// TODO not used?
@@ -86,23 +85,25 @@ namespace UtfUnknown.Core.Models
         /// <summary>
         /// TODO not used?
         /// </summary>
-        public bool KeepEnglishLetter {
+        public bool KeepEnglishLetter
+        {
             get { return keepEnglishLetter; }
         }
-        
+
         protected string charsetName;
 
-        public string CharsetName {
+        public string CharsetName
+        {
             get { return charsetName; }
         }
-        
-        public SequenceModel(
+
+        protected SequenceModel(
                 byte[] charToOrderMap,
                 byte[] precedenceMatrix,
                 int freqCharCount,
                 float typicalPositiveRatio,
                 bool keepEnglishLetter,
-                String charsetName)
+                string charsetName)
         {
             this.charToOrderMap = charToOrderMap;
             this.precedenceMatrix = precedenceMatrix;
@@ -111,12 +112,12 @@ namespace UtfUnknown.Core.Models
             this.keepEnglishLetter = keepEnglishLetter;
             this.charsetName = charsetName;
         }
-        
+
         public byte GetOrder(byte b)
         {
             return charToOrderMap[b];
         }
-        
+
         public byte GetPrecedence(int pos)
         {
             return precedenceMatrix[pos];

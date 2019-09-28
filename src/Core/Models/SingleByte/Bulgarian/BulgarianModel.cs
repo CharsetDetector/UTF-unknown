@@ -40,10 +40,8 @@
 * and adjusted to language specific support.
 */
 
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.SingleByte.Bulgarian
-{   
+{
     public abstract class BulgarianModel : SequenceModel
     {
         // Model Table: 
@@ -52,7 +50,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Bulgarian
         // first 1024 sequences:3.0618%
         // rest  sequences:     0.2992%
         // negative sequences:  0.0020% 
-        private static byte[] LANG_MODEL = {
+        private static readonly byte[] LANG_MODEL = {
             0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,2,3,3,3,3,3,3,3,3,2,3,3,3,3,3,
             3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,3,3,3,2,2,3,2,2,1,2,2,
             3,1,3,3,2,3,3,3,3,3,3,3,3,3,3,3,3,0,3,3,3,3,3,3,3,3,3,3,0,3,0,1,
@@ -183,9 +181,9 @@ namespace UtfUnknown.Core.Models.SingleByte.Bulgarian
             0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,
         };
 
-        public BulgarianModel(byte[] charToOrderMap, string name) 
+        public BulgarianModel(byte[] charToOrderMap, string name)
             : base(charToOrderMap, LANG_MODEL, 64, 0.969392f, false, name)
         {
-        }        
+        }
     }
 }

@@ -30,7 +30,7 @@ namespace UtfUnknown.Core.Models.MultiByte.Korean
         * Case 4: A1-FE					: 2 + 3 + 7 + 8 + 9
         */
 
-        private readonly static int[] CP949_cls = {
+        private static readonly int[] CP949_cls = {
             BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 00 - 07 
             BitPackage.Pack4bits(1,1,1,1,1,1,0,0),  // 08 - 0f 
             BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 10 - 17 
@@ -77,8 +77,8 @@ namespace UtfUnknown.Core.Models.MultiByte.Korean
             ERROR,ERROR,START,START,ERROR,ERROR,ERROR,START,START,START, // Case 4
         */
 
-        private readonly static int[] CP949_st = {
-			BitPackage.Pack4bits(ERROR,START,    6,ERROR,START,START,    3,    3), // 00 - 07
+        private static readonly int[] CP949_st = {
+            BitPackage.Pack4bits(ERROR,START,    6,ERROR,START,START,    3,    3), // 00 - 07
 			BitPackage.Pack4bits(    4,    5,ERROR,ERROR,ERROR,ERROR,ERROR,ERROR), // 08 - 0f
 			BitPackage.Pack4bits(ERROR,ERROR,ERROR,ERROR,ITSME,ITSME,ITSME,ITSME), // 10 - 17
 			BitPackage.Pack4bits(ITSME,ITSME,ITSME,ITSME,ITSME,ITSME,ERROR,ERROR), // 18 - 1f
@@ -89,21 +89,19 @@ namespace UtfUnknown.Core.Models.MultiByte.Korean
 			BitPackage.Pack4bits(ERROR,ERROR,ERROR,START,START,START,    0,    0)  // 40 - 45
         };
 
-        private readonly static int[] CP949CharLenTable = { 0, 1, 2, 0, 1, 1, 2, 2, 0, 2 };
-        
+        private static readonly int[] CP949CharLenTable = { 0, 1, 2, 0, 1, 1, 2, 2, 0, 2 };
+
         public CP949SMModel() : base(
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, CP949_cls),
             10,
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, CP949_st),
             CP949CharLenTable, "CP949")
-        {
-
-        }
+        { }
     }
 }

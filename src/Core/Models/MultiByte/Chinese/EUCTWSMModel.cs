@@ -2,7 +2,7 @@ namespace UtfUnknown.Core.Models.MultiByte.Chinese
 {
     public class EUCTWSMModel : StateMachineModel
     {
-        private readonly static int[] EUCTW_cls = {
+        private static readonly int[] EUCTW_cls = {
             BitPackage.Pack4bits(2,2,2,2,2,2,2,2),  // 00 - 07 
             BitPackage.Pack4bits(2,2,2,2,2,2,0,0),  // 08 - 0f 
             BitPackage.Pack4bits(2,2,2,2,2,2,2,2),  // 10 - 17 
@@ -37,7 +37,7 @@ namespace UtfUnknown.Core.Models.MultiByte.Chinese
             BitPackage.Pack4bits(3,3,3,3,3,3,3,0)   // f8 - ff 
         };
 
-        private readonly static int[] EUCTW_st = {
+        private static readonly int[] EUCTW_st = {
             BitPackage.Pack4bits(ERROR,ERROR,START,    3,    3,    3,    4,ERROR),//00-07 
             BitPackage.Pack4bits(ERROR,ERROR,ERROR,ERROR,ERROR,ERROR,ITSME,ITSME),//08-0f 
             BitPackage.Pack4bits(ITSME,ITSME,ITSME,ITSME,ITSME,ERROR,START,ERROR),//10-17 
@@ -46,21 +46,19 @@ namespace UtfUnknown.Core.Models.MultiByte.Chinese
             BitPackage.Pack4bits(START,ERROR,START,START,START,START,START,START) //28-2f 
         };
 
-        private readonly static int[] EUCTWCharLenTable = { 0, 0, 1, 2, 2, 2, 3 };
-        
+        private static readonly int[] EUCTWCharLenTable = { 0, 0, 1, 2, 2, 2, 3 };
+
         public EUCTWSMModel() : base(
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, EUCTW_cls),
             7,
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, EUCTW_st),
             EUCTWCharLenTable, "EUC-TW")
-        {
-
-        }
+        { }
     }
 }

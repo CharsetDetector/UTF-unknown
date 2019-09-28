@@ -40,8 +40,6 @@
 * and adjusted to language specific support.
 */
 
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.SingleByte.Turkish
 {
     public abstract class TurkishModel : SequenceModel
@@ -52,7 +50,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Turkish
         // Next 512 sequences (512-1024): 0.008134756135611957
         // Rest: 2.949029909160572e-17
         // Negative sequences: TODO
-        private static byte[] LANG_MODEL = {
+        private static readonly byte[] LANG_MODEL = {
             3,2,3,3,3,3,2,3,3,3,3,3,3,3,2,3,0,3,3,3,3,3,3,3,3,3,3,0,3,3,0,2,2,2,2,0,
             3,3,3,3,3,3,0,3,3,3,3,3,3,3,3,3,0,3,3,3,3,3,3,3,3,3,3,0,3,3,2,0,3,0,2,0,
             3,3,3,3,3,3,0,3,3,3,3,3,3,3,3,3,2,3,3,3,3,3,3,3,3,3,3,0,2,2,2,0,2,0,2,0,

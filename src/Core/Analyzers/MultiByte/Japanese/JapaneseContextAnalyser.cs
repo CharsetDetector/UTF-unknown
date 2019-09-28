@@ -48,7 +48,7 @@ namespace UtfUnknown.Core.Analyzers.Japanese
 
         // hiragana frequency category table
         // This is hiragana 2-char sequence table, the number in each cell represents its frequency category
-        protected static byte[,] jp2CharContext = { 
+        protected static byte[,] jp2CharContext = {
             { 0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,},
             { 2,4,0,4,0,3,0,4,0,3,4,4,4,2,4,3,3,4,3,2,3,3,4,2,3,3,3,2,4,1,4,3,3,1,5,4,3,4,3,4,3,5,3,0,3,5,4,2,0,3,1,0,3,3,0,3,3,0,1,1,0,4,3,0,3,3,0,4,0,2,0,3,5,5,5,5,4,0,4,1,0,3,4,},
             { 0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,},
@@ -133,13 +133,13 @@ namespace UtfUnknown.Core.Analyzers.Japanese
             { 0,4,0,4,0,4,0,3,0,4,4,3,4,2,4,3,2,0,4,4,4,3,5,3,5,3,3,2,4,2,4,3,4,3,1,4,0,2,3,4,4,4,3,3,3,4,4,4,3,4,1,3,4,3,2,1,2,1,3,3,3,4,4,3,3,5,0,4,0,3,0,4,3,3,3,2,1,0,3,0,0,3,3,},
             { 0,4,0,3,0,3,0,3,0,3,5,5,3,3,3,3,4,3,4,3,3,3,4,4,4,3,3,3,3,4,3,5,3,3,1,3,2,4,5,5,5,5,4,3,4,5,5,3,2,2,3,3,3,3,2,3,3,1,2,3,2,4,3,3,3,4,0,4,0,2,0,4,3,2,2,1,2,0,3,0,0,4,1,},
         };
-        
+
         // category counters, each integer counts sequence in its category
         int[] relSample = new int[CATEGORIES_NUM];
 
         // total sequence received
         int totalRel;
-  
+
         // The order of previous char
         int lastCharOrder;
 
@@ -150,25 +150,25 @@ namespace UtfUnknown.Core.Analyzers.Japanese
         // If this flag is set to true, detection is done and conclusion has 
         // been made
         bool done;
-        
+
         public JapaneseContextAnalyser()
         {
-            Reset();        
+            Reset();
         }
-        
+
         public float GetConfidence()
         {
             // This is just one way to calculate confidence. It works well for me.
             if (totalRel > MINIMUM_DATA_THRESHOLD)
-                return ((float)(totalRel - relSample[0]))/totalRel;
-            else 
+                return ((float)(totalRel - relSample[0])) / totalRel;
+            else
                 return DONT_KNOW;
         }
 
         public void HandleData(byte[] buf, int offset, int len)
         {
             int max = offset + len;
-            
+
             if (done)
                 return;
 
@@ -179,63 +179,71 @@ namespace UtfUnknown.Core.Analyzers.Japanese
             // to record those bytes as well and analyse the character once it 
             // is complete, but since a character will not make much difference,
             // skipping it will simplify our logic and improve performance.
-            for (int i = needToSkipCharNum+offset; i < max; ) {
+            for (int i = needToSkipCharNum + offset; i < max;)
+            {
                 int order = GetOrder(buf, i, out var charLen);
                 i += charLen;
-                if (i > max) {
+                if (i > max)
+                {
                     needToSkipCharNum = i - max;
                     lastCharOrder = -1;
-                } else {
-                    if (order != -1 && lastCharOrder != -1) {
-                        totalRel ++;
-                        if (totalRel > MAX_REL_THRESHOLD) {
+                }
+                else
+                {
+                    if (order != -1 && lastCharOrder != -1)
+                    {
+                        totalRel++;
+                        if (totalRel > MAX_REL_THRESHOLD)
+                        {
                             done = true;
                             break;
                         }
                         relSample[jp2CharContext[lastCharOrder, order]]++;
-                   }
-                   lastCharOrder = order;
+                    }
+                    lastCharOrder = order;
                 }
             }
         }
-        
+
         public void HandleOneChar(byte[] buf, int offset, int charLen)
         {
-            if (totalRel > MAX_REL_THRESHOLD) 
+            if (totalRel > MAX_REL_THRESHOLD)
                 done = true;
-            if (done)       
+            if (done)
                 return;
-     
+
             // Only 2-bytes characters are of our interest
             int order = (charLen == 2) ? GetOrder(buf, offset) : -1;
-            if (order != -1 && lastCharOrder != -1) {
+            if (order != -1 && lastCharOrder != -1)
+            {
                 totalRel++;
                 // count this sequence to its category counter
                 relSample[jp2CharContext[lastCharOrder, order]]++;
             }
             lastCharOrder = order;
         }
-        
+
         public void Reset()
         {
             totalRel = 0;
-            for (int i = 0; i < CATEGORIES_NUM; i++) {
+            for (int i = 0; i < CATEGORIES_NUM; i++)
+            {
                 relSample[i] = 0;
                 needToSkipCharNum = 0;
                 lastCharOrder = -1;
                 done = false;
             }
         }
-    
+
         protected abstract int GetOrder(byte[] buf, int offset, out int charLen);
-    
+
         protected abstract int GetOrder(byte[] buf, int offset);
-    
-        public bool GotEnoughData() 
+
+        public bool GotEnoughData()
         {
             return totalRel > ENOUGH_REL_THRESHOLD;
         }
-        
+
     }
 }
 

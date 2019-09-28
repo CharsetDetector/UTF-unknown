@@ -37,13 +37,12 @@
  * ***** END LICENSE BLOCK ***** */
 
 //Escaped charsets state machines
-using UtfUnknown.Core.Models;
 
 namespace UtfUnknown.Core.Models.MultiByte.Chinese
 {
     public class HZ_GB_2312_SMModel : StateMachineModel
     {
-        private readonly static int[] HZ_cls = {
+        private static readonly int[] HZ_cls = {
             BitPackage.Pack4bits(1,0,0,0,0,0,0,0),  // 00 - 07 
             BitPackage.Pack4bits(0,0,0,0,0,0,0,0),  // 08 - 0f 
             BitPackage.Pack4bits(0,0,0,0,0,0,0,0),  // 10 - 17 
@@ -78,7 +77,7 @@ namespace UtfUnknown.Core.Models.MultiByte.Chinese
             BitPackage.Pack4bits(1,1,1,1,1,1,1,1)   // f8 - ff 
         };
 
-        private readonly static int[] HZ_st = {
+        private static readonly int[] HZ_st = {
             BitPackage.Pack4bits(START, ERROR,     3, START, START, START, ERROR, ERROR),//00-07 
             BitPackage.Pack4bits(ERROR, ERROR, ERROR, ERROR, ITSME, ITSME, ITSME, ITSME),//08-0f 
             BitPackage.Pack4bits(ITSME, ITSME, ERROR, ERROR, START, START,     4, ERROR),//10-17 
@@ -87,21 +86,19 @@ namespace UtfUnknown.Core.Models.MultiByte.Chinese
             BitPackage.Pack4bits(    4, ITSME, START, START, START, START, START, START) //28-2f 
         };
 
-        private readonly static int[] HZCharLenTable = {0, 0, 0, 0, 0, 0};
-        
+        private static readonly int[] HZCharLenTable = { 0, 0, 0, 0, 0, 0 };
+
         public HZ_GB_2312_SMModel() : base(
-              new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                         BitPackage.SHIFT_MASK_4BITS, 
+              new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                         BitPackage.SHIFT_MASK_4BITS,
                          BitPackage.BIT_SHIFT_4BITS,
                          BitPackage.UNIT_MASK_4BITS, HZ_cls),
                          6,
-              new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                         BitPackage.SHIFT_MASK_4BITS, 
+              new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                         BitPackage.SHIFT_MASK_4BITS,
                          BitPackage.BIT_SHIFT_4BITS,
                          BitPackage.UNIT_MASK_4BITS, HZ_st),
               HZCharLenTable, "HZ-GB-2312")
-        {
-
-        }
+        { }
     }
 }
