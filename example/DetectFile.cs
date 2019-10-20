@@ -24,7 +24,7 @@ namespace ConsoleExample
                 Console.WriteLine($"File not found: {filename}");
                 return;
             }
-                
+
             var result = CharsetDetector.DetectFromFile(filename);
             var message = result.Detected != null
                 ? $"Detected encoding {result.Detected.Encoding.WebName} with confidence {result.Detected.Confidence}."
