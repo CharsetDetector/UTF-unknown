@@ -25,6 +25,7 @@
 Features:
 - Easy to use API
 - .NET standard 1.0 + 2.0 support
+- .NET Core 3.0 support
 - Strong named
 - XML documentation included
 
