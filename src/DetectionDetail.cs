@@ -32,10 +32,9 @@ namespace UtfUnknown
                     .Split(')').First()
                     .Trim();
 #if NETCOREAPP3_0
-                Encoding = CodePagesEncodingProvider.Instance.GetEncoding(encodingName);
-#else
-                Encoding = Encoding.GetEncoding(encodingName);
+                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 #endif
+                Encoding = Encoding.GetEncoding(encodingName);
             }
             catch (Exception)
             {
