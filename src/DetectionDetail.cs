@@ -12,6 +12,13 @@ namespace UtfUnknown
     /// </summary>
     public class DetectionDetail
     {
+#if NETCOREAPP3_0
+        static DetectionDetail()
+        {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        }
+#endif // NETCOREAPP3_0
+        
         /// <summary>
         /// New result
         /// </summary>
@@ -31,9 +38,6 @@ namespace UtfUnknown
                     .Split('(').Last()
                     .Split(')').First()
                     .Trim();
-#if NETCOREAPP3_0
-                Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-#endif
                 Encoding = Encoding.GetEncoding(encodingName);
             }
             catch (Exception)
