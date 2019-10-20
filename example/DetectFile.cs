@@ -1,12 +1,5 @@
-// Udetect.cs created with MonoDevelop
-//
-// Author:
-//    Rudi Pettazzi <rudi.pettazzi@gmail.com>
-//    J. Verdurmen
-//
-
 using System;
-using System.Text;
+using System.IO;
 using UtfUnknown;
 
 namespace ConsoleExample
@@ -17,26 +10,26 @@ namespace ConsoleExample
         /// Command line example: detects the encoding of the given file.
         /// </summary>
         /// <param name="args">a filename</param>
-        public static void Main(String[] args)
+        public static void Main(string[] args)
         {
             if (args.Length == 0)
             {
-                Console.WriteLine("Usage: udetect <filename>");
+                Console.WriteLine("Usage: ConsoleExample <filename>");
                 return;
             }
 
-            string filename = args[0];
-
+            var filename = args[0];
+            if (!File.Exists(filename))
+            {
+                Console.WriteLine($"File not found: {filename}");
+                return;
+            }
+                
             var result = CharsetDetector.DetectFromFile(filename);
-
-            if (result.Detected != null)
-            {
-                Console.WriteLine("Charset: {0}, confidence: {1}", result.Detected.EncodingName, result.Detected.Confidence);
-            }
-            else
-            {
-                Console.WriteLine("Detection failed.");
-            }
+            var message = result.Detected != null
+                ? $"Detected encoding {result.Detected.Encoding.WebName} with confidence {result.Detected.Confidence}."
+                : $"Detection failed: {filename}";
+            Console.WriteLine(message);
         }
     }
 }
