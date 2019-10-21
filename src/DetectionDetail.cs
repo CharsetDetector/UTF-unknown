@@ -12,13 +12,6 @@ namespace UtfUnknown
     /// </summary>
     public class DetectionDetail
     {
-#if NETCOREAPP3_0
-        static DetectionDetail()
-        {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
-        }
-#endif // NETCOREAPP3_0
-        
         /// <summary>
         /// New result
         /// </summary>

@@ -7,7 +7,7 @@
   <PropertyGroup>
     <AssemblyName>UtfUnknown</AssemblyName>
     <PackageId>UTF.Unknown</PackageId>
-    <Version>2.1.0</Version> <!-- patched in AppVeyor.yml -->
+    <Version>2.0.0</Version> <!-- patched in AppVeyor.yml -->
   </PropertyGroup>
 
   <PropertyGroup>
@@ -61,8 +61,8 @@ Features:
   <PropertyGroup>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\UtfUnknown.xml</DocumentationFile>
     <NoWarn>1701;1702;1705,1570,1591</NoWarn>
-    <AssemblyVersion>2.1.0.0</AssemblyVersion>
-    <FileVersion>2.1.0.0</FileVersion>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
 
 </Project>

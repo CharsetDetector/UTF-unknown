@@ -37,6 +37,10 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+#if NETCOREAPP3_0
+using System.Text;
+#endif // NETCOREAPP3_0
+
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -75,6 +79,16 @@ namespace UtfUnknown
     /// </summary>                
     public class CharsetDetector
     {
+#if NETCOREAPP3_0
+        /// <summary>
+        /// 
+        /// </summary>
+        static CharsetDetector()
+        {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        }
+#endif // NETCOREAPP3_0
+        
         internal InputState InputState;
 
         /// <summary>
