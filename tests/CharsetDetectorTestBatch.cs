@@ -108,9 +108,10 @@ namespace UtfUnknown.Tests
         {
             var result = CharsetDetector.DetectFromFile(file);
             var detected = result.Detected;
-            
+#if !NETCOREAPP3_0
+            // because System.NotSupportedException in .net core 3.0 for Encoding
             _logWriter.WriteLine(string.Format("- {0} ({1}) -> {2}", file, expectedCharset, JsonConvert.SerializeObject(result)));
-
+#endif // !NETCOREAPP3_0
             StringAssert.AreEqualIgnoringCase(expectedCharset, detected.EncodingName,
                 $"Charset detection failed for {file}. Expected: {expectedCharset}, detected: {detected.EncodingName} ({detected.Confidence * 100.0f:0.00############}% confidence)");
             Assert.NotNull(detected.Encoding);
