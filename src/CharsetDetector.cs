@@ -37,10 +37,6 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-#if NETCOREAPP3_0
-using System.Text;
-#endif // NETCOREAPP3_0
-
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -81,11 +77,11 @@ namespace UtfUnknown
     {
 #if NETCOREAPP3_0
         /// <summary>
-        /// 
+        /// Adds the encodings of the EncodingProvider object to the common language runtime
         /// </summary>
         static CharsetDetector()
         {
-            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
         }
 #endif // NETCOREAPP3_0
         
