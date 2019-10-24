@@ -1,17 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.0;netstandard1.3;net40</TargetFrameworks>
+    <TargetFrameworks>netstandard1.0;netstandard1.3;net40;netcoreapp3.0</TargetFrameworks>
   </PropertyGroup>
+
   <PropertyGroup>
     <AssemblyName>UtfUnknown</AssemblyName>
     <PackageId>UTF.Unknown</PackageId>
     <Version>2.0.0</Version> <!-- patched in AppVeyor.yml -->
-
   </PropertyGroup>
+
   <PropertyGroup>
     <OutputType>Library</OutputType>
   </PropertyGroup>
+
   <PropertyGroup>
     <Authors>Julian Verdurmen, Rudi Pettazzi, Shy Shalom</Authors>
     <NeutralLanguage>en-US</NeutralLanguage>
@@ -21,9 +23,9 @@
       This package is based on Ude and since version 2 also on uchardet, which are ports of the Mozilla Universal Charset Detector.
 
 Features:
-- Detects 28 charsets
-- Easy to use API  
-- .NET standard 1.0 + 2.0 support 
+- Easy to use API
+- .NET standard 1.0 + 2.0 support
+- .NET Core 3.0 support
 - Strong named
 - XML documentation included
 
@@ -33,18 +35,17 @@ Features:
  - Added some docs
  - Improve error handling
  - Improved unit tests
- 
-      
     </Description>
-    <Copyright></Copyright>
+    
+    <Copyright/>
 
   </PropertyGroup>
+
   <PropertyGroup>
 
     <PackageTags>charset;detection;unicode;ascii;netstandard</PackageTags>
     <PackageReleaseNotes>
 - Added support for CP949 (@HelloWorld017)
-    
     </PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/CharsetDetector/UTF-unknown/master/logo.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/CharsetDetector/UTF-unknown</PackageProjectUrl>
@@ -56,6 +57,7 @@ Features:
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>UtfUnknown.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
+  
   <PropertyGroup>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\UtfUnknown.xml</DocumentationFile>
     <NoWarn>1701;1702;1705,1570,1591</NoWarn>

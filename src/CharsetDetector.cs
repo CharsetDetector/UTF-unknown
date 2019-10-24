@@ -75,6 +75,16 @@ namespace UtfUnknown
     /// </summary>                
     public class CharsetDetector
     {
+#if NETCOREAPP3_0
+        /// <summary>
+        /// Adds the encodings of the EncodingProvider object to the common language runtime
+        /// </summary>
+        static CharsetDetector()
+        {
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
+        }
+#endif // NETCOREAPP3_0
+        
         internal InputState InputState;
 
         /// <summary>
