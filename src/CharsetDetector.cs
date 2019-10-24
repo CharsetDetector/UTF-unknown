@@ -75,7 +75,7 @@ namespace UtfUnknown
     /// </summary>                
     public class CharsetDetector
     {
-#if NETCOREAPP3_0
+#if NETCOREAPP
         /// <summary>
         /// Adds the encodings of the EncodingProvider object to the common language runtime
         /// </summary>
@@ -83,7 +83,7 @@ namespace UtfUnknown
         {
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
         }
-#endif // NETCOREAPP3_0
+#endif 
         
         internal InputState InputState;
 

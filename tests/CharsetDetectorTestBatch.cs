@@ -17,9 +17,10 @@ namespace UtfUnknown.Tests
 
     public class CharsetDetectorTestBatch
     {
+        private const string DIRECTORY_NAME = "TESTS";
         private static readonly string TESTS_ROOT = GetTestsPath();
         private static readonly string DATA_ROOT = FindRootPath();
-        
+
         private StreamWriter _logWriter;
 
         /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
@@ -47,12 +48,24 @@ namespace UtfUnknown.Tests
         {
             var path = TestContext.CurrentContext.TestDirectory;
 
-            var directoryName = "TESTS";
+            if (path.IndexOf(DIRECTORY_NAME, StringComparison.CurrentCultureIgnoreCase) >= 0)
+            {
+                path = TruncatePath(path);
+            }
+            else
+            {
+                // fix for .netcoreapp2.1 -  TestContext.CurrentContext.TestDirectory is bugged in NUnit under .netcoreapp2.1
+                path = TestContext.CurrentContext.WorkDirectory;
+                path = TruncatePath(path);
+            }
 
-            var index = path.IndexOf(directoryName, StringComparison.CurrentCultureIgnoreCase);
+            return path;
+        }
 
-            path = path.Substring(0, index + directoryName.Length);
-
+        private static string TruncatePath(string path)
+        {
+            var index = path.IndexOf(DIRECTORY_NAME, StringComparison.CurrentCultureIgnoreCase);
+            path = path.Substring(0, index + DIRECTORY_NAME.Length);
             return path;
         }
 
@@ -108,10 +121,8 @@ namespace UtfUnknown.Tests
         {
             var result = CharsetDetector.DetectFromFile(file);
             var detected = result.Detected;
-#if !NETCOREAPP3_0
-            // because System.NotSupportedException in .net core 3.0 for Encoding
-            _logWriter.WriteLine(string.Format("- {0} ({1}) -> {2}", file, expectedCharset, JsonConvert.SerializeObject(result)));
-#endif // !NETCOREAPP3_0
+
+            _logWriter.WriteLine($"- {file} ({expectedCharset}) -> {JsonConvert.SerializeObject(result, Formatting.Indented, new EncodingJsonConverter())}");
             StringAssert.AreEqualIgnoringCase(expectedCharset, detected.EncodingName,
                 $"Charset detection failed for {file}. Expected: {expectedCharset}, detected: {detected.EncodingName} ({detected.Confidence * 100.0f:0.00############}% confidence)");
             Assert.NotNull(detected.Encoding);
