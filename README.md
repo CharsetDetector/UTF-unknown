@@ -28,8 +28,11 @@ Features:
 - Documentation added
 - Multiple bugs from Ude fixed
 
-## Platform
-.NET 4+, .NET Standard 1.0+ and  .NET Standard 1.3+
+## Supported Platforms
+- .NET 4+, 
+- .NET Standard 1.0 and .NET Standard 2
+- .NET Core 2
+- .NET Core 3
 
 ## Usage
 
