@@ -9,7 +9,7 @@
 
 
 
-Detect character set for files, steams and other bytes.
+Detect character set for files, streams and other bytes.
 
 Detection of character sets with a simple and redesigned interface.
 
