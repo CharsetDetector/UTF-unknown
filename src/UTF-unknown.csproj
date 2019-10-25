@@ -22,7 +22,7 @@
     <Authors>Julian Verdurmen, Rudi Pettazzi, Shy Shalom</Authors>
     <NeutralLanguage>en-US</NeutralLanguage>
     <AssemblyTitle>UTF Unknown</AssemblyTitle>
-    <Description>Detect character set for files, steams and other bytes.
+    <Description>Detect character set for files, streams and other bytes.
 
       This package is based on Ude and since version 2 also on uchardet, which are ports of the Mozilla Universal Charset Detector.
 
