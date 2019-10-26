@@ -61,7 +61,7 @@ namespace UtfUnknown.Core.Probers.MultiByte.Chinese
 
         public override string GetCharsetName()
         {
-            return "GB18030";
+            return Charset.GB18030;
         }
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)

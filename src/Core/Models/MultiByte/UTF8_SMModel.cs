@@ -119,7 +119,7 @@ namespace UtfUnknown.Core.Models.MultiByte
                          BitPackage.SHIFT_MASK_4BITS, 
                          BitPackage.BIT_SHIFT_4BITS,
                          BitPackage.UNIT_MASK_4BITS, UTF8_st),
-              UTF8CharLenTable, "UTF-8")
+              UTF8CharLenTable, Charset.UTF8)
         {
 
         }

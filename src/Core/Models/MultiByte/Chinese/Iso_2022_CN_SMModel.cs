@@ -62,7 +62,7 @@ namespace UtfUnknown.Core.Models.MultiByte.Chinese
                 BitPackage.SHIFT_MASK_4BITS, 
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, ISO2022CN_st),
-            ISO2022CNCharLenTable, "ISO-2022-CN")
+            ISO2022CNCharLenTable, Charset.ISO_2022_CN)
         {
 
         }

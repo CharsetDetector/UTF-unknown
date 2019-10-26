@@ -35,27 +35,51 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-namespace UtfUnknown.Tests
+namespace UtfUnknown.Core
 {
     /// <summary>
     /// charset helper
     /// </summary>
-    internal static class Charsets
+    internal static class Charset
     {
         internal const string ASCII = "ascii";
 
         internal const string UTF8 = "utf-8";
 
         internal const string UTF16_LE = "utf-16le";
-
+        
         internal const string UTF16_BE = "utf-16be";
-
+        
         internal const string UTF32_LE = "utf-32le";
-
+        
         internal const string UTF32_BE = "utf-32be";
 
-        internal const string X_ISO_10646_UCS_4_3412 = "X-ISO-10646-UCS-4-3412";
+        internal const string X_ISO_10646_UCS_4_3412 = "X-ISO-10646-UCS-4-3412"; // TODO: not supported?
 
-        internal const string X_ISO_10646_UCS_4_2143 = "X-ISO-10646-UCS-4-2143";
+        internal const string X_ISO_10646_UCS_4_2143 = "X-ISO-10646-UCS-4-2143"; // TODO: not supported?
+
+        internal const string BIG5 = "big5";
+
+        internal const string EUC_TW = "euc-tw"; // TODO: not supported?
+
+        internal const string GB18030 = "gb18030";
+
+        internal const string HZ_GB_2312 = "hz-gb-2312";
+        
+        internal const string ISO_2022_CN = "iso-2022-ch"; // TODO: not supported?
+
+        internal const string EUC_JP = "euc-jp";
+
+        internal const string ISO_2022_JP = "iso-2022-jp";
+
+        internal const string SHIFT_JIS = "shift-jis"; // or shift_jis, sjis
+
+        internal const string CP949 = "cp949"; // TODO: not supported?
+
+        internal const string KS_C_5601_1987 = "ks_c_5601-1987"; // TODO: cp949?
+
+        internal const string EUC_KR = "euc-kr";
+
+        internal const string ISO_2022_KR = "iso-2022-kr"; // TODO: or iso-2022-kr-7, iso-2022-kr-7bit?
     }
 }
