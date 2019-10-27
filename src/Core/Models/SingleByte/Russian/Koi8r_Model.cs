@@ -64,7 +64,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Russian
         };
         /*X0  X1  X2  X3  X4  X5  X6  X7  X8  X9  XA  XB  XC  XD  XE  XF */
 
-        public Koi8r_Model() : base(CHAR_TO_ORDER_MAP, "KOI8-R")
+        public Koi8r_Model() : base(CHAR_TO_ORDER_MAP, Charset.KOI8_R)
         {
         }
     }

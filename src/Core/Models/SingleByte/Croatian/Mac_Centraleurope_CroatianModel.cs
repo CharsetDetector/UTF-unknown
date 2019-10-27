@@ -84,7 +84,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Croatian
         };
         /*X0  X1  X2  X3  X4  X5  X6  X7  X8  X9  XA  XB  XC  XD  XE  XF */
 
-        public Mac_Centraleurope_CroatianModel() : base(CHAR_TO_ORDER_MAP, "MAC-CENTRALEUROPE")
+        public Mac_Centraleurope_CroatianModel() : base(CHAR_TO_ORDER_MAP, Charset.X_MAC_CE)
         {
         }
     }

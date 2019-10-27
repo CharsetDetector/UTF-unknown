@@ -84,7 +84,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Irish
         };
         /*X0  X1  X2  X3  X4  X5  X6  X7  X8  X9  XA  XB  XC  XD  XE  XF */
 
-        public Iso_8859_15_IrishModel() : base(CHAR_TO_ORDER_MAP, "ISO-8859-15")
+        public Iso_8859_15_IrishModel() : base(CHAR_TO_ORDER_MAP, Charset.ISO_8859_15)
         {
         }
     }

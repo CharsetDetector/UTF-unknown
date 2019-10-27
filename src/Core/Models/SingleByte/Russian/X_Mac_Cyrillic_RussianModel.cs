@@ -64,7 +64,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Russian
         };
         /*X0  X1  X2  X3  X4  X5  X6  X7  X8  X9  XA  XB  XC  XD  XE  XF */
 
-        public X_Mac_Cyrillic_RussianModel() : base(CHAR_TO_ORDER_MAP, "x-mac-cyrillic")
+        public X_Mac_Cyrillic_RussianModel() : base(CHAR_TO_ORDER_MAP, Charset.X_MAC_CYRILLIC)
         {
         }
     }
