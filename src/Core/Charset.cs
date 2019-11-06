@@ -376,7 +376,7 @@ namespace UtfUnknown.Core
         internal const string VISCII = "viscii";
 
         /// <summary>
-        /// X-ISO-10646-UCS-4-3412 codepage identifier.
+        /// X-ISO-10646-UCS-4-3412 codepage name.
         /// </summary>
         /// <remarks>
         /// TODO: Not supported?
@@ -384,7 +384,7 @@ namespace UtfUnknown.Core
         internal const string X_ISO_10646_UCS_4_3412 = "X-ISO-10646-UCS-4-3412";
 
         /// <summary>
-        /// X-ISO-10646-UCS-4-2143 codepage identifier.
+        /// X-ISO-10646-UCS-4-2143 codepage name.
         /// </summary>
         /// <remarks>
         /// TODO: Not supported?
