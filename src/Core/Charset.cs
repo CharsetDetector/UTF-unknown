@@ -234,7 +234,7 @@ namespace UtfUnknown.Core
         internal const string ISO_8859_7 = "iso-8859-7";
         
         /// <summary>
-        /// ISO 8859-7 Hebrew codepage name.
+        /// ISO 8859-8 Hebrew codepage name.
         /// </summary>
         /// <remarks>
         /// TODO: Are other aliases iso_8859-8, iso_8859-8:1988, iso-8859-8 visual, iso-ir-138, hebrew, logical, visual, csisolatinhebrew?
