@@ -178,12 +178,12 @@ namespace UtfUnknown.Core
         internal const string IBM866 = "ibm866"; // or cp866
 
         /// <summary>
-        /// ISO 8859-1 Latin-1 codepage name.
+        /// ISO 8859-1 Latin-1 Western European codepage name.
         /// </summary>
         internal const string ISO_8859_1 = "iso-8859-1";
 
         /// <summary>
-        /// ISO 8859-2 Central European codepage name.
+        /// ISO 8859-2 Central European (Latin 2 Eastern European) codepage name.
         /// </summary>
         /// <remarks>
         /// TODO: Are other aliases iso8859-2, iso_8859-2, iso_8859-2:1987, iso-ir-101, l2, latin2, csisolatin2?
@@ -191,7 +191,7 @@ namespace UtfUnknown.Core
         internal const string ISO_8859_2 = "iso-8859-2";
 
         /// <summary>
-        /// ISO 8859-3 Latin-3 codepage name.
+        /// ISO 8859-3 Latin-3 (South European) codepage name.
         /// </summary>
         /// <remarks>
         /// TODO: Are other aliases iso_8859-3, iso_8859-3:1988, iso-ir-109, l3, latin3, csisolatin3?
@@ -199,7 +199,7 @@ namespace UtfUnknown.Core
         internal const string ISO_8859_3 = "iso-8859-3";
 
         /// <summary>
-        /// ISO 8859-4 Baltic codepage name.
+        /// ISO 8859-4 Baltic (Latin-4 North European) codepage name.
         /// </summary>
         /// <remarks>
         /// TODO: Are other aliases iso_8859-4, iso_8859-4:1988, iso-ir-110, l4, latin4, csisolatin4?
@@ -239,7 +239,7 @@ namespace UtfUnknown.Core
         internal const string ISO_8859_8 = "iso-8859-8";
 
         /// <summary>
-        /// ISO 8859-9 Turkish codepage name.
+        /// ISO 8859-9 Latin-5 Turkish codepage name.
         /// </summary>
         /// <remarks>
         /// TODO: Is other alias iso-ir-148?
@@ -247,7 +247,7 @@ namespace UtfUnknown.Core
         internal const string ISO_8859_9 = "iso-8859-9";
 
         /// <summary>
-        /// ISO 8859-10 codepage name.
+        /// ISO 8859-10 Latin-6 Nordic codepage name.
         /// </summary>
         /// <remarks>
         /// TODO: Not supported?
@@ -263,12 +263,12 @@ namespace UtfUnknown.Core
         internal const string ISO_8859_11 = "iso-8859-11";
 
         /// <summary>
-        /// ISO 8859-13 Estonian codepage name.
+        /// ISO 8859-13 Estonian (Latin 7 BalticRim) codepage name.
         /// </summary>
         internal const string ISO_8859_13 = "iso-8859-13";
 
         /// <summary>
-        /// ISO 8859-15 Latin-9 codepage name.
+        /// ISO 8859-15 Latin-9 (Western European) codepage name.
         /// </summary>
         /// <remarks>
         /// TODO: Are other aliases iso_8859-15, l9, latin9, csisolatin9?
