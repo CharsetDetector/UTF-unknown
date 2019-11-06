@@ -180,9 +180,6 @@ namespace UtfUnknown.Core
         /// <summary>
         /// ISO 8859-1 Latin-1 codepage name.
         /// </summary>
-        /// <remarks>
-        /// TODO: Not supported?
-        /// </remarks>
         internal const string ISO_8859_1 = "iso-8859-1";
 
         /// <summary>
