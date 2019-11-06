@@ -149,7 +149,7 @@ namespace UtfUnknown.Core
         /// CP949 codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Not supported? Maybe fix to ks-c-5601?
+        /// TODO: Not supported? Attention!: it is superset of ks_c_5601-1987 (see comment by @HelloWorld017 in #74; https://lists.w3.org/Archives/Public/ietf-charsets/2002JulSep/0020.html)
         /// </remarks>
         internal const string CP949 = "cp949";
         
