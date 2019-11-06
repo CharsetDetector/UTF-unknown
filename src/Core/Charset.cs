@@ -232,6 +232,14 @@ namespace UtfUnknown.Core
         /// TODO: Are other aliases iso_8859-7, iso_8859-7:1987, iso-ir-126, greek, greek8, csisolatingreek, ecma-118, elot_928?
         /// </remarks>
         internal const string ISO_8859_7 = "iso-8859-7";
+        
+        /// <summary>
+        /// ISO 8859-7 Hebrew codepage name.
+        /// </summary>
+        /// <remarks>
+        /// TODO: Are other aliases iso_8859-8, iso_8859-8:1988, iso-8859-8 visual, iso-ir-138, hebrew, logical, visual, csisolatinhebrew?
+        /// </remarks>
+        internal const string ISO_8859_8 = "iso-8859-8";
 
         /// <summary>
         /// ISO 8859-9 Turkish codepage name.
@@ -355,7 +363,7 @@ namespace UtfUnknown.Core
         /// TIS-620 codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Not supported? Maybe fix to iso-8859-11?
+        /// TODO: Equal to iso-8859-11?
         /// </remarks>
         internal const string TIS_620 = "tis-620";
 
