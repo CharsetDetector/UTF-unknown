@@ -58,7 +58,7 @@ namespace UtfUnknown.Core.Probers.MultiByte.Korean
 
         public override string GetCharsetName()
         {
-            return Charset.EUC_KR;
+            return CodepageName.EUC_KR;
         }
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)

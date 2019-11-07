@@ -60,7 +60,7 @@ namespace UtfUnknown.Core.Probers.MultiByte.Korean
 
         public override string GetCharsetName()
         {
-            return $"{Charset.CP949} ({Charset.KS_C_5601})";
+            return $"{CodepageName.CP949} ({CodepageName.KS_C_5601})";
         }
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)

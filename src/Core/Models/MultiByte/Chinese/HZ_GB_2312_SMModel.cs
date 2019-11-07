@@ -99,7 +99,7 @@ namespace UtfUnknown.Core.Models.MultiByte.Chinese
                          BitPackage.SHIFT_MASK_4BITS, 
                          BitPackage.BIT_SHIFT_4BITS,
                          BitPackage.UNIT_MASK_4BITS, HZ_st),
-              HZCharLenTable, Charset.HZ_GB_2312)
+              HZCharLenTable, CodepageName.HZ_GB_2312)
         {
 
         }

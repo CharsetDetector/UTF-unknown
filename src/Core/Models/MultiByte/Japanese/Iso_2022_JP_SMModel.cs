@@ -63,7 +63,7 @@ namespace UtfUnknown.Core.Models.MultiByte.Japanese
                 BitPackage.SHIFT_MASK_4BITS, 
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, ISO2022JP_st),
-            ISO2022JPCharLenTable, Charset.ISO_2022_JP)
+            ISO2022JPCharLenTable, CodepageName.ISO_2022_JP)
         {
 
         }

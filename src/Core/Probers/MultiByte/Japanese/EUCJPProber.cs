@@ -60,7 +60,7 @@ namespace UtfUnknown.Core.Probers.MultiByte.Japanese
 
         public override string GetCharsetName()
         {
-            return Charset.EUC_JP;
+            return CodepageName.EUC_JP;
         }
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)

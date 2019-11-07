@@ -61,7 +61,7 @@ namespace UtfUnknown.Core.Models.MultiByte
                 BitPackage.SHIFT_MASK_4BITS, 
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, UCS2LE_st),
-            UCS2LECharLenTable, Charset.UTF16_LE)
+            UCS2LECharLenTable, CodepageName.UTF16_LE)
         {
 
         }

@@ -60,7 +60,7 @@ namespace UtfUnknown.Core.Models.MultiByte.Japanese
                 BitPackage.SHIFT_MASK_4BITS, 
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, EUCJP_st),
-            EUCJPCharLenTable, Charset.EUC_JP)
+            EUCJPCharLenTable, CodepageName.EUC_JP)
         {
 
         }

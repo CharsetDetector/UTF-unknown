@@ -55,7 +55,7 @@ namespace UtfUnknown.Core.Models.MultiByte.Korean
                 BitPackage.SHIFT_MASK_4BITS, 
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, EUCKR_st),
-            EUCKRCharLenTable, Charset.EUC_KR)
+            EUCKRCharLenTable, CodepageName.EUC_KR)
         {
 
         }

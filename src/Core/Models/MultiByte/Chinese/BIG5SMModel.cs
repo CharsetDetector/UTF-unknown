@@ -57,7 +57,7 @@ namespace UtfUnknown.Core.Models.MultiByte.Chinese
                 BitPackage.SHIFT_MASK_4BITS, 
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, BIG5_st),
-            BIG5CharLenTable, Charset.BIG5)
+            BIG5CharLenTable, CodepageName.BIG5)
         {
 
         }

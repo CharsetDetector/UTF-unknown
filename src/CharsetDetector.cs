@@ -383,27 +383,27 @@ namespace UtfUnknown
                 {
                     case 0xEF:
                         if (0xBB == b2 && 0xBF == b3)
-                            bomSet = Charset.UTF8;
+                            bomSet = CodepageName.UTF8;
                         break;
                     case 0xFE:
                         if (0xFF == b2 && 0x00 == b3 && 0x00 == b4)
                             // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
-                            bomSet = Charset.X_ISO_10646_UCS_4_3412;
+                            bomSet = CodepageName.X_ISO_10646_UCS_4_3412;
                         else if (0xFF == b2)
-                            bomSet = Charset.UTF16_BE;
+                            bomSet = CodepageName.UTF16_BE;
                         break;
                     case 0x00:
                         if (0x00 == b2 && 0xFE == b3 && 0xFF == b4)
-                            bomSet = Charset.UTF32_BE;
+                            bomSet = CodepageName.UTF32_BE;
                         else if (0x00 == b2 && 0xFF == b3 && 0xFE == b4)
                             // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
-                            bomSet = Charset.X_ISO_10646_UCS_4_2143;
+                            bomSet = CodepageName.X_ISO_10646_UCS_4_2143;
                         break;
                     case 0xFF:
                         if (0xFE == b2 && 0x00 == b3 && 0x00 == b4)
-                            bomSet = Charset.UTF32_LE;
+                            bomSet = CodepageName.UTF32_LE;
                         else if (0xFE == b2)
-                            bomSet = Charset.UTF16_LE;
+                            bomSet = CodepageName.UTF16_LE;
                         break;
                 } // switch
             }
@@ -447,7 +447,7 @@ namespace UtfUnknown
             else if (InputState == InputState.PureASCII)
             {
                 //TODO why done isn't true?
-                return new DetectionResult(new DetectionDetail(Charset.ASCII, 1.0f));
+                return new DetectionResult(new DetectionDetail(CodepageName.ASCII, 1.0f));
             }
 
             return new DetectionResult();

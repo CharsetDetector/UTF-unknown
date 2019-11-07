@@ -34,7 +34,7 @@ namespace UtfUnknown.Core
     /// This class defines the available codepage .NET Name.
     /// </summary>
     /// <remarks>Based on https://github.com/dotnet/corefx/blob/cf28b7896a762f71c990a5896a160a4138d833c9/src/System.Text.Encoding.CodePages/src/System/Text/EncodingTable.Data.cs</remarks>
-    internal static class Charset
+    internal static class CodepageName
     {
         /// <summary>
         /// ASCII codepage name.

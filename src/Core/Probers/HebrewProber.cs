@@ -164,8 +164,8 @@ namespace UtfUnknown.Core.Probers
         // If the difference is below this, don't rely at all on the model score distance.
         private const float MIN_MODEL_DISTANCE = 0.01f;
 
-        protected const string VISUAL_NAME = Charset.ISO_8859_8;
-        protected const string LOGICAL_NAME = Charset.WINDOWS_1255;
+        protected const string VISUAL_NAME = CodepageName.ISO_8859_8;
+        protected const string LOGICAL_NAME = CodepageName.WINDOWS_1255;
         
         // owned by the group prober.
         protected CharsetProber logicalProber, visualProber;
