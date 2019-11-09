@@ -103,7 +103,7 @@ namespace UtfUnknown.Core.Probers.MultiByte.Chinese
 
         public override string GetCharsetName()
         {
-            return "EUC-TW";
+            return CodepageName.EUC_TW;
         }
 
         public override void Reset()

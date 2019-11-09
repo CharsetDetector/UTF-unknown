@@ -63,7 +63,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Russian
             239, 68,240,241,242,243,244,245,246,247,248,249,250,251,NUM,CTR,
         };
         
-        public Ibm866_RussianModel() : base(CHAR_TO_ORDER_MAP, "IBM866")
+        public Ibm866_RussianModel() : base(CHAR_TO_ORDER_MAP, CodepageName.IBM866)
         {
         }
     }

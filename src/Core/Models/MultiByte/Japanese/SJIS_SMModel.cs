@@ -60,7 +60,7 @@ namespace UtfUnknown.Core.Models.MultiByte.Japanese
                 BitPackage.SHIFT_MASK_4BITS, 
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, SJIS_st),
-            SJISCharLenTable, "Shift_JIS")
+            SJISCharLenTable, CodepageName.SHIFT_JIS)
         {
 
         }

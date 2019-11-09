@@ -58,7 +58,7 @@ namespace UtfUnknown.Core.Probers.MultiByte
 
         public override string GetCharsetName()
         {
-            return "UTF-8";
+            return CodepageName.UTF8;
         }
 
         public override void Reset()

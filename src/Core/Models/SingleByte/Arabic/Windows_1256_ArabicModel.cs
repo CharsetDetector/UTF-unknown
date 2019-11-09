@@ -84,7 +84,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Arabic
         };
         /*X0  X1  X2  X3  X4  X5  X6  X7  X8  X9  XA  XB  XC  XD  XE  XF */
 
-        public Windows_1256_ArabicModel() : base(CHAR_TO_ORDER_MAP, "WINDOWS-1256")
+        public Windows_1256_ArabicModel() : base(CHAR_TO_ORDER_MAP, CodepageName.WINDOWS_1256)
         {
         }
     }

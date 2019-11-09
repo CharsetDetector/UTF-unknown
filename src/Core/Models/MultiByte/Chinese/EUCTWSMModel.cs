@@ -58,7 +58,7 @@ namespace UtfUnknown.Core.Models.MultiByte.Chinese
                 BitPackage.SHIFT_MASK_4BITS, 
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, EUCTW_st),
-            EUCTWCharLenTable, "EUC-TW")
+            EUCTWCharLenTable, CodepageName.EUC_TW)
         {
 
         }

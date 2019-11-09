@@ -65,7 +65,7 @@ namespace UtfUnknown.Core.Models.MultiByte.Chinese
                 BitPackage.SHIFT_MASK_4BITS, 
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, GB18030_st),
-            GB18030CharLenTable, "GB18030")
+            GB18030CharLenTable, CodepageName.GB18030)
         {
 
         }

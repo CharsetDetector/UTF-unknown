@@ -35,22 +35,27 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-namespace UtfUnknown.Core
+namespace UtfUnknown.Tests
 {
     /// <summary>
     /// charset helper
     /// </summary>
     internal static class Charsets
     {
-        public const string ASCII = "ASCII";
+        internal const string ASCII = "ascii";
 
-        public const string UTF16_LE = "UTF-16LE";
-        
-        public const string UTF16_BE = "UTF-16BE";
-        
-        public const string UTF32_BE = "UTF-32BE";
-        
-        public const string UTF32_LE = "UTF-32LE";
+        internal const string UTF8 = "utf-8";
 
+        internal const string UTF16_LE = "utf-16le";
+
+        internal const string UTF16_BE = "utf-16be";
+
+        internal const string UTF32_LE = "utf-32le";
+
+        internal const string UTF32_BE = "utf-32be";
+
+        internal const string X_ISO_10646_UCS_4_3412 = "X-ISO-10646-UCS-4-3412";
+
+        internal const string X_ISO_10646_UCS_4_2143 = "X-ISO-10646-UCS-4-2143";
     }
 }

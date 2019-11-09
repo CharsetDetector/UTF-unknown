@@ -108,7 +108,7 @@ namespace UtfUnknown.Core.Probers.MultiByte.Chinese
 
         public override string GetCharsetName()
         {
-            return "Big5";
+            return CodepageName.BIG5;
         }
 
         public override float GetConfidence(StringBuilder status = null)

@@ -67,7 +67,7 @@ namespace UtfUnknown.Core.Probers.MultiByte.Japanese
 
         public override string GetCharsetName()
         {
-            return "Shift-JIS";
+            return CodepageName.SHIFT_JIS;
         }
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)

@@ -63,7 +63,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Russian
             250, 18, 62, 20, 51, 25, 57, 30, 47, 29, 63, 22, 50,251,NUM,CTR,
         };
                 
-        public Ibm855_RussianModel() : base(BYTE_TO_ORDER_MAP, "IBM855")
+        public Ibm855_RussianModel() : base(BYTE_TO_ORDER_MAP, CodepageName.IBM855)
         {
         }
     }

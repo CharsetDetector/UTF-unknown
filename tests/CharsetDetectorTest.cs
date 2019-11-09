@@ -70,7 +70,7 @@ namespace UtfUnknown.Tests
                        "利用案内でどうぞ。";
             byte[] buf = Encoding.UTF8.GetBytes(s);
             var result = CharsetDetector.DetectFromBytes(buf);
-            Assert.AreEqual("UTF-8", result.Detected.EncodingName);
+            Assert.AreEqual(Charsets.UTF8, result.Detected.EncodingName);
             Assert.AreEqual(1.0f, result.Detected.Confidence);
         }
 
@@ -79,7 +79,7 @@ namespace UtfUnknown.Tests
         {
             byte[] buf = { 0xEF, 0xBB, 0xBF, 0x68, 0x65, 0x6C, 0x6C, 0x6F, 0x21 };
             var result = CharsetDetector.DetectFromBytes(buf);
-            Assert.AreEqual("UTF-8", result.Detected.EncodingName);
+            Assert.AreEqual(Charsets.UTF8, result.Detected.EncodingName);
             Assert.AreEqual(1.0f, result.Detected.Confidence);
         }
 
@@ -100,7 +100,7 @@ namespace UtfUnknown.Tests
             byte[] buf = { 0xFE, 0xFF, 0x00, 0x00, 0x65 };
 
             var result = CharsetDetector.DetectFromBytes(buf);
-            Assert.AreEqual("X-ISO-10646-UCS-4-3412", result.Detected.EncodingName);
+            Assert.AreEqual(Charsets.X_ISO_10646_UCS_4_3412, result.Detected.EncodingName);
             Assert.AreEqual(1.0f, result.Detected.Confidence);
         }
 
@@ -111,7 +111,7 @@ namespace UtfUnknown.Tests
             byte[] buf = { 0x00, 0x00, 0xFF, 0xFE, 0x00, 0x65 };
 
             var result = CharsetDetector.DetectFromBytes(buf);
-            Assert.AreEqual("X-ISO-10646-UCS-4-2143", result.Detected.EncodingName);
+            Assert.AreEqual(Charsets.X_ISO_10646_UCS_4_2143, result.Detected.EncodingName);
             Assert.AreEqual(1.0f, result.Detected.Confidence);
         }
 
@@ -179,10 +179,5 @@ namespace UtfUnknown.Tests
             Assert.AreEqual(Charsets.ASCII, result.Detected.EncodingName);
             Assert.AreEqual(1, result.Detected.Confidence);
         }
-
-
-
-
-
     }
 }

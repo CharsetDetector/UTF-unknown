@@ -57,7 +57,7 @@ namespace UtfUnknown.Core.Models.MultiByte.Korean
                 BitPackage.SHIFT_MASK_4BITS, 
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, ISO2022KR_st),
-            ISO2022KRCharLenTable, "ISO-2022-KR")
+            ISO2022KRCharLenTable, CodepageName.ISO_2022_KR)
         {
 
         }
