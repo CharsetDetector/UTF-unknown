@@ -338,10 +338,7 @@ namespace UtfUnknown.Core
         /// <summary>
         /// MAC Latin-2 codepage name.
         /// </summary>
-        /// <remarks>
-        /// TODO: Fix to x-mac-ce
-        /// </remarks>
-        internal const string X_MAC_CE = "MAC-CENTRALEUROPE";
+        internal const string X_MAC_CE = "x-mac-ce";
         
         /// <summary>
         /// Cyrillic (Mac) codepage name.
