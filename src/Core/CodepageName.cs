@@ -70,7 +70,7 @@ namespace UtfUnknown.Core
         /// EUC Japanese codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Are other aliases x-euc, x-euc-jp, iso-2022-jpeuc, extended_unix_code_packed_format_for_japanese?
+        /// Are other aliases x-euc, x-euc-jp, iso-2022-jpeuc, extended_unix_code_packed_format_for_japanese in .NET
         /// </remarks>
         internal const string EUC_JP = "euc-jp";
 
@@ -78,7 +78,7 @@ namespace UtfUnknown.Core
         /// EUC Korean codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Are other aliases iso-2022-kr-8, iso-2022-kr-8bit, cseuckr?
+        /// Are other aliases iso-2022-kr-8, iso-2022-kr-8bit, cseuckr in .NET
         /// </remarks>
         internal const string EUC_KR = "euc-kr";
 
@@ -102,7 +102,7 @@ namespace UtfUnknown.Core
         /// ISO 2022 Korean codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Are other aliases iso-2022-kr-7, iso-2022-kr-7bit, csiso2022kr?
+        /// Are other aliases iso-2022-kr-7, iso-2022-kr-7bit, csiso2022kr in .NET
         /// </remarks>
         internal const string ISO_2022_KR = "iso-2022-kr";
 
@@ -115,7 +115,7 @@ namespace UtfUnknown.Core
         /// Big5 codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Are other aliases big5-hkscs, cn-big5, csbig5, x-x-big5?
+        /// Are other aliases big5-hkscs, cn-big5, csbig5, x-x-big5 in .NET
         /// </remarks>
         internal const string BIG5 = "big5";
 
@@ -133,7 +133,7 @@ namespace UtfUnknown.Core
         /// Shift-JIS codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Are other aliases shift_jis, sjis, csshiftjis, cswindows31j, ms_kanji, x-sjis?
+        /// Are other aliases shift_jis, sjis, csshiftjis, cswindows31j, ms_kanji, x-sjis in .NET
         /// </remarks>
         internal const string SHIFT_JIS = "shift-jis";
         
@@ -141,7 +141,7 @@ namespace UtfUnknown.Core
         /// ANSI/OEM Korean codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Are other aliases korean, ks-c-5601, ks-c5601, ks_c_5601, ks_c_5601-1989, ks_c_5601_1987, ksc5601, ksc_5601, iso-ir-149, csksc56011987?
+        /// Are other aliases korean, ks-c-5601, ks-c5601, ks_c_5601, ks_c_5601-1989, ks_c_5601_1987, ksc5601, ksc_5601, iso-ir-149, csksc56011987 in .NET
         /// </remarks>
         internal const string KS_C_5601 = "ks_c_5601-1987";
 
@@ -157,7 +157,7 @@ namespace UtfUnknown.Core
         /// OEM Latin-2 codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Is other alias cp852?
+        /// Is other alias cp852 in .NET
         /// </remarks>
         internal const string IBM852 = "ibm852";
 
@@ -165,17 +165,17 @@ namespace UtfUnknown.Core
         /// OEM Cyrillic (primarily Russian) codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Is other alias cp855?
+        /// Is other alias cp855 in .NET
         /// </remarks>
-        internal const string IBM855 = "ibm855"; // or cp855
+        internal const string IBM855 = "ibm855";
         
         /// <summary>
         /// OEM Cyrillic (primarily Russian) codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Is other alias cp866?
+        /// Is other alias cp866 in .NET
         /// </remarks>
-        internal const string IBM866 = "ibm866"; // or cp866
+        internal const string IBM866 = "ibm866";
 
         /// <summary>
         /// ISO 8859-1 Latin-1 Western European codepage name.
@@ -186,7 +186,7 @@ namespace UtfUnknown.Core
         /// ISO 8859-2 Central European (Latin 2 Eastern European) codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Are other aliases iso8859-2, iso_8859-2, iso_8859-2:1987, iso-ir-101, l2, latin2, csisolatin2?
+        /// Are other aliases iso8859-2, iso_8859-2, iso_8859-2:1987, iso-ir-101, l2, latin2, csisolatin2 in .NET
         /// </remarks>
         internal const string ISO_8859_2 = "iso-8859-2";
 
@@ -194,7 +194,7 @@ namespace UtfUnknown.Core
         /// ISO 8859-3 Latin-3 (South European) codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Are other aliases iso_8859-3, iso_8859-3:1988, iso-ir-109, l3, latin3, csisolatin3?
+        /// Are other aliases iso_8859-3, iso_8859-3:1988, iso-ir-109, l3, latin3, csisolatin3 in .NET
         /// </remarks>
         internal const string ISO_8859_3 = "iso-8859-3";
 
@@ -202,7 +202,7 @@ namespace UtfUnknown.Core
         /// ISO 8859-4 Baltic (Latin-4 North European) codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Are other aliases iso_8859-4, iso_8859-4:1988, iso-ir-110, l4, latin4, csisolatin4?
+        /// Are other aliases iso_8859-4, iso_8859-4:1988, iso-ir-110, l4, latin4, csisolatin4 in .NET
         /// </remarks>
         internal const string ISO_8859_4 = "iso-8859-4";
 
@@ -210,7 +210,7 @@ namespace UtfUnknown.Core
         /// ISO 8859-5 Cyrillic codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Are other aliases iso_8859-5, iso_8859-5:1988, iso-ir-144, cyrillic, csisolatincyrillic?
+        /// Are other aliases iso_8859-5, iso_8859-5:1988, iso-ir-144, cyrillic, csisolatincyrillic in .NET
         /// </remarks>
         internal const string ISO_8859_5 = "iso-8859-5";
 
@@ -218,7 +218,7 @@ namespace UtfUnknown.Core
         /// ISO 8859-6 Arabic codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Are other aliases iso_8859-6, iso_8859-6:1987, iso-ir-127, arabic, csisolatinarabic, ecma-114?
+        /// Are other aliases iso_8859-6, iso_8859-6:1987, iso-ir-127, arabic, csisolatinarabic, ecma-114 in .NET
         /// </remarks>
         internal const string ISO_8859_6 = "iso-8859-6";
 
@@ -226,7 +226,7 @@ namespace UtfUnknown.Core
         /// ISO 8859-7 Greek codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Are other aliases iso_8859-7, iso_8859-7:1987, iso-ir-126, greek, greek8, csisolatingreek, ecma-118, elot_928?
+        /// Are other aliases iso_8859-7, iso_8859-7:1987, iso-ir-126, greek, greek8, csisolatingreek, ecma-118, elot_928 in .NET
         /// </remarks>
         internal const string ISO_8859_7 = "iso-8859-7";
         
@@ -234,7 +234,7 @@ namespace UtfUnknown.Core
         /// ISO 8859-8 Hebrew codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Are other aliases iso_8859-8, iso_8859-8:1988, iso-8859-8 visual, iso-ir-138, hebrew, logical, visual, csisolatinhebrew?
+        /// Are other aliases iso_8859-8, iso_8859-8:1988, iso-8859-8 visual, iso-ir-138, hebrew, logical, visual, csisolatinhebrew in .NET
         /// </remarks>
         internal const string ISO_8859_8 = "iso-8859-8";
 
@@ -242,7 +242,7 @@ namespace UtfUnknown.Core
         /// ISO 8859-9 Latin-5 Turkish codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Is other alias iso-ir-148?
+        /// Is other alias iso-ir-148 in .NET
         /// </remarks>
         internal const string ISO_8859_9 = "iso-8859-9";
 
@@ -258,7 +258,7 @@ namespace UtfUnknown.Core
         /// ANSI/OEM Thai codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Are other aliases tis-620, windows-874, dos-874?
+        /// Are other aliases tis-620, windows-874, dos-874 in .NET
         /// </remarks>
         internal const string ISO_8859_11 = "iso-8859-11";
 
@@ -271,7 +271,7 @@ namespace UtfUnknown.Core
         /// ISO 8859-15 Latin-9 (Western European) codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Are other aliases iso_8859-15, l9, latin9, csisolatin9?
+        /// Are other aliases iso_8859-15, l9, latin9, csisolatin9 in .NET
         /// </remarks>
         internal const string ISO_8859_15 = "iso-8859-15";
         
@@ -287,7 +287,7 @@ namespace UtfUnknown.Core
         /// ANSI Central European codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Is other alias x-cp1250?
+        /// Is other alias x-cp1250 in .NET
         /// </remarks>
         internal const string WINDOWS_1250 = "windows-1250";
 
@@ -295,7 +295,7 @@ namespace UtfUnknown.Core
         /// ANSI Cyrillic codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Is other alias x-cp1251?
+        /// Is other alias x-cp1251 in .NET
         /// </remarks>
         internal const string WINDOWS_1251 = "windows-1251";
 
@@ -303,7 +303,7 @@ namespace UtfUnknown.Core
         /// ANSI Latin-1 codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Is other alias x-ansi?
+        /// Is other alias x-ansi in .NET
         /// </remarks>
         internal const string WINDOWS_1252 = "windows-1252";
         
@@ -321,7 +321,7 @@ namespace UtfUnknown.Core
         /// ANSI Arabic codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Is other alias cp1256?
+        /// Is other alias cp1256 in .NET
         /// </remarks>
         internal const string WINDOWS_1256 = "windows-1256";
 
@@ -349,7 +349,7 @@ namespace UtfUnknown.Core
         /// Cyrillic (KOI8-R) codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Are other aliases koi, koi8, koi8r, cskoi8r?
+        /// Are other aliases koi, koi8, koi8r, cskoi8r in .NET
         /// </remarks>
         internal const string KOI8_R = "koi8-r";
 
