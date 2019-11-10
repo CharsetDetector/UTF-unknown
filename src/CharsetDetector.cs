@@ -383,12 +383,12 @@ namespace UtfUnknown
             if (buf0 == 0xFE && buf1 == 0xFF)
             {
                 // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
-                return buf.Length > 2 && len > 2 && buf[2] == 0x00 && buf[3] == 0x00
+                return buf.Length > 3 && len > 3 && buf[2] == 0x00 && buf[3] == 0x00
                     ? CodepageName.X_ISO_10646_UCS_4_3412
                     : CodepageName.UTF16_BE;
             }
 
-            if (buf0 == 0x00 && buf1 == 0x00 && buf.Length > 2)
+            if (buf0 == 0x00 && buf1 == 0x00 && buf.Length > 3)
             {
                 if (buf[2] == 0xFE && buf[3] == 0xFF)
                     return CodepageName.UTF32_BE;
@@ -398,7 +398,7 @@ namespace UtfUnknown
             }
             else if (buf0 == 0xFF && buf1 == 0xFE)
             {
-                return buf.Length > 2 && len > 2 && buf[2] == 0x00 && buf[3] == 0x00
+                return buf.Length > 3 && len > 3 && buf[2] == 0x00 && buf[3] == 0x00
                     ? CodepageName.UTF32_LE
                     : CodepageName.UTF16_LE;
             }
