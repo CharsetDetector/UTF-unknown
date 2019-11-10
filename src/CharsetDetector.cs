@@ -371,40 +371,39 @@ namespace UtfUnknown
 
         private static string FindCharSetByBom(byte[] buf, int len)
         {
-            string bomSet = null;
-            if (buf.Length <= 2) return bomSet;
+            if (len < 2 || buf.Length <= 2)
+                return null;
 
             var buf0 = buf[0];
             var buf1 = buf[1];
-            switch (buf0)
-            {
-                case 0xEF:
-                    if (buf.Length > 2 && buf1 == 0xBB && buf[2] == 0xBF)
-                        bomSet = CodepageName.UTF8;
-                    break;
-                case 0xFE:
-                    if (buf.Length > 2 && buf1 == 0xFF && buf[2] == 0x00 && buf[3] == 0x00)
-                        // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
-                        bomSet = CodepageName.X_ISO_10646_UCS_4_3412;
-                    else if (buf1 == 0xFF)
-                        bomSet = CodepageName.UTF16_BE;
-                    break;
-                case 0x00:
-                    if (buf.Length > 2 && buf1 == 0x00 && buf[2] == 0xFE && buf[3] == 0xFF)
-                        bomSet = CodepageName.UTF32_BE;
-                    else if (buf.Length > 2 && buf1 == 0x00 && buf[2] == 0xFF && buf[3] == 0xFE)
-                        // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
-                        bomSet = CodepageName.X_ISO_10646_UCS_4_2143;
-                    break;
-                case 0xFF:
-                    if (buf.Length > 2 && buf1 == 0xFE && buf[2] == 0x00 && buf[3] == 0x00)
-                        bomSet = CodepageName.UTF32_LE;
-                    else if (buf1 == 0xFE)
-                        bomSet = CodepageName.UTF16_LE;
-                    break;
-            } // switch
             
-            return bomSet;
+            if (buf0 == 0xEF && buf1 == 0xBB && buf.Length > 2 && len > 2 && buf[2] == 0xBF)
+                return CodepageName.UTF8;
+
+            if (buf0 == 0xFE && buf1 == 0xFF)
+            {
+                // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
+                return buf.Length > 2 && len > 2 && buf[2] == 0x00 && buf[3] == 0x00
+                    ? CodepageName.X_ISO_10646_UCS_4_3412
+                    : CodepageName.UTF16_BE;
+            }
+
+            if (buf0 == 0x00 && buf1 == 0x00 && buf.Length > 2)
+            {
+                if (buf[2] == 0xFE && buf[3] == 0xFF)
+                    return CodepageName.UTF32_BE;
+                // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
+                if (buf[2] == 0xFF && buf[3] == 0xFE)
+                    return CodepageName.X_ISO_10646_UCS_4_2143;
+            }
+            else if (buf0 == 0xFF && buf1 == 0xFE)
+            {
+                return buf.Length > 2 && len > 2 && buf[2] == 0x00 && buf[3] == 0x00
+                    ? CodepageName.UTF32_LE
+                    : CodepageName.UTF16_LE;
+            }
+
+            return null;
         }
 
         /// <summary>
