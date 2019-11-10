@@ -371,7 +371,7 @@ namespace UtfUnknown
 
         private static string FindCharSetByBom(byte[] buf, int len)
         {
-            if (len < 2 || buf.Length <= 2)
+            if (len < 2 || buf.Length < 2)
                 return null;
 
             var buf0 = buf[0];
