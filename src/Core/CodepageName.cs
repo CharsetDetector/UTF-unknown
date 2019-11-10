@@ -357,7 +357,7 @@ namespace UtfUnknown.Core
         /// TIS-620 codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Equal to iso-8859-11?
+        /// A nearly identical version of TIS-620 is iso-8859-11. The sole difference being that iso-8859-11 defines hex A0 as a non-breaking space, while TIS-620 leaves it undefined but reserved.
         /// </remarks>
         internal const string TIS_620 = "tis-620";
 
