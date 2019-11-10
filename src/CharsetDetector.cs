@@ -372,37 +372,34 @@ namespace UtfUnknown
         private static string FindCharSetByBom(byte[] buf, int len)
         {
             string bomSet = null;
-            if (len <= 3) return bomSet;
-            
-            //todo UTF bom of only 3 bytes isn't recognized
-            var b1 = buf[0];
-            var b2 = buf[1];
-            var b3 = buf[2];
-            var b4 = buf[3];
-            switch (b1)
+            if (buf.Length <= 2) return bomSet;
+
+            var buf0 = buf[0];
+            var buf1 = buf[1];
+            switch (buf0)
             {
                 case 0xEF:
-                    if (b2 == 0xBB && b3 == 0xBF)
+                    if (buf.Length > 2 && buf1 == 0xBB && buf[2] == 0xBF)
                         bomSet = CodepageName.UTF8;
                     break;
                 case 0xFE:
-                    if (b2 == 0xFF && b3 == 0x00 && b4 == 0x00)
+                    if (buf.Length > 2 && buf1 == 0xFF && buf[2] == 0x00 && buf[3] == 0x00)
                         // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
                         bomSet = CodepageName.X_ISO_10646_UCS_4_3412;
-                    else if (0xFF == b2)
+                    else if (buf1 == 0xFF)
                         bomSet = CodepageName.UTF16_BE;
                     break;
                 case 0x00:
-                    if (b2 == 0x00 && b3 == 0xFE && b4 == 0xFF)
+                    if (buf.Length > 2 && buf1 == 0x00 && buf[2] == 0xFE && buf[3] == 0xFF)
                         bomSet = CodepageName.UTF32_BE;
-                    else if (b2 == 0x00 && b3 == 0xFF && b4 == 0xFE)
+                    else if (buf.Length > 2 && buf1 == 0x00 && buf[2] == 0xFF && buf[3] == 0xFE)
                         // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
                         bomSet = CodepageName.X_ISO_10646_UCS_4_2143;
                     break;
                 case 0xFF:
-                    if (b2 == 0xFE && b3 == 0x00 && b4 == 0x00)
+                    if (buf.Length > 2 && buf1 == 0xFE && buf[2] == 0x00 && buf[3] == 0x00)
                         bomSet = CodepageName.UTF32_LE;
-                    else if (b2 == 0xFE)
+                    else if (buf1 == 0xFE)
                         bomSet = CodepageName.UTF16_LE;
                     break;
             } // switch
