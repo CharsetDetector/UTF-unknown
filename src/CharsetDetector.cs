@@ -377,30 +377,38 @@ namespace UtfUnknown
             var buf0 = buf[0];
             var buf1 = buf[1];
             
-            if (buf0 == 0xEF && buf1 == 0xBB && buf.Length > 2 && len > 2 && buf[2] == 0xBF)
-                return CodepageName.UTF8;
+            if (buf0 == 0xEF && buf1 == 0xBB
+                && buf.Length > 2 && len > 2
+                    && buf[2] == 0xBF)
+                        return CodepageName.UTF8;
 
             if (buf0 == 0xFE && buf1 == 0xFF)
             {
                 // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
-                return buf.Length > 3 && len > 3 && buf[2] == 0x00 && buf[3] == 0x00
-                    ? CodepageName.X_ISO_10646_UCS_4_3412
-                    : CodepageName.UTF16_BE;
+                return buf.Length > 3 && len > 3
+                    && buf[2] == 0x00 && buf[3] == 0x00
+                        ? CodepageName.X_ISO_10646_UCS_4_3412
+                        : CodepageName.UTF16_BE;
             }
 
-            if (buf0 == 0x00 && buf1 == 0x00 && buf.Length > 3)
+            if (buf0 == 0x00 && buf1 == 0x00)
             {
+                if (buf.Length <= 3)
+                    return null;
+                
                 if (buf[2] == 0xFE && buf[3] == 0xFF)
                     return CodepageName.UTF32_BE;
+
                 // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
                 if (buf[2] == 0xFF && buf[3] == 0xFE)
                     return CodepageName.X_ISO_10646_UCS_4_2143;
             }
             else if (buf0 == 0xFF && buf1 == 0xFE)
             {
-                return buf.Length > 3 && len > 3 && buf[2] == 0x00 && buf[3] == 0x00
-                    ? CodepageName.UTF32_LE
-                    : CodepageName.UTF16_LE;
+                return buf.Length > 3 && len > 3
+                    && buf[2] == 0x00 && buf[3] == 0x00
+                        ? CodepageName.UTF32_LE
+                        : CodepageName.UTF16_LE;
             }
 
             return null;
