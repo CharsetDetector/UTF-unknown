@@ -82,6 +82,16 @@ namespace UtfUnknown.Tests
             Assert.AreEqual(Charsets.UTF8, result.Detected.EncodingName);
             Assert.AreEqual(1.0f, result.Detected.Confidence);
         }
+        
+        [Test]
+        public void Test2byteArrayBomUTF16_BE()
+        {
+            byte[] buf = { 0xFE, 0xFF, };
+
+            var result = CharsetDetector.DetectFromBytes(buf);
+            Assert.AreEqual(Charsets.UTF16_BE, result.Detected.EncodingName);
+            Assert.AreEqual(1.0f, result.Detected.Confidence);
+        }
 
         [Test]
         public void TestBomUTF16_BE()
@@ -115,6 +125,15 @@ namespace UtfUnknown.Tests
             Assert.AreEqual(1.0f, result.Detected.Confidence);
         }
 
+        [Test]
+        public void Test2byteArrayBomUTF16_LE()
+        {
+            byte[] buf = { 0xFF, 0xFE, };
+            var result = CharsetDetector.DetectFromBytes(buf);
+            Assert.AreEqual(Charsets.UTF16_LE, result.Detected.EncodingName);
+            Assert.AreEqual(1.0f, result.Detected.Confidence);
+        }
+        
         [Test]
         public void TestBomUTF16_LE()
         {
