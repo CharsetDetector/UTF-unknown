@@ -82,7 +82,6 @@ namespace UtfUnknown
         /// <summary>
         /// A dictionary for replace unsupported codepage name in .NET to the nearly identical version.
         /// </summary>
-        /// <remarks>ReadOnlyDictionary start support with .NET Framework 4.5</remarks>
         private readonly Dictionary<string, string> _fixedToSupportCodepageName =
             new Dictionary<string, string>
             {
