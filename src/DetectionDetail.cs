@@ -29,7 +29,7 @@ namespace UtfUnknown
             try
             {
                 Encoding = Encoding.GetEncoding(
-                    _fixedToSupportCodepageName.TryGetValue(encodingShortName, out var supportCodepageName)
+                    FixedToSupportCodepageName.TryGetValue(encodingShortName, out var supportCodepageName)
                         ? supportCodepageName
                         : encodingShortName);
             }
@@ -82,7 +82,7 @@ namespace UtfUnknown
         /// <summary>
         /// A dictionary for replace unsupported codepage name in .NET to the nearly identical version.
         /// </summary>
-        private readonly Dictionary<string, string> _fixedToSupportCodepageName =
+        private static readonly Dictionary<string, string> FixedToSupportCodepageName =
             new Dictionary<string, string>
             {
                 // CP949 is superset of ks_c_5601-1987 (see comment by @HelloWorld017 in #74)
