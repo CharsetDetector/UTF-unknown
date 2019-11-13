@@ -45,7 +45,7 @@ namespace UtfUnknown
 
         public override string ToString()
         {
-            return $"{nameof(Detected)}: {Detected}, \n{nameof(Details)}:\n - {String.Join("\n- ", Details?.Select(d => d.ToString()))}";
+            return $"{nameof(Detected)}: {Detected}, \n{nameof(Details)}:\n - {string.Join("\n- ", Details?.Select(d => d.ToString()))}";
         }
     }
 }

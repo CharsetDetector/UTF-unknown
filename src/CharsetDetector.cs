@@ -313,7 +313,7 @@ namespace UtfUnknown
                 _done = RunProber(buf, offset, len, prober);
                 if (_done)
                     return;
-            };
+            }
         }
 
         private bool IsStartsWithBom(byte[] buf, int len)
