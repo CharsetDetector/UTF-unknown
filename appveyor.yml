@@ -18,12 +18,11 @@ test_script:
 - ps: dotnet test
 - ps: cd ..
 after_build:
-- ps: cd .\src\
-- ps: dotnet pack -c Release 
-- ps: cd ..
+- ps: msbuild -t:Pack .\src\ -p:Configuration=Release  -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -verbosity:minimal
 - ps: Get-ChildItem '**\test-diag.log' | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
 artifacts:
 - path: '**\*.nupkg'
+- path: '**\*.snupkg'
 - path: '**\test-diag.log'
 dotnet_csproj:
   patch: true
