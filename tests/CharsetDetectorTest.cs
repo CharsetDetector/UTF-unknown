@@ -25,7 +25,7 @@ namespace UtfUnknown.Tests
                              "and your contributions would be greatly appreciated " +
                              "the documentation you want to contribute to and " +
                              "click on the [Edit] link to start writing";
-            var stream = AsciiToSteam(text);
+            var stream = AsciiToStream(text);
             using (stream)
             {
                 var result = CharsetDetector.DetectFromStream(stream);
@@ -34,7 +34,7 @@ namespace UtfUnknown.Tests
             }
         }
 
-        private static MemoryStream AsciiToSteam(string s)
+        private static MemoryStream AsciiToStream(string s)
         {
             return new MemoryStream(Encoding.ASCII.GetBytes(s));
         }
@@ -51,7 +51,7 @@ namespace UtfUnknown.Tests
         {
             // Arrange
             var text = new string('a', 10000);
-            var stream = AsciiToSteam(text);
+            var stream = AsciiToStream(text);
             stream.Position = start;
 
             // Act
