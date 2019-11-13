@@ -51,12 +51,12 @@ namespace UtfUnknown.Core.Models
         public const int START = 0;
 
         /// <summary>
-        /// Error node <see cref="ProbingState.NotMe"/> ?
+        /// Error node <see cref="Probers.ProbingState.NotMe"/> ?
         /// </summary>
         public const int ERROR = 1;
 
         /// <summary>
-        /// <see cref="ProbingState.FoundIt"/> ?
+        /// <see cref="Probers.ProbingState.FoundIt"/> ?
         /// </summary>
         public const int ITSME = 2;
 
