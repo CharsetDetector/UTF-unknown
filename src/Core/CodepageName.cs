@@ -143,13 +143,13 @@ namespace UtfUnknown.Core
         /// <remarks>
         /// Are other aliases korean, ks-c-5601, ks-c5601, ks_c_5601, ks_c_5601-1989, ks_c_5601_1987, ksc5601, ksc_5601, iso-ir-149, csksc56011987 in .NET
         /// </remarks>
-        internal const string KS_C_5601 = "ks_c_5601-1987";
+        internal const string KS_C_5601_1987 = "ks_c_5601-1987";
 
         /// <summary>
         /// CP949 codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Not supported? Attention!: it is superset of ks_c_5601-1987 (see comment by @HelloWorld017 in #74; https://lists.w3.org/Archives/Public/ietf-charsets/2002JulSep/0020.html)
+        /// Not supported in .NET. A nearly identical version of cp949 is ks_c_5601-1987 (see https://lists.w3.org/Archives/Public/ietf-charsets/2002JulSep/0020.html)
         /// </remarks>
         internal const string CP949 = "cp949";
         

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
@@ -22,16 +23,15 @@ namespace UtfUnknown
             TimeSpan? time = null,
             string statusLog = null)
         {
-            EncodingName = encodingShortName.Split('(').First().Trim();
+            EncodingName = encodingShortName;
             Confidence = confidence;
 
             try
             {
-                var encodingName = encodingShortName
-                    .Split('(').Last()
-                    .Split(')').First()
-                    .Trim();
-                Encoding = Encoding.GetEncoding(encodingName);
+                Encoding = Encoding.GetEncoding(
+                    FixedToSupportCodepageName.TryGetValue(encodingShortName, out var supportCodepageName)
+                        ? supportCodepageName
+                        : encodingShortName);
             }
             catch (Exception)
             {
@@ -78,6 +78,16 @@ namespace UtfUnknown
         public TimeSpan? Time { get; set; }
 
         public string StatusLog { get; set; }
+
+        /// <summary>
+        /// A dictionary for replace unsupported codepage name in .NET to the nearly identical version.
+        /// </summary>
+        private static readonly Dictionary<string, string> FixedToSupportCodepageName =
+            new Dictionary<string, string>
+            {
+                // CP949 is superset of ks_c_5601-1987 (see comment by @HelloWorld017 in #74)
+                { CodepageName.CP949, CodepageName.KS_C_5601_1987 },
+            };
 
         public override string ToString()
         {
