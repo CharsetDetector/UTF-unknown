@@ -85,7 +85,7 @@ namespace UtfUnknown
         private static readonly Dictionary<string, string> FixedToSupportCodepageName =
             new Dictionary<string, string>
             {
-                // CP949 is superset of ks_c_5601-1987 (see comment by @HelloWorld017 in #74)
+                // CP949 is superset of ks_c_5601-1987 (see https://github.com/CharsetDetector/UTF-unknown/pull/74#issuecomment-550362133)
                 { CodepageName.CP949, CodepageName.KS_C_5601_1987 },
             };
 
