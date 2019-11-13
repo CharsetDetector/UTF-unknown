@@ -2,10 +2,6 @@ namespace UtfUnknown.Core.Analyzers.Japanese
 {
     public class EUCJPDistributionAnalyser : SJISDistributionAnalyser
     {
-        public EUCJPDistributionAnalyser() : base()
-        {
-        }
-        
         /// <summary>
         /// first  byte range: 0xa0 -- 0xfe
         ///  second byte range: 0xa1 -- 0xfe
