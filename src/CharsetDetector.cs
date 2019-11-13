@@ -37,11 +37,16 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+#if !NET40
+#define ASYNC_SUPPORTED
+#endif
+
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
+using System.Threading;
+using System.Threading.Tasks;
 using UtfUnknown.Core;
 using UtfUnknown.Core.Probers;
 
@@ -83,8 +88,8 @@ namespace UtfUnknown
         {
             System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
         }
-#endif 
-        
+#endif
+
         internal InputState InputState;
 
         /// <summary>
@@ -239,6 +244,62 @@ namespace UtfUnknown
                 }
             }
         }
+#if ASYNC_SUPPORTED
+
+        public static async Task<DetectionResult> DetectFromStreamAsync(Stream stream, long? maxBytesToRead, CancellationToken cancellationToken)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            if (maxBytesToRead <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxBytesToRead));
+            }
+
+            var detector = new CharsetDetector();
+
+            await ReadStreamAsync(stream, maxBytesToRead, detector, cancellationToken);
+            return detector.DataEnd();
+        }
+
+        private static async Task ReadStreamAsync(Stream stream, long? maxBytes, CharsetDetector detector, CancellationToken cancellationToken)
+        {
+            const int bufferSize = 1024;
+            byte[] buff = new byte[bufferSize];
+            int read;
+            long readTotal = 0;
+
+            var toRead = CalcToRead(maxBytes, readTotal, bufferSize);
+
+            while ((read = await stream.ReadAsync(buff, 0, toRead, cancellationToken)) > 0)
+            {
+                if (cancellationToken.IsCancellationRequested)
+                {
+                    return;
+                }
+
+                detector.Feed(buff, 0, read);
+
+                if (maxBytes != null)
+                {
+                    readTotal += read;
+                    if (readTotal >= maxBytes)
+                    {
+                        return;
+                    }
+
+                    toRead = CalcToRead(maxBytes, readTotal, bufferSize);
+                }
+
+                if (detector._done)
+                {
+                    return;
+                }
+            }
+        }
+#endif // ASYNC_SUPPORTED
 
         private static int CalcToRead(long? maxBytes, long readTotal, int bufferSize)
         {
@@ -286,6 +347,29 @@ namespace UtfUnknown
             }
         }
 
+#if ASYNC_SUPPORTED
+        /// <summary>
+        /// Detect the character encoding of this file.
+        /// </summary>
+        /// <param name="filePath">Path to file</param>
+        /// <param name="cancellationToken"></param>
+        /// <returns></returns>
+        public static async Task<DetectionResult> DetectFromFileAsync(string filePath, CancellationToken cancellationToken)
+        {
+            if (filePath == null)
+            {
+                throw new ArgumentNullException(nameof(filePath));
+            }
+
+            using (FileStream fs = new FileStream(filePath,
+                FileMode.Open, FileAccess.Read, FileShare.Read,
+                bufferSize: 4096, useAsync: true))
+            {
+                return await DetectFromStreamAsync(fs, null, cancellationToken);
+            }
+
+        }
+#endif // ASYNC_SUPPORTED
 #endif // !NETSTANDARD1_0
 
         protected virtual void Feed(byte[] buf, int offset, int len)
@@ -376,11 +460,11 @@ namespace UtfUnknown
 
             var buf0 = buf[0];
             var buf1 = buf[1];
-            
+
             if (buf0 == 0xEF && buf1 == 0xBB
                 && buf.Length > 2 && len > 2
                     && buf[2] == 0xBF)
-                        return CodepageName.UTF8;
+                return CodepageName.UTF8;
 
             if (buf0 == 0xFE && buf1 == 0xFF)
             {
@@ -395,7 +479,7 @@ namespace UtfUnknown
             {
                 if (buf.Length <= 3)
                     return null;
-                
+
                 if (buf[2] == 0xFE && buf[3] == 0xFF)
                     return CodepageName.UTF32_BE;
 
