@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <PropertyGroup>
-    <Authors>Julian Verdurmen, Rudi Pettazzi, Shy Shalom</Authors>
+    <Authors>Julian Verdurmen, Rustam Sayfutdinov, Rudi Pettazzi, Shy Shalom</Authors>
     <NeutralLanguage>en-US</NeutralLanguage>
     <AssemblyTitle>UTF Unknown</AssemblyTitle>
     <Description>Detect character set for files, streams and other bytes.
