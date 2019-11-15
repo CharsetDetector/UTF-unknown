@@ -94,9 +94,9 @@ namespace UtfUnknown.Core
         /// ISO 2022 Chinese codepage name.
         /// </summary>
         /// <remarks>
-        /// Other alias is cp50227. Codepage identifier 50229 is currently unsupported (see for example https://github.com/microsoft/referencesource/blob/17b97365645da62cf8a49444d979f94a59bbb155/mscorlib/system/text/iso2022encoding.cs#L92).
+        /// Supported by alias is x-cp50227 in. NET. Codepage identifier 50229 is currently unsupported (see for example https://github.com/microsoft/referencesource/blob/17b97365645da62cf8a49444d979f94a59bbb155/mscorlib/system/text/iso2022encoding.cs#L92).
         /// </remarks>
-        internal const string ISO_2022_CN = "x-cp50227";
+        internal const string ISO_2022_CN = "iso-2022-ch";
         
         /// <summary>
         /// ISO 2022 Korean codepage name.
@@ -110,6 +110,14 @@ namespace UtfUnknown.Core
         /// ISO 2022 Japanese codepage name.
         /// </summary>
         internal const string ISO_2022_JP = "iso-2022-jp";
+
+        /// <summary>
+        /// ISO 2022 Simplified Chinese codepage name.
+        /// </summary>
+        /// <remarks>
+        /// Other alias is cp50227.
+        /// </remarks>
+        internal const string X_CP50227 = "x-cp50227";
         
         /// <summary>
         /// Big5 codepage name.
