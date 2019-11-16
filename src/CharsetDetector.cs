@@ -389,6 +389,12 @@ namespace UtfUnknown
                         : CodepageName.UTF16_LE;
             }
 
+            // Detect utf-7 with bom (see table in https://en.wikipedia.org/wiki/Byte_order_mark)
+            if (len >= 4)
+                if (buf0 == 0x2B && buf1 == 0x2F && buf[2] == 0x76)
+                    if (buf[3] == 0x38 || buf[3] == 0x39 || buf[3] == 0x2B || buf[3] == 0x2F)
+                        return CodepageName.UTF7;
+            
             return null;
         }
 

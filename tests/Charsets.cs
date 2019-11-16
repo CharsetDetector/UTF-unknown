@@ -44,6 +44,8 @@ namespace UtfUnknown.Tests
     {
         internal const string ASCII = "ascii";
 
+        internal const string UTF7 = "utf-7";
+        
         internal const string UTF8 = "utf-8";
 
         internal const string UTF16_LE = "utf-16le";
