@@ -349,21 +349,21 @@ namespace UtfUnknown
 
         private static string FindCharSetByBom(byte[] buf, int len)
         {
-            if (len < 2 || buf.Length < 2)
+            if (len < 2)
                 return null;
 
             var buf0 = buf[0];
             var buf1 = buf[1];
             
             if (buf0 == 0xEF && buf1 == 0xBB
-                && buf.Length > 2 && len > 2
-                    && buf[2] == 0xBF)
-                        return CodepageName.UTF8;
+                && len > 2
+                && buf[2] == 0xBF)
+                return CodepageName.UTF8;
 
             if (buf0 == 0xFE && buf1 == 0xFF)
             {
                 // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
-                return buf.Length > 3 && len > 3
+                return len > 3
                     && buf[2] == 0x00 && buf[3] == 0x00
                         ? CodepageName.X_ISO_10646_UCS_4_3412
                         : CodepageName.UTF16_BE;
@@ -383,7 +383,7 @@ namespace UtfUnknown
             }
             else if (buf0 == 0xFF && buf1 == 0xFE)
             {
-                return buf.Length > 3 && len > 3
+                return len > 3
                     && buf[2] == 0x00 && buf[3] == 0x00
                         ? CodepageName.UTF32_LE
                         : CodepageName.UTF16_LE;
