@@ -19,7 +19,8 @@ namespace UtfUnknown
             new Dictionary<string, string>
             {
                 // CP949 is superset of ks_c_5601-1987 (see https://github.com/CharsetDetector/UTF-unknown/pull/74#issuecomment-550362133)
-                {CodepageName.CP949, CodepageName.KS_C_5601_1987}
+                {CodepageName.CP949, CodepageName.KS_C_5601_1987},
+                {CodepageName.ISO_2022_CN, CodepageName.X_CP50227},
             };
 
         /// <summary>
