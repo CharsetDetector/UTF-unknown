@@ -91,7 +91,7 @@ namespace UtfUnknown.Core
         internal const string EUC_TW = "euc-tw";
         
         /// <summary>
-        /// ISO 2022 Chinese codepage name (Codepage 50227).
+        /// ISO 2022 Chinese codepage name.
         /// </summary>
         /// <remarks>
         /// Supported by alias is x-cp50227 in. NET. Codepage identifier 50229 is currently unsupported (see for example https://github.com/microsoft/referencesource/blob/17b97365645da62cf8a49444d979f94a59bbb155/mscorlib/system/text/iso2022encoding.cs#L92).
@@ -112,7 +112,7 @@ namespace UtfUnknown.Core
         internal const string ISO_2022_JP = "iso-2022-jp";
 
         /// <summary>
-        /// ISO 2022 Simplified Chinese codepage name.
+        /// ISO 2022 Simplified Chinese codepage name (Codepage 50227).
         /// </summary>
         /// <remarks>
         /// Other alias is cp50227.
