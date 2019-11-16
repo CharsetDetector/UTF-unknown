@@ -96,7 +96,7 @@ namespace UtfUnknown.Core
         /// <remarks>
         /// Supported by alias is x-cp50227 in. NET. Codepage identifier 50229 is currently unsupported (see for example https://github.com/microsoft/referencesource/blob/17b97365645da62cf8a49444d979f94a59bbb155/mscorlib/system/text/iso2022encoding.cs#L92).
         /// </remarks>
-        internal const string ISO_2022_CN = "iso-2022-ch";
+        internal const string ISO_2022_CN = "iso-2022-cn";
         
         /// <summary>
         /// ISO 2022 Korean codepage name.
