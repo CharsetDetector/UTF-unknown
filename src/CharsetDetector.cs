@@ -372,19 +372,6 @@ namespace UtfUnknown
                     : CodepageName.UTF16_LE;
             }
 
-            if (buf0 == 0x00 && buf1 == 0x00)
-            {
-                if (len > 3)
-                {
-                    if (buf[2] == 0xFE && buf[3] == 0xFF)
-                        return CodepageName.UTF32_BE;
-
-                    // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
-                    if (buf[2] == 0xFF && buf[3] == 0xFE)
-                        return CodepageName.X_ISO_10646_UCS_4_2143;
-                }
-            }
-
             if (len < 3)
                 return null;
 
@@ -394,6 +381,17 @@ namespace UtfUnknown
             if (len < 4)
                 return null;
             
+            //Here, because anyway further more than 3 positions are checked.
+            if (buf0 == 0x00 && buf1 == 0x00)
+            {
+                if (buf[2] == 0xFE && buf[3] == 0xFF)
+                    return CodepageName.UTF32_BE;
+
+                // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
+                if (buf[2] == 0xFF && buf[3] == 0xFE)
+                    return CodepageName.X_ISO_10646_UCS_4_2143;
+            }
+
             // Detect utf-7 with bom (see table in https://en.wikipedia.org/wiki/Byte_order_mark)
             if (buf0 == 0x2B && buf1 == 0x2F && buf[2] == 0x76)
                 if (buf[3] == 0x38 || buf[3] == 0x39 || buf[3] == 0x2B || buf[3] == 0x2F)
