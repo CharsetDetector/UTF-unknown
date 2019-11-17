@@ -429,26 +429,25 @@ namespace UtfUnknown
                 return new DetectionResult(_detectionDetail);
             }
 
-            switch (InputState)
+            if (InputState == InputState.Highbyte)
             {
-                case InputState.Highbyte:
-                {
-                    var detectionResults = _charsetProbers
-                        .Select(prober => new DetectionDetail(prober))
-                        .Where(result => result.Confidence > MinimumThreshold)
-                        .OrderByDescending(result => result.Confidence)
-                        .ToList();
+                var detectionResults = _charsetProbers
+                    .Select(prober => new DetectionDetail(prober))
+                    .Where(result => result.Confidence > MinimumThreshold)
+                    .OrderByDescending(result => result.Confidence)
+                    .ToList();
 
-                    return new DetectionResult(detectionResults);
+                return new DetectionResult(detectionResults);
 
-                    //TODO why done isn't true?
-                }
-                case InputState.PureASCII:
-                    //TODO why done isn't true?
-                    return new DetectionResult(new DetectionDetail(CodepageName.ASCII, 1.0f));
-                default:
-                    return new DetectionResult();
+                //TODO why done isn't true?
             }
+            else if (InputState == InputState.PureASCII)
+            {
+                //TODO why done isn't true?
+                return new DetectionResult(new DetectionDetail(CodepageName.ASCII, 1.0f));
+            }
+
+            return new DetectionResult();
         }
 
         internal IList<CharsetProber> GetNewProbers()
