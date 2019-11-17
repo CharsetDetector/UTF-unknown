@@ -73,6 +73,16 @@ namespace UtfUnknown.Tests
             Assert.AreEqual(Charsets.UTF7, result.EncodingName);
             Assert.AreEqual(1.0f, result.Confidence);
         }
+        
+        [Test]
+        public void TestBomGb18030()
+        {
+            var bufferBytes = new byte[] { 0x84, 0x31, 0x95, 0x33 };
+            var result = CharsetDetector.DetectFromBytes(bufferBytes)
+                .Detected;
+            Assert.AreEqual(Charsets.GB18030, result.EncodingName);
+            Assert.AreEqual(1.0f, result.Confidence);
+        }
 
         [Test]
         public void TestUTF8_1()
