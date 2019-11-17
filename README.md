@@ -63,9 +63,9 @@ The article "[A composite approach to language/encoding detection](https://www-a
 | International (Unicode) | UTF-8; UTF-16BE / UTF-16LE; UTF-32BE / UTF-32LE / X-ISO-10646-UCS-4-34121 / X-ISO-10646-UCS-4-21431 |
 | Arabic                  | ISO-8859-6; WINDOWS-1256                                                                            |
 | Bulgarian               | ISO-8859-5; WINDOWS-1251                                                                            |
-| Chinese                 | ISO-2022-CN; BIG5; EUC-TW; GB18030; HZ-GB-2312                                                      |
-| Croatian                | ISO-8859-2; ISO-8859-13; ISO-8859-16; WINDOWS-1250; IBM852; MAC-CENTRALEUROPE                       |
-| Czech                   | WINDOWS-1250; ISO-8859-2; IBM852; MAC-CENTRALEUROPE                                                 |
+| Chinese                 | ISO-2022-CN (via X-CP50227); BIG5; EUC-TW; GB18030; HZ-GB-2312                                      |
+| Croatian                | ISO-8859-2; ISO-8859-13; ISO-8859-16; WINDOWS-1250; IBM852; X-MAC-CE                                |
+| Czech                   | WINDOWS-1250; ISO-8859-2; IBM852; X-MAC-CE                                                          |
 | Danish                  | ISO-8859-1; ISO-8859-15; WINDOWS-1252                                                               |
 | English                 | ASCII                                                                                               |
 | Esperanto               | ISO-8859-3                                                                                          |
@@ -79,16 +79,16 @@ The article "[A composite approach to language/encoding detection](https://www-a
 | Irish Gaelic            | ISO-8859-1; ISO-8859-9; ISO-8859-15; WINDOWS-1252                                                   |
 | Italian                 | ISO-8859-1; ISO-8859-3; ISO-8859-9; ISO-8859-15; WINDOWS-1252                                       |
 | Japanese                | ISO-2022-JP; SHIFT_JIS; EUC-JP                                                                      |
-| Korean                  | ISO-2022-KR; EUC-KR / UHC; WINDOWS-949                                                              |
+| Korean                  | ISO-2022-KR; EUC-KR / UHC; CP949 (via KS_C_5601-1987)                                               |
 | Lithuanian              | ISO-8859-4; ISO-8859-10; ISO-8859-13                                                                |
 | Latvian                 | ISO-8859-4; ISO-8859-10; ISO-8859-13                                                                |
 | Maltese                 | ISO-8859-3                                                                                          |
-| Polish                  | ISO-8859-2; ISO-8859-13; ISO-8859-16; WINDOWS-1250; IBM852; MAC-CENTRALEUROPE                       |
+| Polish                  | ISO-8859-2; ISO-8859-13; ISO-8859-16; WINDOWS-1250; IBM852; X-MAC-CE                                |
 | Portuguese              | ISO-8859-1; ISO-8859-9; ISO-8859-15; WINDOWS-1252                                                   |
 | Romanian                | ISO-8859-2; ISO-8859-16; WINDOWS-1250; IBM852                                                       |
-| Russian                 | ISO-8859-5; KOI8-R; WINDOWS-1251; MAC-CYRILLIC; IBM866; IBM855                                      |
-| Slovak                  | WINDOWS-1250; ISO-8859-2; IBM852; MAC-CENTRALEUROPE                                                 |
-| Slovene                 | ISO-8859-2; ISO-8859-16; WINDOWS-1250; IBM852; MAC-CENTRALEUROPE                                    |
+| Russian                 | ISO-8859-5; KOI8-R; WINDOWS-1251; X-MAC-CYRILLIC; IBM866; IBM855                                    |
+| Slovak                  | WINDOWS-1250; ISO-8859-2; IBM852; X-MAC-CE                                                          |
+| Slovene                 | ISO-8859-2; ISO-8859-16; WINDOWS-1250; IBM852; X-MAC-CE                                             |
 | Spanish                 | ISO-8859-1; ISO-8859-15; WINDOWS-1252                                                               |
 | Swedish                 | ISO-8859-1; ISO-8859-4; ISO-8859-9; ISO-8859-15; WINDOWS-1252                                       |
 | Thai                    | TIS-620; ISO-8859-11                                                                                |
