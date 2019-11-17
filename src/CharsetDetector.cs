@@ -354,52 +354,55 @@ namespace UtfUnknown
 
             var buf0 = buf[0];
             var buf1 = buf[1];
-            
-            if (buf0 == 0xEF && buf1 == 0xBB
-                && len > 2
-                && buf[2] == 0xBF)
-                return CodepageName.UTF8;
 
             if (buf0 == 0xFE && buf1 == 0xFF)
             {
                 // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
                 return len > 3
-                    && buf[2] == 0x00 && buf[3] == 0x00
-                        ? CodepageName.X_ISO_10646_UCS_4_3412
-                        : CodepageName.UTF16_BE;
+                        && buf[2] == 0x00 && buf[3] == 0x00
+                    ? CodepageName.X_ISO_10646_UCS_4_3412
+                    : CodepageName.UTF16_BE;
+            }
+
+            if (buf0 == 0xFF && buf1 == 0xFE)
+            {
+                return len > 3
+                       && buf[2] == 0x00 && buf[3] == 0x00
+                    ? CodepageName.UTF32_LE
+                    : CodepageName.UTF16_LE;
             }
 
             if (buf0 == 0x00 && buf1 == 0x00)
             {
-                if (buf.Length <= 3)
-                    return null;
-                
-                if (buf[2] == 0xFE && buf[3] == 0xFF)
-                    return CodepageName.UTF32_BE;
+                if (len > 3)
+                {
+                    if (buf[2] == 0xFE && buf[3] == 0xFF)
+                        return CodepageName.UTF32_BE;
 
-                // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
-                if (buf[2] == 0xFF && buf[3] == 0xFE)
-                    return CodepageName.X_ISO_10646_UCS_4_2143;
-            }
-            else if (buf0 == 0xFF && buf1 == 0xFE)
-            {
-                return len > 3
-                    && buf[2] == 0x00 && buf[3] == 0x00
-                        ? CodepageName.UTF32_LE
-                        : CodepageName.UTF16_LE;
+                    // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
+                    if (buf[2] == 0xFF && buf[3] == 0xFE)
+                        return CodepageName.X_ISO_10646_UCS_4_2143;
+                }
             }
 
+            if (len < 3)
+                return null;
+
+            if (buf0 == 0xEF && buf1 == 0xBB && buf[2] == 0xBF)
+                return CodepageName.UTF8;
+            
+            if (len < 4)
+                return null;
+            
             // Detect utf-7 with bom (see table in https://en.wikipedia.org/wiki/Byte_order_mark)
-            if (len >= 4)
-                if (buf0 == 0x2B && buf1 == 0x2F && buf[2] == 0x76)
-                    if (buf[3] == 0x38 || buf[3] == 0x39 || buf[3] == 0x2B || buf[3] == 0x2F)
-                        return CodepageName.UTF7;
+            if (buf0 == 0x2B && buf1 == 0x2F && buf[2] == 0x76)
+                if (buf[3] == 0x38 || buf[3] == 0x39 || buf[3] == 0x2B || buf[3] == 0x2F)
+                    return CodepageName.UTF7;
             
             // Detect GB18030 with bom (see table in https://en.wikipedia.org/wiki/Byte_order_mark)
             // TODO: If you remove this check, GB18030Prober will still be defined as GB18030 -- It's feature or bug?
-            if (len > 3)
-                if (buf0 == 0x84 && buf1 == 0x31 && buf[2] == 0x95 && buf[3] == 0x33)
-                    return CodepageName.GB18030;
+            if (buf0 == 0x84 && buf1 == 0x31 && buf[2] == 0x95 && buf[3] == 0x33)
+                return CodepageName.GB18030;
             
             return null;
         }
