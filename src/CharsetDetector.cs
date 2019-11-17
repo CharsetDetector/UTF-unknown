@@ -395,6 +395,12 @@ namespace UtfUnknown
                     if (buf[3] == 0x38 || buf[3] == 0x39 || buf[3] == 0x2B || buf[3] == 0x2F)
                         return CodepageName.UTF7;
             
+            // Detect GB18030 with bom (see table in https://en.wikipedia.org/wiki/Byte_order_mark)
+            // TODO: If you remove this check, GB18030Prober will still be defined as GB18030 -- It's feature or bug?
+            if (len > 3)
+                if (buf0 == 0x84 && buf1 == 0x31 && buf[2] == 0x95 && buf[3] == 0x33)
+                    return CodepageName.GB18030;
+            
             return null;
         }
 
@@ -420,25 +426,26 @@ namespace UtfUnknown
                 return new DetectionResult(_detectionDetail);
             }
 
-            if (InputState == InputState.Highbyte)
+            switch (InputState)
             {
-                var detectionResults = _charsetProbers
-                    .Select(prober => new DetectionDetail(prober))
-                    .Where(result => result.Confidence > MinimumThreshold)
-                    .OrderByDescending(result => result.Confidence)
-                    .ToList();
+                case InputState.Highbyte:
+                {
+                    var detectionResults = _charsetProbers
+                        .Select(prober => new DetectionDetail(prober))
+                        .Where(result => result.Confidence > MinimumThreshold)
+                        .OrderByDescending(result => result.Confidence)
+                        .ToList();
 
-                return new DetectionResult(detectionResults);
+                    return new DetectionResult(detectionResults);
 
-                //TODO why done isn't true?
+                    //TODO why done isn't true?
+                }
+                case InputState.PureASCII:
+                    //TODO why done isn't true?
+                    return new DetectionResult(new DetectionDetail(CodepageName.ASCII, 1.0f));
+                default:
+                    return new DetectionResult();
             }
-            else if (InputState == InputState.PureASCII)
-            {
-                //TODO why done isn't true?
-                return new DetectionResult(new DetectionDetail(CodepageName.ASCII, 1.0f));
-            }
-
-            return new DetectionResult();
         }
 
         internal IList<CharsetProber> GetNewProbers()
