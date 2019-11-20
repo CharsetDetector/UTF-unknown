@@ -42,6 +42,11 @@ namespace UtfUnknown.Core
         internal const string ASCII = "ascii";
 
         /// <summary>
+        /// UTF-7 codepage name.
+        /// </summary>
+        internal const string UTF7 = "utf-7";
+        
+        /// <summary>
         /// UTF-8 codepage name.
         /// </summary>
         internal const string UTF8 = "utf-8";
