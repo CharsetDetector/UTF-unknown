@@ -44,6 +44,8 @@ namespace UtfUnknown.Tests
     {
         internal const string ASCII = "ascii";
 
+        internal const string UTF7 = "utf-7";
+        
         internal const string UTF8 = "utf-8";
 
         internal const string UTF16_LE = "utf-16le";
@@ -53,6 +55,8 @@ namespace UtfUnknown.Tests
         internal const string UTF32_LE = "utf-32le";
 
         internal const string UTF32_BE = "utf-32be";
+        
+        internal const string GB18030 = "gb18030";
 
         internal const string X_ISO_10646_UCS_4_3412 = "X-ISO-10646-UCS-4-3412";
 

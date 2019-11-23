@@ -20,7 +20,6 @@ namespace UtfUnknown.Tests
         [Test]
         public void TestAscii()
         {
-
             const string text = "The Documentation of the libraries is not complete " +
                              "and your contributions would be greatly appreciated " +
                              "the documentation you want to contribute to and " +
@@ -59,6 +58,30 @@ namespace UtfUnknown.Tests
 
             // Assert
             Assert.AreEqual(expectedPosition, stream.Position);
+        }
+        
+        [Test]
+        [TestCase(new byte[] { 0x2B, 0x2F, 0x76, 0x38 })]
+        [TestCase(new byte[] { 0x2B, 0x2F, 0x76, 0x39 })]
+        [TestCase(new byte[] { 0x2B, 0x2F, 0x76, 0x2B })]
+        [TestCase(new byte[] { 0x2B, 0x2F, 0x76, 0x2F })]
+        [TestCase(new byte[] { 0x2B, 0x2F, 0x76, 0x38, 0x2D })]
+        public void TestCaseBomUtf7(byte[] bufferBytes)
+        {
+            var result = CharsetDetector.DetectFromBytes(bufferBytes)
+                .Detected;
+            Assert.AreEqual(Charsets.UTF7, result.EncodingName);
+            Assert.AreEqual(1.0f, result.Confidence);
+        }
+        
+        [Test]
+        public void TestBomGb18030()
+        {
+            var bufferBytes = new byte[] { 0x84, 0x31, 0x95, 0x33 };
+            var result = CharsetDetector.DetectFromBytes(bufferBytes)
+                .Detected;
+            Assert.AreEqual(Charsets.GB18030, result.EncodingName);
+            Assert.AreEqual(1.0f, result.Confidence);
         }
 
         [Test]
