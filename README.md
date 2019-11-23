@@ -40,15 +40,28 @@ Use the static detectX methods from `CharsetDetector`.
 
 ```c#
 // Detect from File (NET standard 1.3+ or .NET 4+)
-var result = CharsetDetector.DetectFromFile("c:/myfile.txt"); //or pass FileInfo
-Encoding encoding = result.Detected.Encoding; //or result.Detected.EncodingName
-float confidence = result.Detected.Confidence; //confidence between 0 and 1
-var allDetails = result.Details;
-// Detect from Stream (NET standard 1.3+ or .NET 4+)
-var result = CharsetDetector.DetectFromStream(stream);
-// Detect from bytes
-var result = CharsetDetector.DetectFromBytes(byteArray);
+DetectionResult result = CharsetDetector.DetectFromFile("path/to/file.txt"); // or pass FileInfo
 
+// Detect from Stream (NET standard 1.3+ or .NET 4+)
+result = CharsetDetector.DetectFromStream(stream);
+
+// Detect from bytes
+results = CharsetDetector.DetectFromBytes(byteArray);
+
+// Get the best Detection
+DetectionDetail resultDetected = results.Detected;
+
+// Get the alias of the found encoding
+sting encodingName = resultDetected.EncodingName;
+
+// Get the System.Text.Encoding of the found encoding (can be null if not available)
+Encoding encoding = resultDetected.Encoding
+
+// Get the confidence of the found encoding (between 0 and 1)
+float confidence = resultDetected.Confidence;
+
+// Get all the details of the result
+IList<DetectionDetail> allDetails = result.Details;
 ```
 
 # Docs
@@ -56,7 +69,7 @@ var result = CharsetDetector.DetectFromBytes(byteArray);
 The article "[A composite approach to language/encoding detection](https://www-archive.mozilla.org/projects/intl/UniversalCharsetDetection.html)" describes the charsets detection algorithms implemented by the library.
 
 <details>
-  <summary>The following charsets are supported</summary>
+  <summary>The following charsets are supported to deteсt</summary>
 
 |        Language         | Encodings                                                                                           |
 |-------------------------|-----------------------------------------------------------------------------------------------------|
