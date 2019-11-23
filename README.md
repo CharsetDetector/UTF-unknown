@@ -60,41 +60,41 @@ The article "[A composite approach to language/encoding detection](https://www-a
 
 |        Language         | Encodings                                                                                           |
 |-------------------------|-----------------------------------------------------------------------------------------------------|
-| International (Unicode) | UTF-8; UTF-16BE / UTF-16LE; UTF-32BE / UTF-32LE / X-ISO-10646-UCS-4-34121 / X-ISO-10646-UCS-4-21431 |
-| Arabic                  | ISO-8859-6; WINDOWS-1256                                                                            |
-| Bulgarian               | ISO-8859-5; WINDOWS-1251                                                                            |
-| Chinese                 | ISO-2022-CN (via X-CP50227); BIG5; EUC-TW; GB18030; HZ-GB-2312                                      |
-| Croatian                | ISO-8859-2; ISO-8859-13; ISO-8859-16; WINDOWS-1250; IBM852; X-MAC-CE                                |
-| Czech                   | WINDOWS-1250; ISO-8859-2; IBM852; X-MAC-CE                                                          |
-| Danish                  | ISO-8859-1; ISO-8859-15; WINDOWS-1252                                                               |
-| English                 | ASCII                                                                                               |
-| Esperanto               | ISO-8859-3                                                                                          |
-| Estonian                | ISO-8859-4; ISO-8859-13; ISO-8859-13; WINDOWS-1252; WINDOWS-1257                                    |
-| Finnish                 | ISO-8859-1; ISO-8859-4; ISO-8859-9; ISO-8859-13; ISO-8859-15; WINDOWS-1252                          |
-| French                  | ISO-8859-1; ISO-8859-15; WINDOWS-1252                                                               |
-| German                  | ISO-8859-1; WINDOWS-1252                                                                            |
-| Greek                   | ISO-8859-7; WINDOWS-1253                                                                            |
-| Hebrew                  | ISO-8859-8; WINDOWS-1255                                                                            |
-| Hungarian               | ISO-8859-2; WINDOWS-1250                                                                            |
-| Irish Gaelic            | ISO-8859-1; ISO-8859-9; ISO-8859-15; WINDOWS-1252                                                   |
-| Italian                 | ISO-8859-1; ISO-8859-3; ISO-8859-9; ISO-8859-15; WINDOWS-1252                                       |
-| Japanese                | ISO-2022-JP; SHIFT_JIS; EUC-JP                                                                      |
-| Korean                  | ISO-2022-KR; EUC-KR / UHC; CP949 (via KS_C_5601-1987)                                               |
-| Lithuanian              | ISO-8859-4; ISO-8859-10; ISO-8859-13                                                                |
-| Latvian                 | ISO-8859-4; ISO-8859-10; ISO-8859-13                                                                |
-| Maltese                 | ISO-8859-3                                                                                          |
-| Polish                  | ISO-8859-2; ISO-8859-13; ISO-8859-16; WINDOWS-1250; IBM852; X-MAC-CE                                |
-| Portuguese              | ISO-8859-1; ISO-8859-9; ISO-8859-15; WINDOWS-1252                                                   |
-| Romanian                | ISO-8859-2; ISO-8859-16; WINDOWS-1250; IBM852                                                       |
-| Russian                 | ISO-8859-5; KOI8-R; WINDOWS-1251; X-MAC-CYRILLIC; IBM866; IBM855                                    |
-| Slovak                  | WINDOWS-1250; ISO-8859-2; IBM852; X-MAC-CE                                                          |
-| Slovene                 | ISO-8859-2; ISO-8859-16; WINDOWS-1250; IBM852; X-MAC-CE                                             |
-| Spanish                 | ISO-8859-1; ISO-8859-15; WINDOWS-1252                                                               |
-| Swedish                 | ISO-8859-1; ISO-8859-4; ISO-8859-9; ISO-8859-15; WINDOWS-1252                                       |
-| Thai                    | TIS-620; ISO-8859-11                                                                                |
-| Turkish                 | ISO-8859-3; ISO-8859-9                                                                              |
-| Vietnamese              | VISCII; WINDOWS-1258                                                                                |
-| Others                  | WINDOWS-1252                                                                                        |
+| International (Unicode) | utf-8; utf-16be / utf-16le; utf-32be / utf-32le / X-ISO-10646-UCS-4-34121 / X-ISO-10646-UCS-4-21431 |
+| Arabic                  | iso-8859-6; windows-1256                                                                            |
+| Bulgarian               | iso-8859-5; windows-1251                                                                            |
+| Chinese                 | iso-2022-cn (via x-cp50227); big5; euc-tw; gb18030; hz-fb-2312                                      |
+| Croatian                | iso-8859-2; iso-8859-13; iso-8859-16; windows-1250; ibm852; x-mac-ce                                |
+| Czech                   | windows-1250; iso-8859-2; ibm852; x-mac-ce                                                          |
+| Danish                  | iso-8859-1; iso-8859-15; windows-1252                                                               |
+| English                 | ascii                                                                                               |
+| Esperanto               | iso-8859-3                                                                                          |
+| Estonian                | iso-8859-4; iso-8859-13; iso-8859-13; windows-1252; windows-1257                                    |
+| Finnish                 | iso-8859-1; iso-8859-4; iso-8859-9; iso-8859-13; iso-8859-15; windows-1252                          |
+| French                  | iso-8859-1; iso-8859-15; windows-1252                                                               |
+| German                  | iso-8859-1; windows-1252                                                                            |
+| Greek                   | iso-8859-7; windows-1253                                                                            |
+| Hebrew                  | iso-8859-8; windows-1255                                                                            |
+| Hungarian               | iso-8859-2; windows-1250                                                                            |
+| Irish Gaelic            | iso-8859-1; iso-8859-9; iso-8859-15; windows-1252                                                   |
+| Italian                 | iso-8859-1; iso-8859-3; iso-8859-9; iso-8859-15; windows-1252                                       |
+| Japanese                | iso-2022-jp; shift-jis; euc-jp                                                                      |
+| Korean                  | iso-2022-kr; euc-kr / uhc; cp949 (via ks_c_5601-1987)                                               |
+| Lithuanian              | iso-8859-4; iso-8859-10; iso-8859-13                                                                |
+| Latvian                 | iso-8859-4; iso-8859-10; iso-8859-13                                                                |
+| Maltese                 | iso-8859-3                                                                                          |
+| Polish                  | iso-8859-2; iso-8859-13; iso-8859-16; windows-1250; ibm852; x-mac-ce                                |
+| Portuguese              | iso-8859-1; iso-8859-9; iso-8859-15; windows-1252                                                   |
+| Romanian                | iso-8859-2; iso-8859-16; windows-1250; ibm852                                                       |
+| Russian                 | iso-8859-5; kio8-r; windows-1251; x-mac-cyrillic; ibm855; ibm866                                    |
+| Slovak                  | windows-1250; iso-8859-2; ibm852; x-mac-ce                                                          |
+| Slovene                 | iso-8859-2; iso-8859-16; windows-1250; ibm852; x-mac-ce                                             |
+| Spanish                 | iso-8859-1; iso-8859-15; windows-1252                                                               |
+| Swedish                 | iso-8859-1; iso-8859-4; iso-8859-9; iso-8859-15; windows-1252                                       |
+| Thai                    | tis-620; iso-8859-11                                                                                |
+| Turkish                 | iso-8859-3; iso-8859-9                                                                              |
+| Vietnamese              | viscii; windows-1258                                                                                |
+| Others                  | windows-1252                                                                                        |
 
 </details>
 
