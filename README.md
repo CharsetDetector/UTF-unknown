@@ -52,10 +52,10 @@ results = CharsetDetector.DetectFromBytes(byteArray);
 DetectionDetail resultDetected = results.Detected;
 
 // Get the alias of the found encoding
-sting encodingName = resultDetected.EncodingName;
+string encodingName = resultDetected.EncodingName;
 
 // Get the System.Text.Encoding of the found encoding (can be null if not available)
-Encoding encoding = resultDetected.Encoding
+Encoding encoding = resultDetected.Encoding;
 
 // Get the confidence of the found encoding (between 0 and 1)
 float confidence = resultDetected.Confidence;
