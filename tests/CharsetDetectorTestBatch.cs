@@ -74,6 +74,26 @@ namespace UtfUnknown.Tests
         {
             TestFile(testCase.ExpectedEncoding, testCase.InputFile.FullName);
         }
+        
+        [TestCaseSource(nameof(AllTestFilesUnsupportedEncoding))]
+        public void TestFileUnsupportedEncodings(TestCase testCase)
+        {
+            var result = CharsetDetector.DetectFromFile(testCase.InputFile.FullName);
+            var detected = result.Detected;
+
+            _logWriter.WriteLine(string.Concat(
+                $"- {testCase.InputFile.FullName} ({testCase.ExpectedEncoding}) -> ",
+                $"{JsonConvert.SerializeObject(result, Formatting.Indented, new EncodingJsonConverter())}"));
+            
+            StringAssert.AreEqualIgnoringCase(
+                testCase.ExpectedEncoding,
+                detected.EncodingName,
+                string.Concat(
+                    $"Charset detection failed for {testCase.InputFile.FullName}. ",
+                    $"Expected: {testCase.ExpectedEncoding}. ",
+                    $"Detected: {detected.EncodingName} ",
+                    $"({detected.Confidence * 100.0f:0.00############}% confidence)."));
+        }
 
         public class TestCase
         {
@@ -99,6 +119,24 @@ namespace UtfUnknown.Tests
 
             var dirInfo = new DirectoryInfo(DATA_ROOT);
             var dirs = dirInfo.GetDirectories();
+            foreach (var dir in dirs)
+            {
+                testCases.AddRange(CreateTestCases(dir));
+            }
+
+            return testCases;
+        }
+        
+        private static IReadOnlyList<TestCase> AllTestFilesUnsupportedEncoding()
+        {
+            var path = Path.Combine(TESTS_ROOT, "DataUnsupported");
+            if (!Directory.Exists(path))
+            {
+                throw new DirectoryNotFoundException($"Directory Data with test files not found, path: {path}");
+            }
+            
+            var dirs = new DirectoryInfo(path).GetDirectories();
+            var testCases = new List<TestCase>();
             foreach (var dir in dirs)
             {
                 testCases.AddRange(CreateTestCases(dir));
