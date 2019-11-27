@@ -28,6 +28,9 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System.Runtime.CompilerServices;
+
+[assembly: InternalsVisibleTo("UtfUnknown.Tests")]
 namespace UtfUnknown.Core
 {
     /// <summary>
