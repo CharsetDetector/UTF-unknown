@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using UtfUnknown.Core;
 using UtfUnknown.Core.Probers;
 
+[assembly: InternalsVisibleTo("UtfUnknown.Tests")]
 namespace UtfUnknown
 {
     /// <summary>
@@ -77,7 +78,7 @@ namespace UtfUnknown
             return $"Detected {EncodingName} with confidence of {Confidence}";
         }
 
-        private static Encoding GetEncoding(string encodingShortName)
+        internal static Encoding GetEncoding(string encodingShortName)
         {
             try
             {

@@ -62,7 +62,6 @@ Features:
     <RepositoryUrl>https://github.com/CharsetDetector/UTF-unknown</RepositoryUrl>
     <RootNamespace>UtfUnknown</RootNamespace>
     <SignAssembly>True</SignAssembly>
-    <AssemblyOriginatorKeyFile>UtfUnknown.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <PropertyGroup>
