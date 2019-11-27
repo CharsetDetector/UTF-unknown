@@ -80,21 +80,25 @@ namespace UtfUnknown
 
         internal static Encoding GetEncoding(string encodingShortName)
         {
+            var encodingName = FixedToSupportCodepageName.TryGetValue(encodingShortName, out var supportCodepageName)
+                ? supportCodepageName
+                : encodingShortName;
+
+            Encoding result = null;
             try
             {
-                var encodingName = encodingShortName;
-                if (FixedToSupportCodepageName.TryGetValue(encodingShortName, out var supportCodepageName))
-                {
-                    encodingName = supportCodepageName;
-                }
-
-                return Encoding.GetEncoding(encodingName);
+                result = Encoding.GetEncoding(encodingName);
             }
             catch (Exception)
             {
-                //wrong name
-                return null;
+                // unsupported name
             }
+            
+#if NETSTANDARD && !NETSTANDARD1_0 || NETCOREAPP3_0
+            return result ?? CodePagesEncodingProvider.Instance.GetEncoding(encodingName);
+#else
+            return result;
+#endif
         }
     }
 }
