@@ -8,16 +8,27 @@ namespace UtfUnknown.Tests
 {
     public class CodepageNameTest
     {
-        [TestCaseSource(nameof(_encodingNames))]
-        public void DetectionDetailGetEncodingNotException(string codepageName)
+        [TestCaseSource(nameof(EncodingNames))]
+        public void DetectionDetailGetEncodingIsNotNull(string codepageName)
         {
             var encoding = DetectionDetail.GetEncoding(codepageName);
             Assert.IsNotNull(encoding);
         }
+
+        private static readonly HashSet<string> UnsupportedEncodings = new HashSet<string>
+        {
+            CodepageName.ISO_8859_10,
+            CodepageName.ISO_8859_16,
+            CodepageName.EUC_TW,
+            CodepageName.VISCII,
+            CodepageName.X_ISO_10646_UCS_4_2143,
+            CodepageName.X_ISO_10646_UCS_4_3412,
+        };
         
-        private static IReadOnlyList<string> _encodingNames = typeof(CodepageName)
+        private static readonly IReadOnlyList<string> EncodingNames = typeof(CodepageName)
             .GetFields(BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.CreateInstance)
             .Select(x => x.GetValue(null).ToString())
+            .Where(x => !UnsupportedEncodings.Contains(x))
             .ToList();
     }
 }
