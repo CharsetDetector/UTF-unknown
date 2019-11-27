@@ -4,6 +4,8 @@
     <TargetFrameworks>net452;net472;netcoreapp2.1;netcoreapp3.0</TargetFrameworks>
     <RootNamespace>UtfUnknown.Tests</RootNamespace>
     <AssemblyName>UtfUnknown.Tests</AssemblyName>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\src\UtfUnknown.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
 
   <ItemGroup>
