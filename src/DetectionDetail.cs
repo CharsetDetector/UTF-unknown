@@ -88,20 +88,16 @@ namespace UtfUnknown
             var encodingName = FixedToSupportCodepageName.TryGetValue(encodingShortName, out var supportCodepageName)
                 ? supportCodepageName
                 : encodingShortName;
-
-            Encoding result = null;
             try
             {
-                result = Encoding.GetEncoding(encodingName);
+                return Encoding.GetEncoding(encodingName);
             }
             catch (ArgumentException) // unsupported name
             {
 #if NETSTANDARD && !NETSTANDARD1_0 || NETCOREAPP3_0
-                result = CodePagesEncodingProvider.Instance.GetEncoding(encodingName);
+                return CodePagesEncodingProvider.Instance.GetEncoding(encodingName);
 #endif
             }
-
-            return result;
         }
     }
 }
