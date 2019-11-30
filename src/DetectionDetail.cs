@@ -94,16 +94,14 @@ namespace UtfUnknown
             {
                 result = Encoding.GetEncoding(encodingName);
             }
-            catch (Exception)
+            catch (ArgumentException) // unsupported name
             {
-                // unsupported name
-            }
-            
 #if NETSTANDARD && !NETSTANDARD1_0 || NETCOREAPP3_0
-            return result ?? CodePagesEncodingProvider.Instance.GetEncoding(encodingName);
-#else
-            return result;
+                result = CodePagesEncodingProvider.Instance.GetEncoding(encodingName);
 #endif
+            }
+
+            return result;
         }
     }
 }
