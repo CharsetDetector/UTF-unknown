@@ -96,6 +96,8 @@ namespace UtfUnknown
             {
 #if NETSTANDARD && !NETSTANDARD1_0 || NETCOREAPP3_0
                 return CodePagesEncodingProvider.Instance.GetEncoding(encodingName);
+#else
+                return null;
 #endif
             }
         }
