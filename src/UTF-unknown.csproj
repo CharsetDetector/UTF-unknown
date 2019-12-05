@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net40;netstandard1.0;netstandard1.3;netstandard2.0;netcoreapp2.0;netcoreapp3.0</TargetFrameworks>
+    <TargetFrameworks>net40;netstandard1.0;netstandard1.3;netstandard2.0;netcoreapp3.0</TargetFrameworks>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -15,7 +15,8 @@
   <PropertyGroup>
     <OutputType>Library</OutputType>
   </PropertyGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netcoreapp2.0' ">
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.3' Or '$(TargetFramework)' == 'netstandard2.0' ">
     <PackageReference Include="System.Text.Encoding.CodePages" Version="4.6.0" />
   </ItemGroup>
 
@@ -29,8 +30,11 @@
 
 Features:
 - Easy to use API
-- .NET standard 1.0 + 2.0 support
-- .NET Core 2.0 + 3.0 support
+- Supports frameworks:
+  - .NET Standard 1.0
+  - .NET Standard 1.3 and 2.0
+  - .NET Core 3.0 (because `System.Text.Encoding.CodePages` in shared framework)
+  - .NET Framework 4.0
 - Strong named
 - XML documentation included
 

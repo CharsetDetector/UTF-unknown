@@ -1,10 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using UtfUnknown.Core;
 using UtfUnknown.Core.Probers;
 
+[assembly: InternalsVisibleTo("UtfUnknown.Tests, PublicKey=" +
+"002400000480000094000000060200000024000052534131000400000100010029f6b4defac763" +
+"66721687460b44b7619e8e19a411f785279316fdae2f6965edfa4a460304fe8b4ed796d5356a1c" +
+"225131b9087983d9ff9530df9307eab17d88cd4f1005a45f6f35523445d1ff7323322f3060cffc" +
+"0d70d0cb1b4b7d46081bbead31844927aaadb0508b64bf298de5abe5ea5cca8b92490c961b7b75" +
+"13c2c2a9")]
 namespace UtfUnknown
 {
     /// <summary>
@@ -77,22 +83,22 @@ namespace UtfUnknown
             return $"Detected {EncodingName} with confidence of {Confidence}";
         }
 
-        private static Encoding GetEncoding(string encodingShortName)
+        internal static Encoding GetEncoding(string encodingShortName)
         {
+            var encodingName = FixedToSupportCodepageName.TryGetValue(encodingShortName, out var supportCodepageName)
+                ? supportCodepageName
+                : encodingShortName;
             try
             {
-                var encodingName = encodingShortName;
-                if (FixedToSupportCodepageName.TryGetValue(encodingShortName, out var supportCodepageName))
-                {
-                    encodingName = supportCodepageName;
-                }
-
                 return Encoding.GetEncoding(encodingName);
             }
-            catch (Exception)
+            catch (ArgumentException) // unsupported name
             {
-                //wrong name
+#if NETSTANDARD && !NETSTANDARD1_0 || NETCOREAPP3_0
+                return CodePagesEncodingProvider.Instance.GetEncoding(encodingName);
+#else
                 return null;
+#endif
             }
         }
     }
