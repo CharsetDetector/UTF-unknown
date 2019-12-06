@@ -33,7 +33,10 @@ Features:
 - .NET Framework 4+,
 - .NET Standard 1.0
 - .NET Standard 1.3 and 2.0 (depends on [`System.Text.Encoding.CodePages`](https://www.nuget.org/packages/System.Text.Encoding.CodePages))
-- .NET Core 3.0 (depends on `System.Text.Encoding.CodePages`, but it's in shared framework)
+- .NET Core 3.0 (depends on `System.Text.Encoding.CodePages`, but since with this version, it’s in shared framework)
+
+__Remarks:__
+You can still register your [`EncodingProvider`](https://docs.microsoft.com/ru-ru/dotnet/api/system.text.encodingprovider) so that the  [`Encoding.GetEncoding(...)`](https://docs.microsoft.com/en-us/dotnet/api/system.text.encoding.getencoding?view=netcore-3.0) method first tries to find in it.
 
 ## Usage
 
