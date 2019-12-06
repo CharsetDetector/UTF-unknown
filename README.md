@@ -29,10 +29,11 @@ Features:
 - Multiple bugs from Ude fixed
 
 ## Supported Platforms
-- .NET 4+, 
-- .NET Standard 1.0 and .NET Standard 2
-- .NET Core 2
-- .NET Core 3
+
+- .NET Framework 4+,
+- .NET Standard 1.0
+- .NET Standard 1.3 and 2.0 (depends on `System.Text.Encoding.CodePages`)
+- .NET Core 3.0 (because `System.Text.Encoding.CodePages` in shared framework)
 
 ## Usage
 
@@ -116,9 +117,9 @@ __Encodings without BOM are presented in the table, separated by languages:__
 </details>
 
 __Remarks:__
-For some aliases of encoding not available _System.Text.Encoding_: `iso-2022-cn`, `euc-tw`, `iso-8859-10`, `iso-8859-16`, `cp949`, `viscii`, `X-ISO-10646-UCS-4-34121`/`X-ISO-10646-UCS-4-21431`. Some of them have been offered a suitable replacement for the return result by  _DetectionDetail.Encoding_:
-- `iso-2022-cn` -- _Encoding_ for `ks_c_5601-1987`
-- `cp949` -- _Encoding_ for `x-cp50227`
+For some aliases of encoding not available: `cp949`, `iso-2022-cn`, `euc-tw`, `iso-8859-10`, `iso-8859-16`, `viscii`, `X-ISO-10646-UCS-4-34121`/`X-ISO-10646-UCS-4-21431`. Some of them have been offered a suitable replacement for the return result by  _DetectionDetail.Encoding_:
+- `cp949` to `ks_c_5601-1987`
+- `iso-2022-cn` to `x-cp50227`
 
 ## License
 
