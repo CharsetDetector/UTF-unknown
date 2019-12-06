@@ -32,8 +32,8 @@ Features:
 
 - .NET Framework 4+,
 - .NET Standard 1.0
-- .NET Standard 1.3 and 2.0 (depends on `System.Text.Encoding.CodePages`)
-- .NET Core 3.0 (because `System.Text.Encoding.CodePages` in shared framework)
+- .NET Standard 1.3 and 2.0 (depends on [`System.Text.Encoding.CodePages`](https://www.nuget.org/packages/System.Text.Encoding.CodePages))
+- .NET Core 3.0 (depends on `System.Text.Encoding.CodePages`, but it's in shared framework)
 
 ## Usage
 
