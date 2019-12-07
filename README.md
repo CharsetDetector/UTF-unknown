@@ -29,10 +29,14 @@ Features:
 - Multiple bugs from Ude fixed
 
 ## Supported Platforms
-- .NET 4+, 
-- .NET Standard 1.0 and .NET Standard 2
-- .NET Core 2
-- .NET Core 3
+
+- .NET Framework 4+,
+- .NET Standard 1.0
+- .NET Standard 1.3 and 2.0 (depends on [`System.Text.Encoding.CodePages`](https://www.nuget.org/packages/System.Text.Encoding.CodePages))
+- .NET Core 3.0 (depends on `System.Text.Encoding.CodePages`, but since with this version, it’s in shared framework)
+
+__Remarks:__
+You can still register your [`EncodingProvider`](https://docs.microsoft.com/ru-ru/dotnet/api/system.text.encodingprovider) so that the  [`Encoding.GetEncoding(...)`](https://docs.microsoft.com/en-us/dotnet/api/system.text.encoding.getencoding?view=netcore-3.0) method first tries to find in it.
 
 ## Usage
 
@@ -40,15 +44,28 @@ Use the static detectX methods from `CharsetDetector`.
 
 ```c#
 // Detect from File (NET standard 1.3+ or .NET 4+)
-var result = CharsetDetector.DetectFromFile("c:/myfile.txt"); //or pass FileInfo
-Encoding encoding = result.Detected.Encoding; //or result.Detected.EncodingName
-float confidence = result.Detected.Confidence; //confidence between 0 and 1
-var allDetails = result.Details;
-// Detect from Stream (NET standard 1.3+ or .NET 4+)
-var result = CharsetDetector.DetectFromStream(stream);
-// Detect from bytes
-var result = CharsetDetector.DetectFromBytes(byteArray);
+DetectionResult result = CharsetDetector.DetectFromFile("path/to/file.txt"); // or pass FileInfo
 
+// Detect from Stream (NET standard 1.3+ or .NET 4+)
+result = CharsetDetector.DetectFromStream(stream);
+
+// Detect from bytes
+results = CharsetDetector.DetectFromBytes(byteArray);
+
+// Get the best Detection
+DetectionDetail resultDetected = results.Detected;
+
+// Get the alias of the found encoding
+string encodingName = resultDetected.EncodingName;
+
+// Get the System.Text.Encoding of the found encoding (can be null if not available)
+Encoding encoding = resultDetected.Encoding;
+
+// Get the confidence of the found encoding (between 0 and 1)
+float confidence = resultDetected.Confidence;
+
+// Get all the details of the result
+IList<DetectionDetail> allDetails = result.Details;
 ```
 
 # Docs
@@ -56,49 +73,56 @@ var result = CharsetDetector.DetectFromBytes(byteArray);
 The article "[A composite approach to language/encoding detection](https://www-archive.mozilla.org/projects/intl/UniversalCharsetDetection.html)" describes the charsets detection algorithms implemented by the library.
 
 <details>
-  <summary>The following charsets are supported</summary>
+  <summary>The following charsets are supported to deteсt</summary>
 
-|        Language         | Encodings                                                                                           |
-|-------------------------|-----------------------------------------------------------------------------------------------------|
-| International (Unicode) | UTF-8; UTF-16BE / UTF-16LE; UTF-32BE / UTF-32LE / X-ISO-10646-UCS-4-34121 / X-ISO-10646-UCS-4-21431 |
-| Arabic                  | ISO-8859-6; WINDOWS-1256                                                                            |
-| Bulgarian               | ISO-8859-5; WINDOWS-1251                                                                            |
-| Chinese                 | ISO-2022-CN; BIG5; EUC-TW; GB18030; HZ-GB-2312                                                      |
-| Croatian                | ISO-8859-2; ISO-8859-13; ISO-8859-16; WINDOWS-1250; IBM852; MAC-CENTRALEUROPE                       |
-| Czech                   | WINDOWS-1250; ISO-8859-2; IBM852; MAC-CENTRALEUROPE                                                 |
-| Danish                  | ISO-8859-1; ISO-8859-15; WINDOWS-1252                                                               |
-| English                 | ASCII                                                                                               |
-| Esperanto               | ISO-8859-3                                                                                          |
-| Estonian                | ISO-8859-4; ISO-8859-13; ISO-8859-13; WINDOWS-1252; WINDOWS-1257                                    |
-| Finnish                 | ISO-8859-1; ISO-8859-4; ISO-8859-9; ISO-8859-13; ISO-8859-15; WINDOWS-1252                          |
-| French                  | ISO-8859-1; ISO-8859-15; WINDOWS-1252                                                               |
-| German                  | ISO-8859-1; WINDOWS-1252                                                                            |
-| Greek                   | ISO-8859-7; WINDOWS-1253                                                                            |
-| Hebrew                  | ISO-8859-8; WINDOWS-1255                                                                            |
-| Hungarian               | ISO-8859-2; WINDOWS-1250                                                                            |
-| Irish Gaelic            | ISO-8859-1; ISO-8859-9; ISO-8859-15; WINDOWS-1252                                                   |
-| Italian                 | ISO-8859-1; ISO-8859-3; ISO-8859-9; ISO-8859-15; WINDOWS-1252                                       |
-| Japanese                | ISO-2022-JP; SHIFT_JIS; EUC-JP                                                                      |
-| Korean                  | ISO-2022-KR; EUC-KR / UHC; WINDOWS-949                                                              |
-| Lithuanian              | ISO-8859-4; ISO-8859-10; ISO-8859-13                                                                |
-| Latvian                 | ISO-8859-4; ISO-8859-10; ISO-8859-13                                                                |
-| Maltese                 | ISO-8859-3                                                                                          |
-| Polish                  | ISO-8859-2; ISO-8859-13; ISO-8859-16; WINDOWS-1250; IBM852; MAC-CENTRALEUROPE                       |
-| Portuguese              | ISO-8859-1; ISO-8859-9; ISO-8859-15; WINDOWS-1252                                                   |
-| Romanian                | ISO-8859-2; ISO-8859-16; WINDOWS-1250; IBM852                                                       |
-| Russian                 | ISO-8859-5; KOI8-R; WINDOWS-1251; MAC-CYRILLIC; IBM866; IBM855                                      |
-| Slovak                  | WINDOWS-1250; ISO-8859-2; IBM852; MAC-CENTRALEUROPE                                                 |
-| Slovene                 | ISO-8859-2; ISO-8859-16; WINDOWS-1250; IBM852; MAC-CENTRALEUROPE                                    |
-| Spanish                 | ISO-8859-1; ISO-8859-15; WINDOWS-1252                                                               |
-| Swedish                 | ISO-8859-1; ISO-8859-4; ISO-8859-9; ISO-8859-15; WINDOWS-1252                                       |
-| Thai                    | TIS-620; ISO-8859-11                                                                                |
-| Turkish                 | ISO-8859-3; ISO-8859-9                                                                              |
-| Vietnamese              | VISCII; WINDOWS-1258                                                                                |
-| Others                  | WINDOWS-1252                                                                                        |
+__Encodings with BOM:__ `utf-7`, `utf-8`, `utf-16be`/`utf-16le`, `utf-32be`/`utf-32le`, `X-ISO-10646-UCS-4-34121`/`X-ISO-10646-UCS-4-21431`, `gb18030`.
+
+__Encodings without BOM are presented in the table, separated by languages:__
+
+|         Language        |  Encodings                                                                             |
+|-------------------------|----------------------------------------------------------------------------------------|
+| International (Unicode) | `utf-8`                                                                                |
+| Arabic                  | `iso-8859-6`, `windows-1256`                                                           |
+| Bulgarian               | `iso-8859-5`, `windows-1251`                                                           |
+| Chinese                 | `iso-2022-cn`, `big5`, `euc-tw`, `gb18030`, `hz-gb-2312`                               |
+| Croatian                | `iso-8859-2`, `iso-8859-13`, `iso-8859-16`, `windows-1250`, `ibm852`, `x-mac-ce`       |
+| Czech                   | `windows-1250`, `iso-8859-2`, `ibm852`, `x-mac-ce`                                     |
+| Danish                  | `iso-8859-1`, `iso-8859-15`, `windows-1252`                                            |
+| English                 | `ascii`                                                                                |
+| Esperanto               | `iso-8859-3`                                                                           |
+| Estonian                | `iso-8859-4`, `iso-8859-13`, `iso-8859-13`, `windows-1252`, `windows-1257`             |
+| Finnish                 | `iso-8859-1`, `iso-8859-4`, `iso-8859-9`, `iso-8859-13`, `iso-8859-15`, `windows-1252` |
+| French                  | `iso-8859-1`, `iso-8859-15`, `windows-1252`                                            |
+| German                  | `iso-8859-1`, `windows-1252`                                                           |
+| Greek                   | `iso-8859-7`, `windows-1253`                                                           |
+| Hebrew                  | `iso-8859-8`, `windows-1255`                                                           |
+| Hungarian               | `iso-8859-2`, `windows-1250`                                                           |
+| Irish Gaelic            | `iso-8859-1`, `iso-8859-9`, `iso-8859-15`, `windows-1252`                              |
+| Italian                 | `iso-8859-1`, `iso-8859-3`, `iso-8859-9`, `iso-8859-15`, `windows-1252`                |
+| Japanese                | `iso-2022-jp`, `shift-jis`, `euc-jp`                                                   |
+| Korean                  | `iso-2022-kr`, `euc-kr`/`uhc`, `cp949`                                                 |
+| Lithuanian              | `iso-8859-4`, `iso-8859-10`, `iso-8859-13`                                             |
+| Latvian                 | `iso-8859-4`, `iso-8859-10`, `iso-8859-13`                                             |
+| Maltese                 | `iso-8859-3`                                                                           |
+| Polish                  | `iso-8859-2`, `iso-8859-13`, `iso-8859-16`, `windows-1250`, `ibm852`, `x-mac-ce`       |
+| Portuguese              | `iso-8859-1`, `iso-8859-9`, `iso-8859-15`, `windows-1252`                              |
+| Romanian                | `iso-8859-2`, `iso-8859-16`, `windows-1250`, `ibm852`                                  |
+| Russian                 | `iso-8859-5`, `koi8-r`, `windows-1251`, `x-mac-cyrillic`, `ibm855`, `ibm866`           |
+| Slovak                  | `windows-1250`, `iso-8859-2`, `ibm852`, `x-mac-ce`                                     |
+| Slovene                 | `iso-8859-2`, `iso-8859-16`, `windows-1250`, `ibm852`, `x-mac-ce`                      |
+| Spanish                 | `iso-8859-1`, `iso-8859-15`, `windows-1252`                                            |
+| Swedish                 | `iso-8859-1`, `iso-8859-4`, `iso-8859-9`, `iso-8859-15`, `windows-1252`                |
+| Thai                    | `tis-620`, `iso-8859-11`                                                               |
+| Turkish                 | `iso-8859-3`, `iso-8859-9`                                                             |
+| Vietnamese              | `viscii`, `windows-1258`                                                               |
+| Others                  | `windows-1252`                                                                         |
 
 </details>
 
-
+__Remarks:__
+For some aliases of encoding not available: `cp949`, `iso-2022-cn`, `euc-tw`, `iso-8859-10`, `iso-8859-16`, `viscii`, `X-ISO-10646-UCS-4-34121`/`X-ISO-10646-UCS-4-21431`. Some of them have been offered a suitable replacement for the return result by  _DetectionDetail.Encoding_:
+- `cp949` to `ks_c_5601-1987`
+- `iso-2022-cn` to `x-cp50227`
 
 ## License
 

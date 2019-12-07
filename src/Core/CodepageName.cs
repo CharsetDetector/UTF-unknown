@@ -91,7 +91,7 @@ namespace UtfUnknown.Core
         /// EUC Taiwan codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Not supported?
+        /// Not supported.
         /// </remarks>
         internal const string EUC_TW = "euc-tw";
         
@@ -263,7 +263,7 @@ namespace UtfUnknown.Core
         /// ISO 8859-10 Latin-6 Nordic codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Not supported?
+        /// Not supported.
         /// </remarks>
         internal const string ISO_8859_10 = "iso-8859-10";
         
@@ -292,7 +292,7 @@ namespace UtfUnknown.Core
         /// ISO 8859-16 codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Not supported?
+        /// Not supported.
         /// </remarks>
         internal const string ISO_8859_16 = "iso-8859-16";
 
@@ -378,7 +378,8 @@ namespace UtfUnknown.Core
         /// VISCII codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Not supported?
+        /// Not supported. It's an unofficially-defined modified ASCII character encoding for using the Vietnamese language with computers.
+        /// See https://en.wikipedia.org/wiki/VISCII
         /// </remarks>
         internal const string VISCII = "viscii";
 
@@ -386,7 +387,8 @@ namespace UtfUnknown.Core
         /// X-ISO-10646-UCS-4-3412 codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Not supported?
+        /// Not supported? ISO 10646 and Unicode only include big-endian and little-endian UCS-4/UTF-32, not middle-endian.
+        /// See https://stackoverflow.com/a/21896370
         /// </remarks>
         internal const string X_ISO_10646_UCS_4_3412 = "X-ISO-10646-UCS-4-3412";
 
@@ -394,7 +396,8 @@ namespace UtfUnknown.Core
         /// X-ISO-10646-UCS-4-2143 codepage name.
         /// </summary>
         /// <remarks>
-        /// TODO: Not supported?
+        /// Not supported? ISO 10646 and Unicode only include big-endian and little-endian UCS-4/UTF-32, not middle-endian.
+        /// See https://stackoverflow.com/a/21896370
         /// </remarks>
         internal const string X_ISO_10646_UCS_4_2143 = "X-ISO-10646-UCS-4-2143";
     }
