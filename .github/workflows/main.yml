@@ -1,12 +1,16 @@
-name: Release drafter
+name: Release Drafter
 
-on: [push]
+on:
+  push:
+    # branches to consider in the event; optional, defaults to all
+    branches:
+      - master
 
 jobs:
-  build:
-
+  update_release_draft:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Release Drafter
-        uses: release-drafter/release-drafter@v5.3.1
+      # Drafts your next Release notes as Pull Requests are merged into "master"
+      - uses: release-drafter/release-drafter@v5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
