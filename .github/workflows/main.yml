@@ -1,4 +1,4 @@
-name: my-workflow
+name: Changelog generator
 
 on: [push]
 
