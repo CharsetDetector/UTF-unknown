@@ -1,0 +1,20 @@
+name: my-workflow
+
+on: [push]
+
+jobs:
+  autocommit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - uses: teaminkling/skip-commit@master
+        with:
+          commit-filter: skip-log, skip-ci, automated
+      - uses: teaminkling/autologger@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_repository: ${{ github.repository }}
+      - uses: teaminkling/autocommit@master
+      - uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
