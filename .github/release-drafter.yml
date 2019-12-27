@@ -14,7 +14,7 @@ categories:
       - 'bugfix'
       - 'bug'
   - title: '🔧 Maintenance'
-    label: 
+    labels: 
        - 'refactor'
        - 'test'
        - 'tests'
