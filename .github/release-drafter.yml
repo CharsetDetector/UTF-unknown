@@ -6,7 +6,8 @@ categories:
       - 'feature'
   - title: '👍 Enhancements'
     labels:
-      - 'enhancement'      
+      - 'enhancement'   
+      - 'documentation'
   - title: '🐛 Bug Fixes'
     labels:
       - 'fix'
@@ -15,6 +16,8 @@ categories:
   - title: '🔧 Maintenance'
     label: 
        - 'refactor'
+       - 'test'
+       - 'tests'
 exclude-labels:
   - 'skip-changelog'  
   - 'build'
@@ -23,7 +26,4 @@ template: |
   ## Changes
 
   $CHANGES
-  
-  ## Contributors
-
-  $CONTRIBUTORS
+ 
