@@ -24,6 +24,6 @@ template: |
 
   $CHANGES
   
-  ### Thanks to!
-  
-  $CONTRIBUTORS
+  ## Contributors
+
+  Thanks to $CONTRIBUTORS !
