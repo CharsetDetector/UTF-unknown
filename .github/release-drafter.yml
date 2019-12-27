@@ -1,19 +1,29 @@
-name-template: 'v$NEXT_PATCH_VERSION 🌈'
-tag-template: 'v$NEXT_PATCH_VERSION'
+name-template: 'Version $NEXT_MINOR_VERSION'
+tag-template: 'v$NEXT_MINOR_VERSION'
 categories:
   - title: '🚀 Features'
     labels:
       - 'feature'
-      - 'enhancement'
+  - title: '👍 Enhancements'
+    labels:
+      - 'enhancement'      
   - title: '🐛 Bug Fixes'
     labels:
       - 'fix'
       - 'bugfix'
       - 'bug'
-  - title: '🧰 Maintenance'
-    label: 'chore'
+  - title: '🔧 Maintenance'
+    label: 
+       - 'refactor'
+exclude-labels:
+  - 'skip-changelog'  
+  - 'build'
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
 template: |
   ## Changes
 
   $CHANGES
+  
+  ### Thanks to!
+  
+  $CONTRIBUTORS
