@@ -54,9 +54,7 @@ Features:
 
     <PackageTags>charset;detection;unicode;ascii;netstandard</PackageTags>
     <PackageReleaseNotes>
-- Support for .NET Core 3 (thanks @rstm-sf)
-- Support for .NET Core 2
-- Improved dependencies for .NET Standard 2
+- See https://github.com/CharsetDetector/UTF-unknown/releases
     </PackageReleaseNotes>
     <PackageIconUrl>https://raw.githubusercontent.com/CharsetDetector/UTF-unknown/master/logo.png</PackageIconUrl>
     <PackageProjectUrl>https://github.com/CharsetDetector/UTF-unknown</PackageProjectUrl>
