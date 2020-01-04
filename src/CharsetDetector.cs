@@ -133,6 +133,37 @@ namespace UtfUnknown
             return detector.DataEnd();
         }
 
+        /// <summary>
+        /// Detect the character encoding form this byte array.
+        /// </summary>
+        /// <param name="bytes"></param>
+        /// <param name="offset"></param>
+        /// <param name="len"></param>
+        /// <returns></returns>
+        public static DetectionResult DetectFromBytes(byte[] bytes, int offset, int len)
+        {
+            if (bytes == null)
+            {
+                throw new ArgumentNullException(nameof(bytes));
+            }
+            if (offset < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(offset));
+            }
+            if (len < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(len));
+            }
+            if (bytes.Length - offset < len)
+            {
+                throw new ArgumentOutOfRangeException(nameof(len));
+            }
+
+            var detector = new CharsetDetector();
+            detector.Feed(bytes, offset, len);
+            return detector.DataEnd();
+        }
+
 #if !NETSTANDARD1_0
 
         /// <summary>

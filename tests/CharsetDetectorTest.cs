@@ -59,7 +59,26 @@ namespace UtfUnknown.Tests
             // Assert
             Assert.AreEqual(expectedPosition, stream.Position);
         }
-        
+
+        [Test]
+        [TestCase(0, 10, CodepageName.ASCII)]
+        [TestCase(0, 100, CodepageName.UTF8)]
+        [TestCase(10, 100, CodepageName.UTF8)]
+        public void DetectFromByteArray(int offset, int len, string detectedCodepage)
+        {
+            // Arrange
+            string s = "UTF-Unknown은 파일, 스트림, 그 외 바이트 배열의 캐릭터 셋을 탐지하는 라이브러리입니다." + 
+                "대한민국 (大韓民國, Republic of Korea)";
+            byte[] bytes = Encoding.UTF8.GetBytes(s);
+
+            // Act
+            var result = CharsetDetector.DetectFromBytes(bytes, offset, len);
+
+            // Assert
+            Assert.AreEqual(detectedCodepage, result.Detected.EncodingName);
+            Assert.AreEqual(1.0f, result.Detected.Confidence);
+        }
+
         [Test]
         [TestCase(new byte[] { 0x2B, 0x2F, 0x76, 0x38 })]
         [TestCase(new byte[] { 0x2B, 0x2F, 0x76, 0x39 })]
