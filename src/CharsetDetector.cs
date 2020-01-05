@@ -306,7 +306,7 @@ namespace UtfUnknown
                     return;
             }
 
-            FindInputState(buf, len);
+            FindInputState(buf, offset, len);
             foreach (var prober in CharsetProbers)
             {
                 _done = RunProber(buf, offset, len, prober);
@@ -337,12 +337,12 @@ namespace UtfUnknown
             return false;
         }
 
-        private void FindInputState(byte[] buf, int len)
+        private void FindInputState(byte[] buf, int offset, int len)
         {
             for (int i = 0; i < len; i++)
             {
                 // other than 0xa0, if every other character is ascii, the page is ascii
-                if ((buf[i] & 0x80) != 0 && buf[i] != 0xA0)
+                if ((buf[offset + i] & 0x80) != 0 && buf[offset + i] != 0xA0)
                 {
                     // we got a non-ascii byte (high-byte)
                     if (InputState != InputState.Highbyte)
@@ -357,13 +357,13 @@ namespace UtfUnknown
                 else
                 {
                     if (InputState == InputState.PureASCII &&
-                        (buf[i] == 0x1B || (buf[i] == 0x7B && _lastChar == 0x7E)))
+                        (buf[offset + i] == 0x1B || (buf[offset + i] == 0x7B && _lastChar == 0x7E)))
                     {
                         // found escape character or HZ "~{"
                         InputState = InputState.EscASCII;
                         _escCharsetProber = _escCharsetProber ?? GetNewProbers();
                     }
-                    _lastChar = buf[i];
+                    _lastChar = buf[offset + i];
                 }
             }
         }
