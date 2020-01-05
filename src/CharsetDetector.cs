@@ -339,7 +339,7 @@ namespace UtfUnknown
 
         private void FindInputState(byte[] buf, int offset, int len)
         {
-            for (int i = 0; i < len; i++)
+            for (int i = offset; i < len; i++)
             {
                 // other than 0xa0, if every other character is ascii, the page is ascii
                 if ((buf[offset + i] & 0x80) != 0 && buf[offset + i] != 0xA0)
