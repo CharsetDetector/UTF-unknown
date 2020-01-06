@@ -342,7 +342,7 @@ namespace UtfUnknown
             for (int i = offset; i < len; i++)
             {
                 // other than 0xa0, if every other character is ascii, the page is ascii
-                if ((buf[offset + i] & 0x80) != 0 && buf[offset + i] != 0xA0)
+                if ((buf[i] & 0x80) != 0 && buf[i] != 0xA0)
                 {
                     // we got a non-ascii byte (high-byte)
                     if (InputState != InputState.Highbyte)
@@ -357,13 +357,13 @@ namespace UtfUnknown
                 else
                 {
                     if (InputState == InputState.PureASCII &&
-                        (buf[offset + i] == 0x1B || (buf[offset + i] == 0x7B && _lastChar == 0x7E)))
+                        (buf[i] == 0x1B || (buf[i] == 0x7B && _lastChar == 0x7E)))
                     {
                         // found escape character or HZ "~{"
                         InputState = InputState.EscASCII;
                         _escCharsetProber = _escCharsetProber ?? GetNewProbers();
                     }
-                    _lastChar = buf[offset + i];
+                    _lastChar = buf[i];
                 }
             }
         }
