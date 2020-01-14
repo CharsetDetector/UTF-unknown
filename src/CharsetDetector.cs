@@ -118,8 +118,9 @@ namespace UtfUnknown
 
         /// <summary>
         /// Detect the character encoding form this byte array.
+        /// It searchs for BOM from bytes[0].
         /// </summary>
-        /// <param name="bytes"></param>
+        /// <param name="bytes">The byte array containing the text</param>
         /// <returns></returns>
         public static DetectionResult DetectFromBytes(byte[] bytes)
         {
@@ -134,11 +135,12 @@ namespace UtfUnknown
         }
 
         /// <summary>
-        /// Detect the character encoding form this byte array.
+        /// Detect the character encoding form this byte array. 
+        /// It searchs for BOM from bytes[offset].
         /// </summary>
-        /// <param name="bytes"></param>
-        /// <param name="offset"></param>
-        /// <param name="len"></param>
+        /// <param name="bytes">The byte array containing the text</param>
+        /// <param name="offset">The zero-based byte offset in buffer at which to begin reading the data from</param>
+        /// <param name="len">The maximum number of bytes to be read</param>
         /// <returns></returns>
         public static DetectionResult DetectFromBytes(byte[] bytes, int offset, int len)
         {
@@ -154,9 +156,9 @@ namespace UtfUnknown
             {
                 throw new ArgumentOutOfRangeException(nameof(len));
             }
-            if (bytes.Length - offset < len)
+            if (bytes.Length < offset + len)
             {
-                throw new ArgumentOutOfRangeException(nameof(len));
+                throw new ArgumentException($"{nameof(len)} is greater than the number of bytes from {nameof(offset)} to the end of the array.");
             }
 
             var detector = new CharsetDetector();
