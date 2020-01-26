@@ -118,8 +118,9 @@ namespace UtfUnknown
 
         /// <summary>
         /// Detect the character encoding form this byte array.
+        /// It searchs for BOM from bytes[0].
         /// </summary>
-        /// <param name="bytes"></param>
+        /// <param name="bytes">The byte array containing the text</param>
         /// <returns></returns>
         public static DetectionResult DetectFromBytes(byte[] bytes)
         {
@@ -130,6 +131,38 @@ namespace UtfUnknown
 
             var detector = new CharsetDetector();
             detector.Feed(bytes, 0, bytes.Length);
+            return detector.DataEnd();
+        }
+
+        /// <summary>
+        /// Detect the character encoding form this byte array. 
+        /// It searchs for BOM from bytes[offset].
+        /// </summary>
+        /// <param name="bytes">The byte array containing the text</param>
+        /// <param name="offset">The zero-based byte offset in buffer at which to begin reading the data from</param>
+        /// <param name="len">The maximum number of bytes to be read</param>
+        /// <returns></returns>
+        public static DetectionResult DetectFromBytes(byte[] bytes, int offset, int len)
+        {
+            if (bytes == null)
+            {
+                throw new ArgumentNullException(nameof(bytes));
+            }
+            if (offset < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(offset));
+            }
+            if (len < 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(len));
+            }
+            if (bytes.Length < offset + len)
+            {
+                throw new ArgumentException($"{nameof(len)} is greater than the number of bytes from {nameof(offset)} to the end of the array.");
+            }
+
+            var detector = new CharsetDetector();
+            detector.Feed(bytes, offset, len);
             return detector.DataEnd();
         }
 
@@ -270,12 +303,12 @@ namespace UtfUnknown
             if (_start)
             {
                 _start = false;
-                _done = IsStartsWithBom(buf, len);
+                _done = IsStartsWithBom(buf, offset, len);
                 if (_done)
                     return;
             }
 
-            FindInputState(buf, len);
+            FindInputState(buf, offset, len);
             foreach (var prober in CharsetProbers)
             {
                 _done = RunProber(buf, offset, len, prober);
@@ -284,9 +317,9 @@ namespace UtfUnknown
             }
         }
 
-        private bool IsStartsWithBom(byte[] buf, int len)
+        private bool IsStartsWithBom(byte[] buf, int offset, int len)
         {
-            var bomSet = FindCharSetByBom(buf, len);
+            var bomSet = FindCharSetByBom(buf, offset, len);
             if (bomSet != null)
             {
                 _detectionDetail = new DetectionDetail(bomSet, 1.0f);
@@ -306,9 +339,9 @@ namespace UtfUnknown
             return false;
         }
 
-        private void FindInputState(byte[] buf, int len)
+        private void FindInputState(byte[] buf, int offset, int len)
         {
-            for (int i = 0; i < len; i++)
+            for (int i = offset; i < len; i++)
             {
                 // other than 0xa0, if every other character is ascii, the page is ascii
                 if ((buf[i] & 0x80) != 0 && buf[i] != 0xA0)
@@ -337,19 +370,19 @@ namespace UtfUnknown
             }
         }
 
-        private static string FindCharSetByBom(byte[] buf, int len)
+        private static string FindCharSetByBom(byte[] buf, int offset, int len)
         {
             if (len < 2)
                 return null;
 
-            var buf0 = buf[0];
-            var buf1 = buf[1];
+            var buf0 = buf[offset + 0];
+            var buf1 = buf[offset + 1];
 
             if (buf0 == 0xFE && buf1 == 0xFF)
             {
                 // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
                 return len > 3
-                        && buf[2] == 0x00 && buf[3] == 0x00
+                        && buf[offset + 2] == 0x00 && buf[offset + 3] == 0x00
                     ? CodepageName.X_ISO_10646_UCS_4_3412
                     : CodepageName.UTF16_BE;
             }
@@ -357,7 +390,7 @@ namespace UtfUnknown
             if (buf0 == 0xFF && buf1 == 0xFE)
             {
                 return len > 3
-                       && buf[2] == 0x00 && buf[3] == 0x00
+                       && buf[offset + 2] == 0x00 && buf[offset + 3] == 0x00
                     ? CodepageName.UTF32_LE
                     : CodepageName.UTF16_LE;
             }
@@ -365,7 +398,7 @@ namespace UtfUnknown
             if (len < 3)
                 return null;
 
-            if (buf0 == 0xEF && buf1 == 0xBB && buf[2] == 0xBF)
+            if (buf0 == 0xEF && buf1 == 0xBB && buf[offset + 2] == 0xBF)
                 return CodepageName.UTF8;
             
             if (len < 4)
@@ -374,22 +407,22 @@ namespace UtfUnknown
             //Here, because anyway further more than 3 positions are checked.
             if (buf0 == 0x00 && buf1 == 0x00)
             {
-                if (buf[2] == 0xFE && buf[3] == 0xFF)
+                if (buf[offset + 2] == 0xFE && buf[offset + 3] == 0xFF)
                     return CodepageName.UTF32_BE;
 
                 // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
-                if (buf[2] == 0xFF && buf[3] == 0xFE)
+                if (buf[offset + 2] == 0xFF && buf[offset + 3] == 0xFE)
                     return CodepageName.X_ISO_10646_UCS_4_2143;
             }
 
             // Detect utf-7 with bom (see table in https://en.wikipedia.org/wiki/Byte_order_mark)
-            if (buf0 == 0x2B && buf1 == 0x2F && buf[2] == 0x76)
-                if (buf[3] == 0x38 || buf[3] == 0x39 || buf[3] == 0x2B || buf[3] == 0x2F)
+            if (buf0 == 0x2B && buf1 == 0x2F && buf[offset + 2] == 0x76)
+                if (buf[offset + 3] == 0x38 || buf[offset + 3] == 0x39 || buf[offset + 3] == 0x2B || buf[offset + 3] == 0x2F)
                     return CodepageName.UTF7;
             
             // Detect GB18030 with bom (see table in https://en.wikipedia.org/wiki/Byte_order_mark)
             // TODO: If you remove this check, GB18030Prober will still be defined as GB18030 -- It's feature or bug?
-            if (buf0 == 0x84 && buf1 == 0x31 && buf[2] == 0x95 && buf[3] == 0x33)
+            if (buf0 == 0x84 && buf1 == 0x31 && buf[offset + 2] == 0x95 && buf[offset + 3] == 0x33)
                 return CodepageName.GB18030;
             
             return null;
