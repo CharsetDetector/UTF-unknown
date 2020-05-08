@@ -264,7 +264,7 @@ namespace UtfUnknown
                 throw new ArgumentNullException(nameof(filePath));
             }
 
-            using (FileStream fs = File.OpenRead(filePath))
+            using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 return DetectFromStream(fs);
             }
@@ -281,7 +281,7 @@ namespace UtfUnknown
                 throw new ArgumentNullException(nameof(file));
             }
 
-            using (FileStream fs = file.OpenRead())
+            using (FileStream fs = new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 return DetectFromStream(fs);
             }
