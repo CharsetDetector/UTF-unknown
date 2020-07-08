@@ -1,6 +1,6 @@
-using System;
+
 using System.Collections.Generic;
-using System.Linq;
+
 
 namespace UtfUnknown
 {
@@ -36,8 +36,19 @@ namespace UtfUnknown
         /// <summary>
         /// Get the best Detection
         /// </summary>
-        public DetectionDetail Detected => Details?.FirstOrDefault();
-
+        public DetectionDetail Detected 
+        {
+            get
+            {
+                if (Details == null || Details.Count < 1)
+                    return null;
+                
+                return Details[0];
+            }
+           
+        }
+        
+        
         /// <summary>
         /// All results
         /// </summary>
@@ -45,7 +56,15 @@ namespace UtfUnknown
 
         public override string ToString()
         {
-            return $"{nameof(Detected)}: {Detected}, \n{nameof(Details)}:\n - {string.Join("\n- ", Details?.Select(d => d.ToString()))}";
+            string[] details = new string[Details?.Count ?? 0];
+            for (int i = 0; i < details.Length; ++i)
+            {
+                details[i] = Details[i].ToString();
+            }
+            
+            return $"{nameof(Detected)}: {Detected}, \n{nameof(Details)}:\n - {string.Join("\n- ", details)}";
         }
+        
+        
     }
 }

@@ -38,12 +38,12 @@
  * ***** END LICENSE BLOCK ***** */
 
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
+using System.Collections.Generic;
 
 using UtfUnknown.Core;
 using UtfUnknown.Core.Probers;
+
 
 namespace UtfUnknown
 {
@@ -444,20 +444,28 @@ namespace UtfUnknown
             if (_detectionDetail != null)
             {
                 _done = true;
-
+                
                 // conf 1.0 is from v1.0 (todo wrong?)
                 _detectionDetail.Confidence = 1.0f;
                 return new DetectionResult(_detectionDetail);
             }
-
+            
             if (InputState == InputState.Highbyte)
             {
-                var detectionResults = _charsetProbers
-                    .Select(prober => new DetectionDetail(prober))
-                    .Where(result => result.Confidence > MinimumThreshold)
-                    .OrderByDescending(result => result.Confidence)
-                    .ToList();
-
+                List<DetectionDetail> detectionResults = new List<DetectionDetail>();
+                foreach (CharsetProber thisCharsetProber in _charsetProbers)
+                {
+                    DetectionDetail ddet = new DetectionDetail(thisCharsetProber);
+                    if(ddet.Confidence > MinimumThreshold)
+                        detectionResults.Add(ddet);
+                }
+                
+                detectionResults.Sort(delegate(DetectionDetail detailA, DetectionDetail detailB)
+                {
+                    return detailB.Confidence.CompareTo(detailA.Confidence); // Descending
+                    // return detailA.Confidence.CompareTo();
+                });
+                
                 return new DetectionResult(detectionResults);
 
                 //TODO why done isn't true?
