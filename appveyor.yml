@@ -35,6 +35,6 @@ dotnet_csproj:
 deploy:
 - provider: NuGet
   api_key:
-    secure: AJukx1Xao4KhoyfVO3Cblf3thOZQX8B1H6pH4af9e3+drfsYY2sClu4yEhIopbE8
+    secure: y3pNt9TsJQiWTgDNicvghmSj65QnlFS3exDhDMn/T0v6kULURU+Cd3O1CwjxtSb4
   on:
     branch: master
