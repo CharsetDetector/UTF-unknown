@@ -45,6 +45,8 @@ using System.Linq;
 using UtfUnknown.Core;
 using UtfUnknown.Core.Probers;
 
+#nullable enable
+
 namespace UtfUnknown
 {
     /// <summary>
@@ -78,14 +80,14 @@ namespace UtfUnknown
         /// <summary>
         /// "list" of probers
         /// </summary>
-        private IList<CharsetProber> _charsetProbers;
+        private IList<CharsetProber>? _charsetProbers;
 
         /// <summary>
         /// TODO unknown
         /// </summary>
-        private IList<CharsetProber> _escCharsetProber;
+        private IList<CharsetProber>? _escCharsetProber;
 
-        private IList<CharsetProber> CharsetProbers
+        private IList<CharsetProber>? CharsetProbers
         {
             get
             {
@@ -105,7 +107,7 @@ namespace UtfUnknown
         /// <summary>
         /// Detected charset. Most of the time <see cref="_done"/> is true
         /// </summary>
-        private DetectionDetail _detectionDetail;
+        private DetectionDetail? _detectionDetail;
 
         private const float MinimumThreshold = 0.20f;
 
@@ -309,6 +311,9 @@ namespace UtfUnknown
             }
 
             FindInputState(buf, offset, len);
+
+            if (CharsetProbers == null)
+                return;
             foreach (var prober in CharsetProbers)
             {
                 _done = RunProber(buf, offset, len, prober);
@@ -370,7 +375,7 @@ namespace UtfUnknown
             }
         }
 
-        private static string FindCharSetByBom(byte[] buf, int offset, int len)
+        private static string? FindCharSetByBom(byte[] buf, int offset, int len)
         {
             if (len < 2)
                 return null;
@@ -452,7 +457,7 @@ namespace UtfUnknown
 
             if (InputState == InputState.Highbyte)
             {
-                var detectionResults = _charsetProbers
+                var detectionResults = _charsetProbers?
                     .Select(prober => new DetectionDetail(prober))
                     .Where(result => result.Confidence > MinimumThreshold)
                     .OrderByDescending(result => result.Confidence)

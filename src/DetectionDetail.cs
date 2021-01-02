@@ -5,6 +5,8 @@ using System.Text;
 using UtfUnknown.Core;
 using UtfUnknown.Core.Probers;
 
+#nullable enable
+
 [assembly: InternalsVisibleTo("UtfUnknown.Tests, PublicKey=" +
 "002400000480000094000000060200000024000052534131000400000100010029f6b4defac763" +
 "66721687460b44b7619e8e19a411f785279316fdae2f6965edfa4a460304fe8b4ed796d5356a1c" +
@@ -32,8 +34,8 @@ namespace UtfUnknown
         /// <summary>
         /// New result
         /// </summary>
-        public DetectionDetail(string encodingShortName, float confidence, CharsetProber prober = null,
-            TimeSpan? time = null, string statusLog = null)
+        public DetectionDetail(string encodingShortName, float confidence, CharsetProber? prober = null,
+            TimeSpan? time = null, string? statusLog = null)
         {
             EncodingName = encodingShortName;
             Confidence = confidence;
@@ -59,7 +61,7 @@ namespace UtfUnknown
         /// <summary>
         /// The detected encoding. 
         /// </summary>
-        public Encoding Encoding { get; set; }
+        public Encoding? Encoding { get; set; }
 
         /// <summary>
         /// The confidence of the found encoding. Between 0 and 1.
@@ -69,21 +71,21 @@ namespace UtfUnknown
         /// <summary>
         /// The used prober for detection
         /// </summary>
-        public CharsetProber Prober { get; set; }
+        public CharsetProber? Prober { get; set; }
 
         /// <summary>
         /// The time spend
         /// </summary>
         public TimeSpan? Time { get; set; }
 
-        public string StatusLog { get; set; }
+        public string? StatusLog { get; set; }
 
         public override string ToString()
         {
             return $"Detected {EncodingName} with confidence of {Confidence}";
         }
 
-        internal static Encoding GetEncoding(string encodingShortName)
+        internal static Encoding? GetEncoding(string encodingShortName)
         {
             var encodingName = FixedToSupportCodepageName.TryGetValue(encodingShortName, out var supportCodepageName)
                 ? supportCodepageName
