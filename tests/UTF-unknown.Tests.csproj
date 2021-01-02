@@ -1,11 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net452;netcoreapp2.1;netcoreapp3.0</TargetFrameworks>
+    <TargetFrameworks>net452;netcoreapp2.1;netcoreapp3.1</TargetFrameworks>
     <RootNamespace>UtfUnknown.Tests</RootNamespace>
     <AssemblyName>UtfUnknown.Tests</AssemblyName>
     <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>..\src\UtfUnknown.snk</AssemblyOriginatorKeyFile>
+    <Nullable>enable</Nullable>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

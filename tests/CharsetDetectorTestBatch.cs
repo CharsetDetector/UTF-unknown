@@ -87,7 +87,7 @@ namespace UtfUnknown.Tests
             
             StringAssert.AreEqualIgnoringCase(
                 testCase.ExpectedEncoding,
-                detected.EncodingName,
+                detected!.EncodingName,
                 string.Concat(
                     $"Charset detection failed for {testCase.InputFile.FullName}. ",
                     $"Expected: {testCase.ExpectedEncoding}. ",
@@ -161,7 +161,7 @@ namespace UtfUnknown.Tests
             var detected = result.Detected;
 
             _logWriter.WriteLine($"- {file} ({expectedCharset}) -> {JsonConvert.SerializeObject(result, Formatting.Indented, new EncodingJsonConverter())}");
-            StringAssert.AreEqualIgnoringCase(expectedCharset, detected.EncodingName,
+            StringAssert.AreEqualIgnoringCase(expectedCharset, detected!.EncodingName,
                 $"Charset detection failed for {file}. Expected: {expectedCharset}, detected: {detected.EncodingName} ({detected.Confidence * 100.0f:0.00############}% confidence)");
             Assert.NotNull(detected.Encoding);
         }

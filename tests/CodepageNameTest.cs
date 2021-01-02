@@ -27,8 +27,8 @@ namespace UtfUnknown.Tests
         
         private static readonly IReadOnlyList<string> EncodingNames = typeof(CodepageName)
             .GetFields(BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.CreateInstance)
-            .Select(x => x.GetValue(null).ToString())
-            .Where(x => !UnsupportedEncodings.Contains(x))
-            .ToList();
+            .Select(x => x.GetValue(null)?.ToString())
+            .Where(x => x != null && !UnsupportedEncodings.Contains(x))
+            .ToList()!;
     }
 }
