@@ -1,0 +1,2 @@
+ART;ID_TEILNEHMER;TEILNEHMER_BEZ;STHF_NR;STHF_BEZ;ID_PROD;PROD_NR;PROD_BEZ;ID_REF;REF_NR;REF_BEZ;WERTTYP;JAHR;WERT;ID_KAT;PJAHR;VALIDE
+GZ;2920;Herne;SHF.521.100.10.1.02.;Bauaufsicht - Stellen Sachbearbeitung;67010;521.100.10.10.;Baugenehmigung (TTP);241844;Z.SJ.003.100.01.0001.1.0;Vollzeit-Stellen - Produktübergreifende Fachdaten - Beamte und Beschäftigte Sachbearbeitung - Gng KGSt - SJ - S - 01-12;1;2017;12356;;;1
