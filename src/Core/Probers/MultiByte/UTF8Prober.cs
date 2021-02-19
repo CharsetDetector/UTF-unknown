@@ -36,6 +36,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System;
 using System.Text;
 
 using UtfUnknown.Core.Models;
@@ -48,6 +49,9 @@ namespace UtfUnknown.Core.Probers.MultiByte
         private static float ONE_CHAR_PROB = 0.50f;
         private CodingStateMachine codingSM;
         private int numOfMBChar;
+        private int mbCharLen;
+        private int fullLen;
+        private int basicAsciiLen;
 
         public UTF8Prober()
         {
@@ -70,12 +74,13 @@ namespace UtfUnknown.Core.Probers.MultiByte
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
+            fullLen += buf.Length;
             int max = offset + len;
 
             for (int i = offset; i < max; i++)
             {
-
-                var codingState = codingSM.NextState(buf[i]);
+                var c = buf[i];
+                var codingState = codingSM.NextState(c);
 
                 if (codingState == StateMachineModel.ERROR)
                 {
@@ -92,7 +97,14 @@ namespace UtfUnknown.Core.Probers.MultiByte
                 if (codingState == StateMachineModel.START)
                 {
                     if (codingSM.CurrentCharLen >= 2)
+                    {
                         numOfMBChar++;
+                        mbCharLen += codingSM.CurrentCharLen;
+                    }
+                    else if(c < 128)// codes higher than 127 are extended ASCII
+                    {
+                        basicAsciiLen++;
+                    }
                 }
             }
 
@@ -107,11 +119,17 @@ namespace UtfUnknown.Core.Probers.MultiByte
         {
             float unlike = 0.99f;
             float confidence;
+            var mbCharRatio = 0.0f;
+            var nonBasciAsciiLen = fullLen - basicAsciiLen;
+            if (nonBasciAsciiLen > 0)
+            {
+                mbCharRatio = (float)mbCharLen / nonBasciAsciiLen;
+            }
 
-            if (numOfMBChar < 6)
+            if (numOfMBChar < 6 && mbCharRatio <= 0.6)
             {
                 for (int i = 0; i < numOfMBChar; i++)
-                    unlike *= ONE_CHAR_PROB;
+                    unlike *= (float)Math.Pow(ONE_CHAR_PROB, numOfMBChar);
 
                 confidence = 1.0f - unlike;
             }
