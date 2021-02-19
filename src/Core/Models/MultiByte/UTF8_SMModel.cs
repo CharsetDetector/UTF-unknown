@@ -94,7 +94,7 @@ namespace UtfUnknown.Core.Models.MultiByte
             BitPackage.Pack4bits(ERROR,ERROR,ERROR,ERROR,ERROR,ERROR,ERROR,ERROR),//68-6f 
             BitPackage.Pack4bits(ERROR,ERROR,    9,    9,    9,    9,ERROR,ERROR),//70-77 
             BitPackage.Pack4bits(ERROR,ERROR,ERROR,ERROR,ERROR,ERROR,ERROR,ERROR),//78-7f 
-            BitPackage.Pack4bits(ERROR,ERROR,ERROR,ERROR,ERROR,    9,ERROR,ERROR),//80-87 
+            BitPackage.Pack4bits(ERROR,ERROR,ERROR,ERROR,    9,    9,ERROR,ERROR),//80-87 
             BitPackage.Pack4bits(ERROR,ERROR,ERROR,ERROR,ERROR,ERROR,ERROR,ERROR),//88-8f 
             BitPackage.Pack4bits(ERROR,ERROR,   12,   12,   12,   12,ERROR,ERROR),//90-97 
             BitPackage.Pack4bits(ERROR,ERROR,ERROR,ERROR,ERROR,ERROR,ERROR,ERROR),//98-9f 
