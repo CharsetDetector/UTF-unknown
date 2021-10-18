@@ -72,6 +72,11 @@ namespace UtfUnknown
         public CharsetProber Prober { get; set; }
 
         /// <summary>
+        /// A Byte Order Mark was detected
+        /// </summary>
+        public bool HasBOM { get; set; }
+
+        /// <summary>
         /// The time spend
         /// </summary>
         public TimeSpan? Time { get; set; }
@@ -80,7 +85,7 @@ namespace UtfUnknown
 
         public override string ToString()
         {
-            return $"Detected {EncodingName} with confidence of {Confidence}";
+            return $"Detected {EncodingName} with confidence of {Confidence}. (BOM: {HasBOM})";
         }
 
         internal static Encoding GetEncoding(string encodingShortName)

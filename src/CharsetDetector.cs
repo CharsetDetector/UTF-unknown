@@ -322,7 +322,10 @@ namespace UtfUnknown
             var bomSet = FindCharSetByBom(buf, offset, len);
             if (bomSet != null)
             {
-                _detectionDetail = new DetectionDetail(bomSet, 1.0f);
+                _detectionDetail = new DetectionDetail(bomSet, 1.0f)
+                {
+                    HasBOM = true
+                };
                 return true;
             }
             return false;
