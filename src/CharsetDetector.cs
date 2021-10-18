@@ -467,6 +467,11 @@ namespace UtfUnknown
                 //TODO why done isn't true?
                 return new DetectionResult(new DetectionDetail(CodepageName.ASCII, 1.0f));
             }
+            else if (InputState == InputState.EscASCII)
+            {
+                // We didn't find the escape sequence, assume it's normal ASCII
+                return new DetectionResult(new DetectionDetail(CodepageName.ASCII, 0.99f));
+            }
 
             return new DetectionResult();
         }
