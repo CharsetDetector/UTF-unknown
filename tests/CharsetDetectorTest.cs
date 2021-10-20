@@ -30,6 +30,7 @@ namespace UtfUnknown.Tests
                 var result = CharsetDetector.DetectFromStream(stream);
                 Assert.AreEqual(CodepageName.ASCII, result.Detected.EncodingName);
                 Assert.AreEqual(1.0f, result.Detected.Confidence);
+                Assert.IsFalse(result.Detected.HasBOM);
             }
         }
 
@@ -77,6 +78,7 @@ namespace UtfUnknown.Tests
             // Assert
             Assert.AreEqual(detectedCodepage, result.Detected.EncodingName);
             Assert.AreEqual(1.0f, result.Detected.Confidence);
+            Assert.IsFalse(result.Detected.HasBOM);
         }
 
         [Test]
@@ -91,8 +93,9 @@ namespace UtfUnknown.Tests
                 .Detected;
             Assert.AreEqual(CodepageName.UTF7, result.EncodingName);
             Assert.AreEqual(1.0f, result.Confidence);
+            Assert.IsTrue(result.HasBOM);
         }
-        
+
         [Test]
         public void TestBomGb18030()
         {
@@ -101,6 +104,7 @@ namespace UtfUnknown.Tests
                 .Detected;
             Assert.AreEqual(CodepageName.GB18030, result.EncodingName);
             Assert.AreEqual(1.0f, result.Confidence);
+            Assert.IsTrue(result.HasBOM);
         }
 
         [Test]
@@ -114,6 +118,7 @@ namespace UtfUnknown.Tests
             var result = CharsetDetector.DetectFromBytes(buf);
             Assert.AreEqual(CodepageName.UTF8, result.Detected.EncodingName);
             Assert.AreEqual(1.0f, result.Detected.Confidence);
+            Assert.IsFalse(result.Detected.HasBOM);
         }
 
         [Test]
@@ -123,8 +128,9 @@ namespace UtfUnknown.Tests
             var result = CharsetDetector.DetectFromBytes(buf);
             Assert.AreEqual(CodepageName.UTF8, result.Detected.EncodingName);
             Assert.AreEqual(1.0f, result.Detected.Confidence);
+            Assert.IsTrue(result.Detected.HasBOM);
         }
-        
+
         [Test]
         public void Test2byteArrayBomUTF16_BE()
         {
@@ -133,6 +139,7 @@ namespace UtfUnknown.Tests
             var result = CharsetDetector.DetectFromBytes(buf);
             Assert.AreEqual(CodepageName.UTF16_BE, result.Detected.EncodingName);
             Assert.AreEqual(1.0f, result.Detected.Confidence);
+            Assert.IsTrue(result.Detected.HasBOM);
         }
 
         [Test]
@@ -143,6 +150,7 @@ namespace UtfUnknown.Tests
             var result = CharsetDetector.DetectFromBytes(buf);
             Assert.AreEqual(CodepageName.UTF16_BE, result.Detected.EncodingName);
             Assert.AreEqual(1.0f, result.Detected.Confidence);
+            Assert.IsTrue(result.Detected.HasBOM);
         }
 
         [Test]
@@ -154,6 +162,7 @@ namespace UtfUnknown.Tests
             var result = CharsetDetector.DetectFromBytes(buf);
             Assert.AreEqual(CodepageName.X_ISO_10646_UCS_4_3412, result.Detected.EncodingName);
             Assert.AreEqual(1.0f, result.Detected.Confidence);
+            Assert.IsTrue(result.Detected.HasBOM);
         }
 
         [Test]
@@ -165,6 +174,7 @@ namespace UtfUnknown.Tests
             var result = CharsetDetector.DetectFromBytes(buf);
             Assert.AreEqual(CodepageName.X_ISO_10646_UCS_4_2143, result.Detected.EncodingName);
             Assert.AreEqual(1.0f, result.Detected.Confidence);
+            Assert.IsTrue(result.Detected.HasBOM);
         }
 
         [Test]
@@ -174,8 +184,9 @@ namespace UtfUnknown.Tests
             var result = CharsetDetector.DetectFromBytes(buf);
             Assert.AreEqual(CodepageName.UTF16_LE, result.Detected.EncodingName);
             Assert.AreEqual(1.0f, result.Detected.Confidence);
+            Assert.IsTrue(result.Detected.HasBOM);
         }
-        
+
         [Test]
         public void TestBomUTF16_LE()
         {
@@ -183,6 +194,7 @@ namespace UtfUnknown.Tests
             var result = CharsetDetector.DetectFromBytes(buf);
             Assert.AreEqual(CodepageName.UTF16_LE, result.Detected.EncodingName);
             Assert.AreEqual(1.0f, result.Detected.Confidence);
+            Assert.IsTrue(result.Detected.HasBOM);
         }
 
         [Test]
@@ -192,6 +204,7 @@ namespace UtfUnknown.Tests
             var result = CharsetDetector.DetectFromBytes(buf);
             Assert.AreEqual(CodepageName.UTF32_BE, result.Detected.EncodingName);
             Assert.AreEqual(1.0f, result.Detected.Confidence);
+            Assert.IsTrue(result.Detected.HasBOM);
         }
 
         [Test]
@@ -201,6 +214,7 @@ namespace UtfUnknown.Tests
             var result = CharsetDetector.DetectFromBytes(buf);
             Assert.AreEqual(CodepageName.UTF32_LE, result.Detected.EncodingName);
             Assert.AreEqual(1.0f, result.Detected.Confidence);
+            Assert.IsTrue(result.Detected.HasBOM);
         }
 
         [Test]
@@ -210,26 +224,27 @@ namespace UtfUnknown.Tests
             var result = CharsetDetector.DetectFromBytes(buf);
             Assert.AreEqual(CodepageName.ASCII, result.Detected.EncodingName);
             Assert.AreEqual(1.0f, result.Detected.Confidence);
+            Assert.IsFalse(result.Detected.HasBOM);
         }
 
         [Test]
         public void TestOutOfRange()
         {
-
             byte[] buf = Encoding.UTF8.GetBytes("3");
             var result = CharsetDetector.DetectFromBytes(buf);
             Assert.AreEqual(CodepageName.ASCII, result.Detected.EncodingName);
             Assert.AreEqual(1.0f, result.Detected.Confidence);
+            Assert.IsFalse(result.Detected.HasBOM);
         }
 
         [Test]
         public void TestOutOfRange2()
         {
-
             byte[] buf = Encoding.UTF8.GetBytes("1234567890");
             var result = CharsetDetector.DetectFromBytes(buf);
             Assert.AreEqual(CodepageName.ASCII, result.Detected.EncodingName);
             Assert.AreEqual(1.0f, result.Detected.Confidence);
+            Assert.IsFalse(result.Detected.HasBOM);
         }
 
         [Test]
@@ -239,6 +254,7 @@ namespace UtfUnknown.Tests
             var result = CharsetDetector.DetectFromBytes(buf);
             Assert.AreEqual(CodepageName.ASCII, result.Detected.EncodingName);
             Assert.AreEqual(1, result.Detected.Confidence);
+            Assert.IsFalse(result.Detected.HasBOM);
         }
     }
 }
