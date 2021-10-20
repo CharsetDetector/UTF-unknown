@@ -42,7 +42,7 @@ namespace UtfUnknown.Tests
             {
                 var result = CharsetDetector.DetectFromStream(stream);
                 Assert.AreEqual(CodepageName.ASCII, result.Detected.EncodingName);
-                Assert.AreEqual(0.99f, result.Detected.Confidence);
+                Assert.AreEqual(1.0f, result.Detected.Confidence);
             }
         }
 
