@@ -1,5 +1,6 @@
 name-template: 'Version $NEXT_MINOR_VERSION'
 tag-template: 'v$NEXT_MINOR_VERSION'
+version-template: '$MAJOR.$MINOR'
 categories:
   - title: '🚀 Features'
     labels:
