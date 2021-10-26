@@ -119,9 +119,9 @@ __Encodings without BOM are presented in the table, separated by languages:__
 </details>
 
 __Remarks:__
-For some aliases of encoding not available: `cp949`, `iso-2022-cn`, `euc-tw`, `iso-8859-10`, `iso-8859-16`, `viscii`, `X-ISO-10646-UCS-4-34121`/`X-ISO-10646-UCS-4-21431`. Some of them have been offered a suitable replacement for the return result by  _DetectionDetail.Encoding_:
-- `cp949` to `ks_c_5601-1987`
-- `iso-2022-cn` to `x-cp50227`
+For some aliases of encoding not available: `cp949`, `iso-2022-cn`, `euc-tw`, `iso-8859-10`, `iso-8859-16`, `viscii`, `X-ISO-10646-UCS-4-34121`/`X-ISO-10646-UCS-4-21431`. Some of them have been offered a suitable replacement for the return result by  `DetectionDetail.Encoding`:
+- `cp949`: use `ks_c_5601-1987`
+- `iso-2022-cn`: use `x-cp50227`
 
 ## License
 
