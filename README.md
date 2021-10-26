@@ -72,8 +72,7 @@ IList<DetectionDetail> allDetails = result.Details;
 
 The article "[A composite approach to language/encoding detection](https://www-archive.mozilla.org/projects/intl/UniversalCharsetDetection.html)" describes the charsets detection algorithms implemented by the library.
 
-<details>
-  <summary>The following charsets are supported to deteсt</summary>
+## The following charsets are supported
 
 __Encodings with BOM:__ `utf-7`, `utf-8`, `utf-16be`/`utf-16le`, `utf-32be`/`utf-32le`, `X-ISO-10646-UCS-4-34121`/`X-ISO-10646-UCS-4-21431`, `gb18030`.
 
