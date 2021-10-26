@@ -470,6 +470,10 @@ namespace UtfUnknown
                 //TODO why done isn't true?
                 return new DetectionResult(new DetectionDetail(CodepageName.ASCII, 1.0f));
             }
+            else if (InputState == InputState.EscASCII)
+            {
+                return new DetectionResult(new DetectionDetail(CodepageName.ASCII, 1.0f));
+            }
 
             return new DetectionResult();
         }

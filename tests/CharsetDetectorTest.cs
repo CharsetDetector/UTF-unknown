@@ -34,6 +34,19 @@ namespace UtfUnknown.Tests
             }
         }
 
+        [Test]
+        public void TestAscii_with_HZ_sequence()
+        {
+            const string text = "virtual ~{{NETCLASS_NAME}}();";
+            var stream = AsciiToStream(text);
+            using (stream)
+            {
+                var result = CharsetDetector.DetectFromStream(stream);
+                Assert.AreEqual(CodepageName.ASCII, result.Detected.EncodingName);
+                Assert.AreEqual(1.0f, result.Detected.Confidence);
+            }
+        }
+
         private static MemoryStream AsciiToStream(string s)
         {
             return new MemoryStream(Encoding.ASCII.GetBytes(s));
