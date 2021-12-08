@@ -97,7 +97,9 @@ namespace UtfUnknown
             {
                 return Encoding.GetEncoding(encodingName);
             }
-            catch (ArgumentException) // unsupported name
+            catch (Exception exception) when
+                (exception is ArgumentException || // unsupported name
+                exception is NotSupportedException)
             {
 #if NETSTANDARD && !NETSTANDARD1_0 || NETCOREAPP3_0
                 return CodePagesEncodingProvider.Instance.GetEncoding(encodingName);
