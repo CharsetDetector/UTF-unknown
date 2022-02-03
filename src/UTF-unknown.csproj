@@ -55,7 +55,7 @@ Features:
 
   <PropertyGroup>
 
-    <PackageTags>charset;detection;unicode;ascii;netstandard</PackageTags>
+    <PackageTags>charset;detection;unicode;ascii;netstandard;chardet</PackageTags>
     <PackageReleaseNotes>
 - See https://github.com/CharsetDetector/UTF-unknown/releases
     </PackageReleaseNotes>
