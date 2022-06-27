@@ -203,6 +203,7 @@ namespace UtfUnknown.Core.Probers
             totalSeqs = 0;
             totalChar = 0;
             freqChar = 0;
+            ctrlChar = 0;
         }
         
         public override string GetCharsetName() 
