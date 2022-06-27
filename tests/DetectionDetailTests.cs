@@ -1,13 +1,17 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
+using UtfUnknown;
 using UtfUnknown.Core;
+using UtfUnknown.Core.Probers;
 
 namespace UtfUnknown.Tests
 {
-    public class CodepageNameTest
+    [TestFixture]
+    public class DetectionDetailTests
     {
+
         [TestCaseSource(nameof(EncodingNames))]
         public void DetectionDetailGetEncodingIsNotNull(string codepageName)
         {
@@ -24,11 +28,24 @@ namespace UtfUnknown.Tests
             CodepageName.X_ISO_10646_UCS_4_2143,
             CodepageName.X_ISO_10646_UCS_4_3412,
         };
-        
+
         private static readonly IReadOnlyList<string> EncodingNames = typeof(CodepageName)
             .GetFields(BindingFlags.NonPublic | BindingFlags.Static | BindingFlags.CreateInstance)
             .Select(x => x.GetValue(null).ToString())
             .Where(x => !UnsupportedEncodings.Contains(x))
             .ToList();
+
+
+        [Test]
+        public void GetEncodingShouldHandleIncorrectEncoding()
+        {
+            // Arrange
+            string encoding = "wrong";
+            // Act
+            var result = DetectionDetail.GetEncoding(encoding);
+
+            // Assert
+            Assert.AreEqual(null, result);
+        }
     }
 }
