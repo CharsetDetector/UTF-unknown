@@ -34,10 +34,10 @@
 Features:
 - Easy to use API
 - Supports frameworks:
-  - .NET Standard 1.0
-  - .NET Standard 1.3 and 2.0
-  - .NET Core 3.0 (because `System.Text.Encoding.CodePages` in shared framework)
-  - .NET Framework 4.0
+ - .NET 5+
+ - .NET Standard 1.0+
+ - .NET Core 3.0+
+ - .NET Framework 4.0+
 - Strong named
 - XML documentation included
 
