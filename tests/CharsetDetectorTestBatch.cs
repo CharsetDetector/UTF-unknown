@@ -7,9 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
-using UtfUnknown.Core;
 using NUnit.Framework;
 
 namespace UtfUnknown.Tests
@@ -74,7 +73,13 @@ namespace UtfUnknown.Tests
         {
             TestFile(testCase.ExpectedEncoding, testCase.InputFile.FullName);
         }
-        
+
+        [TestCaseSource(nameof(AllTestFiles))]
+        public Task TestFileAsync(TestCase testCase)
+        {
+            return TestFileAsync(testCase.ExpectedEncoding, testCase.InputFile.FullName);
+        }
+
         [TestCaseSource(nameof(AllTestFilesUnsupportedEncoding))]
         public void TestFileUnsupportedEncodings(TestCase testCase)
         {
@@ -84,7 +89,27 @@ namespace UtfUnknown.Tests
             _logWriter.WriteLine(string.Concat(
                 $"- {testCase.InputFile.FullName} ({testCase.ExpectedEncoding}) -> ",
                 $"{JsonConvert.SerializeObject(result, Formatting.Indented, new EncodingJsonConverter())}"));
-            
+
+            StringAssert.AreEqualIgnoringCase(
+                testCase.ExpectedEncoding,
+                detected.EncodingName,
+                string.Concat(
+                    $"Charset detection failed for {testCase.InputFile.FullName}. ",
+                    $"Expected: {testCase.ExpectedEncoding}. ",
+                    $"Detected: {detected.EncodingName} ",
+                    $"({detected.Confidence * 100.0f:0.00############}% confidence)."));
+        }
+
+        [TestCaseSource(nameof(AllTestFilesUnsupportedEncoding))]
+        public async Task TestFileUnsupportedEncodingsAsync(TestCase testCase)
+        {
+            var result = await CharsetDetector.DetectFromFileAsync(testCase.InputFile.FullName);
+            var detected = result.Detected;
+
+            _logWriter.WriteLine(string.Concat(
+                $"- {testCase.InputFile.FullName} ({testCase.ExpectedEncoding}) -> ",
+                $"{JsonConvert.SerializeObject(result, Formatting.Indented, new EncodingJsonConverter())}"));
+
             StringAssert.AreEqualIgnoringCase(
                 testCase.ExpectedEncoding,
                 detected.EncodingName,
@@ -126,7 +151,7 @@ namespace UtfUnknown.Tests
 
             return testCases;
         }
-        
+
         private static IReadOnlyList<TestCase> AllTestFilesUnsupportedEncoding()
         {
             var path = Path.Combine(TESTS_ROOT, "DataUnsupported");
@@ -134,7 +159,7 @@ namespace UtfUnknown.Tests
             {
                 throw new DirectoryNotFoundException($"Directory Data with test files not found, path: {path}");
             }
-            
+
             var dirs = new DirectoryInfo(path).GetDirectories();
             var testCases = new List<TestCase>();
             foreach (var dir in dirs)
@@ -147,7 +172,7 @@ namespace UtfUnknown.Tests
 
         private static List<TestCase> CreateTestCases(DirectoryInfo dirname)
         {
-            //encoding is the directory name  - before the optional '(' 
+            //encoding is the directory name  - before the optional '('
             var expectedEncoding = dirname.Name.Split('(').First().Trim();
 
             var files = dirname.GetFiles();
@@ -158,6 +183,17 @@ namespace UtfUnknown.Tests
         private void TestFile(string expectedCharset, string file)
         {
             var result = CharsetDetector.DetectFromFile(file);
+            var detected = result.Detected;
+
+            _logWriter.WriteLine($"- {file} ({expectedCharset}) -> {JsonConvert.SerializeObject(result, Formatting.Indented, new EncodingJsonConverter())}");
+            StringAssert.AreEqualIgnoringCase(expectedCharset, detected.EncodingName,
+                $"Charset detection failed for {file}. Expected: {expectedCharset}, detected: {detected.EncodingName} ({detected.Confidence * 100.0f:0.00############}% confidence)");
+            Assert.NotNull(detected.Encoding);
+        }
+
+        private async Task TestFileAsync(string expectedCharset, string file)
+        {
+            var result = await CharsetDetector.DetectFromFileAsync(file);
             var detected = result.Detected;
 
             _logWriter.WriteLine($"- {file} ({expectedCharset}) -> {JsonConvert.SerializeObject(result, Formatting.Indented, new EncodingJsonConverter())}");

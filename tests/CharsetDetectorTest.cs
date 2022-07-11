@@ -4,14 +4,11 @@
 //   Rudi Pettazzi <rudi.pettazzi@gmail.com>
 //
 
-#region
-
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
 using UtfUnknown.Core;
 using NUnit.Framework;
-
-#endregion
 
 namespace UtfUnknown.Tests
 {
@@ -35,6 +32,23 @@ namespace UtfUnknown.Tests
         }
 
         [Test]
+        public async Task TestAsciiAsync()
+        {
+            const string text = "The Documentation of the libraries is not complete " +
+                                "and your contributions would be greatly appreciated " +
+                                "the documentation you want to contribute to and " +
+                                "click on the [Edit] link to start writing";
+            var stream = AsciiToStream(text);
+            using (stream)
+            {
+                var result = await CharsetDetector.DetectFromStreamAsync(stream);
+                Assert.AreEqual(CodepageName.ASCII, result.Detected.EncodingName);
+                Assert.AreEqual(1.0f, result.Detected.Confidence);
+                Assert.IsFalse(result.Detected.HasBOM);
+            }
+        }
+
+        [Test]
         public void TestAscii_with_HZ_sequence()
         {
             const string text = "virtual ~{{NETCLASS_NAME}}();";
@@ -42,6 +56,19 @@ namespace UtfUnknown.Tests
             using (stream)
             {
                 var result = CharsetDetector.DetectFromStream(stream);
+                Assert.AreEqual(CodepageName.ASCII, result.Detected.EncodingName);
+                Assert.AreEqual(1.0f, result.Detected.Confidence);
+            }
+        }
+
+        [Test]
+        public async Task TestAscii_with_HZ_sequenceAsync()
+        {
+            const string text = "virtual ~{{NETCLASS_NAME}}();";
+            var stream = AsciiToStream(text);
+            using (stream)
+            {
+                var result = await CharsetDetector.DetectFromStreamAsync(stream);
                 Assert.AreEqual(CodepageName.ASCII, result.Detected.EncodingName);
                 Assert.AreEqual(1.0f, result.Detected.Confidence);
             }
@@ -75,13 +102,35 @@ namespace UtfUnknown.Tests
         }
 
         [Test]
+        [TestCase(1024, 1024)]
+        [TestCase(2048, 2048)]
+        [TestCase(20, 20)]
+        [TestCase(20, 30, 10)]
+        [TestCase(null, 10000)]
+        [TestCase(1000000, 10000)]
+        [TestCase(null, 10000, 10)]
+        public async Task DetectFromStreamMaxBytesAsync(int? maxBytes, int expectedPosition, int start = 0)
+        {
+            // Arrange
+            var text = new string('a', 10000);
+            var stream = AsciiToStream(text);
+            stream.Position = start;
+
+            // Act
+            await CharsetDetector.DetectFromStreamAsync(stream, maxBytes);
+
+            // Assert
+            Assert.AreEqual(expectedPosition, stream.Position);
+        }
+
+        [Test]
         [TestCase(0, 10, CodepageName.ASCII)]
         [TestCase(0, 100, CodepageName.UTF8)]
         [TestCase(10, 100, CodepageName.UTF8)]
         public void DetectFromByteArray(int offset, int len, string detectedCodepage)
         {
             // Arrange
-            string s = "UTF-Unknown은 파일, 스트림, 그 외 바이트 배열의 캐릭터 셋을 탐지하는 라이브러리입니다." + 
+            string s = "UTF-Unknown은 파일, 스트림, 그 외 바이트 배열의 캐릭터 셋을 탐지하는 라이브러리입니다." +
                 "대한민국 (大韓民國, Republic of Korea)";
             byte[] bytes = Encoding.UTF8.GetBytes(s);
 

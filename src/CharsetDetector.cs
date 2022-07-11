@@ -41,16 +41,17 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
+using System.Threading;
+using System.Threading.Tasks;
 using UtfUnknown.Core;
 using UtfUnknown.Core.Probers;
 
 namespace UtfUnknown
 {
     /// <summary>
-    /// Default implementation of charset detection interface. 
+    /// Default implementation of charset detection interface.
     /// The detector can be fed by a System.IO.Stream:
-    /// </summary>                
+    /// </summary>
     public class CharsetDetector
     {
         internal InputState InputState;
@@ -118,7 +119,7 @@ namespace UtfUnknown
 
         /// <summary>
         /// Detect the character encoding form this byte array.
-        /// It searchs for BOM from bytes[0].
+        /// It searches for BOM from bytes[0].
         /// </summary>
         /// <param name="bytes">The byte array containing the text</param>
         /// <returns></returns>
@@ -135,8 +136,8 @@ namespace UtfUnknown
         }
 
         /// <summary>
-        /// Detect the character encoding form this byte array. 
-        /// It searchs for BOM from bytes[offset].
+        /// Detect the character encoding form this byte array.
+        /// It searches for BOM from bytes[offset].
         /// </summary>
         /// <param name="bytes">The byte array containing the text</param>
         /// <param name="offset">The zero-based byte offset in buffer at which to begin reading the data from</param>
@@ -166,11 +167,9 @@ namespace UtfUnknown
             return detector.DataEnd();
         }
 
-#if !NETSTANDARD1_0
-
         /// <summary>
         /// Detect the character encoding by reading the stream.
-        /// 
+        ///
         /// Note: stream position is not reset before and after.
         /// </summary>
         /// <param name="stream">The steam. </param>
@@ -186,7 +185,7 @@ namespace UtfUnknown
 
         /// <summary>
         /// Detect the character encoding by reading the stream.
-        /// 
+        ///
         /// Note: stream position is not reset before and after.
         /// </summary>
         /// <param name="stream">The steam. </param>
@@ -210,6 +209,50 @@ namespace UtfUnknown
             return detector.DataEnd();
         }
 
+        /// <summary>
+        /// Detect the character encoding by reading the stream.
+        ///
+        /// Note: stream position is not reset before and after.
+        /// </summary>
+        /// <param name="stream">The steam. </param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        public static Task<DetectionResult> DetectFromStreamAsync(Stream stream, CancellationToken cancellationToken = default)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            return DetectFromStreamAsync(stream, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Detect the character encoding by reading the stream.
+        ///
+        /// Note: stream position is not reset before and after.
+        /// </summary>
+        /// <param name="stream">The steam. </param>
+        /// <param name="maxBytesToRead">max bytes to read from <paramref name="stream"/>. If <c>null</c>, then no max</param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="maxBytesToRead"/> 0 or lower.</exception>
+        public static async Task<DetectionResult> DetectFromStreamAsync(Stream stream, long? maxBytesToRead, CancellationToken cancellationToken = default)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            if (maxBytesToRead <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxBytesToRead));
+            }
+
+            var detector = new CharsetDetector();
+
+            await ReadStreamAsync(stream, maxBytesToRead, detector, cancellationToken);
+            return detector.DataEnd();
+        }
+
         private static void ReadStream(Stream stream, long? maxBytes, CharsetDetector detector)
         {
             const int bufferSize = 1024;
@@ -220,6 +263,37 @@ namespace UtfUnknown
             var toRead = CalcToRead(maxBytes, readTotal, bufferSize);
 
             while ((read = stream.Read(buff, 0, toRead)) > 0)
+            {
+                detector.Feed(buff, 0, read);
+
+                if (maxBytes != null)
+                {
+                    readTotal += read;
+                    if (readTotal >= maxBytes)
+                    {
+                        return;
+                    }
+
+                    toRead = CalcToRead(maxBytes, readTotal, bufferSize);
+                }
+
+                if (detector._done)
+                {
+                    return;
+                }
+            }
+        }
+
+        private static async Task ReadStreamAsync(Stream stream, long? maxBytes, CharsetDetector detector, CancellationToken cancellationToken = default)
+        {
+            const int bufferSize = 1024;
+            byte[] buff = new byte[bufferSize];
+            int read;
+            long readTotal = 0;
+
+            var toRead = CalcToRead(maxBytes, readTotal, bufferSize);
+
+            while ((read = await stream.ReadAsync(buff, 0, toRead, cancellationToken)) > 0)
             {
                 detector.Feed(buff, 0, read);
 
@@ -287,7 +361,42 @@ namespace UtfUnknown
             }
         }
 
-#endif // !NETSTANDARD1_0
+        /// <summary>
+        /// Detect the character encoding of this file.
+        /// </summary>
+        /// <param name="filePath">Path to file</param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <returns></returns>
+        public static async Task<DetectionResult> DetectFromFileAsync(string filePath, CancellationToken cancellationToken = default)
+        {
+            if (filePath == null)
+            {
+                throw new ArgumentNullException(nameof(filePath));
+            }
+
+            using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            {
+                return await DetectFromStreamAsync(fs, cancellationToken);
+            }
+        }
+        /// <summary>
+        /// Detect the character encoding of this file.
+        /// </summary>
+        /// <param name="file">The file</param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <returns></returns>
+        public static Task<DetectionResult> DetectFromFileAsync(FileInfo file, CancellationToken cancellationToken = default)
+        {
+            if (file == null)
+            {
+                throw new ArgumentNullException(nameof(file));
+            }
+
+            using (FileStream fs = new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            {
+                return DetectFromStreamAsync(fs, cancellationToken);
+            }
+        }
 
         protected virtual void Feed(byte[] buf, int offset, int len)
         {
@@ -403,10 +512,10 @@ namespace UtfUnknown
 
             if (buf0 == 0xEF && buf1 == 0xBB && buf[offset + 2] == 0xBF)
                 return CodepageName.UTF8;
-            
+
             if (len < 4)
                 return null;
-            
+
             //Here, because anyway further more than 3 positions are checked.
             if (buf0 == 0x00 && buf1 == 0x00)
             {
@@ -422,24 +531,24 @@ namespace UtfUnknown
             if (buf0 == 0x2B && buf1 == 0x2F && buf[offset + 2] == 0x76)
                 if (buf[offset + 3] == 0x38 || buf[offset + 3] == 0x39 || buf[offset + 3] == 0x2B || buf[offset + 3] == 0x2F)
                     return CodepageName.UTF7;
-            
+
             // Detect GB18030 with bom (see table in https://en.wikipedia.org/wiki/Byte_order_mark)
             // TODO: If you remove this check, GB18030Prober will still be defined as GB18030 -- It's feature or bug?
             if (buf0 == 0x84 && buf1 == 0x31 && buf[offset + 2] == 0x95 && buf[offset + 3] == 0x33)
                 return CodepageName.GB18030;
-            
+
             return null;
         }
 
         /// <summary>
-        /// Notify detector that no further data is available. 
+        /// Notify detector that no further data is available.
         /// </summary>
         private DetectionResult DataEnd()
         {
             if (!_gotData)
             {
-                // we haven't got any data yet, return immediately 
-                // caller program sometimes call DataEnd before anything has 
+                // we haven't got any data yet, return immediately
+                // caller program sometimes call DataEnd before anything has
                 // been sent to detector
                 return new DetectionResult();
             }
@@ -478,7 +587,7 @@ namespace UtfUnknown
             return new DetectionResult();
         }
 
-        internal IList<CharsetProber> GetNewProbers()
+        private IList<CharsetProber> GetNewProbers()
         {
             switch (InputState)
             {
@@ -500,4 +609,3 @@ namespace UtfUnknown
         }
     }
 }
-

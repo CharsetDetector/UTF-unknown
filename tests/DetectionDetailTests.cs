@@ -2,9 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
-using UtfUnknown;
 using UtfUnknown.Core;
-using UtfUnknown.Core.Probers;
 
 namespace UtfUnknown.Tests
 {
@@ -21,12 +19,15 @@ namespace UtfUnknown.Tests
 
         private static readonly HashSet<string> UnsupportedEncodings = new HashSet<string>
         {
+            #if NET6_0
+            CodepageName.UTF7, // Support dropped in .NET 6
+            #endif
             CodepageName.ISO_8859_10,
             CodepageName.ISO_8859_16,
             CodepageName.EUC_TW,
             CodepageName.VISCII,
             CodepageName.X_ISO_10646_UCS_4_2143,
-            CodepageName.X_ISO_10646_UCS_4_3412,
+            CodepageName.X_ISO_10646_UCS_4_3412
         };
 
         private static readonly IReadOnlyList<string> EncodingNames = typeof(CodepageName)

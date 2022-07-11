@@ -57,7 +57,7 @@ namespace UtfUnknown
         public string EncodingName { get; }
 
         /// <summary>
-        /// The detected encoding. 
+        /// The detected encoding.
         /// </summary>
         public Encoding Encoding { get; set; }
 
@@ -101,7 +101,7 @@ namespace UtfUnknown
                 (exception is ArgumentException || // unsupported name
                 exception is NotSupportedException)
             {
-#if NETSTANDARD && !NETSTANDARD1_0 || NETCOREAPP3_0
+#if NETSTANDARD || NET6_0
                 return CodePagesEncodingProvider.Instance.GetEncoding(encodingName);
 #else
                 return null;
