@@ -1,5 +1,3 @@
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.MultiByte.Japanese
 {
     public class Iso_2022_JP_SMModel : StateMachineModel

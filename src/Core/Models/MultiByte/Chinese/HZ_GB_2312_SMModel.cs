@@ -37,8 +37,6 @@
  * ***** END LICENSE BLOCK ***** */
 
 //Escaped charsets state machines
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.MultiByte.Chinese
 {
     public class HZ_GB_2312_SMModel : StateMachineModel
@@ -101,7 +99,6 @@ namespace UtfUnknown.Core.Models.MultiByte.Chinese
                          BitPackage.UNIT_MASK_4BITS, HZ_st),
               HZCharLenTable, CodepageName.HZ_GB_2312)
         {
-
         }
     }
 }

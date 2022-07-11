@@ -1,6 +1,4 @@
-using UtfUnknown.Core.Analyzers;
-
-namespace UtfUnknown.Core.Analyzers.Korean
+﻿namespace UtfUnknown.Core.Analyzers.Korean
 {
     public class EUCKRDistributionAnalyser : CharDistributionAnalyser
     {
@@ -169,8 +167,8 @@ namespace UtfUnknown.Core.Analyzers.Korean
             2629,2630,2631, 924, 648, 863, 603,2632,2633, 934,1540, 864, 865,2634, 642,1042,
             670,1190,2635,2636,2637,2638, 168,2639, 652, 873, 542,1054,1541,2640,2641,2642,  //512, 256
 
-            /*************************************************************************************** 
-         * Everything below is of no interest for detection purpose							   
+            /***************************************************************************************
+         * Everything below is of no interest for detection purpose
          ***************************************************************************************
 
         2643,2644,2645,2646,2647,2648,2649,2650,2651,2652,2653,2654,2655,2656,2657,2658,

@@ -60,7 +60,6 @@ namespace UtfUnknown.Core.Models.MultiByte.Chinese
                 BitPackage.UNIT_MASK_4BITS, EUCTW_st),
             EUCTWCharLenTable, CodepageName.EUC_TW)
         {
-
         }
     }
 }

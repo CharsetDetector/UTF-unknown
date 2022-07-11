@@ -1,4 +1,4 @@
-namespace UtfUnknown.Core.Analyzers.Japanese
+﻿namespace UtfUnknown.Core.Analyzers.Japanese
 {
     public class SJISContextAnalyser : JapaneseContextAnalyser
     {
@@ -32,6 +32,5 @@ namespace UtfUnknown.Core.Analyzers.Japanese
             }
             return -1;
         }
-
     }
 }

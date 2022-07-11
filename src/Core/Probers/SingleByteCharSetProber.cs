@@ -1,4 +1,4 @@
-/* ***** BEGIN LICENSE BLOCK *****
+﻿/* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
  * The contents of this file are subject to the Mozilla Public License Version
@@ -20,7 +20,7 @@
  *
  * Contributor(s):
  *          Shy Shalom <shooshX@gmail.com>
- *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port) 
+ *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port)
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -182,7 +182,7 @@ namespace UtfUnknown.Core.Probers
                 // charsets used for the same language.
                 r = r * (seqCounters[POSITIVE_CAT] + (float)seqCounters[PROBABLE_CAT] / 4.0f) / totalChar;
 
-                // The more control characters (proportionnaly to the size of the text), the
+                // The more control characters (proportionally to the size of the text), the
                 // less confident we become in the current charset.
                 r = r * (totalChar - ctrlChar) / totalChar;
 

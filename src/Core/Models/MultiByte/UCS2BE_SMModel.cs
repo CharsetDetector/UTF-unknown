@@ -1,5 +1,3 @@
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.MultiByte
 {
     public class UCS2BE_SMModel : StateMachineModel

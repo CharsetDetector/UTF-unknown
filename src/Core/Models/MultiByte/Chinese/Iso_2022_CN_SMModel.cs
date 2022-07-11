@@ -1,5 +1,3 @@
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.MultiByte.Chinese
 {
     public class Iso_2022_CN_SMModel : StateMachineModel
@@ -64,7 +62,6 @@ namespace UtfUnknown.Core.Models.MultiByte.Chinese
                 BitPackage.UNIT_MASK_4BITS, ISO2022CN_st),
             ISO2022CNCharLenTable, CodepageName.ISO_2022_CN)
         {
-
         }
     }
 }

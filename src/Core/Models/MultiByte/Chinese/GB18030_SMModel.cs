@@ -1,5 +1,3 @@
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.MultiByte.Chinese
 {
     public class GB18030_SMModel : StateMachineModel
@@ -67,7 +65,6 @@ namespace UtfUnknown.Core.Models.MultiByte.Chinese
                 BitPackage.UNIT_MASK_4BITS, GB18030_st),
             GB18030CharLenTable, CodepageName.GB18030)
         {
-
         }
     }
 }

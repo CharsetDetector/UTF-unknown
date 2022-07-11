@@ -1,5 +1,3 @@
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.MultiByte.Chinese
 {
     public class BIG5SMModel : StateMachineModel
@@ -59,7 +57,6 @@ namespace UtfUnknown.Core.Models.MultiByte.Chinese
                 BitPackage.UNIT_MASK_4BITS, BIG5_st),
             BIG5CharLenTable, CodepageName.BIG5)
         {
-
         }
     }
 }
