@@ -48,7 +48,7 @@ namespace UtfUnknown.Core.Probers
     {
         private const int CHARSETS_NUM = 4;
         private string detectedCharset;
-        private CodingStateMachine[] codingSM; 
+        private CodingStateMachine[] codingSM;
         int activeSM;
 
         public EscCharsetProber()
@@ -60,7 +60,7 @@ namespace UtfUnknown.Core.Probers
             codingSM[3] = new CodingStateMachine(new Iso_2022_KR_SMModel());
             Reset();
         }
-        
+
         public override void Reset()
         {
             state = ProbingState.Detecting;
@@ -103,10 +103,10 @@ namespace UtfUnknown.Core.Probers
         {
             return detectedCharset;        
         }
-        
+
         public override float GetConfidence(StringBuilder status = null)
         {
             return 0.99f;
-        }           
+        }
     }
 }

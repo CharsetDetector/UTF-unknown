@@ -48,9 +48,9 @@ using UtfUnknown.Core.Probers;
 namespace UtfUnknown
 {
     /// <summary>
-    /// Default implementation of charset detection interface. 
+    /// Default implementation of charset detection interface.
     /// The detector can be fed by a System.IO.Stream:
-    /// </summary>                
+    /// </summary>
     public class CharsetDetector
     {
         internal InputState InputState;
@@ -135,7 +135,7 @@ namespace UtfUnknown
         }
 
         /// <summary>
-        /// Detect the character encoding form this byte array. 
+        /// Detect the character encoding form this byte array.
         /// It searchs for BOM from bytes[offset].
         /// </summary>
         /// <param name="bytes">The byte array containing the text</param>
@@ -170,7 +170,7 @@ namespace UtfUnknown
 
         /// <summary>
         /// Detect the character encoding by reading the stream.
-        /// 
+        ///
         /// Note: stream position is not reset before and after.
         /// </summary>
         /// <param name="stream">The steam. </param>
@@ -186,7 +186,7 @@ namespace UtfUnknown
 
         /// <summary>
         /// Detect the character encoding by reading the stream.
-        /// 
+        ///
         /// Note: stream position is not reset before and after.
         /// </summary>
         /// <param name="stream">The steam. </param>
@@ -403,10 +403,10 @@ namespace UtfUnknown
 
             if (buf0 == 0xEF && buf1 == 0xBB && buf[offset + 2] == 0xBF)
                 return CodepageName.UTF8;
-            
+
             if (len < 4)
                 return null;
-            
+
             //Here, because anyway further more than 3 positions are checked.
             if (buf0 == 0x00 && buf1 == 0x00)
             {
@@ -422,24 +422,24 @@ namespace UtfUnknown
             if (buf0 == 0x2B && buf1 == 0x2F && buf[offset + 2] == 0x76)
                 if (buf[offset + 3] == 0x38 || buf[offset + 3] == 0x39 || buf[offset + 3] == 0x2B || buf[offset + 3] == 0x2F)
                     return CodepageName.UTF7;
-            
+
             // Detect GB18030 with bom (see table in https://en.wikipedia.org/wiki/Byte_order_mark)
             // TODO: If you remove this check, GB18030Prober will still be defined as GB18030 -- It's feature or bug?
             if (buf0 == 0x84 && buf1 == 0x31 && buf[offset + 2] == 0x95 && buf[offset + 3] == 0x33)
                 return CodepageName.GB18030;
-            
+
             return null;
         }
 
         /// <summary>
-        /// Notify detector that no further data is available. 
+        /// Notify detector that no further data is available.
         /// </summary>
         private DetectionResult DataEnd()
         {
             if (!_gotData)
             {
-                // we haven't got any data yet, return immediately 
-                // caller program sometimes call DataEnd before anything has 
+                // we haven't got any data yet, return immediately
+                // caller program sometimes call DataEnd before anything has
                 // been sent to detector
                 return new DetectionResult();
             }
@@ -500,4 +500,3 @@ namespace UtfUnknown
         }
     }
 }
-

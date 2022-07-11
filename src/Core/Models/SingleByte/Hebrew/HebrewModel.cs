@@ -45,10 +45,10 @@
 using UtfUnknown.Core.Models;
 
 namespace UtfUnknown.Core.Models.SingleByte.Hebrew
-{   
+{
     public abstract class HebrewModel : SequenceModel
     {
-        // Model Table: 
+        // Model Table:
         // total sequences: 100%
         // first 512 sequences: 98.4004%
         // first 1024 sequences: 1.5981%
@@ -185,7 +185,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Hebrew
             0,0,0,0,0,0,0,0,0,0,1,2,1,0,0,0,0,0,1,1,1,1,1,0,1,0,0,0,1,1,0,0,
         };
 
-        public HebrewModel(byte[] charToOrderMap, string name) 
+        public HebrewModel(byte[] charToOrderMap, string name)
             : base(charToOrderMap, LANG_MODEL, 64, 0.984004f, false, name)
         {
         }

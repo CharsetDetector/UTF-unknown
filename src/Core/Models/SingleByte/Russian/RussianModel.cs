@@ -46,12 +46,12 @@ namespace UtfUnknown.Core.Models.SingleByte.Russian
 {
     public abstract class RussianModel : SequenceModel
     {
-        // Model Table: 
+        // Model Table:
         // total sequences: 100%
         // first 512 sequences: 97.6601%
         // first 1024 sequences: 2.3389%
         // rest  sequences:      0.1237%
-        // negative sequences:   0.0009% 
+        // negative sequences:   0.0009%
         protected readonly static byte[] LANG_MODEL = {
             0,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,1,1,3,3,3,3,1,3,3,3,2,3,2,3,3,
             3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,0,3,2,2,2,2,2,0,0,2,
@@ -182,8 +182,8 @@ namespace UtfUnknown.Core.Models.SingleByte.Russian
             0,1,1,1,1,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
             0,0,0,0,0,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,
         };
-        
-        public RussianModel(byte[] charToOrderMap, string name) 
+
+        public RussianModel(byte[] charToOrderMap, string name)
             : base(charToOrderMap, LANG_MODEL, 64, 0.976601f, false, name)
         {
         }

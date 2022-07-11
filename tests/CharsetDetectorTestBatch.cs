@@ -74,7 +74,7 @@ namespace UtfUnknown.Tests
         {
             TestFile(testCase.ExpectedEncoding, testCase.InputFile.FullName);
         }
-        
+
         [TestCaseSource(nameof(AllTestFilesUnsupportedEncoding))]
         public void TestFileUnsupportedEncodings(TestCase testCase)
         {
@@ -126,7 +126,7 @@ namespace UtfUnknown.Tests
 
             return testCases;
         }
-        
+
         private static IReadOnlyList<TestCase> AllTestFilesUnsupportedEncoding()
         {
             var path = Path.Combine(TESTS_ROOT, "DataUnsupported");
@@ -147,7 +147,7 @@ namespace UtfUnknown.Tests
 
         private static List<TestCase> CreateTestCases(DirectoryInfo dirname)
         {
-            //encoding is the directory name  - before the optional '(' 
+            //encoding is the directory name  - before the optional '('
             var expectedEncoding = dirname.Name.Split('(').First().Trim();
 
             var files = dirname.GetFiles();

@@ -3,7 +3,7 @@ namespace UtfUnknown.Core.Analyzers.Japanese
     public class EUCJPContextAnalyser : JapaneseContextAnalyser
     {
         private const byte HIRAGANA_FIRST_BYTE = 0xA4;
-        
+
         protected override int GetOrder(byte[] buf, int offset, out int charLen)
         {
             byte high = buf[offset];
@@ -24,7 +24,7 @@ namespace UtfUnknown.Core.Analyzers.Japanese
             }
             return -1;                    
         }
-                
+
         protected override int GetOrder(byte[] buf, int offset)
         {
             // We are only interested in Hiragana
@@ -34,6 +34,6 @@ namespace UtfUnknown.Core.Analyzers.Japanese
                     return low - 0xA1;
             }
             return -1;
-        }        
+        }
     }
 }

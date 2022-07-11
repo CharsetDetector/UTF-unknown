@@ -5,7 +5,7 @@ namespace UtfUnknown.Core.Analyzers.Korean
     public class EUCKRDistributionAnalyser : CharDistributionAnalyser
     {
         // Sampling from about 20M text materials include literature and computer technology
-		
+
         /*
          * 128  --> 0.79
          * 256  --> 0.92
@@ -573,21 +573,21 @@ namespace UtfUnknown.Core.Analyzers.Korean
         8704,8705,8706,8707,8708,8709,8710,8711,8712,8713,8714,8715,8716,8717,8718,8719,
         8720,8721,8722,8723,8724,8725,8726,8727,8728,8729,8730,8731,8732,8733,8734,8735,
         8736,8737,8738,8739,8740,8741 */ };
-        
+
         public EUCKRDistributionAnalyser()
         {
             charToFreqOrder = EUCKR_CHAR2FREQ_ORDER;
             typicalDistributionRatio = EUCKR_TYPICAL_DISTRIBUTION_RATIO;        
         }
-        
+
         /// <summary>
         /// first  byte range: 0xb0 -- 0xfe
         ///  second byte range: 0xa1 -- 0xfe
         /// no validation needed here. State machine has done that
         /// </summary>
-        public override int GetOrder(byte[] buf, int offset) 
+        public override int GetOrder(byte[] buf, int offset)
         { 
-            if (buf[offset] >= 0xB0)  
+            if (buf[offset] >= 0xB0)
                 return 94 * (buf[offset] - 0xB0) + buf[offset+1] - 0xA1;
             else
                 return -1;

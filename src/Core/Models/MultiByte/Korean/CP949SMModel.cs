@@ -31,38 +31,38 @@ namespace UtfUnknown.Core.Models.MultiByte.Korean
         */
 
         private readonly static int[] CP949_cls = {
-            BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 00 - 07 
-            BitPackage.Pack4bits(1,1,1,1,1,1,0,0),  // 08 - 0f 
-            BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 10 - 17 
-            BitPackage.Pack4bits(1,1,1,0,1,1,1,1),  // 18 - 1f 
-            BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 20 - 27 
-            BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 28 - 2f 
-            BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 30 - 37 
-            BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 38 - 3f 
-            BitPackage.Pack4bits(1,4,4,4,4,4,4,4),  // 40 - 47 
-            BitPackage.Pack4bits(4,4,4,4,4,4,4,4),  // 48 - 4f 
-            BitPackage.Pack4bits(4,4,5,5,5,5,5,5),  // 50 - 57 
-            BitPackage.Pack4bits(5,5,5,1,1,1,1,1),  // 58 - 5f 
-            BitPackage.Pack4bits(1,5,5,5,5,5,5,5),  // 60 - 67 
-            BitPackage.Pack4bits(5,5,5,5,5,5,5,5),  // 68 - 6f 
-            BitPackage.Pack4bits(5,5,5,5,5,5,5,5),  // 70 - 77 
-            BitPackage.Pack4bits(5,5,5,1,1,1,1,1),  // 78 - 7f 
-            BitPackage.Pack4bits(0,6,6,6,6,6,6,6),  // 80 - 87 
-            BitPackage.Pack4bits(6,6,6,6,6,6,6,6),  // 88 - 8f 
-            BitPackage.Pack4bits(6,6,6,6,6,6,6,6),  // 90 - 97 
-            BitPackage.Pack4bits(6,6,6,6,6,6,6,6),  // 98 - 9f 
-            BitPackage.Pack4bits(6,7,7,7,7,7,7,7),  // a0 - a7 
-            BitPackage.Pack4bits(7,7,7,7,7,8,8,8),  // a8 - af 
-            BitPackage.Pack4bits(7,7,7,7,7,7,7,7),  // b0 - b7 
-            BitPackage.Pack4bits(7,7,7,7,7,7,7,7),  // b8 - bf 
-            BitPackage.Pack4bits(7,7,7,7,7,7,9,2),  // c0 - c7 
-            BitPackage.Pack4bits(2,3,2,2,2,2,2,2),  // c8 - cf 
-            BitPackage.Pack4bits(2,2,2,2,2,2,2,2),  // d0 - d7 
-            BitPackage.Pack4bits(2,2,2,2,2,2,2,2),  // d8 - df 
-            BitPackage.Pack4bits(2,2,2,2,2,2,2,2),  // e0 - e7 
-            BitPackage.Pack4bits(2,2,2,2,2,2,2,2),  // e8 - ef 
-            BitPackage.Pack4bits(2,2,2,2,2,2,2,2),  // f0 - f7 
-            BitPackage.Pack4bits(2,2,2,2,2,2,3,0)   // f8 - ff 
+            BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 00 - 07
+            BitPackage.Pack4bits(1,1,1,1,1,1,0,0),  // 08 - 0f
+            BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 10 - 17
+            BitPackage.Pack4bits(1,1,1,0,1,1,1,1),  // 18 - 1f
+            BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 20 - 27
+            BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 28 - 2f
+            BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 30 - 37
+            BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 38 - 3f
+            BitPackage.Pack4bits(1,4,4,4,4,4,4,4),  // 40 - 47
+            BitPackage.Pack4bits(4,4,4,4,4,4,4,4),  // 48 - 4f
+            BitPackage.Pack4bits(4,4,5,5,5,5,5,5),  // 50 - 57
+            BitPackage.Pack4bits(5,5,5,1,1,1,1,1),  // 58 - 5f
+            BitPackage.Pack4bits(1,5,5,5,5,5,5,5),  // 60 - 67
+            BitPackage.Pack4bits(5,5,5,5,5,5,5,5),  // 68 - 6f
+            BitPackage.Pack4bits(5,5,5,5,5,5,5,5),  // 70 - 77
+            BitPackage.Pack4bits(5,5,5,1,1,1,1,1),  // 78 - 7f
+            BitPackage.Pack4bits(0,6,6,6,6,6,6,6),  // 80 - 87
+            BitPackage.Pack4bits(6,6,6,6,6,6,6,6),  // 88 - 8f
+            BitPackage.Pack4bits(6,6,6,6,6,6,6,6),  // 90 - 97
+            BitPackage.Pack4bits(6,6,6,6,6,6,6,6),  // 98 - 9f
+            BitPackage.Pack4bits(6,7,7,7,7,7,7,7),  // a0 - a7
+            BitPackage.Pack4bits(7,7,7,7,7,8,8,8),  // a8 - af
+            BitPackage.Pack4bits(7,7,7,7,7,7,7,7),  // b0 - b7
+            BitPackage.Pack4bits(7,7,7,7,7,7,7,7),  // b8 - bf
+            BitPackage.Pack4bits(7,7,7,7,7,7,9,2),  // c0 - c7
+            BitPackage.Pack4bits(2,3,2,2,2,2,2,2),  // c8 - cf
+            BitPackage.Pack4bits(2,2,2,2,2,2,2,2),  // d0 - d7
+            BitPackage.Pack4bits(2,2,2,2,2,2,2,2),  // d8 - df
+            BitPackage.Pack4bits(2,2,2,2,2,2,2,2),  // e0 - e7
+            BitPackage.Pack4bits(2,2,2,2,2,2,2,2),  // e8 - ef
+            BitPackage.Pack4bits(2,2,2,2,2,2,2,2),  // f0 - f7
+            BitPackage.Pack4bits(2,2,2,2,2,2,3,0)   // f8 - ff
         };
 
         /*
@@ -90,15 +90,15 @@ namespace UtfUnknown.Core.Models.MultiByte.Korean
         };
 
         private readonly static int[] CP949CharLenTable = { 0, 1, 2, 0, 1, 1, 2, 2, 0, 2 };
-        
+
         public CP949SMModel() : base(
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, CP949_cls),
             10,
-            new BitPackage(BitPackage.INDEX_SHIFT_4BITS, 
-                BitPackage.SHIFT_MASK_4BITS, 
+            new BitPackage(BitPackage.INDEX_SHIFT_4BITS,
+                BitPackage.SHIFT_MASK_4BITS,
                 BitPackage.BIT_SHIFT_4BITS,
                 BitPackage.UNIT_MASK_4BITS, CP949_st),
             CP949CharLenTable, CodepageName.CP949)

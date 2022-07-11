@@ -137,7 +137,7 @@ using System.Text;
  */
 
 namespace UtfUnknown.Core.Probers
-{    
+{
     /// <summary>
     /// This prober doesn't actually recognize a language or a charset.
     /// It is a helper prober for the use of the Hebrew model probers
@@ -166,25 +166,25 @@ namespace UtfUnknown.Core.Probers
 
         protected const string VISUAL_NAME = CodepageName.ISO_8859_8;
         protected const string LOGICAL_NAME = CodepageName.WINDOWS_1255;
-        
+
         // owned by the group prober.
         protected CharsetProber logicalProber, visualProber;
-        protected int finalCharLogicalScore, finalCharVisualScore;      
-        
+        protected int finalCharLogicalScore, finalCharVisualScore;
+
         // The two last bytes seen in the previous buffer.
         protected byte prev, beforePrev;
-                
+
         public HebrewProber()
         {
             Reset();
         }
-         
-        public void SetModelProbers(CharsetProber logical, CharsetProber visual) 
+
+        public void SetModelProbers(CharsetProber logical, CharsetProber visual)
         { 
             logicalProber = logical; 
             visualProber = visual; 
         }
-        
+
         /** 
          * Final letter analysis for logical-visual decision.
          * Look for evidence that the received buffer is either logical Hebrew or 
@@ -219,31 +219,31 @@ namespace UtfUnknown.Core.Probers
             int max = offset + len;
 
             for (int i = offset; i < max; i++) {
-                
+
                 byte b = buf[i];
-                
+
                 // a word just ended
                 if (b == 0x20) {
                     // *(curPtr-2) was not a space so prev is not a 1 letter word
                     if (beforePrev != 0x20) {
                         // case (1) [-2:not space][-1:final letter][cur:space]
-                        if (IsFinal(prev)) 
+                        if (IsFinal(prev))
                             finalCharLogicalScore++;
-                        // case (2) [-2:not space][-1:Non-Final letter][cur:space]                        
+                        // case (2) [-2:not space][-1:Non-Final letter][cur:space]
                         else if (IsNonFinal(prev))
                             finalCharVisualScore++;
                     }
-                    
+
                 } else {
                     // case (3) [-2:space][-1:final letter][cur:not space]
-                    if ((beforePrev == 0x20) && (IsFinal(prev)) && (b != ' ')) 
+                    if ((beforePrev == 0x20) && (IsFinal(prev)) && (b != ' '))
                         ++finalCharVisualScore;
                 }
                 beforePrev = prev;
                 prev = b;
             }
 
-            // Forever detecting, till the end or until both model probers 
+            // Forever detecting, till the end or until both model probers
             // return NotMe (handled above).
             return ProbingState.Detecting;
         }
@@ -253,7 +253,7 @@ namespace UtfUnknown.Core.Probers
         {
             // If the final letter score distance is dominant enough, rely on it.
             int finalsub = finalCharLogicalScore - finalCharVisualScore;
-            if (finalsub >= MIN_FINAL_CHAR_DISTANCE) 
+            if (finalsub >= MIN_FINAL_CHAR_DISTANCE)
                 return LOGICAL_NAME;
             if (finalsub <= -(MIN_FINAL_CHAR_DISTANCE))
                 return VISUAL_NAME;
@@ -266,7 +266,7 @@ namespace UtfUnknown.Core.Probers
                 return VISUAL_NAME;
             
             // Still no good, back to final letter distance, maybe it'll save the day.
-            if (finalsub < 0) 
+            if (finalsub < 0)
                 return VISUAL_NAME;
 
             // (finalsub > 0 - Logical) or (don't know what to do) default to Logical.
@@ -281,10 +281,10 @@ namespace UtfUnknown.Core.Probers
             beforePrev = 0x20;
         }
 
-        public override ProbingState GetState() 
+        public override ProbingState GetState()
         {
             // Remain active as long as any of the model probers are active.
-            if (logicalProber.GetState() == ProbingState.NotMe && 
+            if (logicalProber.GetState() == ProbingState.NotMe &&
                 visualProber.GetState() == ProbingState.NotMe)
                 return ProbingState.NotMe;
             return ProbingState.Detecting;
@@ -298,30 +298,30 @@ namespace UtfUnknown.Core.Probers
 
             return status.ToString();
         }
-        
+
         public override float GetConfidence(StringBuilder status = null)
         { 
             return 0.0f;
         }
-        
+
         protected static bool IsFinal(byte b)
         {
-            return (b == FINAL_KAF || b == FINAL_MEM || b == FINAL_NUN 
+            return (b == FINAL_KAF || b == FINAL_MEM || b == FINAL_NUN
                     || b == FINAL_PE || b == FINAL_TSADI);        
         }
-        
+
         protected static bool IsNonFinal(byte b)
         {
-            // The normal Tsadi is not a good Non-Final letter due to words like 
-            // 'lechotet' (to chat) containing an apostrophe after the tsadi. This 
-            // apostrophe is converted to a space in FilterWithoutEnglishLetters causing 
-            // the Non-Final tsadi to appear at an end of a word even though this is not 
+            // The normal Tsadi is not a good Non-Final letter due to words like
+            // 'lechotet' (to chat) containing an apostrophe after the tsadi. This
+            // apostrophe is converted to a space in FilterWithoutEnglishLetters causing
+            // the Non-Final tsadi to appear at an end of a word even though this is not
             // the case in the original text.
-            // The letters Pe and Kaf rarely display a related behavior of not being a 
-            // good Non-Final letter. Words like 'Pop', 'Winamp' and 'Mubarak' for 
-            // example legally end with a Non-Final Pe or Kaf. However, the benefit of 
-            // these letters as Non-Final letters outweighs the damage since these words 
-            // are quite rare.            
+            // The letters Pe and Kaf rarely display a related behavior of not being a
+            // good Non-Final letter. Words like 'Pop', 'Winamp' and 'Mubarak' for
+            // example legally end with a Non-Final Pe or Kaf. However, the benefit of
+            // these letters as Non-Final letters outweighs the damage since these words
+            // are quite rare.
             return (b == NORMAL_KAF || b == NORMAL_MEM || b == NORMAL_NUN || b == NORMAL_PE);
         }
     }

@@ -11,7 +11,7 @@ namespace UtfUnknown.Core.Probers
         /// </summary>
         FoundIt = 1,
         /// <summary>
-        /// Negative answer 
+        /// Negative answer
         /// </summary>
         NotMe = 2
     };

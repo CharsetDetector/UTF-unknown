@@ -104,7 +104,7 @@ namespace UtfUnknown.Core.Probers
             // Hebrew
             HebrewProber hebprober = new HebrewProber();
             probers[10] = hebprober;
-            // Logical  
+            // Logical
             probers[11] = new SingleByteCharSetProber(new Windows_1255_HebrewModel(), false, hebprober);
             // Visual
             probers[12] = new SingleByteCharSetProber(new Windows_1255_HebrewModel(), true, hebprober);
@@ -125,7 +125,7 @@ namespace UtfUnknown.Core.Probers
             probers[20] = new SingleByteCharSetProber(new Windows_1252_SpanishModel());
 
             // Is the following still valid?
-            // disable latin2 before latin1 is available, otherwise all latin1 
+            // disable latin2 before latin1 is available, otherwise all latin1
             // will be detected as latin2 because of their similarity
             // Hungarian
             probers[21] = new SingleByteCharSetProber(new Iso_8859_2_HungarianModel());
@@ -256,7 +256,7 @@ namespace UtfUnknown.Core.Probers
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
             // apply filter to original buffer, and we got new buffer back
-            // depend on what script it is, we will feed them the new buffer 
+            // depend on what script it is, we will feed them the new buffer
             // we got after applying proper filter
             // this is done without any consideration to KeepEnglishLetters
             // of each prober since as of now, there are no probers here which

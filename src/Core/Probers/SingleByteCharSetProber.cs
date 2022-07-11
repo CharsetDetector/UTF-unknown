@@ -54,11 +54,11 @@ namespace UtfUnknown.Core.Probers
         private const int PROBABLE_CAT = NUMBER_OF_SEQ_CAT - 2;
         private const int NEUTRAL_CAT = NUMBER_OF_SEQ_CAT - 3;
         private const int NEGATIVE_CAT = 0;
-        
+
         protected SequenceModel model;
-        
-        // true if we need to reverse every pair in the model lookup        
-        bool reversed; 
+
+        // true if we need to reverse every pair in the model lookup
+        bool reversed;
 
         // char order of last character
         byte lastOrder;
@@ -68,20 +68,20 @@ namespace UtfUnknown.Core.Probers
 
         int totalChar;
         int ctrlChar;
-        
+
         // characters that fall in our sampling range
         int freqChar;
-  
+
         // Optional auxiliary prober for name decision. created and destroyed by the GroupProber
-        CharsetProber nameProber; 
-                    
-        public SingleByteCharSetProber(SequenceModel model) 
+        CharsetProber nameProber;
+
+        public SingleByteCharSetProber(SequenceModel model)
             : this(model, false, null)
         {
             
         }
-    
-        public SingleByteCharSetProber(SequenceModel model, bool reversed, 
+
+        public SingleByteCharSetProber(SequenceModel model, bool reversed,
                                        CharsetProber nameProber)
         {
             this.model = model;
@@ -113,7 +113,7 @@ namespace UtfUnknown.Core.Probers
                 {
                     ctrlChar++;
                 }
-                    
+
                 if (order < model.FreqCharCount)
                 {
                     freqChar++;
@@ -142,7 +142,7 @@ namespace UtfUnknown.Core.Probers
             }
             return state;
         }
-                
+
         public override string DumpStatus()
         {
             StringBuilder status = new StringBuilder();
@@ -193,7 +193,7 @@ namespace UtfUnknown.Core.Probers
             }
             return 0.01f;            
         }
-        
+
         public override void Reset()
         {
             state = ProbingState.Detecting;
@@ -205,11 +205,11 @@ namespace UtfUnknown.Core.Probers
             freqChar = 0;
             ctrlChar = 0;
         }
-        
-        public override string GetCharsetName() 
+
+        public override string GetCharsetName()
         {
             return (nameProber == null) ? model.CharsetName
                                         : nameProber.GetCharsetName();
-        }        
+        }
     }
 }

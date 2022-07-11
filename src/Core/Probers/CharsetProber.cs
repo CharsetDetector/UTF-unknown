@@ -139,8 +139,8 @@ namespace UtfUnknown.Core.Probers
         }
 
         /// <summary>
-        /// Do filtering to reduce load to probers (Remove ASCII symbols, 
-        /// collapse spaces). This filter applies to all scripts which contain 
+        /// Do filtering to reduce load to probers (Remove ASCII symbols,
+        /// collapse spaces). This filter applies to all scripts which contain
         /// both English characters and upper ASCII characters.
         /// </summary>
         /// <returns>a filtered copy of the input buffer</returns>
@@ -180,7 +180,7 @@ namespace UtfUnknown.Core.Probers
                     cur++;
                 }
 
-                // If the current segment contains more than just a symbol 
+                // If the current segment contains more than just a symbol
                 // and it is not inside a tag then keep it.
                 if (!inTag && cur > prev)
                     ms.Write(buf, prev, cur - prev);

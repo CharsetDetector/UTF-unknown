@@ -41,7 +41,7 @@ using System.Text;
 
 namespace UtfUnknown.Core.Probers
 {
-    // TODO: Using trigrams the detector should be able to discriminate between 
+    // TODO: Using trigrams the detector should be able to discriminate between
     // latin-1 and iso8859-2
     public class Latin1Prober : CharsetProber
     {
@@ -173,7 +173,7 @@ namespace UtfUnknown.Core.Probers
                 confidence -= freqCounter[1] * 20.0f / total;
             }
 
-            // lower the confidence of latin1 so that other more accurate detector 
+            // lower the confidence of latin1 so that other more accurate detector
             // can take priority.
             return confidence < 0.0f ? 0.0f : confidence * 0.5f;
         }

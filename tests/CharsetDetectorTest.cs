@@ -81,7 +81,7 @@ namespace UtfUnknown.Tests
         public void DetectFromByteArray(int offset, int len, string detectedCodepage)
         {
             // Arrange
-            string s = "UTF-Unknown은 파일, 스트림, 그 외 바이트 배열의 캐릭터 셋을 탐지하는 라이브러리입니다." + 
+            string s = "UTF-Unknown은 파일, 스트림, 그 외 바이트 배열의 캐릭터 셋을 탐지하는 라이브러리입니다." +
                 "대한민국 (大韓民國, Republic of Korea)";
             byte[] bytes = Encoding.UTF8.GetBytes(s);
 

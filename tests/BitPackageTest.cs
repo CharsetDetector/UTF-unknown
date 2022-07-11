@@ -51,7 +51,7 @@ namespace UtfUnknown.Tests
             Assert.AreEqual(BitPackage.Pack4bits(2,2,2,2,2,2,2,2), 572662306);
             Assert.AreEqual(BitPackage.Pack4bits(15,15,15,15,15,15,15,15), -1);
         }
-        
+
         [Test]
         public void TestUnpack()
         {

@@ -39,7 +39,7 @@
 using System;
 
 namespace UtfUnknown.Core.Models
-{   
+{
     public abstract class SequenceModel
     {
         // Codepoints
@@ -57,11 +57,11 @@ namespace UtfUnknown.Core.Models
 
         // [256] table use to find a char's order
         protected byte[] charToOrderMap;
-        
-        // freqCharCount x freqCharCount table to find a 2-char sequence's 
-        // frequency        
+
+        // freqCharCount x freqCharCount table to find a 2-char sequence's
+        // frequency
         protected byte[] precedenceMatrix;
-        
+
         // The count of frequent characters
         protected int freqCharCount;
 
@@ -72,11 +72,11 @@ namespace UtfUnknown.Core.Models
 
         // freqSeqs / totalSeqs
         protected float typicalPositiveRatio;
-        
+
         public float TypicalPositiveRatio {
             get { return typicalPositiveRatio; }
         }
-        
+
 
         /// <summary>
         /// TODO not used?
@@ -89,13 +89,13 @@ namespace UtfUnknown.Core.Models
         public bool KeepEnglishLetter {
             get { return keepEnglishLetter; }
         }
-        
+
         protected string charsetName;
 
         public string CharsetName {
             get { return charsetName; }
         }
-        
+
         public SequenceModel(
                 byte[] charToOrderMap,
                 byte[] precedenceMatrix,
@@ -111,12 +111,12 @@ namespace UtfUnknown.Core.Models
             this.keepEnglishLetter = keepEnglishLetter;
             this.charsetName = charsetName;
         }
-        
+
         public byte GetOrder(byte b)
         {
             return charToOrderMap[b];
         }
-        
+
         public byte GetPrecedence(int pos)
         {
             return precedenceMatrix[pos];

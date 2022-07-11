@@ -50,7 +50,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Bulgarian
         // NUM: 0 - 9
         //
         // Character Mapping Table:
-        // this table is modified base on win1251BulgarianCharToOrderMap, so 
+        // this table is modified base on win1251BulgarianCharToOrderMap, so
         // only number <64 is sure valid
 
         private static byte[] CHAR_TO_ORDER_MAP = {

@@ -38,7 +38,7 @@
 namespace UtfUnknown.Core.Analyzers
 {
     /// <summary>
-    /// Base class for the Character Distribution Method, used for 
+    /// Base class for the Character Distribution Method, used for
     /// the CJK encodings
     /// </summary>
     public abstract class CharDistributionAnalyser
@@ -60,7 +60,7 @@ namespace UtfUnknown.Core.Analyzers
         // Mapping table to get frequency order from char order (get from GetOrder())
         protected int[] charToFreqOrder;
 
-        // This constant value varies from language to language. It is used in calculating confidence. 
+        // This constant value varies from language to language. It is used in calculating confidence.
         protected float typicalDistributionRatio;
 
         public CharDistributionAnalyser()
@@ -72,7 +72,7 @@ namespace UtfUnknown.Core.Analyzers
         /// Feed a block of data and do distribution analysis
         /// </summary>
         /// <remarks>
-        /// we do not handle character base on its original encoding string, but 
+        /// we do not handle character base on its original encoding string, but
         /// convert this encoding string to a number, here called order.
         /// This allow multiple encoding of a language to share one frequency table
         /// </remarks>
@@ -82,7 +82,7 @@ namespace UtfUnknown.Core.Analyzers
         public abstract int GetOrder(byte[] buf, int offset);
 
         /// <summary>
-        /// Feed a character with known length 
+        /// Feed a character with known length
         /// </summary>
         /// <param name="buf">A <see cref="System.Byte"/></param>
         /// <param name="offset">buf offset</param>

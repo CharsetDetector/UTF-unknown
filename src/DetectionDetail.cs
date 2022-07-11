@@ -57,7 +57,7 @@ namespace UtfUnknown
         public string EncodingName { get; }
 
         /// <summary>
-        /// The detected encoding. 
+        /// The detected encoding.
         /// </summary>
         public Encoding Encoding { get; set; }
 
