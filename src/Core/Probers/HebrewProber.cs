@@ -180,9 +180,9 @@ namespace UtfUnknown.Core.Probers
         }
 
         public void SetModelProbers(CharsetProber logical, CharsetProber visual)
-        { 
-            logicalProber = logical; 
-            visualProber = visual; 
+        {
+            logicalProber = logical;
+            visualProber = visual;
         }
 
         /** 
@@ -264,7 +264,7 @@ namespace UtfUnknown.Core.Probers
                 return LOGICAL_NAME;
             if (modelsub < -(MIN_MODEL_DISTANCE))
                 return VISUAL_NAME;
-            
+
             // Still no good, back to final letter distance, maybe it'll save the day.
             if (finalsub < 0)
                 return VISUAL_NAME;
@@ -300,14 +300,14 @@ namespace UtfUnknown.Core.Probers
         }
 
         public override float GetConfidence(StringBuilder status = null)
-        { 
+        {
             return 0.0f;
         }
 
         protected static bool IsFinal(byte b)
         {
             return (b == FINAL_KAF || b == FINAL_MEM || b == FINAL_NUN
-                    || b == FINAL_PE || b == FINAL_TSADI);        
+                    || b == FINAL_PE || b == FINAL_TSADI);
         }
 
         protected static bool IsNonFinal(byte b)

@@ -5,7 +5,7 @@ namespace UtfUnknown.Core.Probers
         /// <summary>
         /// No sure answer yet, but caller can ask for confidence
         /// </summary>
-        Detecting = 0, // 
+        Detecting = 0,
         /// <summary>
         /// Positive answer
         /// </summary>
@@ -14,5 +14,5 @@ namespace UtfUnknown.Core.Probers
         /// Negative answer
         /// </summary>
         NotMe = 2
-    };
+    }
 }

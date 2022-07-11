@@ -550,7 +550,7 @@ namespace UtfUnknown.Core.Analyzers.Japanese
         public SJISDistributionAnalyser()
         {
             charToFreqOrder = SJIS_CHAR2FREQ_ORDER;
-            typicalDistributionRatio = SJIS_TYPICAL_DISTRIBUTION_RATIO;        
+            typicalDistributionRatio = SJIS_TYPICAL_DISTRIBUTION_RATIO;
         }
 
         /// <summary>
@@ -559,9 +559,9 @@ namespace UtfUnknown.Core.Analyzers.Japanese
         /// no validation needed here. State machine has done that
         /// </summary>
         public override int GetOrder(byte[] buf, int offset)
-        { 
+        {
             int order;
-            
+
             if (buf[offset] >= 0x81 && buf[offset] <= 0x9F)
                 order = 188 * (buf[offset] - 0x81);
             else if (buf[offset] >= 0xE0 && buf[offset] <= 0xEF)
@@ -569,7 +569,7 @@ namespace UtfUnknown.Core.Analyzers.Japanese
             else
                 return -1;
             order += buf[offset+1] - 0x40;
-            
+
             if (buf[offset+1] > 0x7F)
                 order--;
             return order;

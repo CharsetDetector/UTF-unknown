@@ -19,7 +19,7 @@ namespace UtfUnknown.Core.Analyzers.Japanese
                 if (low >= 0x9F && low <= 0xF1)
                     return low - 0x9F;
             }
-            return -1;                    
+            return -1;
         }
 
         protected override int GetOrder(byte[] buf, int offset)

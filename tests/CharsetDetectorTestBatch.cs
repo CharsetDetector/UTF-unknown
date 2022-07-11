@@ -84,7 +84,7 @@ namespace UtfUnknown.Tests
             _logWriter.WriteLine(string.Concat(
                 $"- {testCase.InputFile.FullName} ({testCase.ExpectedEncoding}) -> ",
                 $"{JsonConvert.SerializeObject(result, Formatting.Indented, new EncodingJsonConverter())}"));
-            
+
             StringAssert.AreEqualIgnoringCase(
                 testCase.ExpectedEncoding,
                 detected.EncodingName,
@@ -134,7 +134,7 @@ namespace UtfUnknown.Tests
             {
                 throw new DirectoryNotFoundException($"Directory Data with test files not found, path: {path}");
             }
-            
+
             var dirs = new DirectoryInfo(path).GetDirectories();
             var testCases = new List<TestCase>();
             foreach (var dir in dirs)

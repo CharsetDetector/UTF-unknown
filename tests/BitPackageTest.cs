@@ -59,7 +59,7 @@ namespace UtfUnknown.Tests
                 BitPackage.Pack4bits(0, 1, 2, 3, 4, 5, 6, 7),
                 BitPackage.Pack4bits(8, 9, 10, 11, 12, 13, 14, 15)
             };
-        
+
             BitPackage pkg = new BitPackage(
                     BitPackage.INDEX_SHIFT_4BITS,
                     BitPackage.SHIFT_MASK_4BITS,
@@ -70,7 +70,7 @@ namespace UtfUnknown.Tests
             for (int i = 0; i < 16; i++) {
                 int n = pkg.Unpack(i);
                 Assert.AreEqual(n, i);
-            }          
+            }
         }
     }
 }

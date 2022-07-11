@@ -79,8 +79,8 @@ namespace UtfUnknown.Core.Models
         }
 
         public int GetClass(byte b)
-        {        
-            return classTable.Unpack((int)b);            
+        {
+            return classTable.Unpack((int)b);
         }
     }
 }

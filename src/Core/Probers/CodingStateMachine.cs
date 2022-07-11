@@ -22,7 +22,7 @@
  *          Shy Shalom <shooshX@gmail.com>
  *          Kohei TAKETA <k-tak@void.in> (Java port)
  *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port)
- * 
+ *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
  * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
@@ -75,8 +75,8 @@ namespace UtfUnknown.Core.Probers
         }
 
         public void Reset()
-        { 
-            currentState = StateMachineModel.START; 
+        {
+            currentState = StateMachineModel.START;
         }
 
         public int CurrentCharLen

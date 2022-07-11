@@ -153,7 +153,7 @@ namespace UtfUnknown.Core.Analyzers.Japanese
 
         public JapaneseContextAnalyser()
         {
-            Reset();        
+            Reset();
         }
 
         public float GetConfidence()
@@ -205,7 +205,7 @@ namespace UtfUnknown.Core.Analyzers.Japanese
                 done = true;
             if (done)
                 return;
-     
+
             // Only 2-bytes characters are of our interest
             int order = (charLen == 2) ? GetOrder(buf, offset) : -1;
             if (order != -1 && lastCharOrder != -1) {

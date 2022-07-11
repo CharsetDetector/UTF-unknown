@@ -906,7 +906,7 @@ namespace UtfUnknown.Core.Analyzers.Chinese
         public BIG5DistributionAnalyser()
         {
             charToFreqOrder = BIG5_CHAR2FREQ_ORDER;
-            typicalDistributionRatio = BIG5_TYPICAL_DISTRIBUTION_RATIO;        
+            typicalDistributionRatio = BIG5_TYPICAL_DISTRIBUTION_RATIO;
         }
 
         /// <summary>
@@ -915,7 +915,7 @@ namespace UtfUnknown.Core.Analyzers.Chinese
         /// no validation needed here. State machine has done that
         /// </summary>
         public override int GetOrder(byte[] buf, int offset)
-        { 
+        {
             if (buf[offset] >= 0xA4) {
                 if (buf[offset+1] >= 0xA1)
                     return 157 * (buf[offset] - 0xA4) + buf[offset+1] - 0xA1 + 63;
@@ -923,7 +923,7 @@ namespace UtfUnknown.Core.Analyzers.Chinese
                     return 157 * (buf[offset] - 0xA4) + buf[offset+1] - 0x40;
             } else {
                 return -1;
-            }  
+            }
         }
     }
 }

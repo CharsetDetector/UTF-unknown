@@ -577,7 +577,7 @@ namespace UtfUnknown.Core.Analyzers.Korean
         public EUCKRDistributionAnalyser()
         {
             charToFreqOrder = EUCKR_CHAR2FREQ_ORDER;
-            typicalDistributionRatio = EUCKR_TYPICAL_DISTRIBUTION_RATIO;        
+            typicalDistributionRatio = EUCKR_TYPICAL_DISTRIBUTION_RATIO;
         }
 
         /// <summary>
@@ -586,7 +586,7 @@ namespace UtfUnknown.Core.Analyzers.Korean
         /// no validation needed here. State machine has done that
         /// </summary>
         public override int GetOrder(byte[] buf, int offset)
-        { 
+        {
             if (buf[offset] >= 0xB0)
                 return 94 * (buf[offset] - 0xB0) + buf[offset+1] - 0xA1;
             else

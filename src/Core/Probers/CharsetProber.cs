@@ -21,7 +21,7 @@
  * Contributor(s):
  *          Shy Shalom <shooshX@gmail.com>
  *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port)
- * 
+ *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
  * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
@@ -95,7 +95,7 @@ namespace UtfUnknown.Core.Probers
         // Helper functions used in the Latin1 and Group probers
         //
         /// <summary>
-        ///  
+        ///
         /// </summary>
         /// <returns>filtered buffer</returns>
         protected static byte[] FilterWithoutEnglishLetters(byte[] buf, int offset, int len)
@@ -191,4 +191,3 @@ namespace UtfUnknown.Core.Probers
         }
     }
 }
-

@@ -464,7 +464,7 @@ namespace UtfUnknown.Core.Analyzers.Chinese
         /// </summary>
         /// <returns></returns>
         public override int GetOrder(byte[] buf, int offset)
-        { 
+        {
             if (buf[offset] >= 0xB0 && buf[offset+1] >= 0xA1)
                 return 94 * (buf[offset] - 0xb0) + buf[offset+1] - 0xA1;
             else

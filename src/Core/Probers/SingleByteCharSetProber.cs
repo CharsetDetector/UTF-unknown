@@ -78,7 +78,7 @@ namespace UtfUnknown.Core.Probers
         public SingleByteCharSetProber(SequenceModel model)
             : this(model, false, null)
         {
-            
+
         }
 
         public SingleByteCharSetProber(SequenceModel model, bool reversed,
@@ -87,13 +87,13 @@ namespace UtfUnknown.Core.Probers
             this.model = model;
             this.reversed = reversed;
             this.nameProber = nameProber;
-            Reset();            
+            Reset();
         }
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
             int max = offset + len;
-            
+
             for (int i = offset; i < max; i++)
             {
                 byte order = model.GetOrder(buf[i]);
@@ -191,7 +191,7 @@ namespace UtfUnknown.Core.Probers
                     r = 0.99f;
                 return r;
             }
-            return 0.01f;            
+            return 0.01f;
         }
 
         public override void Reset()
