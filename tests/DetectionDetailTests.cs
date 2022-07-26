@@ -2,9 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using NUnit.Framework;
-using UtfUnknown;
 using UtfUnknown.Core;
-using UtfUnknown.Core.Probers;
 
 namespace UtfUnknown.Tests
 {

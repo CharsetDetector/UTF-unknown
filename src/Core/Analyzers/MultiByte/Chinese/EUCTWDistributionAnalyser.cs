@@ -3,8 +3,8 @@ namespace UtfUnknown.Core.Analyzers.Chinese
     public class EUCTWDistributionAnalyser : CharDistributionAnalyser
     {
         // EUCTW frequency table
-        // Converted from big5 work 
-        // by Taiwan's Mandarin Promotion Council 
+        // Converted from big5 work
+        // by Taiwan's Mandarin Promotion Council
         // <http://www.edu.tw:81/mandr/>
         /******************************************************************************
          * 128  --> 0.42261
@@ -417,9 +417,9 @@ namespace UtfUnknown.Core.Analyzers.Chinese
         ///  second byte range: 0xa1 -- 0xfe
         /// no validation needed here. State machine has done that
         /// </summary>
-        public override int GetOrder(byte[] buf, int offset) 
-        { 
-            if (buf[offset] >= 0xC4)  
+        public override int GetOrder(byte[] buf, int offset)
+        {
+            if (buf[offset] >= 0xC4)
                 return 94 * (buf[offset] - 0xC4) + buf[offset+1] - 0xA1;
             else
                 return -1;

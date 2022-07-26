@@ -22,7 +22,7 @@
  *          Shy Shalom <shooshX@gmail.com>
  *          Kohei TAKETA <k-tak@void.in> (Java port)
  *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port)
- * 
+ *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
  * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
@@ -49,9 +49,9 @@ namespace UtfUnknown.Core.Probers
         private int currentState;
         private StateMachineModel model;
         private int currentCharLen;
-        
-        
-        public CodingStateMachine(StateMachineModel model) 
+
+
+        public CodingStateMachine(StateMachineModel model)
         {
             currentState = StateMachineModel.START;
             this.model = model;
@@ -59,34 +59,34 @@ namespace UtfUnknown.Core.Probers
 
         public int NextState(byte b)
         {
-            // for each byte we get its class, if it is first byte, 
+            // for each byte we get its class, if it is first byte,
             // we also get byte length
             int byteCls = model.GetClass(b);
-            if (currentState == StateMachineModel.START) { 
-                
+            if (currentState == StateMachineModel.START) {
+
                 currentCharLen = model.charLenTable[byteCls];
             }
-            
-            // from byte's class and stateTable, we get its next state            
+
+            // from byte's class and stateTable, we get its next state
             currentState = model.stateTable.Unpack(
                 currentState * model.ClassFactor + byteCls);
-            
+
             return currentState;
         }
-  
-        public void Reset() 
-        { 
-            currentState = StateMachineModel.START; 
+
+        public void Reset()
+        {
+            currentState = StateMachineModel.START;
         }
 
-        public int CurrentCharLen 
-        { 
-            get { return currentCharLen; } 
+        public int CurrentCharLen
+        {
+            get { return currentCharLen; }
         }
 
-        public string ModelName 
-        { 
-            get { return model.Name; } 
+        public string ModelName
+        {
+            get { return model.Name; }
         }
     }
 }

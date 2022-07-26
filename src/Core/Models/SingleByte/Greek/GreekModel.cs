@@ -40,13 +40,11 @@
 * and adjusted to language specific support.
 */
 
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.SingleByte.Greek
-{   
+{
     public abstract class GreekModel : SequenceModel
     {
-        // Model Table: 
+        // Model Table:
         // Total sequences: 1579
         // First 512 sequences: 0.958419074626211
         // Next 512 sequences (512-1024): 0.03968891876305471
@@ -147,9 +145,9 @@ namespace UtfUnknown.Core.Models.SingleByte.Greek
            0,1,1,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
         };
 
-        public GreekModel(byte[] charToOrderMap, string name) 
+        public GreekModel(byte[] charToOrderMap, string name)
             : base(charToOrderMap, LANG_MODEL, 46, 0.958419074626211f, false, name)
         {
-        }        
+        }
     }
 }

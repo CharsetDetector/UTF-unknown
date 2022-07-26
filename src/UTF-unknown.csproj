@@ -42,7 +42,7 @@ Features:
 - XML documentation included
 
  Compared to Ude:
- 
+
  - Refactor of API, namespaces and deadcode removal
  - Added some docs
  - Improve error handling

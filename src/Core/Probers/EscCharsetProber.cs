@@ -48,19 +48,19 @@ namespace UtfUnknown.Core.Probers
     {
         private const int CHARSETS_NUM = 4;
         private string detectedCharset;
-        private CodingStateMachine[] codingSM; 
+        private CodingStateMachine[] codingSM;
         int activeSM;
 
         public EscCharsetProber()
         {
-            codingSM = new CodingStateMachine[CHARSETS_NUM]; 
+            codingSM = new CodingStateMachine[CHARSETS_NUM];
             codingSM[0] = new CodingStateMachine(new HZ_GB_2312_SMModel());
             codingSM[1] = new CodingStateMachine(new Iso_2022_CN_SMModel());
             codingSM[2] = new CodingStateMachine(new Iso_2022_JP_SMModel());
             codingSM[3] = new CodingStateMachine(new Iso_2022_KR_SMModel());
             Reset();
         }
-        
+
         public override void Reset()
         {
             state = ProbingState.Detecting;
@@ -73,7 +73,7 @@ namespace UtfUnknown.Core.Probers
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
             int max = offset + len;
-            
+
             for (int i = offset; i < max && state == ProbingState.Detecting; i++) {
                 for (int j = activeSM - 1; j >= 0; j--) {
                     // byte is feed to all active state machine
@@ -101,12 +101,12 @@ namespace UtfUnknown.Core.Probers
 
         public override string GetCharsetName()
         {
-            return detectedCharset;        
+            return detectedCharset;
         }
-        
+
         public override float GetConfidence(StringBuilder status = null)
         {
             return 0.99f;
-        }           
+        }
     }
 }

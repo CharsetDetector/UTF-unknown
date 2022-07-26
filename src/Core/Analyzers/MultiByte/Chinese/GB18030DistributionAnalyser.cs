@@ -455,7 +455,7 @@ namespace UtfUnknown.Core.Analyzers.Chinese
             charToFreqOrder = GB2312_CHAR2FREQ_ORDER;
             typicalDistributionRatio = GB2312_TYPICAL_DISTRIBUTION_RATIO;
         }
-        
+
         /// <summary>
         /// for GB2312 encoding, we are interested
         ///   first  byte range: 0xb0 -- 0xfe
@@ -463,9 +463,9 @@ namespace UtfUnknown.Core.Analyzers.Chinese
         /// no validation needed here. State machine has done that
         /// </summary>
         /// <returns></returns>
-        public override int GetOrder(byte[] buf, int offset) 
-        { 
-            if (buf[offset] >= 0xB0 && buf[offset+1] >= 0xA1)  
+        public override int GetOrder(byte[] buf, int offset)
+        {
+            if (buf[offset] >= 0xB0 && buf[offset+1] >= 0xA1)
                 return 94 * (buf[offset] - 0xb0) + buf[offset+1] - 0xA1;
             else
                 return -1;

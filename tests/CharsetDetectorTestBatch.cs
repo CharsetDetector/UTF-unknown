@@ -7,9 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Reflection;
 using Newtonsoft.Json;
-using UtfUnknown.Core;
 using NUnit.Framework;
 
 namespace UtfUnknown.Tests
@@ -74,7 +72,7 @@ namespace UtfUnknown.Tests
         {
             TestFile(testCase.ExpectedEncoding, testCase.InputFile.FullName);
         }
-        
+
         [TestCaseSource(nameof(AllTestFilesUnsupportedEncoding))]
         public void TestFileUnsupportedEncodings(TestCase testCase)
         {
@@ -84,7 +82,7 @@ namespace UtfUnknown.Tests
             _logWriter.WriteLine(string.Concat(
                 $"- {testCase.InputFile.FullName} ({testCase.ExpectedEncoding}) -> ",
                 $"{JsonConvert.SerializeObject(result, Formatting.Indented, new EncodingJsonConverter())}"));
-            
+
             StringAssert.AreEqualIgnoringCase(
                 testCase.ExpectedEncoding,
                 detected.EncodingName,
@@ -126,7 +124,7 @@ namespace UtfUnknown.Tests
 
             return testCases;
         }
-        
+
         private static IReadOnlyList<TestCase> AllTestFilesUnsupportedEncoding()
         {
             var path = Path.Combine(TESTS_ROOT, "DataUnsupported");
@@ -134,7 +132,7 @@ namespace UtfUnknown.Tests
             {
                 throw new DirectoryNotFoundException($"Directory Data with test files not found, path: {path}");
             }
-            
+
             var dirs = new DirectoryInfo(path).GetDirectories();
             var testCases = new List<TestCase>();
             foreach (var dir in dirs)
@@ -147,7 +145,7 @@ namespace UtfUnknown.Tests
 
         private static List<TestCase> CreateTestCases(DirectoryInfo dirname)
         {
-            //encoding is the directory name  - before the optional '(' 
+            //encoding is the directory name  - before the optional '('
             var expectedEncoding = dirname.Name.Split('(').First().Trim();
 
             var files = dirname.GetFiles();

@@ -1,4 +1,4 @@
-/* ***** BEGIN LICENSE BLOCK *****
+﻿/* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
  * The contents of this file are subject to the Mozilla Public License Version
@@ -20,7 +20,7 @@
  *
  * Contributor(s):
  *          Shy Shalom <shooshX@gmail.com>
- *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port) 
+ *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port)
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -54,11 +54,11 @@ namespace UtfUnknown.Core.Probers
         private const int PROBABLE_CAT = NUMBER_OF_SEQ_CAT - 2;
         private const int NEUTRAL_CAT = NUMBER_OF_SEQ_CAT - 3;
         private const int NEGATIVE_CAT = 0;
-        
+
         protected SequenceModel model;
-        
-        // true if we need to reverse every pair in the model lookup        
-        bool reversed; 
+
+        // true if we need to reverse every pair in the model lookup
+        bool reversed;
 
         // char order of last character
         byte lastOrder;
@@ -68,32 +68,32 @@ namespace UtfUnknown.Core.Probers
 
         int totalChar;
         int ctrlChar;
-        
+
         // characters that fall in our sampling range
         int freqChar;
-  
+
         // Optional auxiliary prober for name decision. created and destroyed by the GroupProber
-        CharsetProber nameProber; 
-                    
-        public SingleByteCharSetProber(SequenceModel model) 
+        CharsetProber nameProber;
+
+        public SingleByteCharSetProber(SequenceModel model)
             : this(model, false, null)
         {
-            
+
         }
-    
-        public SingleByteCharSetProber(SequenceModel model, bool reversed, 
+
+        public SingleByteCharSetProber(SequenceModel model, bool reversed,
                                        CharsetProber nameProber)
         {
             this.model = model;
             this.reversed = reversed;
             this.nameProber = nameProber;
-            Reset();            
+            Reset();
         }
 
         public override ProbingState HandleData(byte[] buf, int offset, int len)
         {
             int max = offset + len;
-            
+
             for (int i = offset; i < max; i++)
             {
                 byte order = model.GetOrder(buf[i]);
@@ -113,7 +113,7 @@ namespace UtfUnknown.Core.Probers
                 {
                     ctrlChar++;
                 }
-                    
+
                 if (order < model.FreqCharCount)
                 {
                     freqChar++;
@@ -142,7 +142,7 @@ namespace UtfUnknown.Core.Probers
             }
             return state;
         }
-                
+
         public override string DumpStatus()
         {
             StringBuilder status = new StringBuilder();
@@ -182,7 +182,7 @@ namespace UtfUnknown.Core.Probers
                 // charsets used for the same language.
                 r = r * (seqCounters[POSITIVE_CAT] + (float)seqCounters[PROBABLE_CAT] / 4.0f) / totalChar;
 
-                // The more control characters (proportionnaly to the size of the text), the
+                // The more control characters (proportionally to the size of the text), the
                 // less confident we become in the current charset.
                 r = r * (totalChar - ctrlChar) / totalChar;
 
@@ -191,9 +191,9 @@ namespace UtfUnknown.Core.Probers
                     r = 0.99f;
                 return r;
             }
-            return 0.01f;            
+            return 0.01f;
         }
-        
+
         public override void Reset()
         {
             state = ProbingState.Detecting;
@@ -205,11 +205,11 @@ namespace UtfUnknown.Core.Probers
             freqChar = 0;
             ctrlChar = 0;
         }
-        
-        public override string GetCharsetName() 
+
+        public override string GetCharsetName()
         {
             return (nameProber == null) ? model.CharsetName
                                         : nameProber.GetCharsetName();
-        }        
+        }
     }
 }

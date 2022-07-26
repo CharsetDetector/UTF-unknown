@@ -1,4 +1,4 @@
-namespace UtfUnknown.Core.Analyzers.Japanese
+﻿namespace UtfUnknown.Core.Analyzers.Japanese
 {
     public class SJISContextAnalyser : JapaneseContextAnalyser
     {
@@ -7,10 +7,10 @@ namespace UtfUnknown.Core.Analyzers.Japanese
         protected override int GetOrder(byte[] buf, int offset, out int charLen)
         {
             //find out current char's byte length
-            if (buf[offset] >= 0x81 && buf[offset] <= 0x9F 
+            if (buf[offset] >= 0x81 && buf[offset] <= 0x9F
                 || buf[offset] >= 0xe0 && buf[offset] <= 0xFC)
                 charLen = 2;
-            else 
+            else
                 charLen = 1;
 
             // return its order if it is hiragana
@@ -19,7 +19,7 @@ namespace UtfUnknown.Core.Analyzers.Japanese
                 if (low >= 0x9F && low <= 0xF1)
                     return low - 0x9F;
             }
-            return -1;                    
+            return -1;
         }
 
         protected override int GetOrder(byte[] buf, int offset)
@@ -32,6 +32,5 @@ namespace UtfUnknown.Core.Analyzers.Japanese
             }
             return -1;
         }
-
     }
 }
