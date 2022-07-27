@@ -1,4 +1,4 @@
-/* ***** BEGIN LICENSE BLOCK *****
+﻿/* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
  * The contents of this file are subject to the Mozilla Public License Version
@@ -253,31 +253,19 @@ namespace UtfUnknown
             return detector.DataEnd();
         }
 
+        private const int BufferSize = 1024;
+
         private static void ReadStream(Stream stream, long? maxBytes, CharsetDetector detector)
         {
-            const int bufferSize = 1024;
-            byte[] buff = new byte[bufferSize];
+            byte[] buff = new byte[BufferSize];
             int read;
             long readTotal = 0;
 
-            var toRead = CalcToRead(maxBytes, readTotal, bufferSize);
+            var toRead = CalcToRead(maxBytes, readTotal, BufferSize);
 
             while ((read = stream.Read(buff, 0, toRead)) > 0)
             {
-                detector.Feed(buff, 0, read);
-
-                if (maxBytes != null)
-                {
-                    readTotal += read;
-                    if (readTotal >= maxBytes)
-                    {
-                        return;
-                    }
-
-                    toRead = CalcToRead(maxBytes, readTotal, bufferSize);
-                }
-
-                if (detector._done)
+                if (FeedDetector(detector, maxBytes, buff, read, ref readTotal, ref toRead))
                 {
                     return;
                 }
@@ -286,33 +274,39 @@ namespace UtfUnknown
 
         private static async Task ReadStreamAsync(Stream stream, long? maxBytes, CharsetDetector detector, CancellationToken cancellationToken = default)
         {
-            const int bufferSize = 1024;
-            byte[] buff = new byte[bufferSize];
+            byte[] buff = new byte[BufferSize];
             int read;
             long readTotal = 0;
 
-            var toRead = CalcToRead(maxBytes, readTotal, bufferSize);
+            var toRead = CalcToRead(maxBytes, readTotal, BufferSize);
 
             while ((read = await stream.ReadAsync(buff, 0, toRead, cancellationToken)) > 0)
             {
-                detector.Feed(buff, 0, read);
-
-                if (maxBytes != null)
-                {
-                    readTotal += read;
-                    if (readTotal >= maxBytes)
-                    {
-                        return;
-                    }
-
-                    toRead = CalcToRead(maxBytes, readTotal, bufferSize);
-                }
-
-                if (detector._done)
+                if (FeedDetector(detector, maxBytes, buff, read, ref readTotal, ref toRead))
                 {
                     return;
                 }
             }
+        }
+
+        private static bool FeedDetector(CharsetDetector detector, long? maxBytes, byte[] buff, int read, ref long readTotal, ref int toRead)
+        {
+            detector.Feed(buff, 0, read);
+
+            if (maxBytes == null)
+            {
+                return detector._done;
+            }
+
+            readTotal += read;
+            if (readTotal >= maxBytes)
+            {
+                return true;
+            }
+
+            toRead = CalcToRead(maxBytes, readTotal, BufferSize);
+
+            return detector._done;
         }
 
         private static int CalcToRead(long? maxBytes, long readTotal, int bufferSize)
@@ -338,7 +332,7 @@ namespace UtfUnknown
                 throw new ArgumentNullException(nameof(filePath));
             }
 
-            using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (FileStream fs = OpenFile(filePath))
             {
                 return DetectFromStream(fs);
             }
@@ -355,7 +349,7 @@ namespace UtfUnknown
                 throw new ArgumentNullException(nameof(file));
             }
 
-            using (FileStream fs = new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (FileStream fs = OpenFile(file.FullName))
             {
                 return DetectFromStream(fs);
             }
@@ -374,7 +368,7 @@ namespace UtfUnknown
                 throw new ArgumentNullException(nameof(filePath));
             }
 
-            using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (FileStream fs = OpenFile(filePath))
             {
                 return await DetectFromStreamAsync(fs, cancellationToken);
             }
@@ -392,10 +386,19 @@ namespace UtfUnknown
                 throw new ArgumentNullException(nameof(file));
             }
 
-            using (FileStream fs = new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (FileStream fs = OpenFile(file.FullName))
             {
                 return DetectFromStreamAsync(fs, cancellationToken);
             }
+        }
+
+        private static FileStream OpenFile(string filePath)
+        {
+            return new FileStream(
+                filePath,
+                FileMode.Open,
+                FileAccess.Read,
+                FileShare.ReadWrite);
         }
 
         protected virtual void Feed(byte[] buf, int offset, int len)
