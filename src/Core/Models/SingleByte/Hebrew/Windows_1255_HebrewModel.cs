@@ -52,7 +52,7 @@ namespace UtfUnknown.Core.Models.SingleByte.Hebrew
         // 252: 0 - 9
 
         // Windows-1255 language model
-        // Character Mapping Table:        
+        // Character Mapping Table:
         private readonly static byte[]CHAR_TO_ORDER_MAP = {
             CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,RET,CTR,CTR,RET,CTR,CTR, /* 0X */
             CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR, /* 1X */

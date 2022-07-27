@@ -41,10 +41,8 @@
 * and adjusted to language specific support.
 */
 
-using UtfUnknown.Core.Models;
-
 namespace UtfUnknown.Core.Models.SingleByte.Hungarian
-{   
+{
     public abstract class HungarianModel : SequenceModel
     {
         // Model Table:
@@ -88,10 +86,10 @@ namespace UtfUnknown.Core.Models.SingleByte.Hungarian
           2,2,2,2,3,2,2,2,0,3,2,0,2,2,0,2,2,3,0,2,2,0,2,2,2,0,0,0,0,0,0,0,
         };
 
-        public HungarianModel(byte[] charToOrderMap, string name) 
-            : base(charToOrderMap, LANG_MODEL, 32, 0.9748272224933486f, 
+        public HungarianModel(byte[] charToOrderMap, string name)
+            : base(charToOrderMap, LANG_MODEL, 32, 0.9748272224933486f,
                    false, name)
         {
-        }        
+        }
     }
 }

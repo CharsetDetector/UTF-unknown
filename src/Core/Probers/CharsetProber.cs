@@ -21,7 +21,7 @@
  * Contributor(s):
  *          Shy Shalom <shooshX@gmail.com>
  *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port)
- * 
+ *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
  * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
@@ -95,7 +95,7 @@ namespace UtfUnknown.Core.Probers
         // Helper functions used in the Latin1 and Group probers
         //
         /// <summary>
-        ///  
+        ///
         /// </summary>
         /// <returns>filtered buffer</returns>
         protected static byte[] FilterWithoutEnglishLetters(byte[] buf, int offset, int len)
@@ -139,8 +139,8 @@ namespace UtfUnknown.Core.Probers
         }
 
         /// <summary>
-        /// Do filtering to reduce load to probers (Remove ASCII symbols, 
-        /// collapse spaces). This filter applies to all scripts which contain 
+        /// Do filtering to reduce load to probers (Remove ASCII symbols,
+        /// collapse spaces). This filter applies to all scripts which contain
         /// both English characters and upper ASCII characters.
         /// </summary>
         /// <returns>a filtered copy of the input buffer</returns>
@@ -180,7 +180,7 @@ namespace UtfUnknown.Core.Probers
                     cur++;
                 }
 
-                // If the current segment contains more than just a symbol 
+                // If the current segment contains more than just a symbol
                 // and it is not inside a tag then keep it.
                 if (!inTag && cur > prev)
                     ms.Write(buf, prev, cur - prev);
@@ -191,4 +191,3 @@ namespace UtfUnknown.Core.Probers
         }
     }
 }
-

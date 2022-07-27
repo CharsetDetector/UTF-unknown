@@ -1,4 +1,4 @@
-/* ***** BEGIN LICENSE BLOCK *****
+﻿/* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
  * The contents of this file are subject to the Mozilla Public License Version
@@ -21,7 +21,7 @@
  * Contributor(s):
  *          Shy Shalom <shooshX@gmail.com>
  *          Rudi Pettazzi <rudi.pettazzi@gmail.com> (C# port)
- * 
+ *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
  * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
@@ -48,7 +48,7 @@ namespace UtfUnknown.Core.Analyzers.Japanese
 
         // hiragana frequency category table
         // This is hiragana 2-char sequence table, the number in each cell represents its frequency category
-        protected static byte[,] jp2CharContext = { 
+        protected static byte[,] jp2CharContext = {
             { 0,0,0,2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,1,0,0,0,0,0,0,0,0,0,0,1,},
             { 2,4,0,4,0,3,0,4,0,3,4,4,4,2,4,3,3,4,3,2,3,3,4,2,3,3,3,2,4,1,4,3,3,1,5,4,3,4,3,4,3,5,3,0,3,5,4,2,0,3,1,0,3,3,0,3,3,0,1,1,0,4,3,0,3,3,0,4,0,2,0,3,5,5,5,5,4,0,4,1,0,3,4,},
             { 0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,2,},
@@ -133,50 +133,50 @@ namespace UtfUnknown.Core.Analyzers.Japanese
             { 0,4,0,4,0,4,0,3,0,4,4,3,4,2,4,3,2,0,4,4,4,3,5,3,5,3,3,2,4,2,4,3,4,3,1,4,0,2,3,4,4,4,3,3,3,4,4,4,3,4,1,3,4,3,2,1,2,1,3,3,3,4,4,3,3,5,0,4,0,3,0,4,3,3,3,2,1,0,3,0,0,3,3,},
             { 0,4,0,3,0,3,0,3,0,3,5,5,3,3,3,3,4,3,4,3,3,3,4,4,4,3,3,3,3,4,3,5,3,3,1,3,2,4,5,5,5,5,4,3,4,5,5,3,2,2,3,3,3,3,2,3,3,1,2,3,2,4,3,3,3,4,0,4,0,2,0,4,3,2,2,1,2,0,3,0,0,4,1,},
         };
-        
+
         // category counters, each integer counts sequence in its category
         int[] relSample = new int[CATEGORIES_NUM];
 
         // total sequence received
         int totalRel;
-  
+
         // The order of previous char
         int lastCharOrder;
 
-        // if last byte in current buffer is not the last byte of a character, 
+        // if last byte in current buffer is not the last byte of a character,
         // we need to know how many byte to skip in next buffer.
         int needToSkipCharNum;
 
-        // If this flag is set to true, detection is done and conclusion has 
+        // If this flag is set to true, detection is done and conclusion has
         // been made
         bool done;
-        
+
         public JapaneseContextAnalyser()
         {
-            Reset();        
+            Reset();
         }
-        
+
         public float GetConfidence()
         {
             // This is just one way to calculate confidence. It works well for me.
             if (totalRel > MINIMUM_DATA_THRESHOLD)
                 return ((float)(totalRel - relSample[0]))/totalRel;
-            else 
+            else
                 return DONT_KNOW;
         }
 
         public void HandleData(byte[] buf, int offset, int len)
         {
             int max = offset + len;
-            
+
             if (done)
                 return;
 
-            // The buffer we got is byte oriented, and a character may span  
+            // The buffer we got is byte oriented, and a character may span
             // more than one buffer. In case the last one or two byte in last
-            // buffer is not complete, we record how many byte needed to 
+            // buffer is not complete, we record how many byte needed to
             // complete that character and skip these bytes here. We can choose
-            // to record those bytes as well and analyse the character once it 
+            // to record those bytes as well and analyse the character once it
             // is complete, but since a character will not make much difference,
             // skipping it will simplify our logic and improve performance.
             for (int i = needToSkipCharNum+offset; i < max; ) {
@@ -198,14 +198,14 @@ namespace UtfUnknown.Core.Analyzers.Japanese
                 }
             }
         }
-        
+
         public void HandleOneChar(byte[] buf, int offset, int charLen)
         {
-            if (totalRel > MAX_REL_THRESHOLD) 
+            if (totalRel > MAX_REL_THRESHOLD)
                 done = true;
-            if (done)       
+            if (done)
                 return;
-     
+
             // Only 2-bytes characters are of our interest
             int order = (charLen == 2) ? GetOrder(buf, offset) : -1;
             if (order != -1 && lastCharOrder != -1) {
@@ -215,7 +215,7 @@ namespace UtfUnknown.Core.Analyzers.Japanese
             }
             lastCharOrder = order;
         }
-        
+
         public void Reset()
         {
             totalRel = 0;
@@ -226,16 +226,15 @@ namespace UtfUnknown.Core.Analyzers.Japanese
                 done = false;
             }
         }
-    
+
         protected abstract int GetOrder(byte[] buf, int offset, out int charLen);
-    
+
         protected abstract int GetOrder(byte[] buf, int offset);
-    
-        public bool GotEnoughData() 
+
+        public bool GotEnoughData()
         {
             return totalRel > ENOUGH_REL_THRESHOLD;
         }
-        
+
     }
 }
-

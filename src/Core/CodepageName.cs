@@ -13,7 +13,7 @@
  *
  * Contributor(s):
  *          UTF-Unknown Contributors (2019)
- * 
+ *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
  * the GNU Lesser General Public License Version 2.1 or later (the "LGPL"),
@@ -45,7 +45,7 @@ namespace UtfUnknown.Core
         /// UTF-7 codepage name.
         /// </summary>
         internal const string UTF7 = "utf-7";
-        
+
         /// <summary>
         /// UTF-8 codepage name.
         /// </summary>
@@ -55,22 +55,22 @@ namespace UtfUnknown.Core
         /// UTF-16LE codepage name.
         /// </summary>
         internal const string UTF16_LE = "utf-16le";
-        
+
         /// <summary>
         /// UTF-16BE codepage name.
         /// </summary>
         internal const string UTF16_BE = "utf-16be";
-        
+
         /// <summary>
         /// UTF-32LE codepage name.
         /// </summary>
         internal const string UTF32_LE = "utf-32le";
-        
+
         /// <summary>
         /// UTF-32BE codepage name.
         /// </summary>
         internal const string UTF32_BE = "utf-32be";
-        
+
         /// <summary>
         /// EUC Japanese codepage name.
         /// </summary>
@@ -94,7 +94,7 @@ namespace UtfUnknown.Core
         /// Not supported.
         /// </remarks>
         internal const string EUC_TW = "euc-tw";
-        
+
         /// <summary>
         /// ISO 2022 Chinese codepage name.
         /// </summary>
@@ -102,7 +102,7 @@ namespace UtfUnknown.Core
         /// Supported by alias is x-cp50227 (Codepage 50227) in. NET. Codepage identifier 50229 is currently unsupported (see for example https://github.com/microsoft/referencesource/blob/17b97365645da62cf8a49444d979f94a59bbb155/mscorlib/system/text/iso2022encoding.cs#L92).
         /// </remarks>
         internal const string ISO_2022_CN = "iso-2022-cn";
-        
+
         /// <summary>
         /// ISO 2022 Korean codepage name.
         /// </summary>
@@ -123,7 +123,7 @@ namespace UtfUnknown.Core
         /// Other alias is cp50227.
         /// </remarks>
         internal const string X_CP50227 = "x-cp50227";
-        
+
         /// <summary>
         /// Big5 codepage name.
         /// </summary>
@@ -149,7 +149,7 @@ namespace UtfUnknown.Core
         /// Are other aliases shift_jis, sjis, csshiftjis, cswindows31j, ms_kanji, x-sjis in .NET
         /// </remarks>
         internal const string SHIFT_JIS = "shift-jis";
-        
+
         /// <summary>
         /// ANSI/OEM Korean codepage name.
         /// </summary>
@@ -165,7 +165,7 @@ namespace UtfUnknown.Core
         /// Not supported in .NET. A nearly identical version of cp949 is ks_c_5601-1987 (see https://lists.w3.org/Archives/Public/ietf-charsets/2002JulSep/0020.html)
         /// </remarks>
         internal const string CP949 = "cp949";
-        
+
         /// <summary>
         /// OEM Latin-2 codepage name.
         /// </summary>
@@ -181,7 +181,7 @@ namespace UtfUnknown.Core
         /// Is other alias cp855 in .NET
         /// </remarks>
         internal const string IBM855 = "ibm855";
-        
+
         /// <summary>
         /// OEM Cyrillic (primarily Russian) codepage name.
         /// </summary>
@@ -242,7 +242,7 @@ namespace UtfUnknown.Core
         /// Are other aliases iso_8859-7, iso_8859-7:1987, iso-ir-126, greek, greek8, csisolatingreek, ecma-118, elot_928 in .NET
         /// </remarks>
         internal const string ISO_8859_7 = "iso-8859-7";
-        
+
         /// <summary>
         /// ISO 8859-8 Hebrew codepage name.
         /// </summary>
@@ -266,7 +266,7 @@ namespace UtfUnknown.Core
         /// Not supported.
         /// </remarks>
         internal const string ISO_8859_10 = "iso-8859-10";
-        
+
         /// <summary>
         /// ANSI/OEM Thai codepage name.
         /// </summary>
@@ -287,7 +287,7 @@ namespace UtfUnknown.Core
         /// Are other aliases iso_8859-15, l9, latin9, csisolatin9 in .NET
         /// </remarks>
         internal const string ISO_8859_15 = "iso-8859-15";
-        
+
         /// <summary>
         /// ISO 8859-16 codepage name.
         /// </summary>
@@ -319,12 +319,12 @@ namespace UtfUnknown.Core
         /// Is other alias x-ansi in .NET
         /// </remarks>
         internal const string WINDOWS_1252 = "windows-1252";
-        
+
         /// <summary>
         /// ANSI Greek codepage name.
         /// </summary>
         internal const string WINDOWS_1253 = "windows-1253";
-        
+
         /// <summary>
         /// ANSI Hebrew codepage name.
         /// </summary>
@@ -342,7 +342,7 @@ namespace UtfUnknown.Core
         /// ANSI Baltic codepage name.
         /// </summary>
         internal const string WINDOWS_1257 = "windows-1257";
-        
+
         /// <summary>
         /// ANSI/OEM Vietnamese codepage name.
         /// </summary>
@@ -352,7 +352,7 @@ namespace UtfUnknown.Core
         /// MAC Latin-2 codepage name.
         /// </summary>
         internal const string X_MAC_CE = "x-mac-ce";
-        
+
         /// <summary>
         /// Cyrillic (Mac) codepage name.
         /// </summary>

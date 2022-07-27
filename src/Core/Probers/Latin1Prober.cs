@@ -36,12 +36,11 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
-using System;
 using System.Text;
 
 namespace UtfUnknown.Core.Probers
 {
-    // TODO: Using trigrams the detector should be able to discriminate between 
+    // TODO: Using trigrams the detector should be able to discriminate between
     // latin-1 and iso8859-2
     public class Latin1Prober : CharsetProber
     {
@@ -102,11 +101,11 @@ namespace UtfUnknown.Core.Probers
             /*      UDF OTH ASC ASS ACV ACO ASV ASO  */
             /*UDF*/  0,  0,  0,  0,  0,  0,  0,  0,
             /*OTH*/  0,  3,  3,  3,  3,  3,  3,  3,
-            /*ASC*/  0,  3,  3,  3,  3,  3,  3,  3, 
+            /*ASC*/  0,  3,  3,  3,  3,  3,  3,  3,
             /*ASS*/  0,  3,  3,  3,  1,  1,  3,  3,
             /*ACV*/  0,  3,  3,  3,  1,  2,  1,  2,
-            /*ACO*/  0,  3,  3,  3,  3,  3,  3,  3, 
-            /*ASV*/  0,  3,  1,  3,  1,  1,  1,  3, 
+            /*ACO*/  0,  3,  3,  3,  3,  3,  3,  3,
+            /*ASV*/  0,  3,  1,  3,  1,  1,  1,  3,
             /*ASO*/  0,  3,  1,  3,  1,  1,  3,  3,
         };
 
@@ -173,7 +172,7 @@ namespace UtfUnknown.Core.Probers
                 confidence -= freqCounter[1] * 20.0f / total;
             }
 
-            // lower the confidence of latin1 so that other more accurate detector 
+            // lower the confidence of latin1 so that other more accurate detector
             // can take priority.
             return confidence < 0.0f ? 0.0f : confidence * 0.5f;
         }
