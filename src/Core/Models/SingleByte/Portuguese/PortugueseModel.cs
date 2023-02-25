@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Portuguese
 {
-    public abstract class PortugueseModel : SequenceModel
+    internal abstract class PortugueseModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 891

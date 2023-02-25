@@ -43,7 +43,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Hungarian
 {
-    public abstract class HungarianModel : SequenceModel
+    internal abstract class HungarianModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 1084

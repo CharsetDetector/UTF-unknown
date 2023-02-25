@@ -1,6 +1,6 @@
 namespace UtfUnknown.Core.Models.MultiByte.Chinese
 {
-    public class Iso_2022_CN_SMModel : StateMachineModel
+    internal class Iso_2022_CN_SMModel : StateMachineModel
     {
         private readonly static int[] ISO2022CN_cls = {
             BitPackage.Pack4bits(2,0,0,0,0,0,0,0), // 00 - 07

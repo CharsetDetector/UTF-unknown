@@ -1,6 +1,6 @@
 ﻿namespace UtfUnknown.Core.Analyzers.Korean
 {
-    public class EUCKRDistributionAnalyser : CharDistributionAnalyser
+    internal class EUCKRDistributionAnalyser : CharDistributionAnalyser
     {
         // Sampling from about 20M text materials include literature and computer technology
 

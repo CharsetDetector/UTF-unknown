@@ -74,7 +74,7 @@ using UtfUnknown.Core.Models.SingleByte.Vietnamese;
 
 namespace UtfUnknown.Core.Probers
 {
-    public class SBCSGroupProber : CharsetProber
+    internal class SBCSGroupProber : CharsetProber
     {
         private const int PROBERS_NUM = 100;
         private CharsetProber[] probers = new CharsetProber[PROBERS_NUM];

@@ -43,7 +43,7 @@ using UtfUnknown.Core.Models.MultiByte.Japanese;
 
 namespace UtfUnknown.Core.Probers.MultiByte.Japanese
 {
-    public class EUCJPProber : CharsetProber
+    internal class EUCJPProber : CharsetProber
     {
         private CodingStateMachine codingSM;
         private EUCJPContextAnalyser contextAnalyser;

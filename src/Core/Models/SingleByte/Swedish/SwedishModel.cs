@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Swedish
 {
-    public abstract class SwedishModel : SequenceModel
+    internal abstract class SwedishModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 748

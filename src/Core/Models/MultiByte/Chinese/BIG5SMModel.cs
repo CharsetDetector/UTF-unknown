@@ -1,6 +1,6 @@
 namespace UtfUnknown.Core.Models.MultiByte.Chinese
 {
-    public class BIG5SMModel : StateMachineModel
+    internal class BIG5SMModel : StateMachineModel
     {
         private readonly static int[] BIG5_cls = {
             BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 00 - 07

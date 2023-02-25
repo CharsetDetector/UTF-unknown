@@ -44,7 +44,7 @@ using UtfUnknown.Core.Models.MultiByte.Chinese;
 
 namespace UtfUnknown.Core.Probers.MultiByte.Chinese
 {
-    public class Big5Prober : CharsetProber
+    internal class Big5Prober : CharsetProber
     {
         //void GetDistribution(PRUint32 aCharLen, const char* aStr);
         private CodingStateMachine codingSM;

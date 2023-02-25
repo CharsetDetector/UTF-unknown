@@ -40,7 +40,7 @@ using System;
 
 namespace UtfUnknown.Core.Models
 {
-    public abstract class SequenceModel
+    internal abstract class SequenceModel
     {
         // Codepoints
 

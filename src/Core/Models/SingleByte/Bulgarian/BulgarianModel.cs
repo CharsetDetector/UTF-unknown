@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Bulgarian
 {
-    public abstract class BulgarianModel : SequenceModel
+    internal abstract class BulgarianModel : SequenceModel
     {
         // Model Table:
         // total sequences: 100%

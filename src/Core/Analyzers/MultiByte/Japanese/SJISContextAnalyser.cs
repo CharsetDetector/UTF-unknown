@@ -1,6 +1,6 @@
 ﻿namespace UtfUnknown.Core.Analyzers.Japanese
 {
-    public class SJISContextAnalyser : JapaneseContextAnalyser
+    internal class SJISContextAnalyser : JapaneseContextAnalyser
     {
         private const byte HIRAGANA_FIRST_BYTE = 0x82;
 

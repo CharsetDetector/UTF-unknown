@@ -1,6 +1,6 @@
 namespace UtfUnknown.Core.Models.MultiByte.Japanese
 {
-    public class SJIS_SMModel : StateMachineModel
+    internal class SJIS_SMModel : StateMachineModel
     {
         private readonly static int[] SJIS_cls = {
             //BitPacket.Pack4bits(0,1,1,1,1,1,1,1),  // 00 - 07

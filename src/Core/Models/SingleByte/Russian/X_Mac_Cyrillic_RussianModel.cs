@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Russian
 {
-    public class X_Mac_Cyrillic_RussianModel : RussianModel
+    internal class X_Mac_Cyrillic_RussianModel : RussianModel
     {
         private readonly static byte[] CHAR_TO_ORDER_MAP = {
             CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,RET,CTR,CTR,RET,CTR,CTR, /* 0X */

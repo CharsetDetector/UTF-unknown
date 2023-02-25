@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Finnish
 {
-    public abstract class FinnishModel : SequenceModel
+    internal abstract class FinnishModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 919

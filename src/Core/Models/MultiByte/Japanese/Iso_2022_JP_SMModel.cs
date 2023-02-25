@@ -1,6 +1,6 @@
 namespace UtfUnknown.Core.Models.MultiByte.Japanese
 {
-    public class Iso_2022_JP_SMModel : StateMachineModel
+    internal class Iso_2022_JP_SMModel : StateMachineModel
     {
         private readonly static int[] ISO2022JP_cls = {
             BitPackage.Pack4bits(2,0,0,0,0,0,0,0), // 00 - 07

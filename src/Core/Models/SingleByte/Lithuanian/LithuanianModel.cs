@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Lithuanian
 {
-    public abstract class LithuanianModel : SequenceModel
+    internal abstract class LithuanianModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 1016

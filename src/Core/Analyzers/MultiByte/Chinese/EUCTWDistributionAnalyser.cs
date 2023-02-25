@@ -1,6 +1,6 @@
 namespace UtfUnknown.Core.Analyzers.Chinese
 {
-    public class EUCTWDistributionAnalyser : CharDistributionAnalyser
+    internal class EUCTWDistributionAnalyser : CharDistributionAnalyser
     {
         // EUCTW frequency table
         // Converted from big5 work

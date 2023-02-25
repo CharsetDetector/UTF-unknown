@@ -43,7 +43,7 @@ using UtfUnknown.Core.Models.MultiByte;
 
 namespace UtfUnknown.Core.Probers.MultiByte
 {
-    public class UTF8Prober : CharsetProber
+    internal class UTF8Prober : CharsetProber
     {
         private static float ONE_CHAR_PROB = 0.50f;
         private CodingStateMachine codingSM;

@@ -1,6 +1,6 @@
 namespace UtfUnknown.Core.Models.MultiByte.Korean
 {
-    public class EUCKRSMModel : StateMachineModel
+    internal class EUCKRSMModel : StateMachineModel
     {
         private readonly static int[] EUCKR_cls = {
             //BitPacket.Pack4bits(0,1,1,1,1,1,1,1),  // 00 - 07

@@ -1,6 +1,6 @@
 namespace UtfUnknown.Core.Models.MultiByte
 {
-    public class UCS2LE_SMModel : StateMachineModel
+    internal class UCS2LE_SMModel : StateMachineModel
     {
         private readonly static int[] UCS2LE_cls = {
             BitPackage.Pack4bits(0,0,0,0,0,0,0,0),  // 00 - 07

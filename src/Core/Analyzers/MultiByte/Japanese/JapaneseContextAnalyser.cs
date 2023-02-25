@@ -38,7 +38,7 @@
 
 namespace UtfUnknown.Core.Analyzers.Japanese
 {
-    public abstract class JapaneseContextAnalyser
+    internal abstract class JapaneseContextAnalyser
     {
         protected const int CATEGORIES_NUM = 6;
         protected const int ENOUGH_REL_THRESHOLD = 100;

@@ -44,7 +44,7 @@ using UtfUnknown.Core.Models.MultiByte.Chinese;
 
 namespace UtfUnknown.Core.Probers.MultiByte.Chinese
 {
-    public class EUCTWProber : CharsetProber
+    internal class EUCTWProber : CharsetProber
     {
         private CodingStateMachine codingSM;
         private EUCTWDistributionAnalyser distributionAnalyser;

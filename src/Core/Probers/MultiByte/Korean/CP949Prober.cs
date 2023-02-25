@@ -43,7 +43,7 @@ using UtfUnknown.Core.Models.MultiByte.Korean;
 
 namespace UtfUnknown.Core.Probers.MultiByte.Korean
 {
-    public class CP949Prober : CharsetProber
+    internal class CP949Prober : CharsetProber
     {
         private CodingStateMachine codingSM;
         private EUCKRDistributionAnalyser distributionAnalyser;

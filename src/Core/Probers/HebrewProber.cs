@@ -141,7 +141,7 @@ namespace UtfUnknown.Core.Probers
     /// This prober doesn't actually recognize a language or a charset.
     /// It is a helper prober for the use of the Hebrew model probers
     /// </summary>
-    public class HebrewProber : CharsetProber
+    internal class HebrewProber : CharsetProber
     {
         // windows-1255 / ISO-8859-8 code points of interest
         private const byte FINAL_KAF  = 0xEA;

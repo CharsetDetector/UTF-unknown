@@ -48,7 +48,7 @@ namespace UtfUnknown.Core.Probers
     /// <summary>
     /// Multi-byte charsets probers
     /// </summary>
-    public class MBCSGroupProber : CharsetProber
+    internal class MBCSGroupProber : CharsetProber
     {
         private const int PROBERS_NUM = 8;
 

@@ -43,7 +43,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Hungarian
 {
-    public class Windows_1250_HungarianModel : HungarianModel
+    internal class Windows_1250_HungarianModel : HungarianModel
     {
         // Character Mapping Table:
         // ILL: illegal character.

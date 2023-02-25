@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Maltese
 {
-    public abstract class MalteseModel : SequenceModel
+    internal abstract class MalteseModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 870

@@ -44,7 +44,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Hebrew
 {
-    public class Windows_1255_HebrewModel : HebrewModel
+    internal class Windows_1255_HebrewModel : HebrewModel
     {
         // 255: Control characters that usually does not exist in any text
         // 254: Carriage/Return

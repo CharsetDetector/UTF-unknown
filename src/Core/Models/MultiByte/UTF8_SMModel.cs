@@ -38,7 +38,7 @@
 
 namespace UtfUnknown.Core.Models.MultiByte
 {
-    public class UTF8_SMModel : StateMachineModel
+    internal class UTF8_SMModel : StateMachineModel
     {
         private readonly static int[] UTF8_cls = {
             BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 00 - 07

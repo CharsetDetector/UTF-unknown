@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Greek
 {
-    public abstract class GreekModel : SequenceModel
+    internal abstract class GreekModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 1579

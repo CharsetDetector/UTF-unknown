@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Czech
 {
-    public abstract class CzechModel : SequenceModel
+    internal abstract class CzechModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 1025

@@ -1,6 +1,6 @@
 namespace UtfUnknown.Core.Models.MultiByte.Chinese
 {
-    public class GB18030_SMModel : StateMachineModel
+    internal class GB18030_SMModel : StateMachineModel
     {
         private readonly static int[] GB18030_cls = {
             BitPackage.Pack4bits(1,1,1,1,1,1,1,1),  // 00 - 07

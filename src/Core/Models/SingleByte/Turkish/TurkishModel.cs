@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Turkish
 {
-    public abstract class TurkishModel : SequenceModel
+    internal abstract class TurkishModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 935

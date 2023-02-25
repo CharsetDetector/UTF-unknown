@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Polish
 {
-    public abstract class PolishModel : SequenceModel
+    internal abstract class PolishModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 1321

@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Arabic
 {
-    public abstract class ArabicModel : SequenceModel
+    internal abstract class ArabicModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 1479

@@ -50,7 +50,7 @@ namespace UtfUnknown.Core.Probers.MultiByte.Japanese
     /// 2, kana character often exist in group
     /// 3, certain combination of kana is never used in japanese language
     /// </summary>
-    public class SJISProber : CharsetProber
+    internal class SJISProber : CharsetProber
     {
         private CodingStateMachine codingSM;
         private SJISContextAnalyser contextAnalyser;

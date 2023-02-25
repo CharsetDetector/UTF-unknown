@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.German
 {
-    public abstract class GermanModel : SequenceModel
+    internal abstract class GermanModel : SequenceModel
     {
         //  Model Table:
         //  Total sequences: 1188

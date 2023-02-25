@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Romanian
 {
-    public abstract class RomanianModel : SequenceModel
+    internal abstract class RomanianModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 981

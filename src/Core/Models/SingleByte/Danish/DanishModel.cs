@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Danish
 {
-    public abstract class DanishModel : SequenceModel
+    internal abstract class DanishModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 964

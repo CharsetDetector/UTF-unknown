@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.French
 {
-    public abstract class FrenchModel : SequenceModel
+    internal abstract class FrenchModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 914

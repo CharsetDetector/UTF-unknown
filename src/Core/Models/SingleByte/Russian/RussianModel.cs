@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Russian
 {
-    public abstract class RussianModel : SequenceModel
+    internal abstract class RussianModel : SequenceModel
     {
         // Model Table:
         // total sequences: 100%

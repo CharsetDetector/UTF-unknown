@@ -1,6 +1,6 @@
 namespace UtfUnknown.Core.Models.MultiByte.Japanese
 {
-    public class EUCJPSMModel : StateMachineModel
+    internal class EUCJPSMModel : StateMachineModel
     {
         private readonly static int[] EUCJP_cls = {
             //BitPacket.Pack4bits(5,4,4,4,4,4,4,4),  // 00 - 07

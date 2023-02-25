@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Vietnamese
 {
-    public abstract class VietnameseModel : SequenceModel
+    internal abstract class VietnameseModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 1494

@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Slovak
 {
-    public abstract class SlovakModel : SequenceModel
+    internal abstract class SlovakModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 1181

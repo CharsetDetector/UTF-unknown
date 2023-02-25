@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Italian
 {
-    public abstract class ItalianModel : SequenceModel
+    internal abstract class ItalianModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 872

@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Latvian
 {
-    public abstract class LatvianModel : SequenceModel
+    internal abstract class LatvianModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 970

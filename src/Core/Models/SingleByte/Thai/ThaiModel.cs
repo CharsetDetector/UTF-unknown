@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Thai
 {
-    public class ThaiModel : SequenceModel
+    internal class ThaiModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 2324

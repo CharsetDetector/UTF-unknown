@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Estonian
 {
-    public abstract class EstonianModel : SequenceModel
+    internal abstract class EstonianModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 853

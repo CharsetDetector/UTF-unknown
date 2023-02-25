@@ -1,6 +1,6 @@
 namespace UtfUnknown.Core.Analyzers.Chinese
 {
-    public class BIG5DistributionAnalyser : CharDistributionAnalyser
+    internal class BIG5DistributionAnalyser : CharDistributionAnalyser
     {
         // Big5 frequency table
         // by Taiwan's Mandarin Promotion Council

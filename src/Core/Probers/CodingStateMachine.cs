@@ -44,7 +44,7 @@ namespace UtfUnknown.Core.Probers
     /// <summary>
     /// Parallel state machine for the Coding Scheme Method
     /// </summary>
-    public class CodingStateMachine
+    internal class CodingStateMachine
     {
         private int currentState;
         private StateMachineModel model;
@@ -64,11 +64,11 @@ namespace UtfUnknown.Core.Probers
             int byteCls = model.GetClass(b);
             if (currentState == StateMachineModel.START) {
 
-                currentCharLen = model.charLenTable[byteCls];
+                currentCharLen = model.CharLenTable[byteCls];
             }
 
             // from byte's class and stateTable, we get its next state
-            currentState = model.stateTable.Unpack(
+            currentState = model.StateTable.Unpack(
                 currentState * model.ClassFactor + byteCls);
 
             return currentState;

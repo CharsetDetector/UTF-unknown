@@ -1,6 +1,6 @@
 namespace UtfUnknown.Core.Analyzers.Japanese
 {
-    public class EUCJPContextAnalyser : JapaneseContextAnalyser
+    internal class EUCJPContextAnalyser : JapaneseContextAnalyser
     {
         private const byte HIRAGANA_FIRST_BYTE = 0xA4;
 

@@ -39,7 +39,7 @@
 //Escaped charsets state machines
 namespace UtfUnknown.Core.Models.MultiByte.Chinese
 {
-    public class HZ_GB_2312_SMModel : StateMachineModel
+    internal class HZ_GB_2312_SMModel : StateMachineModel
     {
         private readonly static int[] HZ_cls = {
             BitPackage.Pack4bits(1,0,0,0,0,0,0,0),  // 00 - 07

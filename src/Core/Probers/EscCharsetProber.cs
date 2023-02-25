@@ -44,7 +44,7 @@ using UtfUnknown.Core.Models.MultiByte.Korean;
 
 namespace UtfUnknown.Core.Probers
 {
-    public class EscCharsetProber : CharsetProber
+    internal class EscCharsetProber : CharsetProber
     {
         private const int CHARSETS_NUM = 4;
         private string detectedCharset;

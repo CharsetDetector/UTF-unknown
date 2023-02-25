@@ -43,44 +43,46 @@ namespace UtfUnknown.Core.Models
     /// <summary>
     /// State machine model
     /// </summary>
-    public abstract class StateMachineModel
+    internal abstract class StateMachineModel
     {
+        private readonly BitPackage _classTable;
+
         /// <summary>
         /// Start node
         /// </summary>
-        public const int START = 0;
+        public static int START => 0;
 
         /// <summary>
         /// Error node <see cref="Probers.ProbingState.NotMe"/> ?
         /// </summary>
-        public const int ERROR = 1;
+        public static int ERROR => 1;
 
         /// <summary>
         /// <see cref="Probers.ProbingState.FoundIt"/> ?
         /// </summary>
-        public const int ITSME = 2;
-
-        public BitPackage classTable;
-        public BitPackage stateTable;
-        public int[] charLenTable;
+        public static int ITSME => 2;
 
         public string Name { get; }
 
         public int ClassFactor { get; }
 
-        public StateMachineModel(BitPackage classTable, int classFactor,
+        internal BitPackage StateTable { get; }
+
+        internal int[] CharLenTable { get; }
+
+        internal StateMachineModel(BitPackage classTable, int classFactor,
             BitPackage stateTable, int[] charLenTable, String name)
         {
-            this.classTable = classTable;
+            this._classTable = classTable;
             ClassFactor = classFactor;
-            this.stateTable = stateTable;
-            this.charLenTable = charLenTable;
+            this.StateTable = stateTable;
+            this.CharLenTable = charLenTable;
             Name = name;
         }
 
         public int GetClass(byte b)
         {
-            return classTable.Unpack((int)b);
+            return _classTable.Unpack(b);
         }
     }
 }

@@ -38,23 +38,23 @@
 
 namespace UtfUnknown.Core
 {
-    public class BitPackage
+    internal class BitPackage
     {
-        public static int INDEX_SHIFT_4BITS  = 3;
-        public static int INDEX_SHIFT_8BITS  = 2;
-        public static int INDEX_SHIFT_16BITS = 1;
-        public static int SHIFT_MASK_4BITS  = 7;
-        public static int SHIFT_MASK_8BITS  = 3;
+        public static int INDEX_SHIFT_4BITS => 3;
+        public static int INDEX_SHIFT_8BITS => 2;
+        public static int INDEX_SHIFT_16BITS => 1;
+        public static int SHIFT_MASK_4BITS => 7;
+        public static int SHIFT_MASK_8BITS => 3;
 
-        public static int SHIFT_MASK_16BITS = 1;
-        public static int BIT_SHIFT_4BITS  = 2;
-        public static int BIT_SHIFT_8BITS  = 3;
+        public static int SHIFT_MASK_16BITS => 1;
+        public static int BIT_SHIFT_4BITS  => 2;
+        public static int BIT_SHIFT_8BITS  => 3;
 
-        public static int BIT_SHIFT_16BITS = 4;
-        public static int UNIT_MASK_4BITS  = 0x0000000F;
-        public static int UNIT_MASK_8BITS  = 0x000000FF;
+        public static int BIT_SHIFT_16BITS => 4;
+        public static int UNIT_MASK_4BITS  => 0x0000000F;
+        public static int UNIT_MASK_8BITS  => 0x000000FF;
 
-        public static int UNIT_MASK_16BITS = 0x0000FFFF;
+        public static int UNIT_MASK_16BITS => 0x0000FFFF;
 
         private int indexShift;
         private int shiftMask;

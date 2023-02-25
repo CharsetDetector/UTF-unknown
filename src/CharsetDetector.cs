@@ -53,7 +53,7 @@ namespace UtfUnknown
     /// </summary>
     public class CharsetDetector
     {
-        internal InputState InputState;
+        private InputState _inputState;
 
         /// <summary>
         /// Start of the file
@@ -89,7 +89,7 @@ namespace UtfUnknown
         {
             get
             {
-                switch (InputState)
+                switch (_inputState)
                 {
                     case InputState.EscASCII:
                         return _escCharsetProber;
@@ -112,7 +112,7 @@ namespace UtfUnknown
         private CharsetDetector()
         {
             _start = true;
-            InputState = InputState.PureASCII;
+            _inputState = InputState.PureASCII;
             _lastChar = 0x00;
         }
 
@@ -350,9 +350,9 @@ namespace UtfUnknown
                 if ((buf[i] & 0x80) != 0 && buf[i] != 0xA0)
                 {
                     // we got a non-ascii byte (high-byte)
-                    if (InputState != InputState.Highbyte)
+                    if (_inputState != InputState.Highbyte)
                     {
-                        InputState = InputState.Highbyte;
+                        _inputState = InputState.Highbyte;
 
                         // kill EscCharsetProber if it is active
                         _escCharsetProber = null;
@@ -361,11 +361,11 @@ namespace UtfUnknown
                 }
                 else
                 {
-                    if (InputState == InputState.PureASCII &&
+                    if (_inputState == InputState.PureASCII &&
                         (buf[i] == 0x1B || (buf[i] == 0x7B && _lastChar == 0x7E)))
                     {
                         // found escape character or HZ "~{"
-                        InputState = InputState.EscASCII;
+                        _inputState = InputState.EscASCII;
                         _escCharsetProber = _escCharsetProber ?? GetNewProbers();
                     }
                     _lastChar = buf[i];
@@ -453,7 +453,7 @@ namespace UtfUnknown
                 return new DetectionResult(_detectionDetail);
             }
 
-            if (InputState == InputState.Highbyte)
+            if (_inputState == InputState.Highbyte)
             {
                 var detectionResults = _charsetProbers
                     .Select(prober => new DetectionDetail(prober))
@@ -465,12 +465,12 @@ namespace UtfUnknown
 
                 //TODO why done isn't true?
             }
-            else if (InputState == InputState.PureASCII)
+            else if (_inputState == InputState.PureASCII)
             {
                 //TODO why done isn't true?
                 return new DetectionResult(new DetectionDetail(CodepageName.ASCII, 1.0f));
             }
-            else if (InputState == InputState.EscASCII)
+            else if (_inputState == InputState.EscASCII)
             {
                 return new DetectionResult(new DetectionDetail(CodepageName.ASCII, 1.0f));
             }
@@ -480,7 +480,7 @@ namespace UtfUnknown
 
         internal IList<CharsetProber> GetNewProbers()
         {
-            switch (InputState)
+            switch (_inputState)
             {
                 case InputState.EscASCII:
                     return new List<CharsetProber>() { new EscCharsetProber() };

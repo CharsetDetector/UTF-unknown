@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Bulgarian
 {
-    public class Windows_1251_BulgarianModel : BulgarianModel
+    internal class Windows_1251_BulgarianModel : BulgarianModel
     {
         // CTR: Control characters that usually does not exist in any text
         // RET: Carriage/Return

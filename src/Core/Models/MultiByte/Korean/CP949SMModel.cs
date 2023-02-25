@@ -1,6 +1,6 @@
 namespace UtfUnknown.Core.Models.MultiByte.Korean
 {
-    public class CP949SMModel : StateMachineModel
+    internal class CP949SMModel : StateMachineModel
     {
         /*
         * 0: Unused

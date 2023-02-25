@@ -43,7 +43,7 @@ using UtfUnknown.Core.Models;
 
 namespace UtfUnknown.Core.Probers
 {
-    public class SingleByteCharSetProber : CharsetProber
+    internal class SingleByteCharSetProber : CharsetProber
     {
         private const int SB_ENOUGH_REL_THRESHOLD = 1024;
         private const float POSITIVE_SHORTCUT_THRESHOLD = 0.95f;

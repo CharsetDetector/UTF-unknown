@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Croatian
 {
-    public abstract class CroatianModel : SequenceModel
+    internal abstract class CroatianModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 712

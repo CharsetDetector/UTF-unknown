@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Esperanto
 {
-    public abstract class EsperantoModel : SequenceModel
+    internal abstract class EsperantoModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 989

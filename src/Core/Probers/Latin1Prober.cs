@@ -42,7 +42,7 @@ namespace UtfUnknown.Core.Probers
 {
     // TODO: Using trigrams the detector should be able to discriminate between
     // latin-1 and iso8859-2
-    public class Latin1Prober : CharsetProber
+    internal class Latin1Prober : CharsetProber
     {
         private const int FREQ_CAT_NUM = 4;
 

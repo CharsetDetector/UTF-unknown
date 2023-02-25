@@ -1,6 +1,6 @@
 namespace UtfUnknown.Core.Analyzers.Chinese
 {
-    public class GB18030DistributionAnalyser : CharDistributionAnalyser
+    internal class GB18030DistributionAnalyser : CharDistributionAnalyser
     {
         // GB2312 most frequently used character table
         // Char to FreqOrder table, from hz6763

@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Russian
 {
-    public class Ibm855_RussianModel : RussianModel
+    internal class Ibm855_RussianModel : RussianModel
     {
         private readonly static byte[] BYTE_TO_ORDER_MAP = {
             CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,RET,CTR,CTR,RET,CTR,CTR,  //00

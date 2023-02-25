@@ -42,7 +42,7 @@
 
 namespace UtfUnknown.Core.Models.SingleByte.Irish
 {
-    public abstract class IrishModel : SequenceModel
+    internal abstract class IrishModel : SequenceModel
     {
         // Model Table:
         // Total sequences: 701

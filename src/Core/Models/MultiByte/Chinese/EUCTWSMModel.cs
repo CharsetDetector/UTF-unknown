@@ -1,6 +1,6 @@
 namespace UtfUnknown.Core.Models.MultiByte.Chinese
 {
-    public class EUCTWSMModel : StateMachineModel
+    internal class EUCTWSMModel : StateMachineModel
     {
         private readonly static int[] EUCTW_cls = {
             BitPackage.Pack4bits(2,2,2,2,2,2,2,2),  // 00 - 07
