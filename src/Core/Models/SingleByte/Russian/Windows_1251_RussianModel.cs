@@ -68,4 +68,36 @@ namespace UtfUnknown.Core.Models.SingleByte.Russian
         {
         }
     }
+
+    /// <summary>
+    /// No regiter difference
+    /// </summary>
+    public class Windows_1251_RussianModelCaseInsinsivite : RussianModel
+    {
+        private readonly static byte[] CHAR_TO_ORDER_MAP = {
+            CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,RET,CTR,CTR,RET,CTR,CTR, /* 0X */
+            CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR,CTR, /* 1X */
+            SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM,SYM, /* 2X */
+            NUM,NUM,NUM,NUM,NUM,NUM,NUM,NUM,NUM,NUM,SYM,SYM,SYM,SYM,SYM,SYM, /* 3X */
+            SYM,142,143,144,145,146,147,148,149,150,151,152, 74,153, 75,154, /* 4X */
+            155,156,157,158,159,160,161,162,163,164,165,SYM,SYM,SYM,SYM,SYM, /* 5X */
+            SYM, 71,172, 66,173, 65,174, 76,175, 64,176,177, 77, 72,178, 69, /* 6X */
+             67,179, 78, 73,180,181, 79,182,183,184,185,SYM,SYM,SYM,SYM,SYM, /* 7X */
+            191,192,193,194,195,196,197,198,199,200,201,202,203,204,205,206, /* 8X */
+            207,208,209,210,211,212,213,214,ILL,216,217,218,219,220,221,222, /* 9X */
+            223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238, /* AX */
+            239,240,241,242,243,244,245,246, 68,247,248,249,250,251,NUM,SYM, /* BX */
+              3, 21, 10, 19, 13,  2, 24, 20,  4, 23, 11,  8, 12,  5,  1, 15, /* ÑX */
+              9,  7,  6, 14, 39, 26, 28, 22, 25, 29, 54, 18, 17, 30, 27, 16, /* DX */
+              3, 21, 10, 19, 13,  2, 24, 20,  4, 23, 11,  8, 12,  5,  1, 15, /* EX */
+              9,  7,  6, 14, 39, 26, 28, 22, 25, 29, 54, 18, 17, 30, 27, 16, /* FX */
+        };
+        /*X0  X1  X2  X3  X4  X5  X6  X7  X8  X9  XA  XB  XC  XD  XE  XF */
+
+        public Windows_1251_RussianModelCaseInsinsivite() 
+            : base(CHAR_TO_ORDER_MAP, CodepageName.WINDOWS_1251)
+        {
+        }
+    }
+
 }

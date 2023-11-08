@@ -1,4 +1,4 @@
-/* ***** BEGIN LICENSE BLOCK *****
+﻿/* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
  * The contents of this file are subject to the Mozilla Public License Version
@@ -76,7 +76,7 @@ namespace UtfUnknown.Core.Probers
 {
     public class SBCSGroupProber : CharsetProber
     {
-        private const int PROBERS_NUM = 100;
+        private const int PROBERS_NUM = 101;
         private CharsetProber[] probers = new CharsetProber[PROBERS_NUM];
         private bool[] isActive = new bool[PROBERS_NUM];
         private int bestGuess;
@@ -86,6 +86,7 @@ namespace UtfUnknown.Core.Probers
         {
             // Russian
             probers[0] = new SingleByteCharSetProber(new Windows_1251_RussianModel());
+            probers[100] = new SingleByteCharSetProber(new Windows_1251_RussianModelCaseInsinsivite());
             probers[1] = new SingleByteCharSetProber(new Koi8r_Model());
             probers[2] = new SingleByteCharSetProber(new Iso_8859_5_RussianModel());
             probers[3] = new SingleByteCharSetProber(new X_Mac_Cyrillic_RussianModel());
