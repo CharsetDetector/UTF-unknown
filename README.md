@@ -14,7 +14,7 @@ Detect character set for files, streams and other bytes.
 Detection of character sets with a simple and redesigned interface.
 
 This package is based on [Ude](https://github.com/errepi/ude) and since version 2 also on [uchardet](https://gitlab.freedesktop.org/uchardet/uchardet),
-which are ports of the [Mozilla Universal Charset Detector](https://mxr.mozilla.org/mozilla/source/extensions/universalchardet/).
+which are ports of the [Mozilla Universal Charset Detector](https://www-archive.mozilla.org/projects/intl/chardet.html).
 
 The interface and other classes has been resigned so it's easier to use and better object oriented design (OOD). Unit tests and CI has been added.
 
