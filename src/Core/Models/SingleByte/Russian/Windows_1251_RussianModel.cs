@@ -1,4 +1,4 @@
-/* ***** BEGIN LICENSE BLOCK *****
+ï»¿/* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
  * The contents of this file are subject to the Mozilla Public License Version
@@ -87,14 +87,14 @@ namespace UtfUnknown.Core.Models.SingleByte.Russian
             207,208,209,210,211,212,213,214,ILL,216,217,218,219,220,221,222, /* 9X */
             223,224,225,226,227,228,229,230,231,232,233,234,235,236,237,238, /* AX */
             239,240,241,242,243,244,245,246, 68,247,248,249,250,251,NUM,SYM, /* BX */
-              3, 21, 10, 19, 13,  2, 24, 20,  4, 23, 11,  8, 12,  5,  1, 15, /* ÑX */
+              3, 21, 10, 19, 13,  2, 24, 20,  4, 23, 11,  8, 12,  5,  1, 15, /* CX */
               9,  7,  6, 14, 39, 26, 28, 22, 25, 29, 54, 18, 17, 30, 27, 16, /* DX */
               3, 21, 10, 19, 13,  2, 24, 20,  4, 23, 11,  8, 12,  5,  1, 15, /* EX */
               9,  7,  6, 14, 39, 26, 28, 22, 25, 29, 54, 18, 17, 30, 27, 16, /* FX */
         };
         /*X0  X1  X2  X3  X4  X5  X6  X7  X8  X9  XA  XB  XC  XD  XE  XF */
 
-        public Windows_1251_RussianModelCaseInsinsivite() 
+        public Windows_1251_RussianModelCaseInsinsivite()
             : base(CHAR_TO_ORDER_MAP, CodepageName.WINDOWS_1251)
         {
         }
