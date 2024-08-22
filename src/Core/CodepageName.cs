@@ -1,4 +1,4 @@
-/* ***** BEGIN LICENSE BLOCK *****
+﻿/* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
  * The contents of this file are subject to the Mozilla Public License Version
@@ -165,6 +165,14 @@ namespace UtfUnknown.Core
         /// Not supported in .NET. A nearly identical version of cp949 is ks_c_5601-1987 (see https://lists.w3.org/Archives/Public/ietf-charsets/2002JulSep/0020.html)
         /// </remarks>
         internal const string CP949 = "cp949";
+
+        /// <summary>
+        /// OEM Latin-1 codepage name.
+        /// </summary>
+        /// <remarks>
+        /// Is other alias cp850 in .NET
+        /// </remarks>
+        internal const string IBM850 = "ibm850";
 
         /// <summary>
         /// OEM Latin-2 codepage name.
