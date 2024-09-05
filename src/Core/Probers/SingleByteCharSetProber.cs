@@ -170,8 +170,13 @@ namespace UtfUnknown.Core.Probers
             // POSITIVE_APPROACH
             float r;
 
-            if (totalSeqs > 0) {
-                r = 1.0f * seqCounters[POSITIVE_CAT] / totalSeqs / model.TypicalPositiveRatio;
+            if (totalSeqs > 0 && totalChar > 0) {
+                int positiveSeqs = seqCounters[POSITIVE_CAT];
+                int probableSeqs = seqCounters[PROBABLE_CAT];
+                int negativeSeqs = seqCounters[NEGATIVE_CAT];
+                r = (positiveSeqs + probableSeqs * 0.25f - negativeSeqs * 4f) / totalSeqs / model.TypicalPositiveRatio;
+                if (r < 0.0f)
+                    return 0.01f;
 
                 // Multiply by a ratio of positive sequences per characters.
                 // This would help in particular to distinguish close winners.
@@ -180,7 +185,6 @@ namespace UtfUnknown.Core.Probers
                 // may not have been a letter, but instead a symbol (or some other
                 // character). This could make the difference between very closely related
                 // charsets used for the same language.
-                r = r * (seqCounters[POSITIVE_CAT] + (float)seqCounters[PROBABLE_CAT] / 4.0f) / totalChar;
 
                 // The more control characters (proportionally to the size of the text), the
                 // less confident we become in the current charset.
