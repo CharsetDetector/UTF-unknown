@@ -132,7 +132,7 @@ namespace UtfUnknown.Core.Probers
             }
 
             if (state == ProbingState.Detecting) {
-                if (totalSeqs > SB_ENOUGH_REL_THRESHOLD) {
+                if (totalSeqs > max / (4096 / SB_ENOUGH_REL_THRESHOLD))
                     float cf = GetConfidence();
                     if (cf > POSITIVE_SHORTCUT_THRESHOLD)
                         state = ProbingState.FoundIt;
