@@ -19,11 +19,11 @@ test_script:
 - ps: cd ..
 after_build:
 - ps: msbuild -t:Pack .\src\ -p:Configuration=Release  -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:ContinuousIntegrationBuild=true -p:EmbedUntrackedSources=true -verbosity:minimal
-- ps: Get-ChildItem '**\test-diag.log' | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
+- ps: Get-ChildItem '**\test-diag-*.log' | % { Push-AppveyorArtifact $_.FullName -FileName $_.Name }
 artifacts:
 - path: '**\*.nupkg'
 - path: '**\*.snupkg'
-- path: '**\test-diag.log'
+- path: '**\test-diag-*.log'
 dotnet_csproj:
   patch: true
   file: '**\*.csproj'
@@ -35,6 +35,6 @@ dotnet_csproj:
 deploy:
 - provider: NuGet
   api_key:
-    secure: iB1GljKDgO1ynQjVNyXRQY1Ib3nOuCvV+UkPGK44U/5tIhKvZm7ZSgUG5CeQj2/z
+    secure: SNGGi9ZdP5LKMbc9ujEvu37J1WkX+PTPW6YF1OKNmkqDFVZ1//UaaoYmoSSvHsRw
   on:
     branch: master
