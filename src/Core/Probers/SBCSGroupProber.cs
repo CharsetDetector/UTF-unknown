@@ -1,4 +1,4 @@
-/* ***** BEGIN LICENSE BLOCK *****
+﻿/* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
  * The contents of this file are subject to the Mozilla Public License Version
@@ -76,7 +76,7 @@ namespace UtfUnknown.Core.Probers
 {
     public class SBCSGroupProber : CharsetProber
     {
-        private const int PROBERS_NUM = 100;
+        private const int PROBERS_NUM = 101;
         private CharsetProber[] probers = new CharsetProber[PROBERS_NUM];
         private bool[] isActive = new bool[PROBERS_NUM];
         private int bestGuess;
@@ -131,123 +131,124 @@ namespace UtfUnknown.Core.Probers
             probers[22] = new SingleByteCharSetProber(new Windows_1250_HungarianModel());
 
             // German
-            probers[23] = new SingleByteCharSetProber(new Iso_8859_1_GermanModel());
-            probers[24] = new SingleByteCharSetProber(new Windows_1252_GermanModel());
+            probers[23] = new SingleByteCharSetProber(new Ibm850_GermanModel());
+            probers[24] = new SingleByteCharSetProber(new Iso_8859_1_GermanModel());
+            probers[25] = new SingleByteCharSetProber(new Windows_1252_GermanModel());
 
             // Esperanto
-            probers[25] = new SingleByteCharSetProber(new Iso_8859_3_EsperantoModel());
+            probers[26] = new SingleByteCharSetProber(new Iso_8859_3_EsperantoModel());
 
             // Turkish
-            probers[26] = new SingleByteCharSetProber(new Iso_8859_3_TurkishModel());
-            probers[27] = new SingleByteCharSetProber(new Iso_8859_9_TurkishModel());
+            probers[27] = new SingleByteCharSetProber(new Iso_8859_3_TurkishModel());
+            probers[28] = new SingleByteCharSetProber(new Iso_8859_9_TurkishModel());
 
             // Arabic
-            probers[28] = new SingleByteCharSetProber(new Iso_8859_6_ArabicModel());
-            probers[29] = new SingleByteCharSetProber(new Windows_1256_ArabicModel());
+            probers[29] = new SingleByteCharSetProber(new Iso_8859_6_ArabicModel());
+            probers[30] = new SingleByteCharSetProber(new Windows_1256_ArabicModel());
 
             // Vietnamese
-            probers[30] = new SingleByteCharSetProber(new Viscii_VietnameseModel());
-            probers[31] = new SingleByteCharSetProber(new Windows_1258_VietnameseModel());
+            probers[31] = new SingleByteCharSetProber(new Viscii_VietnameseModel());
+            probers[32] = new SingleByteCharSetProber(new Windows_1258_VietnameseModel());
 
             // Danish
-            probers[32] = new SingleByteCharSetProber(new Iso_8859_15_DanishModel());
-            probers[33] = new SingleByteCharSetProber(new Iso_8859_1_DanishModel());
-            probers[34] = new SingleByteCharSetProber(new Windows_1252_DanishModel());
+            probers[33] = new SingleByteCharSetProber(new Iso_8859_15_DanishModel());
+            probers[34] = new SingleByteCharSetProber(new Iso_8859_1_DanishModel());
+            probers[35] = new SingleByteCharSetProber(new Windows_1252_DanishModel());
 
             // Lithuanian
-            probers[35] = new SingleByteCharSetProber(new Iso_8859_13_LithuanianModel());
-            probers[36] = new SingleByteCharSetProber(new Iso_8859_10_LithuanianModel());
-            probers[37] = new SingleByteCharSetProber(new Iso_8859_4_LithuanianModel());
+            probers[36] = new SingleByteCharSetProber(new Iso_8859_13_LithuanianModel());
+            probers[37] = new SingleByteCharSetProber(new Iso_8859_10_LithuanianModel());
+            probers[38] = new SingleByteCharSetProber(new Iso_8859_4_LithuanianModel());
 
             // Latvian
-            probers[38] = new SingleByteCharSetProber(new Iso_8859_13_LatvianModel());
-            probers[39] = new SingleByteCharSetProber(new Iso_8859_10_LatvianModel());
-            probers[40] = new SingleByteCharSetProber(new Iso_8859_4_LatvianModel());
+            probers[39] = new SingleByteCharSetProber(new Iso_8859_13_LatvianModel());
+            probers[40] = new SingleByteCharSetProber(new Iso_8859_10_LatvianModel());
+            probers[41] = new SingleByteCharSetProber(new Iso_8859_4_LatvianModel());
 
             // Portuguese
-            probers[41] = new SingleByteCharSetProber(new Iso_8859_1_PortugueseModel());
-            probers[42] = new SingleByteCharSetProber(new Iso_8859_9_PortugueseModel());
-            probers[43] = new SingleByteCharSetProber(new Iso_8859_15_PortugueseModel());
-            probers[44] = new SingleByteCharSetProber(new Windows_1252_PortugueseModel());
+            probers[42] = new SingleByteCharSetProber(new Iso_8859_1_PortugueseModel());
+            probers[43] = new SingleByteCharSetProber(new Iso_8859_9_PortugueseModel());
+            probers[44] = new SingleByteCharSetProber(new Iso_8859_15_PortugueseModel());
+            probers[45] = new SingleByteCharSetProber(new Windows_1252_PortugueseModel());
 
             // Maltese
-            probers[45] = new SingleByteCharSetProber(new Iso_8859_3_MalteseModel());
+            probers[46] = new SingleByteCharSetProber(new Iso_8859_3_MalteseModel());
 
             // Czech
-            probers[46] = new SingleByteCharSetProber(new Windows_1250_CzechModel());
-            probers[47] = new SingleByteCharSetProber(new Iso_8859_2_CzechModel());
-            probers[48] = new SingleByteCharSetProber(new Mac_Centraleurope_CzechModel());
-            probers[49] = new SingleByteCharSetProber(new Ibm852_CzechModel());
+            probers[47] = new SingleByteCharSetProber(new Windows_1250_CzechModel());
+            probers[48] = new SingleByteCharSetProber(new Iso_8859_2_CzechModel());
+            probers[49] = new SingleByteCharSetProber(new Mac_Centraleurope_CzechModel());
+            probers[50] = new SingleByteCharSetProber(new Ibm852_CzechModel());
 
             // Slovak
-            probers[50] = new SingleByteCharSetProber(new Windows_1250_SlovakModel());
-            probers[51] = new SingleByteCharSetProber(new Iso_8859_2_SlovakModel());
-            probers[52] = new SingleByteCharSetProber(new Mac_Centraleurope_SlovakModel());
-            probers[53] = new SingleByteCharSetProber(new Ibm852_SlovakModel());
+            probers[51] = new SingleByteCharSetProber(new Windows_1250_SlovakModel());
+            probers[52] = new SingleByteCharSetProber(new Iso_8859_2_SlovakModel());
+            probers[53] = new SingleByteCharSetProber(new Mac_Centraleurope_SlovakModel());
+            probers[54] = new SingleByteCharSetProber(new Ibm852_SlovakModel());
 
             // Polish
-            probers[54] = new SingleByteCharSetProber(new Windows_1250_PolishModel());
-            probers[55] = new SingleByteCharSetProber(new Iso_8859_2_PolishModel());
-            probers[56] = new SingleByteCharSetProber(new Iso_8859_13_PolishModel());
-            probers[57] = new SingleByteCharSetProber(new Iso_8859_16_PolishModel());
-            probers[58] = new SingleByteCharSetProber(new Mac_Centraleurope_PolishModel());
-            probers[59] = new SingleByteCharSetProber(new Ibm852_PolishModel());
+            probers[55] = new SingleByteCharSetProber(new Windows_1250_PolishModel());
+            probers[56] = new SingleByteCharSetProber(new Iso_8859_2_PolishModel());
+            probers[57] = new SingleByteCharSetProber(new Iso_8859_13_PolishModel());
+            probers[58] = new SingleByteCharSetProber(new Iso_8859_16_PolishModel());
+            probers[59] = new SingleByteCharSetProber(new Mac_Centraleurope_PolishModel());
+            probers[60] = new SingleByteCharSetProber(new Ibm852_PolishModel());
 
             // Finnish
-            probers[60] = new SingleByteCharSetProber(new Iso_8859_1_FinnishModel());
-            probers[61] = new SingleByteCharSetProber(new Iso_8859_4_FinnishModel());
-            probers[62] = new SingleByteCharSetProber(new Iso_8859_9_FinnishModel());
-            probers[63] = new SingleByteCharSetProber(new Iso_8859_13_FinnishModel());
-            probers[64] = new SingleByteCharSetProber(new Iso_8859_15_FinnishModel());
-            probers[65] = new SingleByteCharSetProber(new Windows_1252_FinnishModel());
+            probers[61] = new SingleByteCharSetProber(new Iso_8859_1_FinnishModel());
+            probers[62] = new SingleByteCharSetProber(new Iso_8859_4_FinnishModel());
+            probers[63] = new SingleByteCharSetProber(new Iso_8859_9_FinnishModel());
+            probers[64] = new SingleByteCharSetProber(new Iso_8859_13_FinnishModel());
+            probers[65] = new SingleByteCharSetProber(new Iso_8859_15_FinnishModel());
+            probers[66] = new SingleByteCharSetProber(new Windows_1252_FinnishModel());
 
             // Italian
-            probers[66] = new SingleByteCharSetProber(new Iso_8859_1_ItalianModel());
-            probers[67] = new SingleByteCharSetProber(new Iso_8859_3_ItalianModel());
-            probers[68] = new SingleByteCharSetProber(new Iso_8859_9_ItalianModel());
-            probers[69] = new SingleByteCharSetProber(new Iso_8859_15_ItalianModel());
-            probers[70] = new SingleByteCharSetProber(new Windows_1252_ItalianModel());
+            probers[67] = new SingleByteCharSetProber(new Iso_8859_1_ItalianModel());
+            probers[68] = new SingleByteCharSetProber(new Iso_8859_3_ItalianModel());
+            probers[69] = new SingleByteCharSetProber(new Iso_8859_9_ItalianModel());
+            probers[70] = new SingleByteCharSetProber(new Iso_8859_15_ItalianModel());
+            probers[71] = new SingleByteCharSetProber(new Windows_1252_ItalianModel());
 
             // Croatian
-            probers[71] = new SingleByteCharSetProber(new Windows_1250_CroatianModel());
-            probers[72] = new SingleByteCharSetProber(new Iso_8859_2_CroatianModel());
-            probers[73] = new SingleByteCharSetProber(new Iso_8859_13_CroatianModel());
-            probers[74] = new SingleByteCharSetProber(new Iso_8859_16_CroatianModel());
-            probers[75] = new SingleByteCharSetProber(new Mac_Centraleurope_CroatianModel());
-            probers[76] = new SingleByteCharSetProber(new Ibm852_CroatianModel());
+            probers[72] = new SingleByteCharSetProber(new Windows_1250_CroatianModel());
+            probers[73] = new SingleByteCharSetProber(new Iso_8859_2_CroatianModel());
+            probers[74] = new SingleByteCharSetProber(new Iso_8859_13_CroatianModel());
+            probers[75] = new SingleByteCharSetProber(new Iso_8859_16_CroatianModel());
+            probers[76] = new SingleByteCharSetProber(new Mac_Centraleurope_CroatianModel());
+            probers[77] = new SingleByteCharSetProber(new Ibm852_CroatianModel());
 
             // Estonian
-            probers[77] = new SingleByteCharSetProber(new Windows_1252_EstonianModel());
-            probers[78] = new SingleByteCharSetProber(new Windows_1257_EstonianModel());
-            probers[79] = new SingleByteCharSetProber(new Iso_8859_4_EstonianModel());
-            probers[80] = new SingleByteCharSetProber(new Iso_8859_13_EstonianModel());
-            probers[81] = new SingleByteCharSetProber(new Iso_8859_15_EstonianModel());
+            probers[78] = new SingleByteCharSetProber(new Windows_1252_EstonianModel());
+            probers[79] = new SingleByteCharSetProber(new Windows_1257_EstonianModel());
+            probers[80] = new SingleByteCharSetProber(new Iso_8859_4_EstonianModel());
+            probers[81] = new SingleByteCharSetProber(new Iso_8859_13_EstonianModel());
+            probers[82] = new SingleByteCharSetProber(new Iso_8859_15_EstonianModel());
 
             // Irish
-            probers[82] = new SingleByteCharSetProber(new Iso_8859_1_IrishModel());
-            probers[83] = new SingleByteCharSetProber(new Iso_8859_9_IrishModel());
-            probers[84] = new SingleByteCharSetProber(new Iso_8859_15_IrishModel());
-            probers[85] = new SingleByteCharSetProber(new Windows_1252_IrishModel());
+            probers[83] = new SingleByteCharSetProber(new Iso_8859_1_IrishModel());
+            probers[84] = new SingleByteCharSetProber(new Iso_8859_9_IrishModel());
+            probers[85] = new SingleByteCharSetProber(new Iso_8859_15_IrishModel());
+            probers[86] = new SingleByteCharSetProber(new Windows_1252_IrishModel());
 
             // Romanian
-            probers[86] = new SingleByteCharSetProber(new Windows_1250_RomanianModel());
-            probers[87] = new SingleByteCharSetProber(new Iso_8859_2_RomanianModel());
-            probers[88] = new SingleByteCharSetProber(new Iso_8859_16_RomanianModel());
-            probers[89] = new SingleByteCharSetProber(new Ibm852_RomanianModel());
+            probers[87] = new SingleByteCharSetProber(new Windows_1250_RomanianModel());
+            probers[88] = new SingleByteCharSetProber(new Iso_8859_2_RomanianModel());
+            probers[89] = new SingleByteCharSetProber(new Iso_8859_16_RomanianModel());
+            probers[90] = new SingleByteCharSetProber(new Ibm852_RomanianModel());
 
             // Slovene
-            probers[90] = new SingleByteCharSetProber(new Windows_1250_SloveneModel());
-            probers[91] = new SingleByteCharSetProber(new Iso_8859_2_SloveneModel());
-            probers[92] = new SingleByteCharSetProber(new Iso_8859_16_SloveneModel());
-            probers[93] = new SingleByteCharSetProber(new Mac_Centraleurope_SloveneModel());
-            probers[94] = new SingleByteCharSetProber(new Ibm852_SloveneModel());
+            probers[91] = new SingleByteCharSetProber(new Windows_1250_SloveneModel());
+            probers[92] = new SingleByteCharSetProber(new Iso_8859_2_SloveneModel());
+            probers[93] = new SingleByteCharSetProber(new Iso_8859_16_SloveneModel());
+            probers[94] = new SingleByteCharSetProber(new Mac_Centraleurope_SloveneModel());
+            probers[95] = new SingleByteCharSetProber(new Ibm852_SloveneModel());
 
             // Swedish
-            probers[95] = new SingleByteCharSetProber(new Iso_8859_1_SwedishModel());
-            probers[96] = new SingleByteCharSetProber(new Iso_8859_4_SwedishModel());
-            probers[97] = new SingleByteCharSetProber(new Iso_8859_9_SwedishModel());
-            probers[98] = new SingleByteCharSetProber(new Iso_8859_15_SwedishModel());
-            probers[99] = new SingleByteCharSetProber(new Windows_1252_SwedishModel());
+            probers[96] = new SingleByteCharSetProber(new Iso_8859_1_SwedishModel());
+            probers[97] = new SingleByteCharSetProber(new Iso_8859_4_SwedishModel());
+            probers[98] = new SingleByteCharSetProber(new Iso_8859_9_SwedishModel());
+            probers[99] = new SingleByteCharSetProber(new Iso_8859_15_SwedishModel());
+            probers[100] = new SingleByteCharSetProber(new Windows_1252_SwedishModel());
 
             Reset();
         }

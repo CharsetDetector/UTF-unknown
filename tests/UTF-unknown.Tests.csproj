@@ -19,4 +19,8 @@
     <ProjectReference Include="..\src\UTF-unknown.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Data\ibm850\" />
+  </ItemGroup>
+
 </Project>
