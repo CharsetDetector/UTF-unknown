@@ -242,7 +242,7 @@ namespace UtfUnknown
                 throw new ArgumentNullException(nameof(stream));
             }
 
-            if (maxBytesToRead <= 0)
+            if (maxBytesToRead.HasValue && maxBytesToRead <= 0)
             {
                 throw new ArgumentOutOfRangeException(nameof(maxBytesToRead));
             }
