@@ -92,7 +92,7 @@ __Encodings without BOM are presented in the table, separated by languages:__
 | Estonian                | `iso-8859-4`, `iso-8859-13`, `iso-8859-13`, `windows-1252`, `windows-1257`             |
 | Finnish                 | `iso-8859-1`, `iso-8859-4`, `iso-8859-9`, `iso-8859-13`, `iso-8859-15`, `windows-1252` |
 | French                  | `iso-8859-1`, `iso-8859-15`, `windows-1252`                                            |
-| German                  | `iso-8859-1`, `windows-1252`                                                           |
+| German                  | `iso-8859-1`, `windows-1252`, `CP 850`/`IBM 00850`                                     |
 | Greek                   | `iso-8859-7`, `windows-1253`                                                           |
 | Hebrew                  | `iso-8859-8`, `windows-1255`                                                           |
 | Hungarian               | `iso-8859-2`, `windows-1250`                                                           |
