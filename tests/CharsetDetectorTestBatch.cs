@@ -207,14 +207,14 @@ namespace UtfUnknown.Tests
 
         private string GetCurrentFrameworkName()
         {
-#if NETCOREAPP3_0
-                    return "dotnetcore3";
-#elif NETCOREAPP2_1
-            return "dotnetcore2.1";
-#elif NET452
-                return "net452";
+#if NET6_0
+            return "net6";
+#elif NET8_0
+            return "net8";
+#elif NET481
+            return "net481";
 #else
-                return "unknown";
+            return "";
 #endif
         }
 
