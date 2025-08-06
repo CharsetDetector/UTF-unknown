@@ -379,7 +379,7 @@ namespace UtfUnknown
         /// <param name="file">The file</param>
         /// <param name="cancellationToken">The cancellation token for this operation.</param>
         /// <returns></returns>
-        public static Task<DetectionResult> DetectFromFileAsync(FileInfo file, CancellationToken cancellationToken = default)
+        public static async Task<DetectionResult> DetectFromFileAsync(FileInfo file, CancellationToken cancellationToken = default)
         {
             if (file == null)
             {
@@ -388,7 +388,7 @@ namespace UtfUnknown
 
             using (FileStream fs = OpenFile(file.FullName))
             {
-                return DetectFromStreamAsync(fs, cancellationToken);
+                return await DetectFromStreamAsync(fs, cancellationToken);
             }
         }
 
