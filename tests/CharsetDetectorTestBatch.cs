@@ -1,4 +1,4 @@
-// Author:
+﻿// Author:
 //    Rudi Pettazzi <rudi.pettazzi@gmail.com>
 //    Julian Verdurmen
 //
@@ -13,19 +13,21 @@ using NUnit.Framework;
 namespace UtfUnknown.Tests
 {
 
-    public class CharsetDetectorTestBatch
+    public class CharsetDetectorTestBatch : IDisposable
     {
         private const string DIRECTORY_NAME = "TESTS";
         private static readonly string TESTS_ROOT = GetTestsPath();
         private static readonly string DATA_ROOT = FindRootPath();
 
         private StreamWriter _logWriter;
+        private bool _disposed;
 
         /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
         public CharsetDetectorTestBatch()
         {
             _logWriter = new StreamWriter(Path.Combine(TESTS_ROOT, "test-diag.log"));
         }
+
 
         static string FindRootPath()
         {
@@ -163,5 +165,35 @@ namespace UtfUnknown.Tests
                 $"Charset detection failed for {file}. Expected: {expectedCharset}, detected: {detected.EncodingName} ({detected.Confidence * 100.0f:0.00############}% confidence)");
             Assert.NotNull(detected.Encoding);
         }
+
+        #region Cleanup
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            if (disposing && _logWriter != null)
+            {
+                _logWriter.Flush();
+                _logWriter.Dispose();
+                _logWriter = null;
+            }
+
+            _disposed = true;
+        }
+
+        [OneTimeTearDown]
+        public void Cleanup()
+        {
+            Dispose();
+        }
+
+        #endregion
     }
 }
