@@ -12,7 +12,6 @@ using NUnit.Framework;
 
 namespace UtfUnknown.Tests
 {
-
     public class CharsetDetectorTestBatch : IDisposable
     {
         private const string DIRECTORY_NAME = "TESTS";
@@ -22,10 +21,11 @@ namespace UtfUnknown.Tests
         private StreamWriter _logWriter;
         private bool _disposed;
 
-        /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
         public CharsetDetectorTestBatch()
         {
-            _logWriter = new StreamWriter(Path.Combine(TESTS_ROOT, "test-diag.log"));
+            string frameworkName = GetCurrentFrameworkName();
+            Assert.IsNotEmpty(frameworkName, "Framework name should not be empty");
+            _logWriter = new StreamWriter(Path.Combine(TESTS_ROOT, $"test-diag-{frameworkName}.log"));
         }
 
 
@@ -147,7 +147,7 @@ namespace UtfUnknown.Tests
 
         private static List<TestCase> CreateTestCases(DirectoryInfo dirname)
         {
-            //encoding is the directory name  - before the optional '('
+            //encoding is the directory name  - before the optional '(' 
             var expectedEncoding = dirname.Name.Split('(').First().Trim();
 
             var files = dirname.GetFiles();
@@ -166,7 +166,19 @@ namespace UtfUnknown.Tests
             Assert.NotNull(detected.Encoding);
         }
 
-        #region Cleanup
+        private string GetCurrentFrameworkName()
+        {
+#if NETCOREAPP3_0
+                    return "dotnetcore3";
+#elif NETCOREAPP2_1
+            return "dotnetcore2.1";
+#elif NET452
+                return "net452";
+#else
+                return "unknown";
+#endif
+        }
+
 
         public void Dispose()
         {
@@ -193,7 +205,5 @@ namespace UtfUnknown.Tests
         {
             Dispose();
         }
-
-        #endregion
     }
 }
