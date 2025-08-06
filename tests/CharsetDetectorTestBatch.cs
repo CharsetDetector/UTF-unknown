@@ -203,7 +203,6 @@ namespace UtfUnknown.Tests
             StringAssert.AreEqualIgnoringCase(expectedCharset, detected.EncodingName,
                 $"Charset detection failed for {file}. Expected: {expectedCharset}, detected: {detected.EncodingName} ({detected.Confidence * 100.0f:0.00############}% confidence)");
             Assert.NotNull(detected.Encoding);
-
         }
 
         private string GetCurrentFrameworkName()
