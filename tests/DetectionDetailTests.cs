@@ -19,6 +19,9 @@ namespace UtfUnknown.Tests
 
         private static readonly HashSet<string> UnsupportedEncodings = new HashSet<string>
         {
+            #if NET6_0_OR_GREATER
+            CodepageName.UTF7, // Support dropped in .NET 6
+            #endif
             CodepageName.ISO_8859_10,
             CodepageName.ISO_8859_16,
             CodepageName.EUC_TW,
