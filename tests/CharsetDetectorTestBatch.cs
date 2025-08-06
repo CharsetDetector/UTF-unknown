@@ -1,4 +1,4 @@
-// Author:
+﻿// Author:
 //    Rudi Pettazzi <rudi.pettazzi@gmail.com>
 //    Julian Verdurmen
 //
@@ -12,20 +12,22 @@ using NUnit.Framework;
 
 namespace UtfUnknown.Tests
 {
-
-    public class CharsetDetectorTestBatch
+    public class CharsetDetectorTestBatch : IDisposable
     {
         private const string DIRECTORY_NAME = "TESTS";
         private static readonly string TESTS_ROOT = GetTestsPath();
         private static readonly string DATA_ROOT = FindRootPath();
 
         private StreamWriter _logWriter;
+        private bool _disposed;
 
-        /// <summary>Initializes a new instance of the <see cref="T:System.Object" /> class.</summary>
         public CharsetDetectorTestBatch()
         {
-            _logWriter = new StreamWriter(Path.Combine(TESTS_ROOT, "test-diag.log"));
+            string frameworkName = GetCurrentFrameworkName();
+            Assert.IsNotEmpty(frameworkName, "Framework name should not be empty");
+            _logWriter = new StreamWriter(Path.Combine(TESTS_ROOT, $"test-diag-{frameworkName}.log"));
         }
+
 
         static string FindRootPath()
         {
@@ -145,7 +147,7 @@ namespace UtfUnknown.Tests
 
         private static List<TestCase> CreateTestCases(DirectoryInfo dirname)
         {
-            //encoding is the directory name  - before the optional '('
+            //encoding is the directory name  - before the optional '(' 
             var expectedEncoding = dirname.Name.Split('(').First().Trim();
 
             var files = dirname.GetFiles();
@@ -162,6 +164,46 @@ namespace UtfUnknown.Tests
             StringAssert.AreEqualIgnoringCase(expectedCharset, detected.EncodingName,
                 $"Charset detection failed for {file}. Expected: {expectedCharset}, detected: {detected.EncodingName} ({detected.Confidence * 100.0f:0.00############}% confidence)");
             Assert.NotNull(detected.Encoding);
+        }
+
+        private string GetCurrentFrameworkName()
+        {
+#if NETCOREAPP3_0
+                    return "dotnetcore3";
+#elif NETCOREAPP2_1
+            return "dotnetcore2.1";
+#elif NET452
+                return "net452";
+#else
+                return "unknown";
+#endif
+        }
+
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            if (disposing && _logWriter != null)
+            {
+                _logWriter.Flush();
+                _logWriter.Dispose();
+                _logWriter = null;
+            }
+
+            _disposed = true;
+        }
+
+        [OneTimeTearDown]
+        public void Cleanup()
+        {
+            Dispose();
         }
     }
 }

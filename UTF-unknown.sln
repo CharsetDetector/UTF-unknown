@@ -1,17 +1,18 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.2.32616.157
+VisualStudioVersion = 17.14.36401.2
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UTF-unknown", "src\UTF-unknown.csproj", "{64CA7BA7-EFD9-4475-BB66-40B187622A73}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UTF-unknown", "src\UTF-unknown.csproj", "{64CA7BA7-EFD9-4475-BB66-40B187622A73}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleExample", "example\ConsoleExample.csproj", "{386C6ABF-44EA-4418-B90E-E8D21E4C2475}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleExample", "example\ConsoleExample.csproj", "{386C6ABF-44EA-4418-B90E-E8D21E4C2475}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UTF-unknown.Tests", "Tests\UTF-unknown.Tests.csproj", "{1922DCC9-A45F-4627-9087-CD492BBF7F38}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UTF-unknown.Tests", "Tests\UTF-unknown.Tests.csproj", "{1922DCC9-A45F-4627-9087-CD492BBF7F38}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{052846B2-CA56-482F-B477-6E33523C091E}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{089100B1-113F-4E66-888A-E83F3999EAFD}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		appveyor.yml = appveyor.yml
 	EndProjectSection
 EndProject
 Global
@@ -37,6 +38,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {0C7AF656-EF20-4880-8EB9-9BF101340A03}
+		SolutionGuid = {ADC9377F-B4F3-4E02-9452-D53CF4135245}
 	EndGlobalSection
 EndGlobal
