@@ -30,23 +30,25 @@ Features:
 
 ## Supported Platforms
 
-- .NET 5+
-- .NET Standard 1.0+
-- .NET Core 3.0+
-- .NET Framework 4.0+
+- .NET 6 (Will be dropped in the future)
+- .NET 8
+- .NET Standard 2.0
 
 __Remarks:__
-You can still register your [`EncodingProvider`](https://docs.microsoft.com/ru-ru/dotnet/api/system.text.encodingprovider) so that the  [`Encoding.GetEncoding(...)`](https://docs.microsoft.com/en-us/dotnet/api/system.text.encoding.getencoding?view=netcore-3.0) method first tries to find in it.
+You can still register your [`EncodingProvider`](https://docs.microsoft.com/dotnet/api/system.text.encodingprovider) 
+so that the  [`Encoding.GetEncoding(...)`](https://docs.microsoft.com/dotnet/api/system.text.encoding.getencoding) method first tries to find in it.
 
 ## Usage
 
 Use the static detectX methods from `CharsetDetector`.
 
+### Synchronous Methods
+
 ```c#
-// Detect from File (NET standard 1.3+ or .NET 4+)
+// Detect from File 
 DetectionResult result = CharsetDetector.DetectFromFile("path/to/file.txt"); // or pass FileInfo
 
-// Detect from Stream (NET standard 1.3+ or .NET 4+)
+// Detect from Stream
 result = CharsetDetector.DetectFromStream(stream);
 
 // Detect from bytes
@@ -66,6 +68,17 @@ float confidence = resultDetected.Confidence;
 
 // Get all the details of the result
 IList<DetectionDetail> allDetails = result.Details;
+```
+
+### Asynchronous Methods
+
+```c#
+// Detect from File asynchronously
+DetectionResult result = await CharsetDetector.DetectFromFileAsync("path/to/file.txt", cancellationToken); // or pass FileInfo
+
+// Detect from Stream asynchronously
+result = await CharsetDetector.DetectFromStreamAsync(stream, cancellationToken);
+
 ```
 
 # Docs

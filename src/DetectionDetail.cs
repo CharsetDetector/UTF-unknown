@@ -101,7 +101,7 @@ namespace UtfUnknown
                 (exception is ArgumentException || // unsupported name
                 exception is NotSupportedException)
             {
-#if NETSTANDARD && !NETSTANDARD1_0 || NETCOREAPP3_0
+#if NETSTANDARD || NET6_0_OR_GREATER
                 return CodePagesEncodingProvider.Instance.GetEncoding(encodingName);
 #else
                 return null;

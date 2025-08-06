@@ -1,4 +1,4 @@
-/* ***** BEGIN LICENSE BLOCK *****
+﻿/* ***** BEGIN LICENSE BLOCK *****
  * Version: MPL 1.1/GPL 2.0/LGPL 2.1
  *
  * The contents of this file are subject to the Mozilla Public License Version
@@ -41,7 +41,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-
+using System.Threading;
+using System.Threading.Tasks;
 using UtfUnknown.Core;
 using UtfUnknown.Core.Probers;
 
@@ -118,7 +119,7 @@ namespace UtfUnknown
 
         /// <summary>
         /// Detect the character encoding form this byte array.
-        /// It searchs for BOM from bytes[0].
+        /// It searches for BOM from bytes[0].
         /// </summary>
         /// <param name="bytes">The byte array containing the text</param>
         /// <returns></returns>
@@ -136,7 +137,7 @@ namespace UtfUnknown
 
         /// <summary>
         /// Detect the character encoding form this byte array.
-        /// It searchs for BOM from bytes[offset].
+        /// It searches for BOM from bytes[offset].
         /// </summary>
         /// <param name="bytes">The byte array containing the text</param>
         /// <param name="offset">The zero-based byte offset in buffer at which to begin reading the data from</param>
@@ -165,8 +166,6 @@ namespace UtfUnknown
             detector.Feed(bytes, offset, len);
             return detector.DataEnd();
         }
-
-#if !NETSTANDARD1_0
 
         /// <summary>
         /// Detect the character encoding by reading the stream.
@@ -210,35 +209,104 @@ namespace UtfUnknown
             return detector.DataEnd();
         }
 
+        /// <summary>
+        /// Detect the character encoding by reading the stream.
+        ///
+        /// Note: stream position is not reset before and after.
+        /// </summary>
+        /// <param name="stream">The steam. </param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        public static Task<DetectionResult> DetectFromStreamAsync(Stream stream, CancellationToken cancellationToken = default)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            return DetectFromStreamAsync(stream, null, cancellationToken);
+        }
+
+        /// <summary>
+        /// Detect the character encoding by reading the stream.
+        ///
+        /// Note: stream position is not reset before and after.
+        /// </summary>
+        /// <param name="stream">The steam. </param>
+        /// <param name="maxBytesToRead">max bytes to read from <paramref name="stream"/>. If <c>null</c>, then no max</param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="maxBytesToRead"/> 0 or lower.</exception>
+        public static async Task<DetectionResult> DetectFromStreamAsync(Stream stream, long? maxBytesToRead, CancellationToken cancellationToken = default)
+        {
+            if (stream == null)
+            {
+                throw new ArgumentNullException(nameof(stream));
+            }
+
+            if (maxBytesToRead <= 0)
+            {
+                throw new ArgumentOutOfRangeException(nameof(maxBytesToRead));
+            }
+
+            var detector = new CharsetDetector();
+
+            await ReadStreamAsync(stream, maxBytesToRead, detector, cancellationToken);
+            return detector.DataEnd();
+        }
+
+        private const int BufferSize = 1024;
+
         private static void ReadStream(Stream stream, long? maxBytes, CharsetDetector detector)
         {
-            const int bufferSize = 1024;
-            byte[] buff = new byte[bufferSize];
+            byte[] buff = new byte[BufferSize];
             int read;
             long readTotal = 0;
 
-            var toRead = CalcToRead(maxBytes, readTotal, bufferSize);
+            var toRead = CalcToRead(maxBytes, readTotal, BufferSize);
 
             while ((read = stream.Read(buff, 0, toRead)) > 0)
             {
-                detector.Feed(buff, 0, read);
-
-                if (maxBytes != null)
-                {
-                    readTotal += read;
-                    if (readTotal >= maxBytes)
-                    {
-                        return;
-                    }
-
-                    toRead = CalcToRead(maxBytes, readTotal, bufferSize);
-                }
-
-                if (detector._done)
+                if (FeedDetector(detector, maxBytes, buff, read, ref readTotal, ref toRead))
                 {
                     return;
                 }
             }
+        }
+
+        private static async Task ReadStreamAsync(Stream stream, long? maxBytes, CharsetDetector detector, CancellationToken cancellationToken = default)
+        {
+            byte[] buff = new byte[BufferSize];
+            int read;
+            long readTotal = 0;
+
+            var toRead = CalcToRead(maxBytes, readTotal, BufferSize);
+
+            while ((read = await stream.ReadAsync(buff, 0, toRead, cancellationToken)) > 0)
+            {
+                if (FeedDetector(detector, maxBytes, buff, read, ref readTotal, ref toRead))
+                {
+                    return;
+                }
+            }
+        }
+
+        private static bool FeedDetector(CharsetDetector detector, long? maxBytes, byte[] buff, int read, ref long readTotal, ref int toRead)
+        {
+            detector.Feed(buff, 0, read);
+
+            if (maxBytes == null)
+            {
+                return detector._done;
+            }
+
+            readTotal += read;
+            if (readTotal >= maxBytes)
+            {
+                return true;
+            }
+
+            toRead = CalcToRead(maxBytes, readTotal, BufferSize);
+
+            return detector._done;
         }
 
         private static int CalcToRead(long? maxBytes, long readTotal, int bufferSize)
@@ -264,7 +332,7 @@ namespace UtfUnknown
                 throw new ArgumentNullException(nameof(filePath));
             }
 
-            using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (FileStream fs = OpenFile(filePath))
             {
                 return DetectFromStream(fs);
             }
@@ -281,13 +349,57 @@ namespace UtfUnknown
                 throw new ArgumentNullException(nameof(file));
             }
 
-            using (FileStream fs = new FileStream(file.FullName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (FileStream fs = OpenFile(file.FullName))
             {
                 return DetectFromStream(fs);
             }
         }
 
-#endif // !NETSTANDARD1_0
+        /// <summary>
+        /// Detect the character encoding of this file.
+        /// </summary>
+        /// <param name="filePath">Path to file</param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <returns></returns>
+        public static async Task<DetectionResult> DetectFromFileAsync(string filePath, CancellationToken cancellationToken = default)
+        {
+            if (filePath == null)
+            {
+                throw new ArgumentNullException(nameof(filePath));
+            }
+
+            using (FileStream fs = OpenFile(filePath))
+            {
+                return await DetectFromStreamAsync(fs, cancellationToken);
+            }
+        }
+        /// <summary>
+        /// Detect the character encoding of this file.
+        /// </summary>
+        /// <param name="file">The file</param>
+        /// <param name="cancellationToken">The cancellation token for this operation.</param>
+        /// <returns></returns>
+        public static async Task<DetectionResult> DetectFromFileAsync(FileInfo file, CancellationToken cancellationToken = default)
+        {
+            if (file == null)
+            {
+                throw new ArgumentNullException(nameof(file));
+            }
+
+            using (FileStream fs = OpenFile(file.FullName))
+            {
+                return await DetectFromStreamAsync(fs, cancellationToken);
+            }
+        }
+
+        private static FileStream OpenFile(string filePath)
+        {
+            return new FileStream(
+                filePath,
+                FileMode.Open,
+                FileAccess.Read,
+                FileShare.ReadWrite);
+        }
 
         protected virtual void Feed(byte[] buf, int offset, int len)
         {
@@ -478,7 +590,7 @@ namespace UtfUnknown
             return new DetectionResult();
         }
 
-        internal IList<CharsetProber> GetNewProbers()
+        private IList<CharsetProber> GetNewProbers()
         {
             switch (InputState)
             {

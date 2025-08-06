@@ -4,7 +4,7 @@ environment:
 version: 2.0.{build}
 
 clone_folder: c:\utfUnknown
-image: Visual Studio 2019
+image: Visual Studio 2022
 configuration: Release
 platform: Any CPU
 nuget:
@@ -12,7 +12,7 @@ nuget:
 init:
 - git config --global core.autocrlf true
 build_script:
-- ps: dotnet build -c Release 
+- ps: dotnet build -c Release
 test_script:
 - ps: cd .\tests\
 - ps: dotnet test
