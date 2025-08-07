@@ -60,7 +60,7 @@ Features:
 
   <PropertyGroup>
 
-    <PackageTags>charset;detection;unicode;ascii;netstandard;chardet</PackageTags>
+    <PackageTags>charset;detection;unicode;ascii;netstandard;chardet;encoding;iso-8859</PackageTags>
     <PackageReleaseNotes>
 - See https://github.com/CharsetDetector/UTF-unknown/releases
     </PackageReleaseNotes>
@@ -81,5 +81,6 @@ Features:
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
+
 
 </Project>
