@@ -42,17 +42,18 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
 
-    # Create the NuGet package in the folder from the environment variable NuGetDirectory
+    # Create the NuGet package using MSBuild to match original AppVeyor parameters for deterministic builds
     - name: Pack NuGet package
-      run: dotnet pack src/UTF-unknown.csproj --configuration Release --no-restore --output ${{ env.NuGetDirectory }} --include-symbols --verbosity normal
+      run: dotnet msbuild -t:Pack src/UTF-unknown.csproj -p:Configuration=Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:ContinuousIntegrationBuild=true -p:EmbedUntrackedSources=true -p:PackageOutputPath=${{ env.NuGetDirectory }} -verbosity:minimal
 
     # Publish the NuGet package as an artifact, so they can be used in the following jobs
-    - uses: actions/upload-artifact@v4
+    - name: Upload packages to artifacts
+      uses: actions/upload-artifact@v4
       with:
         name: nuget
         if-no-files-found: error
         retention-days: 7
-        path: ${{ env.NuGetDirectory }}/*.nupkg
+        path: ${{ env.NuGetDirectory }}/*
 
   validate_nuget:
     runs-on: ubuntu-latest
@@ -147,6 +148,6 @@ jobs:
       # - Copy the API key and add it as a secret in your GitHub repository with the name NUGET_API_KEY
       - name: Publish NuGet package
         run: |
-          foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.nupkg)) {
+          foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.nupkg, *.snupkg)) {
               dotnet nuget push $file --api-key "${{ secrets.NUGET_API_KEY }}" --source https://api.nuget.org/v3/index.json --skip-duplicate
           }
