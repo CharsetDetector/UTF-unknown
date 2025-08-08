@@ -44,7 +44,7 @@ jobs:
 
     # Create the NuGet package using MSBuild to match original AppVeyor parameters for deterministic builds
     - name: Pack NuGet package
-      run: dotnet msbuild -t:Pack src/UTF-unknown.csproj -p:Configuration=Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:ContinuousIntegrationBuild=true -p:EmbedUntrackedSources=true -p:PackageOutputPath=${{ env.NuGetDirectory }} -verbosity:minimal
+      run: dotnet msbuild -t:Pack src/UTF-unknown.csproj -p:Configuration=Release -p:PackageVersion=2.6.0 -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:ContinuousIntegrationBuild=true -p:EmbedUntrackedSources=true -p:PackageOutputPath=${{ env.NuGetDirectory }} -verbosity:minimal
 
     # Publish the NuGet package as an artifact, so they can be used in the following jobs
     - name: Upload packages to artifacts
