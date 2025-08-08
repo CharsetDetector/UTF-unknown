@@ -38,88 +38,87 @@
 
 using System;
 
-namespace UtfUnknown.Core.Models
+namespace UtfUnknown.Core.Models;
+
+public abstract class SequenceModel
 {
-    public abstract class SequenceModel
+    // Codepoints
+
+    // Illegal codepoints
+    public const byte ILL = 255;
+    // Control character
+    public const byte CTR = 254;
+    // Symbols and punctuation that does not belong to words
+    public const byte SYM = 253;
+    // Return/Line feeds
+    public const byte RET = 252;
+    // Numbers 0-9
+    public const byte NUM = 251;
+
+    // [256] table use to find a char's order
+    protected byte[] charToOrderMap;
+
+    // freqCharCount x freqCharCount table to find a 2-char sequence's
+    // frequency
+    protected byte[] precedenceMatrix;
+
+    // The count of frequent characters
+    protected int freqCharCount;
+
+    public int FreqCharCount
     {
-        // Codepoints
+        get { return freqCharCount; }
+    }
 
-        // Illegal codepoints
-        public const byte ILL = 255;
-        // Control character
-        public const byte CTR = 254;
-        // Symbols and punctuation that does not belong to words
-        public const byte SYM = 253;
-        // Return/Line feeds
-        public const byte RET = 252;
-        // Numbers 0-9
-        public const byte NUM = 251;
+    // freqSeqs / totalSeqs
+    protected float typicalPositiveRatio;
 
-        // [256] table use to find a char's order
-        protected byte[] charToOrderMap;
-
-        // freqCharCount x freqCharCount table to find a 2-char sequence's
-        // frequency
-        protected byte[] precedenceMatrix;
-
-        // The count of frequent characters
-        protected int freqCharCount;
-
-        public int FreqCharCount
-        {
-            get { return freqCharCount; }
-        }
-
-        // freqSeqs / totalSeqs
-        protected float typicalPositiveRatio;
-
-        public float TypicalPositiveRatio {
-            get { return typicalPositiveRatio; }
-        }
+    public float TypicalPositiveRatio {
+        get { return typicalPositiveRatio; }
+    }
 
 
-        /// <summary>
-        /// TODO not used?
-        /// </summary>
-        protected bool keepEnglishLetter;
+    /// <summary>
+    /// TODO not used?
+    /// </summary>
+    protected bool keepEnglishLetter;
 
-        /// <summary>
-        /// TODO not used?
-        /// </summary>
-        public bool KeepEnglishLetter {
-            get { return keepEnglishLetter; }
-        }
+    /// <summary>
+    /// TODO not used?
+    /// </summary>
+    public bool KeepEnglishLetter {
+        get { return keepEnglishLetter; }
+    }
 
-        protected string charsetName;
+    protected string charsetName;
 
-        public string CharsetName {
-            get { return charsetName; }
-        }
+    public string CharsetName {
+        get { return charsetName; }
+    }
 
-        public SequenceModel(
-                byte[] charToOrderMap,
-                byte[] precedenceMatrix,
-                int freqCharCount,
-                float typicalPositiveRatio,
-                bool keepEnglishLetter,
-                String charsetName)
-        {
-            this.charToOrderMap = charToOrderMap;
-            this.precedenceMatrix = precedenceMatrix;
-            this.freqCharCount = freqCharCount;
-            this.typicalPositiveRatio = typicalPositiveRatio;
-            this.keepEnglishLetter = keepEnglishLetter;
-            this.charsetName = charsetName;
-        }
+    public SequenceModel(
+        byte[] charToOrderMap,
+        byte[] precedenceMatrix,
+        int freqCharCount,
+        float typicalPositiveRatio,
+        bool keepEnglishLetter,
+        String charsetName)
+    {
+        this.charToOrderMap = charToOrderMap;
+        this.precedenceMatrix = precedenceMatrix;
+        this.freqCharCount = freqCharCount;
+        this.typicalPositiveRatio = typicalPositiveRatio;
+        this.keepEnglishLetter = keepEnglishLetter;
+        this.charsetName = charsetName;
+    }
 
-        public byte GetOrder(byte b)
-        {
-            return charToOrderMap[b];
-        }
+    public byte GetOrder(byte b)
+    {
+        return charToOrderMap[b];
+    }
 
-        public byte GetPrecedence(int pos)
-        {
-            return precedenceMatrix[pos];
-        }
+    public byte GetPrecedence(int pos)
+    {
+        return precedenceMatrix[pos];
     }
 }
