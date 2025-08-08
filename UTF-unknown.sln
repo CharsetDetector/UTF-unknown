@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UTF-unknown", "src\UTF-unkn
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleExample", "example\ConsoleExample.csproj", "{386C6ABF-44EA-4418-B90E-E8D21E4C2475}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UTF-unknown.Tests", "Tests\UTF-unknown.Tests.csproj", "{1922DCC9-A45F-4627-9087-CD492BBF7F38}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UTF-unknown.Tests", "tests\UTF-unknown.Tests.csproj", "{1922DCC9-A45F-4627-9087-CD492BBF7F38}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{089100B1-113F-4E66-888A-E83F3999EAFD}"
 	ProjectSection(SolutionItems) = preProject
