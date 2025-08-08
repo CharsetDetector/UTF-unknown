@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net6.0;net8.0</TargetFrameworks>
@@ -78,7 +78,7 @@ Features:
     <EnablePackageValidation>true</EnablePackageValidation>
     <PackageValidationBaselineVersion>2.0.0</PackageValidationBaselineVersion>
     <ApiCompatEnableRuleCannotChangeParameterName>true</ApiCompatEnableRuleCannotChangeParameterName>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild Condition=" '$(CI)' != 'true' AND '$(APPVEYOR)' != 'True' AND '$(GITHUB_ACTIONS)' != 'true' ">true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup>
