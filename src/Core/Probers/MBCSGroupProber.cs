@@ -43,201 +43,200 @@ using UtfUnknown.Core.Probers.MultiByte.Chinese;
 using UtfUnknown.Core.Probers.MultiByte.Japanese;
 using UtfUnknown.Core.Probers.MultiByte.Korean;
 
-namespace UtfUnknown.Core.Probers
+namespace UtfUnknown.Core.Probers;
+
+/// <summary>
+/// Multi-byte charsets probers
+/// </summary>
+public class MBCSGroupProber : CharsetProber
 {
-    /// <summary>
-    /// Multi-byte charsets probers
-    /// </summary>
-    public class MBCSGroupProber : CharsetProber
+    private const int PROBERS_NUM = 8;
+
+    private CharsetProber[] probers = new CharsetProber[PROBERS_NUM];
+    private bool[] isActive = new bool[PROBERS_NUM];
+    private int bestGuess;
+    private int activeNum;
+
+    public MBCSGroupProber()
     {
-        private const int PROBERS_NUM = 8;
+        probers[0] = new UTF8Prober();
+        probers[1] = new SJISProber();
+        probers[2] = new EUCJPProber();
+        probers[3] = new GB18030Prober();
+        probers[4] = new EUCKRProber();
+        probers[5] = new CP949Prober();
+        probers[6] = new Big5Prober();
+        probers[7] = new EUCTWProber();
 
-        private CharsetProber[] probers = new CharsetProber[PROBERS_NUM];
-        private bool[] isActive = new bool[PROBERS_NUM];
-        private int bestGuess;
-        private int activeNum;
+        Reset();
+    }
 
-        public MBCSGroupProber()
+    public override string GetCharsetName()
+    {
+        if (bestGuess == -1)
         {
-            probers[0] = new UTF8Prober();
-            probers[1] = new SJISProber();
-            probers[2] = new EUCJPProber();
-            probers[3] = new GB18030Prober();
-            probers[4] = new EUCKRProber();
-            probers[5] = new CP949Prober();
-            probers[6] = new Big5Prober();
-            probers[7] = new EUCTWProber();
+            GetConfidence();
 
-            Reset();
-        }
-
-        public override string GetCharsetName()
-        {
             if (bestGuess == -1)
-            {
-                GetConfidence();
-
-                if (bestGuess == -1)
-                    bestGuess = 0;
-            }
-
-            return probers[bestGuess].GetCharsetName();
+                bestGuess = 0;
         }
 
-        public override void Reset()
+        return probers[bestGuess].GetCharsetName();
+    }
+
+    public override void Reset()
+    {
+        activeNum = 0;
+
+        for (int i = 0; i < probers.Length; i++)
         {
-            activeNum = 0;
-
-            for (int i = 0; i < probers.Length; i++)
+            if (probers[i] != null)
             {
-                if (probers[i] != null)
-                {
-                    probers[i].Reset();
-                    isActive[i] = true;
-                    ++activeNum;
-                }
-                else
-                {
-                    isActive[i] = false;
-                }
+                probers[i].Reset();
+                isActive[i] = true;
+                ++activeNum;
             }
-
-            bestGuess = -1;
-            state = ProbingState.Detecting;
+            else
+            {
+                isActive[i] = false;
+            }
         }
 
-        public override ProbingState HandleData(byte[] buf, int offset, int len)
-        {
-            // do filtering to reduce load to probers
-            byte[] highbyteBuf = new byte[len];
-            int hptr = 0;
-            //assume previous is not ascii, it will do no harm except add some noise
-            bool keepNext = true;
-            int max = offset + len;
+        bestGuess = -1;
+        state = ProbingState.Detecting;
+    }
 
-            for (int i = offset; i < max; i++)
+    public override ProbingState HandleData(byte[] buf, int offset, int len)
+    {
+        // do filtering to reduce load to probers
+        byte[] highbyteBuf = new byte[len];
+        int hptr = 0;
+        //assume previous is not ascii, it will do no harm except add some noise
+        bool keepNext = true;
+        int max = offset + len;
+
+        for (int i = offset; i < max; i++)
+        {
+            if ((buf[i] & 0x80) != 0)
             {
-                if ((buf[i] & 0x80) != 0)
+                highbyteBuf[hptr++] = buf[i];
+                keepNext = true;
+            }
+            else
+            {
+                //if previous is highbyte, keep this even it is a ASCII
+                if (keepNext)
                 {
                     highbyteBuf[hptr++] = buf[i];
-                    keepNext = true;
-                }
-                else
-                {
-                    //if previous is highbyte, keep this even it is a ASCII
-                    if (keepNext)
-                    {
-                        highbyteBuf[hptr++] = buf[i];
-                        keepNext = false;
-                    }
+                    keepNext = false;
                 }
             }
-
-            for (int i = 0; i < probers.Length; i++)
-            {
-                if (isActive[i])
-                {
-                    var st = probers[i].HandleData(highbyteBuf, 0, hptr);
-                    if (st == ProbingState.FoundIt)
-                    {
-                        bestGuess = i;
-                        state = ProbingState.FoundIt;
-                        break;
-                    }
-                    else if (st == ProbingState.NotMe)
-                    {
-                        isActive[i] = false;
-                        activeNum--;
-                        if (activeNum <= 0)
-                        {
-                            state = ProbingState.NotMe;
-                            break;
-                        }
-                    }
-                }
-            }
-
-            return state;
         }
 
-        public override float GetConfidence(StringBuilder status = null)
+        for (int i = 0; i < probers.Length; i++)
         {
-            float bestConf = 0.0f;
-
-            switch (state)
+            if (isActive[i])
             {
-                case ProbingState.FoundIt:
-                    return 0.99f;
-
-                case ProbingState.NotMe:
-                    return 0.01f;
-
-                default:
-
-                    if (status != null)
+                var st = probers[i].HandleData(highbyteBuf, 0, hptr);
+                if (st == ProbingState.FoundIt)
+                {
+                    bestGuess = i;
+                    state = ProbingState.FoundIt;
+                    break;
+                }
+                else if (st == ProbingState.NotMe)
+                {
+                    isActive[i] = false;
+                    activeNum--;
+                    if (activeNum <= 0)
                     {
-                        status.AppendLine($"Get confidence:");
+                        state = ProbingState.NotMe;
+                        break;
                     }
+                }
+            }
+        }
 
-                    for (int i = 0; i < PROBERS_NUM; i++)
+        return state;
+    }
+
+    public override float GetConfidence(StringBuilder status = null)
+    {
+        float bestConf = 0.0f;
+
+        switch (state)
+        {
+            case ProbingState.FoundIt:
+                return 0.99f;
+
+            case ProbingState.NotMe:
+                return 0.01f;
+
+            default:
+
+                if (status != null)
+                {
+                    status.AppendLine($"Get confidence:");
+                }
+
+                for (int i = 0; i < PROBERS_NUM; i++)
+                {
+                    if (isActive[i])
                     {
-                        if (isActive[i])
+                        var cf = probers[i].GetConfidence();
+                        if (bestConf < cf)
                         {
-                            var cf = probers[i].GetConfidence();
-                            if (bestConf < cf)
-                            {
-                                bestConf = cf;
-                                bestGuess = i;
+                            bestConf = cf;
+                            bestGuess = i;
 
-                                if (status != null)
-                                {
-                                    status.AppendLine($"-- new match found: confidence {bestConf}, index {bestGuess}, charset {probers[i].GetCharsetName()}.");
-                                }
+                            if (status != null)
+                            {
+                                status.AppendLine($"-- new match found: confidence {bestConf}, index {bestGuess}, charset {probers[i].GetCharsetName()}.");
                             }
                         }
                     }
+                }
 
-                    if (status != null)
-                    {
-                        status.AppendLine($"Get confidence done.");
-                    }
+                if (status != null)
+                {
+                    status.AppendLine($"Get confidence done.");
+                }
 
-                    break;
-            }
-
-            return bestConf;
+                break;
         }
 
-        public override string DumpStatus()
+        return bestConf;
+    }
+
+    public override string DumpStatus()
+    {
+        StringBuilder status = new StringBuilder();
+
+        float cf = GetConfidence(status);
+
+        status.AppendLine(" MBCS Group Prober --------begin status");
+
+        for (int i = 0; i < PROBERS_NUM; i++)
         {
-            StringBuilder status = new StringBuilder();
-
-            float cf = GetConfidence(status);
-
-            status.AppendLine(" MBCS Group Prober --------begin status");
-
-            for (int i = 0; i < PROBERS_NUM; i++)
+            if (probers[i] != null)
             {
-                if (probers[i] != null)
+                if (!isActive[i])
                 {
-                    if (!isActive[i])
-                    {
-                        status.AppendLine($" MBCS inactive: {probers[i].GetCharsetName()} (i.e. confidence is too low).");
-                    }
-                    else
-                    {
-                        var cfp = probers[i].GetConfidence();
+                    status.AppendLine($" MBCS inactive: {probers[i].GetCharsetName()} (i.e. confidence is too low).");
+                }
+                else
+                {
+                    var cfp = probers[i].GetConfidence();
 
-                        status.AppendLine($" MBCS {cfp}: [{probers[i].GetCharsetName()}]");
+                    status.AppendLine($" MBCS {cfp}: [{probers[i].GetCharsetName()}]");
 
-                        status.AppendLine(probers[i].DumpStatus());
-                    }
+                    status.AppendLine(probers[i].DumpStatus());
                 }
             }
-
-            status.AppendLine($" MBCS Group found best match [{probers[bestGuess].GetCharsetName()}] confidence {cf}.");
-
-            return status.ToString();
         }
+
+        status.AppendLine($" MBCS Group found best match [{probers[bestGuess].GetCharsetName()}] confidence {cf}.");
+
+        return status.ToString();
     }
 }

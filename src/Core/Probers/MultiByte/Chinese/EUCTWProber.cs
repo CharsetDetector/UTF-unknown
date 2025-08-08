@@ -42,80 +42,79 @@ using UtfUnknown.Core.Analyzers.Chinese;
 using UtfUnknown.Core.Models;
 using UtfUnknown.Core.Models.MultiByte.Chinese;
 
-namespace UtfUnknown.Core.Probers.MultiByte.Chinese
+namespace UtfUnknown.Core.Probers.MultiByte.Chinese;
+
+public class EUCTWProber : CharsetProber
 {
-    public class EUCTWProber : CharsetProber
+    private CodingStateMachine codingSM;
+    private EUCTWDistributionAnalyser distributionAnalyser;
+    private byte[] lastChar = new byte[2];
+
+    public EUCTWProber()
     {
-        private CodingStateMachine codingSM;
-        private EUCTWDistributionAnalyser distributionAnalyser;
-        private byte[] lastChar = new byte[2];
+        codingSM = new CodingStateMachine(new EUCTWSMModel());
+        distributionAnalyser = new EUCTWDistributionAnalyser();
+        Reset();
+    }
 
-        public EUCTWProber()
+    public override ProbingState HandleData(byte[] buf, int offset, int len)
+    {
+        int codingState;
+        int max = offset + len;
+
+        for (int i = 0; i < max; i++)
         {
-            codingSM = new CodingStateMachine(new EUCTWSMModel());
-            distributionAnalyser = new EUCTWDistributionAnalyser();
-            Reset();
-        }
-
-        public override ProbingState HandleData(byte[] buf, int offset, int len)
-        {
-            int codingState;
-            int max = offset + len;
-
-            for (int i = 0; i < max; i++)
+            codingState = codingSM.NextState(buf[i]);
+            if (codingState == StateMachineModel.ERROR)
             {
-                codingState = codingSM.NextState(buf[i]);
-                if (codingState == StateMachineModel.ERROR)
-                {
-                    state = ProbingState.NotMe;
-                    break;
-                }
-
-                if (codingState == StateMachineModel.ITSME)
-                {
-                    state = ProbingState.FoundIt;
-                    break;
-                }
-
-                if (codingState == StateMachineModel.START)
-                {
-                    int charLen = codingSM.CurrentCharLen;
-                    if (i == offset)
-                    {
-                        lastChar[1] = buf[offset];
-                        distributionAnalyser.HandleOneChar(lastChar, 0, charLen);
-                    }
-                    else
-                    {
-                        distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
-                    }
-                }
+                state = ProbingState.NotMe;
+                break;
             }
 
-            lastChar[0] = buf[max - 1];
+            if (codingState == StateMachineModel.ITSME)
+            {
+                state = ProbingState.FoundIt;
+                break;
+            }
 
-            if (state == ProbingState.Detecting)
-                if (distributionAnalyser.GotEnoughData() && GetConfidence() > SHORTCUT_THRESHOLD)
-                    state = ProbingState.FoundIt;
-
-            return state;
+            if (codingState == StateMachineModel.START)
+            {
+                int charLen = codingSM.CurrentCharLen;
+                if (i == offset)
+                {
+                    lastChar[1] = buf[offset];
+                    distributionAnalyser.HandleOneChar(lastChar, 0, charLen);
+                }
+                else
+                {
+                    distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
+                }
+            }
         }
 
-        public override string GetCharsetName()
-        {
-            return CodepageName.EUC_TW;
-        }
+        lastChar[0] = buf[max - 1];
 
-        public override void Reset()
-        {
-            codingSM.Reset();
-            state = ProbingState.Detecting;
-            distributionAnalyser.Reset();
-        }
+        if (state == ProbingState.Detecting)
+            if (distributionAnalyser.GotEnoughData() && GetConfidence() > SHORTCUT_THRESHOLD)
+                state = ProbingState.FoundIt;
 
-        public override float GetConfidence(StringBuilder status = null)
-        {
-            return distributionAnalyser.GetConfidence();
-        }
+        return state;
+    }
+
+    public override string GetCharsetName()
+    {
+        return CodepageName.EUC_TW;
+    }
+
+    public override void Reset()
+    {
+        codingSM.Reset();
+        state = ProbingState.Detecting;
+        distributionAnalyser.Reset();
+    }
+
+    public override float GetConfidence(StringBuilder status = null)
+    {
+        return distributionAnalyser.GetConfidence();
     }
 }

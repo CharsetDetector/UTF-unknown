@@ -38,49 +38,48 @@
 
 using System;
 
-namespace UtfUnknown.Core.Models
+namespace UtfUnknown.Core.Models;
+
+/// <summary>
+/// State machine model
+/// </summary>
+public abstract class StateMachineModel
 {
     /// <summary>
-    /// State machine model
+    /// Start node
     /// </summary>
-    public abstract class StateMachineModel
+    public const int START = 0;
+
+    /// <summary>
+    /// Error node <see cref="Probers.ProbingState.NotMe"/> ?
+    /// </summary>
+    public const int ERROR = 1;
+
+    /// <summary>
+    /// <see cref="Probers.ProbingState.FoundIt"/> ?
+    /// </summary>
+    public const int ITSME = 2;
+
+    public BitPackage classTable;
+    public BitPackage stateTable;
+    public int[] charLenTable;
+
+    public string Name { get; }
+
+    public int ClassFactor { get; }
+
+    public StateMachineModel(BitPackage classTable, int classFactor,
+        BitPackage stateTable, int[] charLenTable, String name)
     {
-        /// <summary>
-        /// Start node
-        /// </summary>
-        public const int START = 0;
+        this.classTable = classTable;
+        ClassFactor = classFactor;
+        this.stateTable = stateTable;
+        this.charLenTable = charLenTable;
+        Name = name;
+    }
 
-        /// <summary>
-        /// Error node <see cref="Probers.ProbingState.NotMe"/> ?
-        /// </summary>
-        public const int ERROR = 1;
-
-        /// <summary>
-        /// <see cref="Probers.ProbingState.FoundIt"/> ?
-        /// </summary>
-        public const int ITSME = 2;
-
-        public BitPackage classTable;
-        public BitPackage stateTable;
-        public int[] charLenTable;
-
-        public string Name { get; }
-
-        public int ClassFactor { get; }
-
-        public StateMachineModel(BitPackage classTable, int classFactor,
-            BitPackage stateTable, int[] charLenTable, String name)
-        {
-            this.classTable = classTable;
-            ClassFactor = classFactor;
-            this.stateTable = stateTable;
-            this.charLenTable = charLenTable;
-            Name = name;
-        }
-
-        public int GetClass(byte b)
-        {
-            return classTable.Unpack((int)b);
-        }
+    public int GetClass(byte b)
+    {
+        return classTable.Unpack((int)b);
     }
 }
