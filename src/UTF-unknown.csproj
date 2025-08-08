@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net6.0;net8.0</TargetFrameworks>
@@ -59,7 +59,6 @@ Features:
   </PropertyGroup>
 
   <PropertyGroup>
-
     <PackageTags>charset;detection;unicode;ascii;netstandard;chardet</PackageTags>
     <PackageReleaseNotes>
 - See https://github.com/CharsetDetector/UTF-unknown/releases
@@ -73,6 +72,13 @@ Features:
     <RootNamespace>UtfUnknown</RootNamespace>
     <SignAssembly>True</SignAssembly>
     <AssemblyOriginatorKeyFile>UtfUnknown.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <EnablePackageValidation>true</EnablePackageValidation>
+    <PackageValidationBaselineVersion>2.0.0</PackageValidationBaselineVersion>
+    <ApiCompatEnableRuleCannotChangeParameterName>true</ApiCompatEnableRuleCannotChangeParameterName>
+    <GeneratePackageOnBuild Condition=" '$(CI)' != 'true' AND '$(APPVEYOR)' != 'True' AND '$(GITHUB_ACTIONS)' != 'true' ">true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup>
