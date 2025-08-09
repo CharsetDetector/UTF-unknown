@@ -149,8 +149,6 @@ jobs:
       # - Create a new API key
       # - Copy the API key and add it as a secret in your GitHub repository with the name NUGET_API_KEY
       - name: Publish NuGet package to nuget.org
-        run: |
-          foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.nupkg, *.snupkg)) {
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
         run: |
