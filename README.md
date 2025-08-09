@@ -1,4 +1,4 @@
-[![Build status](https://ci.appveyor.com/api/projects/status/xr59ab52cav8vuph/branch/master?svg=true)](https://ci.appveyor.com/project/304NotModified/utf-unknown/branch/master)
+[![CI/CD](https://github.com/CharsetDetector/UTF-unknown/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/CharsetDetector/UTF-unknown/actions/workflows/ci.yml)
 [![NuGet Pre Release](https://img.shields.io/nuget/vpre/UTF.Unknown.svg)](https://www.nuget.org/packages/UTF.Unknown/)
 
 <!--
@@ -23,7 +23,7 @@ Features:
 - New API
 - Moved to .NET Standard
 - Added more unit tests
-- Builds on CI (AppVeyor)
+- Builds on CI (GitHub Actions)
 - Strong named
 - Documentation added
 - Multiple bugs from Ude fixed
