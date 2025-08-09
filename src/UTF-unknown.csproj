@@ -67,7 +67,7 @@ Features:
     <PackageIcon>logo.png</PackageIcon>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/CharsetDetector/UTF-unknown</PackageProjectUrl>
-    <PackageLicenseUrl>https://github.com/CharsetDetector/UTF-unknown/blob/master/license/MPL-1.1.txt</PackageLicenseUrl>
+    <PackageLicenseExpression>MPL-1.1</PackageLicenseExpression> 
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/CharsetDetector/UTF-unknown</RepositoryUrl>
@@ -96,3 +96,4 @@ Features:
   </ItemGroup>
 
 </Project>
+
