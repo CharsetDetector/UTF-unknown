@@ -41,7 +41,7 @@ jobs:
       run: dotnet restore
 
     - name: Create NuGet package
-      run: dotnet msbuild -t:Pack src/UTF-unknown.csproj -p:Configuration=Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:ContinuousIntegrationBuild=true -p:EmbedUntrackedSources=true -p:PackageOutputPath=${{ env.NuGetDirectory }} -verbosity:minimal -p:FileVersion=2.0.1.${{ github.run_number }} 
+      run: dotnet msbuild -t:Pack src/UTF-unknown.csproj -p:Configuration=Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:ContinuousIntegrationBuild=true -p:EmbedUntrackedSources=true -p:PackageOutputPath=${{ env.NuGetDirectory }} -verbosity:minimal -p:FileVersion=2.1.${{ github.run_number }} 
 
     - name: Upload packages to artifacts
       uses: actions/upload-artifact@v4
