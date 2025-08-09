@@ -1,17 +1,16 @@
-namespace UtfUnknown.Core
+namespace UtfUnknown.Core;
+
+enum InputState
 {
-    enum InputState
-    {
-        PureASCII=0,
+    PureASCII=0,
 
-        /// <summary>
-        /// Found escape character or HZ "~{"
-        /// </summary>
-        EscASCII = 1,
+    /// <summary>
+    /// Found escape character or HZ "~{"
+    /// </summary>
+    EscASCII = 1,
 
-        /// <summary>
-        /// non-ascii byte (high-byte)
-        /// </summary>
-        Highbyte = 2
-    };
-}
+    /// <summary>
+    /// non-ascii byte (high-byte)
+    /// </summary>
+    Highbyte = 2
+};

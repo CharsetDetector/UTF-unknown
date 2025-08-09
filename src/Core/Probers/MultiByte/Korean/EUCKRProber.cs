@@ -41,81 +41,80 @@ using UtfUnknown.Core.Analyzers.Korean;
 using UtfUnknown.Core.Models;
 using UtfUnknown.Core.Models.MultiByte.Korean;
 
-namespace UtfUnknown.Core.Probers.MultiByte.Korean
+namespace UtfUnknown.Core.Probers.MultiByte.Korean;
+
+public class EUCKRProber : CharsetProber
 {
-    public class EUCKRProber : CharsetProber
+    private CodingStateMachine codingSM;
+    private EUCKRDistributionAnalyser distributionAnalyser;
+    private byte[] lastChar = new byte[2];
+
+    public EUCKRProber()
     {
-        private CodingStateMachine codingSM;
-        private EUCKRDistributionAnalyser distributionAnalyser;
-        private byte[] lastChar = new byte[2];
+        codingSM = new CodingStateMachine(new EUCKRSMModel());
+        distributionAnalyser = new EUCKRDistributionAnalyser();
+        Reset();
+    }
 
-        public EUCKRProber()
+    public override string GetCharsetName()
+    {
+        return CodepageName.EUC_KR;
+    }
+
+    public override ProbingState HandleData(byte[] buf, int offset, int len)
+    {
+        int codingState;
+        int max = offset + len;
+
+        for (int i = offset; i < max; i++)
         {
-            codingSM = new CodingStateMachine(new EUCKRSMModel());
-            distributionAnalyser = new EUCKRDistributionAnalyser();
-            Reset();
-        }
-
-        public override string GetCharsetName()
-        {
-            return CodepageName.EUC_KR;
-        }
-
-        public override ProbingState HandleData(byte[] buf, int offset, int len)
-        {
-            int codingState;
-            int max = offset + len;
-
-            for (int i = offset; i < max; i++)
+            codingState = codingSM.NextState(buf[i]);
+            if (codingState == StateMachineModel.ERROR)
             {
-                codingState = codingSM.NextState(buf[i]);
-                if (codingState == StateMachineModel.ERROR)
-                {
-                    state = ProbingState.NotMe;
-                    break;
-                }
-
-                if (codingState == StateMachineModel.ITSME)
-                {
-                    state = ProbingState.FoundIt;
-                    break;
-                }
-
-                if (codingState == StateMachineModel.START)
-                {
-                    int charLen = codingSM.CurrentCharLen;
-                    if (i == offset)
-                    {
-                        lastChar[1] = buf[offset];
-                        distributionAnalyser.HandleOneChar(lastChar, 0, charLen);
-                    }
-                    else
-                    {
-                        distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
-                    }
-                }
+                state = ProbingState.NotMe;
+                break;
             }
 
-            lastChar[0] = buf[max - 1];
+            if (codingState == StateMachineModel.ITSME)
+            {
+                state = ProbingState.FoundIt;
+                break;
+            }
 
-            if (state == ProbingState.Detecting)
-                if (distributionAnalyser.GotEnoughData() && GetConfidence() > SHORTCUT_THRESHOLD)
-                    state = ProbingState.FoundIt;
-
-            return state;
+            if (codingState == StateMachineModel.START)
+            {
+                int charLen = codingSM.CurrentCharLen;
+                if (i == offset)
+                {
+                    lastChar[1] = buf[offset];
+                    distributionAnalyser.HandleOneChar(lastChar, 0, charLen);
+                }
+                else
+                {
+                    distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
+                }
+            }
         }
 
-        public override float GetConfidence(StringBuilder status = null)
-        {
-            return distributionAnalyser.GetConfidence();
-        }
+        lastChar[0] = buf[max - 1];
 
-        public override void Reset()
-        {
-            codingSM.Reset();
-            state = ProbingState.Detecting;
-            distributionAnalyser.Reset();
-            //mContextAnalyser.Reset();
-        }
+        if (state == ProbingState.Detecting)
+            if (distributionAnalyser.GotEnoughData() && GetConfidence() > SHORTCUT_THRESHOLD)
+                state = ProbingState.FoundIt;
+
+        return state;
+    }
+
+    public override float GetConfidence(StringBuilder status = null)
+    {
+        return distributionAnalyser.GetConfidence();
+    }
+
+    public override void Reset()
+    {
+        codingSM.Reset();
+        state = ProbingState.Detecting;
+        distributionAnalyser.Reset();
+        //mContextAnalyser.Reset();
     }
 }
