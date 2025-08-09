@@ -1,7 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFrameworks>netstandard2.0;net6.0;net8.0</TargetFrameworks>
+  
   </PropertyGroup>
 
   <PropertyGroup>
@@ -63,7 +64,8 @@ Features:
     <PackageReleaseNotes>
 - See https://github.com/CharsetDetector/UTF-unknown/releases
     </PackageReleaseNotes>
-    <PackageIconUrl>https://raw.githubusercontent.com/CharsetDetector/UTF-unknown/master/logo.png</PackageIconUrl>
+    <PackageIcon>logo.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/CharsetDetector/UTF-unknown</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/CharsetDetector/UTF-unknown/blob/master/license/MPL-1.1.txt</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -75,12 +77,22 @@ Features:
   </PropertyGroup>
 
   <PropertyGroup>
+    <EnablePackageValidation>true</EnablePackageValidation>
+    <PackageValidationBaselineVersion>2.0.0</PackageValidationBaselineVersion>
+    <ApiCompatEnableRuleCannotChangeParameterName>true</ApiCompatEnableRuleCannotChangeParameterName>
+    <GeneratePackageOnBuild Condition=" '$(CI)' != 'true' AND '$(APPVEYOR)' != 'True' AND '$(GITHUB_ACTIONS)' != 'true' ">true</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <PropertyGroup>
     <DocumentationFile>bin\$(Configuration)\$(TargetFramework)\UtfUnknown.xml</DocumentationFile>
     <NoWarn>1701;1702;1705,1570,1591</NoWarn>
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="..\logo.png" Pack="true" PackagePath="\" />
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
 </Project>
-

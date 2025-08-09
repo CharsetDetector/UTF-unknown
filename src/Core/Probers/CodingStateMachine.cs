@@ -39,54 +39,53 @@
 
 using UtfUnknown.Core.Models;
 
-namespace UtfUnknown.Core.Probers
+namespace UtfUnknown.Core.Probers;
+
+/// <summary>
+/// Parallel state machine for the Coding Scheme Method
+/// </summary>
+public class CodingStateMachine
 {
-    /// <summary>
-    /// Parallel state machine for the Coding Scheme Method
-    /// </summary>
-    public class CodingStateMachine
+    private int currentState;
+    private StateMachineModel model;
+    private int currentCharLen;
+
+
+    public CodingStateMachine(StateMachineModel model)
     {
-        private int currentState;
-        private StateMachineModel model;
-        private int currentCharLen;
+        currentState = StateMachineModel.START;
+        this.model = model;
+    }
 
+    public int NextState(byte b)
+    {
+        // for each byte we get its class, if it is first byte,
+        // we also get byte length
+        int byteCls = model.GetClass(b);
+        if (currentState == StateMachineModel.START) {
 
-        public CodingStateMachine(StateMachineModel model)
-        {
-            currentState = StateMachineModel.START;
-            this.model = model;
+            currentCharLen = model.charLenTable[byteCls];
         }
 
-        public int NextState(byte b)
-        {
-            // for each byte we get its class, if it is first byte,
-            // we also get byte length
-            int byteCls = model.GetClass(b);
-            if (currentState == StateMachineModel.START) {
+        // from byte's class and stateTable, we get its next state
+        currentState = model.stateTable.Unpack(
+            currentState * model.ClassFactor + byteCls);
 
-                currentCharLen = model.charLenTable[byteCls];
-            }
+        return currentState;
+    }
 
-            // from byte's class and stateTable, we get its next state
-            currentState = model.stateTable.Unpack(
-                currentState * model.ClassFactor + byteCls);
+    public void Reset()
+    {
+        currentState = StateMachineModel.START;
+    }
 
-            return currentState;
-        }
+    public int CurrentCharLen
+    {
+        get { return currentCharLen; }
+    }
 
-        public void Reset()
-        {
-            currentState = StateMachineModel.START;
-        }
-
-        public int CurrentCharLen
-        {
-            get { return currentCharLen; }
-        }
-
-        public string ModelName
-        {
-            get { return model.Name; }
-        }
+    public string ModelName
+    {
+        get { return model.Name; }
     }
 }

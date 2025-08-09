@@ -42,84 +42,83 @@ using UtfUnknown.Core.Analyzers.Chinese;
 using UtfUnknown.Core.Models;
 using UtfUnknown.Core.Models.MultiByte.Chinese;
 
-namespace UtfUnknown.Core.Probers.MultiByte.Chinese
+namespace UtfUnknown.Core.Probers.MultiByte.Chinese;
+
+// We use gb18030 to replace gb2312, because 18030 is a superset.
+public class GB18030Prober : CharsetProber
 {
-    // We use gb18030 to replace gb2312, because 18030 is a superset.
-    public class GB18030Prober : CharsetProber
+    private CodingStateMachine codingSM;
+    private GB18030DistributionAnalyser analyser;
+    private byte[] lastChar;
+
+    public GB18030Prober()
     {
-        private CodingStateMachine codingSM;
-        private GB18030DistributionAnalyser analyser;
-        private byte[] lastChar;
+        lastChar = new byte[2];
+        codingSM = new CodingStateMachine(new GB18030_SMModel());
+        analyser = new GB18030DistributionAnalyser();
+        Reset();
+    }
 
-        public GB18030Prober()
+    public override string GetCharsetName()
+    {
+        return CodepageName.GB18030;
+    }
+
+    public override ProbingState HandleData(byte[] buf, int offset, int len)
+    {
+        int max = offset + len;
+
+        for (int i = offset; i < max; i++)
         {
-            lastChar = new byte[2];
-            codingSM = new CodingStateMachine(new GB18030_SMModel());
-            analyser = new GB18030DistributionAnalyser();
-            Reset();
-        }
+            var codingState = codingSM.NextState(buf[i]);
 
-        public override string GetCharsetName()
-        {
-            return CodepageName.GB18030;
-        }
-
-        public override ProbingState HandleData(byte[] buf, int offset, int len)
-        {
-            int max = offset + len;
-
-            for (int i = offset; i < max; i++)
+            if (codingState == StateMachineModel.ERROR)
             {
-                var codingState = codingSM.NextState(buf[i]);
-
-                if (codingState == StateMachineModel.ERROR)
-                {
-                    state = ProbingState.NotMe;
-                    break;
-                }
-
-                if (codingState == StateMachineModel.ITSME)
-                {
-                    state = ProbingState.FoundIt;
-                    break;
-                }
-
-                if (codingState == StateMachineModel.START)
-                {
-                    int charLen = codingSM.CurrentCharLen;
-                    if (i == offset)
-                    {
-                        lastChar[1] = buf[offset];
-                        analyser.HandleOneChar(lastChar, 0, charLen);
-                    }
-                    else
-                    {
-                        analyser.HandleOneChar(buf, i - 1, charLen);
-                    }
-                }
+                state = ProbingState.NotMe;
+                break;
             }
 
-            lastChar[0] = buf[max - 1];
-
-            if (state == ProbingState.Detecting)
+            if (codingState == StateMachineModel.ITSME)
             {
-                if (analyser.GotEnoughData() && GetConfidence() > SHORTCUT_THRESHOLD)
-                    state = ProbingState.FoundIt;
+                state = ProbingState.FoundIt;
+                break;
             }
 
-            return state;
+            if (codingState == StateMachineModel.START)
+            {
+                int charLen = codingSM.CurrentCharLen;
+                if (i == offset)
+                {
+                    lastChar[1] = buf[offset];
+                    analyser.HandleOneChar(lastChar, 0, charLen);
+                }
+                else
+                {
+                    analyser.HandleOneChar(buf, i - 1, charLen);
+                }
+            }
         }
 
-        public override float GetConfidence(StringBuilder status = null)
+        lastChar[0] = buf[max - 1];
+
+        if (state == ProbingState.Detecting)
         {
-            return analyser.GetConfidence();
+            if (analyser.GotEnoughData() && GetConfidence() > SHORTCUT_THRESHOLD)
+                state = ProbingState.FoundIt;
         }
 
-        public override void Reset()
-        {
-            codingSM.Reset();
-            state = ProbingState.Detecting;
-            analyser.Reset();
-        }
+        return state;
+    }
+
+    public override float GetConfidence(StringBuilder status = null)
+    {
+        return analyser.GetConfidence();
+    }
+
+    public override void Reset()
+    {
+        codingSM.Reset();
+        state = ProbingState.Detecting;
+        analyser.Reset();
     }
 }

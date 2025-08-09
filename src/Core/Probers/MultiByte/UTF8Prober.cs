@@ -41,86 +41,85 @@ using System.Text;
 using UtfUnknown.Core.Models;
 using UtfUnknown.Core.Models.MultiByte;
 
-namespace UtfUnknown.Core.Probers.MultiByte
+namespace UtfUnknown.Core.Probers.MultiByte;
+
+public class UTF8Prober : CharsetProber
 {
-    public class UTF8Prober : CharsetProber
+    private static float ONE_CHAR_PROB = 0.50f;
+    private CodingStateMachine codingSM;
+    private int numOfMBChar;
+
+    public UTF8Prober()
     {
-        private static float ONE_CHAR_PROB = 0.50f;
-        private CodingStateMachine codingSM;
-        private int numOfMBChar;
+        numOfMBChar = 0;
+        codingSM = new CodingStateMachine(new UTF8_SMModel());
+        Reset();
+    }
 
-        public UTF8Prober()
+    public override string GetCharsetName()
+    {
+        return CodepageName.UTF8;
+    }
+
+    public override void Reset()
+    {
+        codingSM.Reset();
+        numOfMBChar = 0;
+        state = ProbingState.Detecting;
+    }
+
+    public override ProbingState HandleData(byte[] buf, int offset, int len)
+    {
+        int max = offset + len;
+
+        for (int i = offset; i < max; i++)
         {
-            numOfMBChar = 0;
-            codingSM = new CodingStateMachine(new UTF8_SMModel());
-            Reset();
-        }
 
-        public override string GetCharsetName()
-        {
-            return CodepageName.UTF8;
-        }
+            var codingState = codingSM.NextState(buf[i]);
 
-        public override void Reset()
-        {
-            codingSM.Reset();
-            numOfMBChar = 0;
-            state = ProbingState.Detecting;
-        }
-
-        public override ProbingState HandleData(byte[] buf, int offset, int len)
-        {
-            int max = offset + len;
-
-            for (int i = offset; i < max; i++)
+            if (codingState == StateMachineModel.ERROR)
             {
-
-                var codingState = codingSM.NextState(buf[i]);
-
-                if (codingState == StateMachineModel.ERROR)
-                {
-                    state = ProbingState.NotMe;
-                    break;
-                }
-
-                if (codingState == StateMachineModel.ITSME)
-                {
-                    state = ProbingState.FoundIt;
-                    break;
-                }
-
-                if (codingState == StateMachineModel.START)
-                {
-                    if (codingSM.CurrentCharLen >= 2)
-                        numOfMBChar++;
-                }
+                state = ProbingState.NotMe;
+                break;
             }
 
-            if (state == ProbingState.Detecting)
-                if (GetConfidence() > SHORTCUT_THRESHOLD)
-                    state = ProbingState.FoundIt;
+            if (codingState == StateMachineModel.ITSME)
+            {
+                state = ProbingState.FoundIt;
+                break;
+            }
 
-            return state;
+            if (codingState == StateMachineModel.START)
+            {
+                if (codingSM.CurrentCharLen >= 2)
+                    numOfMBChar++;
+            }
         }
 
-        public override float GetConfidence(StringBuilder status = null)
+        if (state == ProbingState.Detecting)
+            if (GetConfidence() > SHORTCUT_THRESHOLD)
+                state = ProbingState.FoundIt;
+
+        return state;
+    }
+
+    public override float GetConfidence(StringBuilder status = null)
+    {
+        float unlike = 0.99f;
+        float confidence;
+
+        if (numOfMBChar < 6)
         {
-            float unlike = 0.99f;
-            float confidence;
+            for (int i = 0; i < numOfMBChar; i++)
+                unlike *= ONE_CHAR_PROB;
 
-            if (numOfMBChar < 6)
-            {
-                for (int i = 0; i < numOfMBChar; i++)
-                    unlike *= ONE_CHAR_PROB;
-
-                confidence = 1.0f - unlike;
-            }
-            else
-            {
-                confidence = 0.99f;
-            }
-
-            return confidence;
+            confidence = 1.0f - unlike;
         }
+        else
+        {
+            confidence = 0.99f;
+        }
+
+        return confidence;
     }
 }
