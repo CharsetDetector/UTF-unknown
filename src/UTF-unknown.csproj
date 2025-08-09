@@ -64,7 +64,8 @@ Features:
     <PackageReleaseNotes>
 - See https://github.com/CharsetDetector/UTF-unknown/releases
     </PackageReleaseNotes>
-    <PackageIconUrl>https://raw.githubusercontent.com/CharsetDetector/UTF-unknown/master/logo.png</PackageIconUrl>
+    <PackageIcon>logo.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageProjectUrl>https://github.com/CharsetDetector/UTF-unknown</PackageProjectUrl>
     <PackageLicenseUrl>https://github.com/CharsetDetector/UTF-unknown/blob/master/license/MPL-1.1.txt</PackageLicenseUrl>
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
@@ -88,5 +89,10 @@ Features:
     <AssemblyVersion>2.0.0.0</AssemblyVersion>
     <FileVersion>2.0.0.0</FileVersion>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\logo.png" Pack="true" PackagePath="\" />
+    <None Include="..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
 
 </Project>
