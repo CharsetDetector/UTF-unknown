@@ -60,7 +60,7 @@ Features:
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageTags>charset;detection;unicode;ascii;netstandard;chardet</PackageTags>
+    <PackageTags>charset;detection;character-encoding-detector;chardet;unicode;ascii;iso-8859;utf8;utf16;codepage;</PackageTags>
     <PackageReleaseNotes>
 - See https://github.com/CharsetDetector/UTF-unknown/releases
     </PackageReleaseNotes>
