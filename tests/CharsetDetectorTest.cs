@@ -1,4 +1,4 @@
-// CharsetDetectorTest.cs created with MonoDevelop
+﻿// CharsetDetectorTest.cs created with MonoDevelop
 //
 // Author:
 //   Rudi Pettazzi <rudi.pettazzi@gmail.com>
@@ -25,9 +25,9 @@ public class CharsetDetectorTest
         using (stream)
         {
             var result = CharsetDetector.DetectFromStream(stream);
-            Assert.AreEqual(CodepageName.ASCII, result.Detected.EncodingName);
-            Assert.AreEqual(1.0f, result.Detected.Confidence);
-            Assert.IsFalse(result.Detected.HasBOM);
+            Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.ASCII));
+            Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+            Assert.That(result.Detected.HasBOM, Is.False);
         }
     }
 
@@ -42,9 +42,9 @@ public class CharsetDetectorTest
         using (stream)
         {
             var result = await CharsetDetector.DetectFromStreamAsync(stream);
-            Assert.AreEqual(CodepageName.ASCII, result.Detected.EncodingName);
-            Assert.AreEqual(1.0f, result.Detected.Confidence);
-            Assert.IsFalse(result.Detected.HasBOM);
+            Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.ASCII));
+            Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+            Assert.That(result.Detected.HasBOM, Is.False);
         }
     }
 
@@ -56,8 +56,8 @@ public class CharsetDetectorTest
         using (stream)
         {
             var result = CharsetDetector.DetectFromStream(stream);
-            Assert.AreEqual(CodepageName.ASCII, result.Detected.EncodingName);
-            Assert.AreEqual(1.0f, result.Detected.Confidence);
+            Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.ASCII));
+            Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
         }
     }
 
@@ -69,8 +69,8 @@ public class CharsetDetectorTest
         using (stream)
         {
             var result = await CharsetDetector.DetectFromStreamAsync(stream);
-            Assert.AreEqual(CodepageName.ASCII, result.Detected.EncodingName);
-            Assert.AreEqual(1.0f, result.Detected.Confidence);
+            Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.ASCII));
+            Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
         }
     }
 
@@ -98,7 +98,7 @@ public class CharsetDetectorTest
         CharsetDetector.DetectFromStream(stream, maxBytes);
 
         // Assert
-        Assert.AreEqual(expectedPosition, stream.Position);
+        Assert.That(stream.Position, Is.EqualTo(expectedPosition));
     }
 
     [Test]
@@ -120,7 +120,7 @@ public class CharsetDetectorTest
         await CharsetDetector.DetectFromStreamAsync(stream, maxBytes);
 
         // Assert
-        Assert.AreEqual(expectedPosition, stream.Position);
+        Assert.That(stream.Position, Is.EqualTo(expectedPosition));
     }
 
     [Test]
@@ -138,9 +138,9 @@ public class CharsetDetectorTest
         var result = CharsetDetector.DetectFromBytes(bytes, offset, len);
 
         // Assert
-        Assert.AreEqual(detectedCodepage, result.Detected.EncodingName);
-        Assert.AreEqual(1.0f, result.Detected.Confidence);
-        Assert.IsFalse(result.Detected.HasBOM);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(detectedCodepage));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.False);
     }
 
     [Test]
@@ -153,9 +153,9 @@ public class CharsetDetectorTest
     {
         var result = CharsetDetector.DetectFromBytes(bufferBytes)
             .Detected;
-        Assert.AreEqual(CodepageName.UTF7, result.EncodingName);
-        Assert.AreEqual(1.0f, result.Confidence);
-        Assert.IsTrue(result.HasBOM);
+        Assert.That(result.EncodingName, Is.EqualTo(CodepageName.UTF7));
+        Assert.That(result.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.HasBOM, Is.True);
     }
 
     [Test]
@@ -164,9 +164,9 @@ public class CharsetDetectorTest
         var bufferBytes = new byte[] { 0x84, 0x31, 0x95, 0x33 };
         var result = CharsetDetector.DetectFromBytes(bufferBytes)
             .Detected;
-        Assert.AreEqual(CodepageName.GB18030, result.EncodingName);
-        Assert.AreEqual(1.0f, result.Confidence);
-        Assert.IsTrue(result.HasBOM);
+        Assert.That(result.EncodingName, Is.EqualTo(CodepageName.GB18030));
+        Assert.That(result.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.HasBOM, Is.True);
     }
 
     [Test]
@@ -178,9 +178,9 @@ public class CharsetDetectorTest
                    "利用案内でどうぞ。";
         byte[] buf = Encoding.UTF8.GetBytes(s);
         var result = CharsetDetector.DetectFromBytes(buf);
-        Assert.AreEqual(CodepageName.UTF8, result.Detected.EncodingName);
-        Assert.AreEqual(1.0f, result.Detected.Confidence);
-        Assert.IsFalse(result.Detected.HasBOM);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.UTF8));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.False);
     }
 
     [Test]
@@ -188,9 +188,9 @@ public class CharsetDetectorTest
     {
         byte[] buf = { 0xEF, 0xBB, 0xBF, 0x68, 0x65, 0x6C, 0x6C, 0x6F, 0x21 };
         var result = CharsetDetector.DetectFromBytes(buf);
-        Assert.AreEqual(CodepageName.UTF8, result.Detected.EncodingName);
-        Assert.AreEqual(1.0f, result.Detected.Confidence);
-        Assert.IsTrue(result.Detected.HasBOM);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.UTF8));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.True);
     }
 
     [Test]
@@ -199,9 +199,9 @@ public class CharsetDetectorTest
         byte[] buf = { 0xFE, 0xFF, };
 
         var result = CharsetDetector.DetectFromBytes(buf);
-        Assert.AreEqual(CodepageName.UTF16_BE, result.Detected.EncodingName);
-        Assert.AreEqual(1.0f, result.Detected.Confidence);
-        Assert.IsTrue(result.Detected.HasBOM);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.UTF16_BE));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.True);
     }
 
     [Test]
@@ -210,9 +210,9 @@ public class CharsetDetectorTest
         byte[] buf = { 0xFE, 0xFF, 0x00, 0x68, 0x00, 0x65 };
 
         var result = CharsetDetector.DetectFromBytes(buf);
-        Assert.AreEqual(CodepageName.UTF16_BE, result.Detected.EncodingName);
-        Assert.AreEqual(1.0f, result.Detected.Confidence);
-        Assert.IsTrue(result.Detected.HasBOM);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.UTF16_BE));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.True);
     }
 
     [Test]
@@ -222,9 +222,9 @@ public class CharsetDetectorTest
         byte[] buf = { 0xFE, 0xFF, 0x00, 0x00, 0x65 };
 
         var result = CharsetDetector.DetectFromBytes(buf);
-        Assert.AreEqual(CodepageName.X_ISO_10646_UCS_4_3412, result.Detected.EncodingName);
-        Assert.AreEqual(1.0f, result.Detected.Confidence);
-        Assert.IsTrue(result.Detected.HasBOM);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.X_ISO_10646_UCS_4_3412));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.True);
     }
 
     [Test]
@@ -234,9 +234,9 @@ public class CharsetDetectorTest
         byte[] buf = { 0x00, 0x00, 0xFF, 0xFE, 0x00, 0x65 };
 
         var result = CharsetDetector.DetectFromBytes(buf);
-        Assert.AreEqual(CodepageName.X_ISO_10646_UCS_4_2143, result.Detected.EncodingName);
-        Assert.AreEqual(1.0f, result.Detected.Confidence);
-        Assert.IsTrue(result.Detected.HasBOM);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.X_ISO_10646_UCS_4_2143));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.True);
     }
 
     [Test]
@@ -244,9 +244,9 @@ public class CharsetDetectorTest
     {
         byte[] buf = { 0xFF, 0xFE, };
         var result = CharsetDetector.DetectFromBytes(buf);
-        Assert.AreEqual(CodepageName.UTF16_LE, result.Detected.EncodingName);
-        Assert.AreEqual(1.0f, result.Detected.Confidence);
-        Assert.IsTrue(result.Detected.HasBOM);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.UTF16_LE));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.True);
     }
 
     [Test]
@@ -254,9 +254,9 @@ public class CharsetDetectorTest
     {
         byte[] buf = { 0xFF, 0xFE, 0x68, 0x00, 0x65, 0x00 };
         var result = CharsetDetector.DetectFromBytes(buf);
-        Assert.AreEqual(CodepageName.UTF16_LE, result.Detected.EncodingName);
-        Assert.AreEqual(1.0f, result.Detected.Confidence);
-        Assert.IsTrue(result.Detected.HasBOM);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.UTF16_LE));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.True);
     }
 
     [Test]
@@ -264,9 +264,9 @@ public class CharsetDetectorTest
     {
         byte[] buf = { 0x00, 0x00, 0xFE, 0xFF, 0x00, 0x00, 0x00, 0x68 };
         var result = CharsetDetector.DetectFromBytes(buf);
-        Assert.AreEqual(CodepageName.UTF32_BE, result.Detected.EncodingName);
-        Assert.AreEqual(1.0f, result.Detected.Confidence);
-        Assert.IsTrue(result.Detected.HasBOM);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.UTF32_BE));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.True);
     }
 
     [Test]
@@ -274,9 +274,9 @@ public class CharsetDetectorTest
     {
         byte[] buf = { 0xFF, 0xFE, 0x00, 0x00, 0x68, 0x00, 0x00, 0x00 };
         var result = CharsetDetector.DetectFromBytes(buf);
-        Assert.AreEqual(CodepageName.UTF32_LE, result.Detected.EncodingName);
-        Assert.AreEqual(1.0f, result.Detected.Confidence);
-        Assert.IsTrue(result.Detected.HasBOM);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.UTF32_LE));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.True);
     }
 
     [Test]
@@ -284,9 +284,9 @@ public class CharsetDetectorTest
     {
         byte[] buf = Encoding.UTF8.GetBytes("3");
         var result = CharsetDetector.DetectFromBytes(buf);
-        Assert.AreEqual(CodepageName.ASCII, result.Detected.EncodingName);
-        Assert.AreEqual(1.0f, result.Detected.Confidence);
-        Assert.IsFalse(result.Detected.HasBOM);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.ASCII));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.False);
     }
 
     [Test]
@@ -294,9 +294,9 @@ public class CharsetDetectorTest
     {
         byte[] buf = Encoding.UTF8.GetBytes("3");
         var result = CharsetDetector.DetectFromBytes(buf);
-        Assert.AreEqual(CodepageName.ASCII, result.Detected.EncodingName);
-        Assert.AreEqual(1.0f, result.Detected.Confidence);
-        Assert.IsFalse(result.Detected.HasBOM);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.ASCII));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.False);
     }
 
     [Test]
@@ -304,9 +304,9 @@ public class CharsetDetectorTest
     {
         byte[] buf = Encoding.UTF8.GetBytes("1234567890");
         var result = CharsetDetector.DetectFromBytes(buf);
-        Assert.AreEqual(CodepageName.ASCII, result.Detected.EncodingName);
-        Assert.AreEqual(1.0f, result.Detected.Confidence);
-        Assert.IsFalse(result.Detected.HasBOM);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.ASCII));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.False);
     }
 
     [Test]
@@ -314,8 +314,8 @@ public class CharsetDetectorTest
     {
         byte[] buf = Encoding.UTF8.GetBytes("3");
         var result = CharsetDetector.DetectFromBytes(buf);
-        Assert.AreEqual(CodepageName.ASCII, result.Detected.EncodingName);
-        Assert.AreEqual(1, result.Detected.Confidence);
-        Assert.IsFalse(result.Detected.HasBOM);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.ASCII));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1));
+        Assert.That(result.Detected.HasBOM, Is.False);
     }
 }

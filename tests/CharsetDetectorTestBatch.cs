@@ -25,7 +25,7 @@ public class CharsetDetectorTestBatch : IDisposable
     public CharsetDetectorTestBatch()
     {
         string frameworkName = GetCurrentFrameworkName();
-        Assert.IsNotEmpty(frameworkName, "Framework name should not be empty");
+        Assert.That(frameworkName, Is.Not.Empty, "Framework name should not be empty");
         _logWriter = new StreamWriter(Path.Combine(TESTS_ROOT, $"test-diag-{frameworkName}.log"));
     }
 
@@ -92,9 +92,8 @@ public class CharsetDetectorTestBatch : IDisposable
             $"- {testCase.InputFile.FullName} ({testCase.ExpectedEncoding}) -> ",
             $"{JsonConvert.SerializeObject(result, Formatting.Indented, new EncodingJsonConverter())}"));
 
-        StringAssert.AreEqualIgnoringCase(
-            testCase.ExpectedEncoding,
-            detected.EncodingName,
+        Assert.That(detected.EncodingName, 
+            Is.EqualTo(testCase.ExpectedEncoding).IgnoreCase,
             string.Concat(
                 $"Charset detection failed for {testCase.InputFile.FullName}. ",
                 $"Expected: {testCase.ExpectedEncoding}. ",
@@ -112,9 +111,8 @@ public class CharsetDetectorTestBatch : IDisposable
             $"- {testCase.InputFile.FullName} ({testCase.ExpectedEncoding}) -> ",
             $"{JsonConvert.SerializeObject(result, Formatting.Indented, new EncodingJsonConverter())}"));
 
-        StringAssert.AreEqualIgnoringCase(
-            testCase.ExpectedEncoding,
-            detected.EncodingName,
+        Assert.That(detected.EncodingName, 
+            Is.EqualTo(testCase.ExpectedEncoding).IgnoreCase,
             string.Concat(
                 $"Charset detection failed for {testCase.InputFile.FullName}. ",
                 $"Expected: {testCase.ExpectedEncoding}. ",
@@ -188,9 +186,10 @@ public class CharsetDetectorTestBatch : IDisposable
         var detected = result.Detected;
 
         _logWriter.WriteLine($"- {file} ({expectedCharset}) -> {JsonConvert.SerializeObject(result, Formatting.Indented, new EncodingJsonConverter())}");
-        StringAssert.AreEqualIgnoringCase(expectedCharset, detected.EncodingName,
+        Assert.That(detected.EncodingName, 
+            Is.EqualTo(expectedCharset).IgnoreCase,
             $"Charset detection failed for {file}. Expected: {expectedCharset}, detected: {detected.EncodingName} ({detected.Confidence * 100.0f:0.00############}% confidence)");
-        Assert.NotNull(detected.Encoding);
+        Assert.That(detected.Encoding, Is.Not.Null);
     }
 
 
@@ -200,9 +199,10 @@ public class CharsetDetectorTestBatch : IDisposable
         var detected = result.Detected;
 
         _logWriter.WriteLine($"- {file} ({expectedCharset}) -> {JsonConvert.SerializeObject(result, Formatting.Indented, new EncodingJsonConverter())}");
-        StringAssert.AreEqualIgnoringCase(expectedCharset, detected.EncodingName,
+        Assert.That(detected.EncodingName, 
+            Is.EqualTo(expectedCharset).IgnoreCase,
             $"Charset detection failed for {file}. Expected: {expectedCharset}, detected: {detected.EncodingName} ({detected.Confidence * 100.0f:0.00############}% confidence)");
-        Assert.NotNull(detected.Encoding);
+        Assert.That(detected.Encoding, Is.Not.Null);
     }
 
     private string GetCurrentFrameworkName()

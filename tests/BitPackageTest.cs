@@ -46,10 +46,10 @@ public class BitPackageTest
     [Test]
     public void TestPack()
     {
-        Assert.AreEqual(BitPackage.Pack4bits(0,0,0,0,0,0,0,0), 0);
-        Assert.AreEqual(BitPackage.Pack4bits(1,1,1,1,1,1,1,1), 286331153);
-        Assert.AreEqual(BitPackage.Pack4bits(2,2,2,2,2,2,2,2), 572662306);
-        Assert.AreEqual(BitPackage.Pack4bits(15,15,15,15,15,15,15,15), -1);
+        Assert.That(BitPackage.Pack4bits(0,0,0,0,0,0,0,0), Is.EqualTo(0));
+        Assert.That(BitPackage.Pack4bits(1,1,1,1,1,1,1,1), Is.EqualTo(286331153));
+        Assert.That(BitPackage.Pack4bits(2,2,2,2,2,2,2,2), Is.EqualTo(572662306));
+        Assert.That(BitPackage.Pack4bits(15,15,15,15,15,15,15,15), Is.EqualTo(-1));
     }
 
     [Test]
@@ -69,7 +69,7 @@ public class BitPackageTest
 
         for (int i = 0; i < 16; i++) {
             int n = pkg.Unpack(i);
-            Assert.AreEqual(n, i);
+            Assert.That(n, Is.EqualTo(i));
         }
     }
 }
