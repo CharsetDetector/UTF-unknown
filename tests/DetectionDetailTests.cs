@@ -14,7 +14,7 @@ public class DetectionDetailTests
     public void DetectionDetailGetEncodingIsNotNull(string codepageName)
     {
         var encoding = DetectionDetail.GetEncoding(codepageName);
-        Assert.IsNotNull(encoding);
+        Assert.That(encoding, Is.Not.Null);
     }
 
     private static readonly HashSet<string> UnsupportedEncodings = new HashSet<string>
@@ -44,6 +44,6 @@ public class DetectionDetailTests
         var result = DetectionDetail.GetEncoding(encoding);
 
         // Assert
-        Assert.AreEqual(null, result);
+        Assert.That(result, Is.Null);
     }
 }
