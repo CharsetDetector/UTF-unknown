@@ -182,7 +182,7 @@ public abstract class JapaneseContextAnalyser
         // is complete, but since a character will not make much difference,
         // skipping it will simplify our logic and improve performance.
         for (int i = needToSkipCharNum+offset; i < max; ) {
-            int order = GetOrder(buf, i, out var charLen);
+            int order = GetOrder(buf.Slice(i), out var charLen);
             i += charLen;
             if (i > max) {
                 needToSkipCharNum = i - max;
@@ -201,7 +201,7 @@ public abstract class JapaneseContextAnalyser
         }
     }
 
-    public void HandleOneChar(ReadOnlySpan<byte> buf, int offset, int charLen)
+    public void HandleOneChar(ReadOnlySpan<byte> buf, int charLen)
     {
         if (totalRel > MAX_REL_THRESHOLD)
             done = true;
@@ -209,7 +209,7 @@ public abstract class JapaneseContextAnalyser
             return;
 
         // Only 2-bytes characters are of our interest
-        int order = (charLen == 2) ? GetOrder(buf, offset) : -1;
+        int order = (charLen == 2) ? GetOrder(buf) : -1;
         if (order != -1 && lastCharOrder != -1) {
             totalRel++;
             // count this sequence to its category counter
@@ -229,9 +229,9 @@ public abstract class JapaneseContextAnalyser
         }
     }
 
-    protected abstract int GetOrder(ReadOnlySpan<byte> buf, int offset, out int charLen);
+    protected abstract int GetOrder(ReadOnlySpan<byte> buf, out int charLen);
 
-    protected abstract int GetOrder(ReadOnlySpan<byte> buf, int offset);
+    protected abstract int GetOrder(ReadOnlySpan<byte> buf);
 
     public bool GotEnoughData()
     {

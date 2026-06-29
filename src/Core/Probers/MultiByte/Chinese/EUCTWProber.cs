@@ -84,11 +84,11 @@ public class EUCTWProber : CharsetProber
                 if (i == 0)
                 {
                     lastChar[1] = buf[0];
-                    distributionAnalyser.HandleOneChar(lastChar, 0, charLen);
+                    distributionAnalyser.HandleOneChar(lastChar, charLen);
                 }
                 else
                 {
-                    distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
+                    distributionAnalyser.HandleOneChar(buf.Slice(i - 1), charLen);
                 }
             }
         }
