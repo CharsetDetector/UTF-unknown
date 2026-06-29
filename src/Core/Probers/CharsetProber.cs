@@ -62,8 +62,6 @@ public abstract class CharsetProber
     /// Feed data to the prober
     /// </summary>
     /// <param name="buf">a buffer</param>
-    /// <param name="offset">offset into buffer</param>
-    /// <param name="len">number of bytes available into buffer</param>
     /// <returns>
     /// A <see cref="ProbingState"/>
     /// </returns>
