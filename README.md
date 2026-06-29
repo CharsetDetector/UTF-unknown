@@ -30,7 +30,7 @@ Features:
 
 ## Supported Platforms
 
-- .NET 6 (Will be dropped in the future)
+- .NET 8
 - .NET 8
 - .NET Standard 2.0
 

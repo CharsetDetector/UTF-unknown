@@ -207,10 +207,8 @@ public class CharsetDetectorTestBatch : IDisposable
 
     private string GetCurrentFrameworkName()
     {
-#if NET6_0
-            return "net6";
-#elif NET8_0
-            return "net8";
+#if NET8_0
+        return "net8";
 #elif NET481
         return "net481";
 #else
