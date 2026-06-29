@@ -1,3 +1,5 @@
+using System;
+
 namespace UtfUnknown.Core.Analyzers.Japanese;
 
 public class SJISDistributionAnalyser : CharDistributionAnalyser
@@ -558,7 +560,7 @@ public class SJISDistributionAnalyser : CharDistributionAnalyser
     ///  second byte range: 0x40 -- 0x7e,  0x81 -- oxfe
     /// no validation needed here. State machine has done that
     /// </summary>
-    public override int GetOrder(byte[] buf, int offset)
+    public override int GetOrder(ReadOnlySpan<byte> buf, int offset)
     {
         int order;
 

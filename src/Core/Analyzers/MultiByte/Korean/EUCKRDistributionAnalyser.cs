@@ -1,4 +1,6 @@
-﻿namespace UtfUnknown.Core.Analyzers.Korean;
+﻿using System;
+
+namespace UtfUnknown.Core.Analyzers.Korean;
 
 public class EUCKRDistributionAnalyser : CharDistributionAnalyser
 {
@@ -583,7 +585,7 @@ public class EUCKRDistributionAnalyser : CharDistributionAnalyser
     ///  second byte range: 0xa1 -- 0xfe
     /// no validation needed here. State machine has done that
     /// </summary>
-    public override int GetOrder(byte[] buf, int offset)
+    public override int GetOrder(ReadOnlySpan<byte> buf, int offset)
     {
         if (buf[offset] >= 0xB0)
             return 94 * (buf[offset] - 0xB0) + buf[offset+1] - 0xA1;

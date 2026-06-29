@@ -1,10 +1,12 @@
-﻿namespace UtfUnknown.Core.Analyzers.Japanese;
+﻿using System;
+
+namespace UtfUnknown.Core.Analyzers.Japanese;
 
 public class SJISContextAnalyser : JapaneseContextAnalyser
 {
     private const byte HIRAGANA_FIRST_BYTE = 0x82;
 
-    protected override int GetOrder(byte[] buf, int offset, out int charLen)
+    protected override int GetOrder(ReadOnlySpan<byte> buf, int offset, out int charLen)
     {
         //find out current char's byte length
         if (buf[offset] >= 0x81 && buf[offset] <= 0x9F
@@ -22,7 +24,7 @@ public class SJISContextAnalyser : JapaneseContextAnalyser
         return -1;
     }
 
-    protected override int GetOrder(byte[] buf, int offset)
+    protected override int GetOrder(ReadOnlySpan<byte> buf, int offset)
     {
         // We are only interested in Hiragana
         if (buf[offset] == HIRAGANA_FIRST_BYTE) {

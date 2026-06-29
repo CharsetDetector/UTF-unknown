@@ -1,10 +1,12 @@
+﻿using System;
+
 namespace UtfUnknown.Core.Analyzers.Japanese;
 
 public class EUCJPContextAnalyser : JapaneseContextAnalyser
 {
     private const byte HIRAGANA_FIRST_BYTE = 0xA4;
 
-    protected override int GetOrder(byte[] buf, int offset, out int charLen)
+    protected override int GetOrder(ReadOnlySpan<byte> buf, int offset, out int charLen)
     {
         byte high = buf[offset];
 
@@ -25,7 +27,7 @@ public class EUCJPContextAnalyser : JapaneseContextAnalyser
         return -1;
     }
 
-    protected override int GetOrder(byte[] buf, int offset)
+    protected override int GetOrder(ReadOnlySpan<byte> buf, int offset)
     {
         // We are only interested in Hiragana
         if (buf[offset] == HIRAGANA_FIRST_BYTE) {

@@ -36,6 +36,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System;
 using System.Text;
 
 using UtfUnknown.Core.Analyzers.Chinese;
@@ -64,11 +65,11 @@ public class GB18030Prober : CharsetProber
         return CodepageName.GB18030;
     }
 
-    public override ProbingState HandleData(byte[] buf, int offset, int len)
+    public override ProbingState HandleData(ReadOnlySpan<byte> buf)
     {
-        int max = offset + len;
+        int max = buf.Length;
 
-        for (int i = offset; i < max; i++)
+        for (int i = 0; i < max; i++)
         {
             var codingState = codingSM.NextState(buf[i]);
 
@@ -87,9 +88,9 @@ public class GB18030Prober : CharsetProber
             if (codingState == StateMachineModel.START)
             {
                 int charLen = codingSM.CurrentCharLen;
-                if (i == offset)
+                if (i == 0)
                 {
-                    lastChar[1] = buf[offset];
+                    lastChar[1] = buf[0];
                     analyser.HandleOneChar(lastChar, 0, charLen);
                 }
                 else

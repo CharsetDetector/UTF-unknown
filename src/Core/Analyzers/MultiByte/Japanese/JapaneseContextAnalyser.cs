@@ -36,6 +36,8 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System;
+
 namespace UtfUnknown.Core.Analyzers.Japanese;
 
 public abstract class JapaneseContextAnalyser
@@ -165,7 +167,7 @@ public abstract class JapaneseContextAnalyser
             return DONT_KNOW;
     }
 
-    public void HandleData(byte[] buf, int offset, int len)
+    public void HandleData(ReadOnlySpan<byte> buf, int offset, int len)
     {
         int max = offset + len;
 
@@ -199,7 +201,7 @@ public abstract class JapaneseContextAnalyser
         }
     }
 
-    public void HandleOneChar(byte[] buf, int offset, int charLen)
+    public void HandleOneChar(ReadOnlySpan<byte> buf, int offset, int charLen)
     {
         if (totalRel > MAX_REL_THRESHOLD)
             done = true;
@@ -227,9 +229,9 @@ public abstract class JapaneseContextAnalyser
         }
     }
 
-    protected abstract int GetOrder(byte[] buf, int offset, out int charLen);
+    protected abstract int GetOrder(ReadOnlySpan<byte> buf, int offset, out int charLen);
 
-    protected abstract int GetOrder(byte[] buf, int offset);
+    protected abstract int GetOrder(ReadOnlySpan<byte> buf, int offset);
 
     public bool GotEnoughData()
     {

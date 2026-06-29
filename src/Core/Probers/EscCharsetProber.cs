@@ -35,6 +35,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System;
 using System.Text;
 
 using UtfUnknown.Core.Models;
@@ -70,11 +71,11 @@ public class EscCharsetProber : CharsetProber
         detectedCharset = null;
     }
 
-    public override ProbingState HandleData(byte[] buf, int offset, int len)
+    public override ProbingState HandleData(ReadOnlySpan<byte> buf)
     {
-        int max = offset + len;
+        int max = buf.Length;
 
-        for (int i = offset; i < max && state == ProbingState.Detecting; i++) {
+        for (int i = 0; i < max && state == ProbingState.Detecting; i++) {
             for (int j = activeSM - 1; j >= 0; j--) {
                 // byte is feed to all active state machine
                 int codingState = codingSM[j].NextState(buf[i]);
