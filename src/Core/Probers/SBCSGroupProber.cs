@@ -36,6 +36,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System;
 using System.Text;
 
 #region using languages
@@ -253,7 +254,7 @@ public class SBCSGroupProber : CharsetProber
         Reset();
     }
 
-    public override ProbingState HandleData(byte[] buf, int offset, int len)
+    public override ProbingState HandleData(ReadOnlySpan<byte> buf)
     {
         // apply filter to original buffer, and we got new buffer back
         // depend on what script it is, we will feed them the new buffer
@@ -262,7 +263,7 @@ public class SBCSGroupProber : CharsetProber
         // of each prober since as of now, there are no probers here which
         // recognize languages with English characters.
 
-        byte[] newBuf = FilterWithoutEnglishLetters(buf, offset, len);
+        byte[] newBuf = FilterWithoutEnglishLetters(buf);
 
         if (newBuf.Length == 0)
             return state; // Nothing to see here, move on.
@@ -271,7 +272,7 @@ public class SBCSGroupProber : CharsetProber
         {
             if (isActive[i])
             {
-                ProbingState st = probers[i].HandleData(newBuf, 0, newBuf.Length);
+                ProbingState st = probers[i].HandleData(newBuf);
 
                 if (st == ProbingState.FoundIt)
                 {

@@ -35,6 +35,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System;
 using System.Text;
 
 using UtfUnknown.Core.Analyzers.Korean;
@@ -61,12 +62,12 @@ public class EUCKRProber : CharsetProber
         return CodepageName.EUC_KR;
     }
 
-    public override ProbingState HandleData(byte[] buf, int offset, int len)
+    public override ProbingState HandleData(ReadOnlySpan<byte> buf)
     {
         int codingState;
-        int max = offset + len;
+        int max = buf.Length;
 
-        for (int i = offset; i < max; i++)
+        for (int i = 0; i < max; i++)
         {
             codingState = codingSM.NextState(buf[i]);
             if (codingState == StateMachineModel.ERROR)
@@ -84,9 +85,9 @@ public class EUCKRProber : CharsetProber
             if (codingState == StateMachineModel.START)
             {
                 int charLen = codingSM.CurrentCharLen;
-                if (i == offset)
+                if (i == 0)
                 {
-                    lastChar[1] = buf[offset];
+                    lastChar[1] = buf[0];
                     distributionAnalyser.HandleOneChar(lastChar, 0, charLen);
                 }
                 else

@@ -36,6 +36,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System;
 using System.Text;
 
 namespace UtfUnknown.Core.Probers;
@@ -130,9 +131,9 @@ public class Latin1Prober : CharsetProber
             freqCounter[i] = 0;
     }
 
-    public override ProbingState HandleData(byte[] buf, int offset, int len)
+    public override ProbingState HandleData(ReadOnlySpan<byte> buf)
     {
-        byte[] newbuf = FilterWithEnglishLetters(buf, offset, len);
+        byte[] newbuf = FilterWithEnglishLetters(buf);
         byte charClass, freq;
 
         for (int i = 0; i < newbuf.Length; i++)

@@ -36,6 +36,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System;
 using System.Text;
 
 using UtfUnknown.Core.Models;
@@ -68,11 +69,11 @@ public class UTF8Prober : CharsetProber
         state = ProbingState.Detecting;
     }
 
-    public override ProbingState HandleData(byte[] buf, int offset, int len)
+    public override ProbingState HandleData(ReadOnlySpan<byte> buf)
     {
-        int max = offset + len;
+        int max = buf.Length;
 
-        for (int i = offset; i < max; i++)
+        for (int i = 0; i < max; i++)
         {
 
             var codingState = codingSM.NextState(buf[i]);
