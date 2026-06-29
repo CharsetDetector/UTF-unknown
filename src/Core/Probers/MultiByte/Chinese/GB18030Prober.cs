@@ -91,11 +91,11 @@ public class GB18030Prober : CharsetProber
                 if (i == 0)
                 {
                     lastChar[1] = buf[0];
-                    analyser.HandleOneChar(lastChar, 0, charLen);
+                    analyser.HandleOneChar(lastChar, charLen);
                 }
                 else
                 {
-                    analyser.HandleOneChar(buf, i - 1, charLen);
+                    analyser.HandleOneChar(buf.Slice(i - 1), charLen);
                 }
             }
         }

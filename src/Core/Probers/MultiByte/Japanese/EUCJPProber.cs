@@ -88,13 +88,13 @@ public class EUCJPProber : CharsetProber
                 if (i == 0)
                 {
                     lastChar[1] = buf[0];
-                    contextAnalyser.HandleOneChar(lastChar, 0, charLen);
-                    distributionAnalyser.HandleOneChar(lastChar, 0, charLen);
+                    contextAnalyser.HandleOneChar(lastChar, charLen);
+                    distributionAnalyser.HandleOneChar(lastChar, charLen);
                 }
                 else
                 {
-                    contextAnalyser.HandleOneChar(buf, i - 1, charLen);
-                    distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
+                    contextAnalyser.HandleOneChar(buf.Slice(i - 1), charLen);
+                    distributionAnalyser.HandleOneChar(buf.Slice(i - 1), charLen);
                 }
             }
         }

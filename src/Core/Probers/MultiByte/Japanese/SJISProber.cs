@@ -95,13 +95,13 @@ public class SJISProber : CharsetProber
                 if (i == 0)
                 {
                     lastChar[1] = buf[0];
-                    contextAnalyser.HandleOneChar(lastChar, 2 - charLen, charLen);
-                    distributionAnalyser.HandleOneChar(lastChar, 0, charLen);
+                    contextAnalyser.HandleOneChar(lastChar.AsSpan(2 - charLen), charLen);
+                    distributionAnalyser.HandleOneChar(lastChar, charLen);
                 }
                 else
                 {
-                    contextAnalyser.HandleOneChar(buf, i + 1 - charLen, charLen);
-                    distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
+                    contextAnalyser.HandleOneChar(buf.Slice(i + 1 - charLen), charLen);
+                    distributionAnalyser.HandleOneChar(buf.Slice(i - 1), charLen);
                 }
             }
         }
