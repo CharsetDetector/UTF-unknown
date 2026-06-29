@@ -31,7 +31,6 @@ Features:
 ## Supported Platforms
 
 - .NET 8
-- .NET 8
 - .NET Standard 2.0
 
 __Remarks:__
