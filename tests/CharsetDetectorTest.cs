@@ -4,6 +4,7 @@
 //   Rudi Pettazzi <rudi.pettazzi@gmail.com>
 //
 
+using System;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
@@ -187,6 +188,16 @@ public class CharsetDetectorTest
     public void TestBomUtf8()
     {
         byte[] buf = { 0xEF, 0xBB, 0xBF, 0x68, 0x65, 0x6C, 0x6C, 0x6F, 0x21 };
+        var result = CharsetDetector.DetectFromBytes(buf);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.UTF8));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.True);
+    }
+
+    [Test]
+    public void DetectFromReadOnlySpan()
+    {
+        ReadOnlySpan<byte> buf = new byte[] { 0xEF, 0xBB, 0xBF, 0x68, 0x65, 0x6C, 0x6C, 0x6F, 0x21 };
         var result = CharsetDetector.DetectFromBytes(buf);
         Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.UTF8));
         Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
