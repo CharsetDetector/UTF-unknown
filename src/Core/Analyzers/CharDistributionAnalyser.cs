@@ -79,7 +79,6 @@ public abstract class CharDistributionAnalyser
     /// This allow multiple encoding of a language to share one frequency table
     /// </remarks>
     /// <param name="buf">A <see cref="System.Byte"/></param>
-    /// <param name="offset"></param>
     /// <returns></returns>
     public abstract int GetOrder(ReadOnlySpan<byte> buf);
 
@@ -87,7 +86,6 @@ public abstract class CharDistributionAnalyser
     /// Feed a character with known length
     /// </summary>
     /// <param name="buf">A <see cref="System.Byte"/></param>
-    /// <param name="offset">buf offset</param>
     /// <param name="charLen">1 of 2 char length?</param>
     public void HandleOneChar(ReadOnlySpan<byte> buf, int charLen)
     {
