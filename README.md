@@ -30,9 +30,10 @@ Features:
 
 ## Supported Platforms
 
-- .NET 6 (Will be dropped in the future)
 - .NET 8
 - .NET Standard 2.0
+
+> **Note:** .NET 6 support was removed in version 2.7.0.
 
 __Remarks:__
 You can still register your [`EncodingProvider`](https://docs.microsoft.com/dotnet/api/system.text.encodingprovider) 

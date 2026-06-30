@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net6.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.0;net8.0</TargetFrameworks>
   
   </PropertyGroup>
 
@@ -20,14 +20,12 @@
     <PackageReference Include="System.Text.Encoding.CodePages" Version="4.7.1" />
     <PackageReference Include="System.Memory" Version="4.5.5" />
   </ItemGroup>
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' ">
-    <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.1" />
-  </ItemGroup>
+
   <ItemGroup Condition=" '$(TargetFramework)' == 'net8.0' ">
     <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.0.300" PrivateAssets="All" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -41,7 +39,6 @@
 Features:
 - Easy to use API
 - Supports frameworks:
- - .NET 6 (Will be dropped in the future)
  - .NET 8
  - .NET Standard 2.0
 - Strong named
@@ -94,6 +91,10 @@ Features:
   <ItemGroup>
     <None Include="..\logo.png" Pack="true" PackagePath="\" />
     <None Include="..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="UtfUnknown.Tests, PublicKey=002400000480000094000000060200000024000052534131000400000100010029f6b4defac76366721687460b44b7619e8e19a411f785279316fdae2f6965edfa4a460304fe8b4ed796d5356a1c225131b9087983d9ff9530df9307eab17d88cd4f1005a45f6f35523445d1ff7323322f3060cffc0d70d0cb1b4b7d46081bbead31844927aaadb0508b64bf298de5abe5ea5cca8b92490c961b7b7513c2c2a9" />
   </ItemGroup>
 
 </Project>
