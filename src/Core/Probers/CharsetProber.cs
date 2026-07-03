@@ -190,7 +190,7 @@ public abstract class CharsetProber
 
     private static void WriteSpanToStream(MemoryStream stream, ReadOnlySpan<byte> buffer)
     {
-#if NETSTANDARD2_1_OR_GREATER || NETCOREAPP2_1_OR_GREATER
+#if NET8_0_OR_GREATER
         stream.Write(buffer);
 #else
         byte[] rent = ArrayPool<byte>.Shared.Rent(buffer.Length);

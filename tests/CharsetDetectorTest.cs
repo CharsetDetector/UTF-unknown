@@ -205,6 +205,119 @@ public class CharsetDetectorTest
     }
 
     [Test]
+    public void DetectFromReadOnlySpan_Empty()
+    {
+        var result = CharsetDetector.DetectFromBytes(ReadOnlySpan<byte>.Empty);
+        Assert.That(result.Detected, Is.Null);
+    }
+
+    [Test]
+    public void DetectFromReadOnlySpan_ASCII()
+    {
+        ReadOnlySpan<byte> buf = Encoding.ASCII.GetBytes("Hello, World!");
+        var result = CharsetDetector.DetectFromBytes(buf);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.ASCII));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.False);
+    }
+
+    [Test]
+    public void DetectFromReadOnlySpan_UTF8()
+    {
+        string s = "ウィキペディアはオープンコンテントの百科事典です。";
+        ReadOnlySpan<byte> buf = Encoding.UTF8.GetBytes(s);
+        var result = CharsetDetector.DetectFromBytes(buf);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.UTF8));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.False);
+    }
+
+    [Test]
+    [TestCase(0, 10, CodepageName.ASCII)]
+    [TestCase(0, 100, CodepageName.UTF8)]
+    [TestCase(10, 100, CodepageName.UTF8)]
+    public void DetectFromReadOnlySpan_Sliced(int offset, int len, string detectedCodepage)
+    {
+        // Arrange - demonstrates the key use case: detecting encoding from a slice without copying
+        string s = "UTF-Unknown은 파일, 스트림, 그 외 바이트 배열의 캐릭터 셋을 탐지하는 라이브러리입니다." +
+                   "대한민국 (大韓民國, Republic of Korea)";
+        byte[] bytes = Encoding.UTF8.GetBytes(s);
+
+        // Act
+        var result = CharsetDetector.DetectFromBytes(bytes.AsSpan(offset, len));
+
+        // Assert
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(detectedCodepage));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.False);
+    }
+
+    [Test]
+    [TestCase(new byte[] { 0x2B, 0x2F, 0x76, 0x38 })]
+    [TestCase(new byte[] { 0x2B, 0x2F, 0x76, 0x39 })]
+    [TestCase(new byte[] { 0x2B, 0x2F, 0x76, 0x2B })]
+    [TestCase(new byte[] { 0x2B, 0x2F, 0x76, 0x2F })]
+    [TestCase(new byte[] { 0x2B, 0x2F, 0x76, 0x38, 0x2D })]
+    public void DetectFromReadOnlySpan_BomUtf7(byte[] bufferBytes)
+    {
+        ReadOnlySpan<byte> buf = bufferBytes;
+        var result = CharsetDetector.DetectFromBytes(buf).Detected;
+        Assert.That(result.EncodingName, Is.EqualTo(CodepageName.UTF7));
+        Assert.That(result.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.HasBOM, Is.True);
+    }
+
+    [Test]
+    public void DetectFromReadOnlySpan_BomGb18030()
+    {
+        ReadOnlySpan<byte> buf = new byte[] { 0x84, 0x31, 0x95, 0x33 };
+        var result = CharsetDetector.DetectFromBytes(buf).Detected;
+        Assert.That(result.EncodingName, Is.EqualTo(CodepageName.GB18030));
+        Assert.That(result.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.HasBOM, Is.True);
+    }
+
+    [Test]
+    public void DetectFromReadOnlySpan_BomUTF16_BE()
+    {
+        ReadOnlySpan<byte> buf = new byte[] { 0xFE, 0xFF, 0x00, 0x68, 0x00, 0x65 };
+        var result = CharsetDetector.DetectFromBytes(buf);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.UTF16_BE));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.True);
+    }
+
+    [Test]
+    public void DetectFromReadOnlySpan_BomUTF16_LE()
+    {
+        ReadOnlySpan<byte> buf = new byte[] { 0xFF, 0xFE, 0x68, 0x00, 0x65, 0x00 };
+        var result = CharsetDetector.DetectFromBytes(buf);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.UTF16_LE));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.True);
+    }
+
+    [Test]
+    public void DetectFromReadOnlySpan_BomUTF32_BE()
+    {
+        ReadOnlySpan<byte> buf = new byte[] { 0x00, 0x00, 0xFE, 0xFF, 0x00, 0x00, 0x00, 0x68 };
+        var result = CharsetDetector.DetectFromBytes(buf);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.UTF32_BE));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.True);
+    }
+
+    [Test]
+    public void DetectFromReadOnlySpan_BomUTF32_LE()
+    {
+        ReadOnlySpan<byte> buf = new byte[] { 0xFF, 0xFE, 0x00, 0x00, 0x68, 0x00, 0x00, 0x00 };
+        var result = CharsetDetector.DetectFromBytes(buf);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.UTF32_LE));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.True);
+    }
+
+    [Test]
     public void Test2byteArrayBomUTF16_BE()
     {
         byte[] buf = { 0xFE, 0xFF, };
