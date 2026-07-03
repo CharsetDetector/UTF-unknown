@@ -418,8 +418,10 @@ public class CharsetDetector
             return;
         }
 
-        if (buf.Length > 0)
-            _gotData = true;
+        if (buf.Length == 0)
+            return;
+
+        _gotData = true;
 
         // If the data starts with BOM, we know it is UTF
         if (_start)

@@ -167,9 +167,9 @@ public abstract class JapaneseContextAnalyser
             return DONT_KNOW;
     }
 
-    public void HandleData(ReadOnlySpan<byte> buf, int offset, int len)
+    public void HandleData(ReadOnlySpan<byte> buf)
     {
-        int max = offset + len;
+        int max = buf.Length;
 
         if (done)
             return;
@@ -181,7 +181,7 @@ public abstract class JapaneseContextAnalyser
         // to record those bytes as well and analyse the character once it
         // is complete, but since a character will not make much difference,
         // skipping it will simplify our logic and improve performance.
-        for (int i = needToSkipCharNum+offset; i < max; ) {
+        for (int i = needToSkipCharNum; i < max; ) {
             int order = GetOrder(buf.Slice(i), out var charLen);
             i += charLen;
             if (i > max) {
