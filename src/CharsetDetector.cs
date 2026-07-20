@@ -110,7 +110,7 @@ public class CharsetDetector
 
     private const float MinimumThreshold = 0.20f;
 
-    private CharsetDetector()
+    protected CharsetDetector()
     {
         _start = true;
         InputState = InputState.PureASCII;
@@ -418,8 +418,10 @@ public class CharsetDetector
             return;
         }
 
-        if (buf.Length > 0)
-            _gotData = true;
+        if (buf.IsEmpty)
+            return;
+
+        _gotData = true;
 
         // If the data starts with BOM, we know it is UTF
         if (_start)
@@ -556,7 +558,7 @@ public class CharsetDetector
     /// <summary>
     /// Notify detector that no further data is available.
     /// </summary>
-    private DetectionResult DataEnd()
+    protected DetectionResult DataEnd()
     {
         if (!_gotData)
         {

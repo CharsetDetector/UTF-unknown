@@ -329,4 +329,28 @@ public class CharsetDetectorTest
         Assert.That(result.Detected.Confidence, Is.EqualTo(1));
         Assert.That(result.Detected.HasBOM, Is.False);
     }
+
+    [Test]
+    public void TestFeedEmpty()
+    {
+        Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+        string s = "UTF-Unknown은 파일, 스트림, 그 외 바이트 배열의 캐릭터 셋을 탐지하는 라이브러리입니다." +
+            "대한민국 (大韓民國, Republic of Korea)";
+
+        var eucKr = Encoding.GetEncoding(CodepageName.EUC_KR);
+        Assert.That(eucKr, Is.Not.Null);
+        var bytes = eucKr.GetBytes(s);
+        
+        var charsetDetector = new TestCharsetDetector();
+
+        // Make sure EUCKRProber is enqueued to charsetDetector.CharsetProbers
+        // so feeding empty bytes may invoke EUCKRProber.HandleData
+        charsetDetector.Feed(bytes);
+        charsetDetector.Feed([]);
+        var result = charsetDetector.DataEnd();
+
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.EUC_KR));
+        Assert.That(result.Detected.HasBOM, Is.False);
+    }
 }
