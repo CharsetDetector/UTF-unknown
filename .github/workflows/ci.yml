@@ -7,6 +7,13 @@ on:
     branches: [ main ]
   release:
     types: [ published ]
+  workflow_dispatch:
+    inputs:
+      publish:
+        description: Publish the NuGet package to nuget.org
+        type: boolean
+        required: false
+        default: false
 
 env:
   DOTNET_SKIP_FIRST_TIME_EXPERIENCE: 1
@@ -134,10 +141,10 @@ jobs:
         path: TestResults-${{ matrix.os }}/*.trx
 
   deploy:
-    # Publish only when creating a GitHub Release
+    # Publish when creating a GitHub Release, or manually via workflow_dispatch with "publish" enabled
     # https://docs.github.com/en/repositories/releasing-projects-on-github/managing-releases-in-a-repository
     # You can update this logic if you want to manage releases differently
-    if: github.event_name == 'release'
+    if: github.event_name == 'release' || (github.event_name == 'workflow_dispatch' && inputs.publish == 'true')
     runs-on: ubuntu-latest
     needs: [ validate_nuget, run_test ]
     permissions:
@@ -155,7 +162,7 @@ jobs:
         uses: actions/setup-dotnet@v4
 
       - name: Authenticate to NuGet.org with trusted publishing
-        uses: NuGet/login@v3
+        uses: NuGet/login@v1
         id: nuget_login
         with:
           user: ${{ secrets.NUGET_USERNAME }}
