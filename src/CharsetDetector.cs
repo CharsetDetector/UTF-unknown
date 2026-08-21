@@ -558,7 +558,7 @@ public class CharsetDetector
     /// <summary>
     /// Notify detector that no further data is available.
     /// </summary>
-    protected DetectionResult DataEnd()
+    private protected DetectionResult DataEnd()
     {
         if (!_gotData)
         {
