@@ -28,6 +28,11 @@ jobs:
 
     - name: Install .NET
       uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: |
+          8.0.x
+          9.0.x
+          10.0.x
       
     - name: Cache NuGet packages 
       uses: actions/cache@v4
@@ -78,20 +83,25 @@ jobs:
       matrix:
         os: [ ubuntu-latest, windows-latest, macos-latest ]
         include:
-          # Only test on all frameworks on Windows (closest to original AppVeyor setup)
+          # Only test on all frameworks on Windows, incl. net481 (closest to original AppVeyor setup)
           - os: windows-latest
-            test-framework: ''
-          # Test only .NET 8.0 on Linux and macOS for efficiency
+            test-frameworks: ''
+          # Test .NET 8.0, 9.0 and 10.0 on Linux and macOS (net481 is Windows-only)
           - os: ubuntu-latest
-            test-framework: '--framework net8.0'
+            test-frameworks: 'net8.0,net9.0,net10.0'
           - os: macos-latest
-            test-framework: '--framework net8.0'
+            test-frameworks: 'net8.0,net9.0,net10.0'
     name: Run tests on ${{ matrix.os }}
     steps:
     - uses: actions/checkout@v4
     
     - name: Install .NET
       uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: |
+          8.0.x
+          9.0.x
+          10.0.x
       
     - name: Cache NuGet packages 
       uses: actions/cache@v4
@@ -105,7 +115,15 @@ jobs:
       run: dotnet restore
       
     - name: Run tests
-      run: dotnet test --configuration Release --no-restore --logger trx --results-directory "TestResults-${{ matrix.os }}" ${{ matrix.test-framework }}
+      run: |
+        $frameworks = '${{ matrix.test-frameworks }}'
+        if ([string]::IsNullOrEmpty($frameworks)) {
+          dotnet test --configuration Release --no-restore --logger trx --results-directory "TestResults-${{ matrix.os }}"
+        } else {
+          foreach ($fw in $frameworks.Split(',')) {
+            dotnet test --configuration Release --no-restore --logger trx --results-directory "TestResults-${{ matrix.os }}" --framework $fw
+          }
+        }
       
     - name: Upload test results
       uses: actions/upload-artifact@v4
