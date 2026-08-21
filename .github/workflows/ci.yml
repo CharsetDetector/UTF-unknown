@@ -121,7 +121,8 @@ jobs:
           dotnet test --configuration Release --no-restore --logger trx --results-directory "TestResults-${{ matrix.os }}"
         } else {
           foreach ($fw in $frameworks.Split(',')) {
-            dotnet test --configuration Release --no-restore --logger trx --results-directory "TestResults-${{ matrix.os }}" --framework $fw
+            $fw = $fw.Trim()
+            dotnet test --configuration Release --no-restore --logger "trx;LogFileName=TestResults_${{ matrix.os }}_$fw.trx" --results-directory "TestResults-${{ matrix.os }}" --framework $fw
           }
         }
       
