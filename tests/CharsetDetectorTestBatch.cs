@@ -209,6 +209,10 @@ public class CharsetDetectorTestBatch : IDisposable
     {
 #if NET8_0
         return "net8";
+#elif NET9_0
+        return "net9";
+#elif NET10_0
+        return "net10";
 #elif NET481
         return "net481";
 #else

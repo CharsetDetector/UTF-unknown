@@ -1,7 +1,9 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net481;net8.0</TargetFrameworks>
+    <!-- Full matrix in CI; locally only net481 and net10.0 to keep the inner loop fast -->
+    <TargetFrameworks Condition=" '$(GITHUB_ACTIONS)' == 'true' ">net481;net8.0;net9.0;net10.0</TargetFrameworks>
+    <TargetFrameworks Condition=" '$(GITHUB_ACTIONS)' != 'true' ">net481;net10.0</TargetFrameworks>
     <RootNamespace>UtfUnknown.Tests</RootNamespace>
     <AssemblyName>UtfUnknown.Tests</AssemblyName>
     <SignAssembly>true</SignAssembly>
