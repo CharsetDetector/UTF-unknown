@@ -1,11 +1,11 @@
-[![CI/CD](https://github.com/CharsetDetector/UTF-unknown/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/CharsetDetector/UTF-unknown/actions/workflows/ci.yml)
+[![CI/CD](https://github.com/CharsetDetector/UTF-unknown/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/CharsetDetector/UTF-unknown/actions/workflows/ci.yml)
 [![NuGet Pre Release](https://img.shields.io/nuget/vpre/UTF.Unknown.svg)](https://www.nuget.org/packages/UTF.Unknown/)
 
 <!--
-[![codecov.io](https://codecov.io/github/UniversalCharsetDetector/ude/coverage.svg?branch=master)](https://codecov.io/github/UniversalCharsetDetector/ude?branch=master)
+[![codecov.io](https://codecov.io/github/UniversalCharsetDetector/ude/coverage.svg?branch=main)](https://codecov.io/github/UniversalCharsetDetector/ude?branch=main)
 -->
 
-<h1><img src="https://raw.githubusercontent.com/CharsetDetector/UTF-unknown/master/logo.png" width="40" height="40" /> UTF Unknown </h1>
+<h1><img src="https://raw.githubusercontent.com/CharsetDetector/UTF-unknown/main/logo.png" width="40" height="40" /> UTF Unknown </h1>
 
 
 
