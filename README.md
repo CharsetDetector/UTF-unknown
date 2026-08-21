@@ -27,14 +27,14 @@ Features:
 
 ## Supported Platforms
 
-- .NET 8
+- .NET 8, .NET 9 and .NET 10
 - .NET Standard 2.0
 
 > **Note:** .NET 6 support was removed in version 2.7.0.
 
 __Remarks:__
 You can still register your [`EncodingProvider`](https://docs.microsoft.com/dotnet/api/system.text.encodingprovider) 
-so that the  [`Encoding.GetEncoding(...)`](https://docs.microsoft.com/dotnet/api/system.text.encoding.getencoding) method first tries to find in it.
+so that the [`Encoding.GetEncoding(...)`](https://docs.microsoft.com/dotnet/api/system.text.encoding.getencoding) method first tries to find the encoding using it.
 
 ## Usage
 
