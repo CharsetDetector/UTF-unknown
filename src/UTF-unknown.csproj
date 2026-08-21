@@ -75,7 +75,7 @@ Features:
 
   <PropertyGroup>
     <EnablePackageValidation>true</EnablePackageValidation>
-    <PackageValidationBaselineVersion>2.0.0</PackageValidationBaselineVersion>
+    <PackageValidationBaselineVersion>2.6.0</PackageValidationBaselineVersion>
     <ApiCompatEnableRuleCannotChangeParameterName>true</ApiCompatEnableRuleCannotChangeParameterName>
     <GeneratePackageOnBuild Condition=" '$(CI)' != 'true' AND '$(APPVEYOR)' != 'True' AND '$(GITHUB_ACTIONS)' != 'true' ">true</GeneratePackageOnBuild>
   </PropertyGroup>
