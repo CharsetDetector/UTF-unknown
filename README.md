@@ -16,7 +16,7 @@ Detection of character sets with a simple and redesigned interface.
 This package is based on [Ude](https://github.com/errepi/ude) and since version 2 also on [uchardet](https://gitlab.freedesktop.org/uchardet/uchardet),
 which are ports of the [Mozilla Universal Charset Detector](https://www-archive.mozilla.org/projects/intl/chardet.html).
 
-The interface and other classes has been resigned so it's easier to use and better object oriented design (OOD). Unit tests and CI has been added.
+The interface and other classes have been redesigned so it's easier to use and has a better object oriented design (OOD). Unit tests and CI have been added.
 
 Features:
 
@@ -54,6 +54,9 @@ result = CharsetDetector.DetectFromStream(stream);
 
 // Detect from bytes
 results = CharsetDetector.DetectFromBytes(byteArray);
+
+// Detect from a ReadOnlySpan<byte> (also accepts Span<byte> implicitly)
+results = CharsetDetector.DetectFromBytes(readOnlySpanOfBytes);
 
 // Get the best Detection
 DetectionDetail resultDetected = results.Detected;
@@ -133,7 +136,7 @@ __Encodings without BOM are presented in the table, separated by languages:__
 </details>
 
 __Remarks:__
-For some aliases of encoding not available: `cp949`, `iso-2022-cn`, `euc-tw`, `iso-8859-10`, `iso-8859-16`, `viscii`, `X-ISO-10646-UCS-4-34121`/`X-ISO-10646-UCS-4-21431`. Some of them have been offered a suitable replacement for the return result by  `DetectionDetail.Encoding`:
+For some encodings no alias is available: `cp949`, `iso-2022-cn`, `euc-tw`, `iso-8859-10`, `iso-8859-16`, `viscii`, `X-ISO-10646-UCS-4-34121`/`X-ISO-10646-UCS-4-21431`. Some of them have been offered a suitable replacement for the return result by `DetectionDetail.Encoding`:
 - `cp949`: use `ks_c_5601-1987`
 - `iso-2022-cn`: use `x-cp50227`
 
