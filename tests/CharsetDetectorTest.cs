@@ -205,6 +205,42 @@ public class CharsetDetectorTest
     }
 
     [Test]
+    public void DetectFromReadOnlySpan_Empty()
+    {
+        var result = CharsetDetector.DetectFromBytes(ReadOnlySpan<byte>.Empty);
+        Assert.That(result.Detected, Is.Null);
+    }
+
+    [Test]
+    public void DetectFromReadOnlySpan_SlicedWithOffset()
+    {
+        // BOM should only be recognized when it starts at the beginning of the span,
+        // not at the beginning of the underlying array.
+        byte[] underlying = { 0x00, 0x00, 0x00, 0x00, 0x00, 0xEF, 0xBB, 0xBF, 0x68, 0x65, 0x6C, 0x6C, 0x6F, 0x21 };
+        ReadOnlySpan<byte> slice = underlying.AsSpan(5, underlying.Length - 5);
+
+        var result = CharsetDetector.DetectFromBytes(slice);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.UTF8));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.True);
+    }
+
+    [Test]
+    public void DetectFromReadOnlySpan_NoBom()
+    {
+        string s = "ウィキペディアはオープンコンテントの百科事典です。基本方針に賛同し" +
+                   "ていただけるなら、誰でも記事を編集したり新しく作成したりできます。" +
+                   "ガイドブックを読んでから、サンドボックスで練習してみましょう。質問は" +
+                   "利用案内でどうぞ。";
+        ReadOnlySpan<byte> buf = Encoding.UTF8.GetBytes(s);
+
+        var result = CharsetDetector.DetectFromBytes(buf);
+        Assert.That(result.Detected.EncodingName, Is.EqualTo(CodepageName.UTF8));
+        Assert.That(result.Detected.Confidence, Is.EqualTo(1.0f));
+        Assert.That(result.Detected.HasBOM, Is.False);
+    }
+
+    [Test]
     public void Test2byteArrayBomUTF16_BE()
     {
         byte[] buf = { 0xFE, 0xFF, };
