@@ -137,7 +137,9 @@ jobs:
 
       - name: Authenticate to NuGet.org with trusted publishing
         uses: NuGet/login@v3
-
+        id: nuget_login
+        with:
+          user: ${{ secrets.NUGET_USERNAME }}
       # Publish the NuGet package to NuGet.org using the OIDC token issued by GitHub Actions.
       # The NuGet.org package must be configured for trusted publishing in the package owner account.
       - name: Publish NuGet package to nuget.org
