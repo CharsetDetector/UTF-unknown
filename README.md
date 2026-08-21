@@ -2,7 +2,7 @@
 [![NuGet Pre Release](https://img.shields.io/nuget/vpre/UTF.Unknown.svg)](https://www.nuget.org/packages/UTF.Unknown/)
 
 
-# ![UTF Unknown logo](https://raw.githubusercontent.com/CharsetDetector/UTF-unknown/main/logo40.png) UTF Unknown
+# ![UTF Unknown logo](https://raw.githubusercontent.com/CharsetDetector/UTF-unknown/main/logo30.png) UTF Unknown
 
 
 
