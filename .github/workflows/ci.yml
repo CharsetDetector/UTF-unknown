@@ -22,12 +22,12 @@ jobs:
     runs-on: ubuntu-latest
     name: Create NuGet packages
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
       with:
         fetch-depth: 0 # Get all history to allow automatic versioning using MinVer
 
     - name: Install .NET
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: |
           8.0.x
@@ -35,7 +35,7 @@ jobs:
           10.0.x
       
     - name: Cache NuGet packages 
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
@@ -49,7 +49,7 @@ jobs:
       run: dotnet msbuild -t:Pack src/UTF-unknown.csproj -p:Configuration=Release -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:ContinuousIntegrationBuild=true -p:EmbedUntrackedSources=true -p:PackageOutputPath=${{ env.NuGetDirectory }} -verbosity:minimal -p:FileVersion=2.1.${{ github.run_number }} 
 
     - name: Upload packages to artifacts
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       with:
         name: nuget
         if-no-files-found: error
@@ -61,10 +61,10 @@ jobs:
     needs: [ create_nuget ]
     steps:
       - name: Install .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
 
       - name: Download NuGet package
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: nuget
           path: ${{ env.NuGetDirectory }}
@@ -93,10 +93,10 @@ jobs:
             test-frameworks: 'net8.0,net9.0,net10.0'
     name: Run tests on ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
     
     - name: Install .NET
-      uses: actions/setup-dotnet@v4
+      uses: actions/setup-dotnet@v5
       with:
         dotnet-version: |
           8.0.x
@@ -104,7 +104,7 @@ jobs:
           10.0.x
       
     - name: Cache NuGet packages 
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: ~/.nuget/packages
         key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
@@ -127,7 +127,7 @@ jobs:
         }
       
     - name: Upload test results
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       if: always()
       with:
         name: test-results-${{ matrix.os }}
@@ -146,16 +146,16 @@ jobs:
       id-token: write
     steps:
       - name: Download NuGet package
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v5
         with:
           name: nuget
           path: ${{ env.NuGetDirectory }}
 
       - name: Install .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v5
 
       - name: Authenticate to NuGet.org with trusted publishing
-        uses: NuGet/login@v3
+        uses: NuGet/login@v1
         id: nuget_login
         with:
           user: ${{ secrets.NUGET_USERNAME }}
