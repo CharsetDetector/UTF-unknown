@@ -139,6 +139,10 @@ jobs:
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
     needs: [ validate_nuget, run_test ]
+    permissions:
+      actions: read
+      contents: read
+      id-token: write
     steps:
       - name: Download NuGet package
         uses: actions/download-artifact@v4
@@ -149,15 +153,14 @@ jobs:
       - name: Install .NET
         uses: actions/setup-dotnet@v4
 
-      # Publish the NuGet package to NuGet.org
-      # To publish to NuGet.org, you need to create an account and generate an API key
-      # - Create an account on NuGet.org
-      # - Go to https://www.nuget.org/account/apikeys
-      # - Create a new API key
-      # - Copy the API key and add it as a secret in your GitHub repository with the name NUGET_API_KEY
+      - name: Authenticate to NuGet.org with trusted publishing
+        uses: NuGet/login@v3
+        id: nuget_login
+        with:
+          user: ${{ secrets.NUGET_USERNAME }}
+      # Publish the NuGet package to NuGet.org using the OIDC token issued by GitHub Actions.
+      # The NuGet.org package must be configured for trusted publishing in the package owner account.
       - name: Publish NuGet package to nuget.org
-        env:
-          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
         run: |
           foreach($file in (Get-ChildItem "${{ env.NuGetDirectory }}" -Recurse -Include *.nupkg, *.snupkg)) {
               dotnet nuget push $file --source https://api.nuget.org/v3/index.json --skip-duplicate
