@@ -1,3 +1,5 @@
+using System;
+
 namespace UtfUnknown.Core.Analyzers.Chinese;
 
 public class GB18030DistributionAnalyser : CharDistributionAnalyser
@@ -463,10 +465,10 @@ public class GB18030DistributionAnalyser : CharDistributionAnalyser
     /// no validation needed here. State machine has done that
     /// </summary>
     /// <returns></returns>
-    public override int GetOrder(byte[] buf, int offset)
+    public override int GetOrder(ReadOnlySpan<byte> buf)
     {
-        if (buf[offset] >= 0xB0 && buf[offset+1] >= 0xA1)
-            return 94 * (buf[offset] - 0xb0) + buf[offset+1] - 0xA1;
+        if (buf[0] >= 0xB0 && buf[1] >= 0xA1)
+            return 94 * (buf[0] - 0xb0) + buf[1] - 0xA1;
         else
             return -1;
     }

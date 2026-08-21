@@ -36,6 +36,7 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System;
 using System.Text;
 
 using UtfUnknown.Core.Analyzers.Chinese;
@@ -57,10 +58,10 @@ public class EUCTWProber : CharsetProber
         Reset();
     }
 
-    public override ProbingState HandleData(byte[] buf, int offset, int len)
+    public override ProbingState HandleData(ReadOnlySpan<byte> buf)
     {
         int codingState;
-        int max = offset + len;
+        int max = buf.Length;
 
         for (int i = 0; i < max; i++)
         {
@@ -80,14 +81,14 @@ public class EUCTWProber : CharsetProber
             if (codingState == StateMachineModel.START)
             {
                 int charLen = codingSM.CurrentCharLen;
-                if (i == offset)
+                if (i == 0)
                 {
-                    lastChar[1] = buf[offset];
-                    distributionAnalyser.HandleOneChar(lastChar, 0, charLen);
+                    lastChar[1] = buf[0];
+                    distributionAnalyser.HandleOneChar(lastChar, charLen);
                 }
                 else
                 {
-                    distributionAnalyser.HandleOneChar(buf, i - 1, charLen);
+                    distributionAnalyser.HandleOneChar(buf.Slice(i - 1), charLen);
                 }
             }
         }

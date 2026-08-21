@@ -36,8 +36,10 @@
  *
  * ***** END LICENSE BLOCK ***** */
 
+using System;
 using System.IO;
 using System.Text;
+using System.Buffers;
 
 namespace UtfUnknown.Core.Probers;
 
@@ -60,12 +62,10 @@ public abstract class CharsetProber
     /// Feed data to the prober
     /// </summary>
     /// <param name="buf">a buffer</param>
-    /// <param name="offset">offset into buffer</param>
-    /// <param name="len">number of bytes available into buffer</param>
     /// <returns>
     /// A <see cref="ProbingState"/>
     /// </returns>
-    public abstract ProbingState HandleData(byte[] buf, int offset, int len);
+    public abstract ProbingState HandleData(ReadOnlySpan<byte> buf);
 
     /// <summary>
     /// Reset prober state
@@ -98,16 +98,16 @@ public abstract class CharsetProber
     ///
     /// </summary>
     /// <returns>filtered buffer</returns>
-    protected static byte[] FilterWithoutEnglishLetters(byte[] buf, int offset, int len)
+    protected static byte[] FilterWithoutEnglishLetters(ReadOnlySpan<byte> buf)
     {
         byte[] result;
 
         using (MemoryStream ms = new MemoryStream(buf.Length))
         {
             bool meetMSB = false;
-            int max = offset + len;
-            int prev = offset;
-            int cur = offset;
+            int max = buf.Length;
+            int prev = 0;
+            int cur = 0;
 
             while (cur < max)
             {
@@ -121,7 +121,7 @@ public abstract class CharsetProber
                 {
                     if (meetMSB && cur > prev)
                     {
-                        ms.Write(buf, prev, cur - prev);
+                        WriteSpanToStream(ms, buf.Slice(prev, cur - prev));
                         ms.WriteByte(SPACE);
                         meetMSB = false;
                     }
@@ -131,7 +131,7 @@ public abstract class CharsetProber
             }
 
             if (meetMSB && cur > prev)
-                ms.Write(buf, prev, cur - prev);
+                WriteSpanToStream(ms, buf.Slice(prev, cur - prev));
             ms.SetLength(ms.Position);
             result = ms.ToArray();
         }
@@ -144,21 +144,19 @@ public abstract class CharsetProber
     /// both English characters and upper ASCII characters.
     /// </summary>
     /// <returns>a filtered copy of the input buffer</returns>
-    protected static byte[] FilterWithEnglishLetters(byte[] buf, int offset, int len)
+    protected static byte[] FilterWithEnglishLetters(ReadOnlySpan<byte> buf)
     {
         byte[] result;
 
         using (MemoryStream ms = new MemoryStream(buf.Length))
         {
-
             bool inTag = false;
-            int max = offset + len;
-            int prev = offset;
-            int cur = offset;
+            int max = buf.Length;
+            int prev = 0;
+            int cur = 0;
 
             while (cur < max)
             {
-
                 byte b = buf[cur];
 
                 if (b == GREATER_THAN)
@@ -172,7 +170,7 @@ public abstract class CharsetProber
                 {
                     if (cur > prev && !inTag)
                     {
-                        ms.Write(buf, prev, cur - prev);
+                        WriteSpanToStream(ms, buf.Slice(prev, cur - prev));
                         ms.WriteByte(SPACE);
                     }
                     prev = cur + 1;
@@ -183,10 +181,30 @@ public abstract class CharsetProber
             // If the current segment contains more than just a symbol
             // and it is not inside a tag then keep it.
             if (!inTag && cur > prev)
-                ms.Write(buf, prev, cur - prev);
+                WriteSpanToStream(ms, buf.Slice(prev, cur - prev));
             ms.SetLength(ms.Position);
             result = ms.ToArray();
         }
         return result;
+    }
+
+    private static void WriteSpanToStream(MemoryStream stream, ReadOnlySpan<byte> buffer)
+    {
+#if NET8_0_OR_GREATER
+        stream.Write(buffer);
+#else
+        byte[] rent = ArrayPool<byte>.Shared.Rent(buffer.Length);
+
+        try
+        {
+            buffer.CopyTo(rent);
+
+            stream.Write(rent, 0, buffer.Length);
+        }
+        finally
+        {
+            ArrayPool<byte>.Shared.Return(rent);
+        }
+#endif
     }
 }

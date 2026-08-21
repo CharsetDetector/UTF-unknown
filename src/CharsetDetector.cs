@@ -110,11 +110,25 @@ public class CharsetDetector
 
     private const float MinimumThreshold = 0.20f;
 
-    private CharsetDetector()
+    protected CharsetDetector()
     {
         _start = true;
         InputState = InputState.PureASCII;
         _lastChar = 0x00;
+    }
+
+    /// <summary>
+    /// Detect the character encoding of these bytes.
+    /// It searches for BOM from the start of the span.
+    /// Slice the span before passing it if only a range should be inspected.
+    /// </summary>
+    /// <param name="bytes">The bytes containing the text</param>
+    /// <returns></returns>
+    public static DetectionResult DetectFromBytes(ReadOnlySpan<byte> bytes)
+    {
+        var detector = new CharsetDetector();
+        detector.Feed(bytes);
+        return detector.DataEnd();
     }
 
     /// <summary>
@@ -130,9 +144,7 @@ public class CharsetDetector
             throw new ArgumentNullException(nameof(bytes));
         }
 
-        var detector = new CharsetDetector();
-        detector.Feed(bytes, 0, bytes.Length);
-        return detector.DataEnd();
+        return DetectFromBytes(bytes.AsSpan());
     }
 
     /// <summary>
@@ -161,10 +173,8 @@ public class CharsetDetector
         {
             throw new ArgumentException($"{nameof(len)} is greater than the number of bytes from {nameof(offset)} to the end of the array.");
         }
-
-        var detector = new CharsetDetector();
-        detector.Feed(bytes, offset, len);
-        return detector.DataEnd();
+        
+        return DetectFromBytes(bytes.AsSpan(offset, len));
     }
 
     /// <summary>
@@ -291,7 +301,7 @@ public class CharsetDetector
 
     private static bool FeedDetector(CharsetDetector detector, long? maxBytes, byte[] buff, int read, ref long readTotal, ref int toRead)
     {
-        detector.Feed(buff, 0, read);
+        detector.Feed(buff.AsSpan(0, read));
 
         if (maxBytes == null)
         {
@@ -401,37 +411,39 @@ public class CharsetDetector
             FileShare.ReadWrite);
     }
 
-    protected virtual void Feed(byte[] buf, int offset, int len)
+    protected virtual void Feed(ReadOnlySpan<byte> buf)
     {
         if (_done)
         {
             return;
         }
 
-        if (len > 0)
-            _gotData = true;
+        if (buf.IsEmpty)
+            return;
+
+        _gotData = true;
 
         // If the data starts with BOM, we know it is UTF
         if (_start)
         {
             _start = false;
-            _done = IsStartsWithBom(buf, offset, len);
+            _done = IsStartsWithBom(buf);
             if (_done)
                 return;
         }
 
-        FindInputState(buf, offset, len);
+        FindInputState(buf);
         foreach (var prober in CharsetProbers)
         {
-            _done = RunProber(buf, offset, len, prober);
+            _done = RunProber(buf, prober);
             if (_done)
                 return;
         }
     }
 
-    private bool IsStartsWithBom(byte[] buf, int offset, int len)
+    private bool IsStartsWithBom(ReadOnlySpan<byte> buf)
     {
-        var bomSet = FindCharSetByBom(buf, offset, len);
+        var bomSet = FindCharSetByBom(buf);
         if (bomSet != null)
         {
             _detectionDetail = new DetectionDetail(bomSet, 1.0f)
@@ -443,9 +455,9 @@ public class CharsetDetector
         return false;
     }
 
-    private bool RunProber(byte[] buf, int offset, int len, CharsetProber charsetProber)
+    private bool RunProber(ReadOnlySpan<byte> buf, CharsetProber charsetProber)
     {
-        var probingState = charsetProber.HandleData(buf, offset, len);
+        var probingState = charsetProber.HandleData(buf);
         if (probingState == ProbingState.FoundIt)
         {
             _detectionDetail = new DetectionDetail(charsetProber);
@@ -454,9 +466,9 @@ public class CharsetDetector
         return false;
     }
 
-    private void FindInputState(byte[] buf, int offset, int len)
+    private void FindInputState(ReadOnlySpan<byte> buf)
     {
-        for (int i = offset; i < len; i++)
+        for (int i = 0; i < buf.Length; i++)
         {
             // other than 0xa0, if every other character is ascii, the page is ascii
             if ((buf[i] & 0x80) != 0 && buf[i] != 0xA0)
@@ -485,59 +497,59 @@ public class CharsetDetector
         }
     }
 
-    private static string FindCharSetByBom(byte[] buf, int offset, int len)
+    private static string FindCharSetByBom(ReadOnlySpan<byte> buf)
     {
-        if (len < 2)
+        if (buf.Length < 2)
             return null;
 
-        var buf0 = buf[offset + 0];
-        var buf1 = buf[offset + 1];
+        var buf0 = buf[0];
+        var buf1 = buf[1];
 
         if (buf0 == 0xFE && buf1 == 0xFF)
         {
             // FE FF 00 00  UCS-4, unusual octet order BOM (3412)
-            return len > 3
-                   && buf[offset + 2] == 0x00 && buf[offset + 3] == 0x00
+            return buf.Length > 3
+                   && buf[2] == 0x00 && buf[3] == 0x00
                 ? CodepageName.X_ISO_10646_UCS_4_3412
                 : CodepageName.UTF16_BE;
         }
 
         if (buf0 == 0xFF && buf1 == 0xFE)
         {
-            return len > 3
-                   && buf[offset + 2] == 0x00 && buf[offset + 3] == 0x00
+            return buf.Length > 3
+                   && buf[2] == 0x00 && buf[3] == 0x00
                 ? CodepageName.UTF32_LE
                 : CodepageName.UTF16_LE;
         }
 
-        if (len < 3)
+        if (buf.Length < 3)
             return null;
 
-        if (buf0 == 0xEF && buf1 == 0xBB && buf[offset + 2] == 0xBF)
+        if (buf0 == 0xEF && buf1 == 0xBB && buf[2] == 0xBF)
             return CodepageName.UTF8;
 
-        if (len < 4)
+        if (buf.Length < 4)
             return null;
 
         //Here, because anyway further more than 3 positions are checked.
         if (buf0 == 0x00 && buf1 == 0x00)
         {
-            if (buf[offset + 2] == 0xFE && buf[offset + 3] == 0xFF)
+            if (buf[2] == 0xFE && buf[3] == 0xFF)
                 return CodepageName.UTF32_BE;
 
             // 00 00 FF FE  UCS-4, unusual octet order BOM (2143)
-            if (buf[offset + 2] == 0xFF && buf[offset + 3] == 0xFE)
+            if (buf[2] == 0xFF && buf[3] == 0xFE)
                 return CodepageName.X_ISO_10646_UCS_4_2143;
         }
 
         // Detect utf-7 with bom (see table in https://en.wikipedia.org/wiki/Byte_order_mark)
-        if (buf0 == 0x2B && buf1 == 0x2F && buf[offset + 2] == 0x76)
-            if (buf[offset + 3] == 0x38 || buf[offset + 3] == 0x39 || buf[offset + 3] == 0x2B || buf[offset + 3] == 0x2F)
+        if (buf0 == 0x2B && buf1 == 0x2F && buf[2] == 0x76)
+            if (buf[3] == 0x38 || buf[3] == 0x39 || buf[3] == 0x2B || buf[3] == 0x2F)
                 return CodepageName.UTF7;
 
         // Detect GB18030 with bom (see table in https://en.wikipedia.org/wiki/Byte_order_mark)
         // TODO: If you remove this check, GB18030Prober will still be defined as GB18030 -- It's feature or bug?
-        if (buf0 == 0x84 && buf1 == 0x31 && buf[offset + 2] == 0x95 && buf[offset + 3] == 0x33)
+        if (buf0 == 0x84 && buf1 == 0x31 && buf[2] == 0x95 && buf[3] == 0x33)
             return CodepageName.GB18030;
 
         return null;
@@ -546,7 +558,7 @@ public class CharsetDetector
     /// <summary>
     /// Notify detector that no further data is available.
     /// </summary>
-    private DetectionResult DataEnd()
+    private protected DetectionResult DataEnd()
     {
         if (!_gotData)
         {

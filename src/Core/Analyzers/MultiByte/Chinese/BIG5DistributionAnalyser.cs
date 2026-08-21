@@ -1,3 +1,5 @@
+using System;
+
 namespace UtfUnknown.Core.Analyzers.Chinese;
 
 public class BIG5DistributionAnalyser : CharDistributionAnalyser
@@ -914,13 +916,13 @@ public class BIG5DistributionAnalyser : CharDistributionAnalyser
     ///  second byte range: 0x40 -- 0x7e , 0xa1 -- 0xfe
     /// no validation needed here. State machine has done that
     /// </summary>
-    public override int GetOrder(byte[] buf, int offset)
+    public override int GetOrder(ReadOnlySpan<byte> buf)
     {
-        if (buf[offset] >= 0xA4) {
-            if (buf[offset+1] >= 0xA1)
-                return 157 * (buf[offset] - 0xA4) + buf[offset+1] - 0xA1 + 63;
+        if (buf[0] >= 0xA4) {
+            if (buf[1] >= 0xA1)
+                return 157 * (buf[0] - 0xA4) + buf[1] - 0xA1 + 63;
             else
-                return 157 * (buf[offset] - 0xA4) + buf[offset+1] - 0x40;
+                return 157 * (buf[0] - 0xA4) + buf[1] - 0x40;
         } else {
             return -1;
         }
