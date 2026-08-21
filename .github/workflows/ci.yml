@@ -122,6 +122,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: [ validate_nuget, run_test ]
     permissions:
+      actions: read
+      contents: read
       id-token: write
     steps:
       - name: Download NuGet package
