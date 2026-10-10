@@ -71,6 +71,8 @@ float confidence = resultDetected.Confidence;
 IList<DetectionDetail> allDetails = result.Details;
 ```
 
+Byte-array and span detection use the same 1024-byte batches as stream detection. Detection can stop once a confident match is found, without inspecting the remaining input. This is an encoding heuristic, not validation that every byte belongs to the detected encoding.
+
 ### Asynchronous Methods
 
 ```c#
@@ -142,3 +144,7 @@ For some encodings no alias is available: `cp949`, `iso-2022-cn`, `euc-tw`, `iso
 The library is subject to the Mozilla Public License Version 1.1 (the "License"). Alternatively, it may be used under the terms of either the GNU General Public License Version 2 or later (the "GPL"), or the GNU Lesser General Public License Version 2.1 or later (the "LGPL").
 
 Test data has been extracted from [Wikipedia](https://wikipedia.org) and [The Project Gutenberg](https://www.gutenberg.org/) books and is subject to their licenses.
+
+### Modifications
+
+2026-10-09: Byte-array and span detection now process input in stream-sized batches and can stop at a confident match; input-method consistency tests and the sampling documentation were added. These modifications are derived from the Mozilla Universal charset detector code originally provided by Netscape Communications Corporation.

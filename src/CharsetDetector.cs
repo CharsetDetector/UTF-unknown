@@ -127,7 +127,13 @@ public class CharsetDetector
     public static DetectionResult DetectFromBytes(ReadOnlySpan<byte> bytes)
     {
         var detector = new CharsetDetector();
-        detector.Feed(bytes);
+        while (!bytes.IsEmpty && !detector._done)
+        {
+            var toRead = Math.Min(bytes.Length, BufferSize);
+            detector.Feed(bytes.Slice(0, toRead));
+            bytes = bytes.Slice(toRead);
+        }
+
         return detector.DataEnd();
     }
 
