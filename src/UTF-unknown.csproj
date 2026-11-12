@@ -33,7 +33,7 @@
     <PackageReference Include="System.Text.Encoding.CodePages" Version="10.0.11" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="10.*" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="11.*" PrivateAssets="All" />
   </ItemGroup>
 
   <PropertyGroup>
